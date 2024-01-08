@@ -8,6 +8,8 @@ const theme = {
         tertiaryDark: "#560C12",
 		primaryLightBackground: "#FCF7F8",
 		primaryDarkBackground: "#2A313C",
+		secondaryLightBackground: "#CED3DC",
+		secondaryDarkBackground: "#8A8A8A",
 		textDark: "#272A30",
 		textLight: "#FFFFFF",
 	},
