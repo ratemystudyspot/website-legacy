@@ -1,35 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import theme from '../../../theme.js'
 import user_icon from '../person.png'
 import email_icon from '../email.png'
 import password_icon from '../password.png'
 
 const LoginSignup = () => {
+    const [action, setAction] = useState("Sign Up");
+
+
     return (
         <div>
             <div className='container' style={container}>
                 <div className='header' style={header}>
-                    <div className='text' style={text}>Sign Up</div>
+                    <div className='text' style={text}>{action}</div>
                     <div className='underline' style={underline}></div>
                 </div>
                 <div className='inputs' style={inputs}>
+                    {
+                        action === "Login" ?
+                            <div></div> :
+                            <div className='input' style={input}>
+                                <img src={user_icon} alt='' style={input.img} />
+                                <input type='text' placeholder='Name' style={input.input} />
+                            </div>
+                    }
                     <div className='input' style={input}>
-                        <img src={user_icon} alt='' style={input.img}/>
-                        <input type='text' placeholder='Name' style={input.input}/>
+                        <img src={email_icon} alt='' style={input.img} />
+                        <input type='email' placeholder='Email' style={input.input} />
                     </div>
                     <div className='input' style={input}>
-                        <img src={email_icon} alt='' style={input.img}/>
-                        <input type='email' placeholder='Email' style={input.input}/>
-                    </div>
-                    <div className='input' style={input}>
-                        <img src={password_icon} alt='' style={input.img}/>
-                        <input type='password' placeholder='Password' style={input.input}/>
+                        <img src={password_icon} alt='' style={input.img} />
+                        <input type='password' placeholder='Password' style={input.input} />
                     </div>
                 </div>
-                <div className="forgot-password" style={forgotPassword}>Forgot Password? <span style={forgotPassword.span}>Click Here!</span></div>
+                {
+                    action === "Sign Up" ?
+                        <div></div> :
+                        <div className="forgot-password" style={forgotPassword}>
+                            Forgot Password? <span style={forgotPassword.span}>Click Here!</span>
+                        </div>
+                }
                 <div className="submitcontainer" style={submitContainer}>
-                    <div className="submit" style={submit}>Sign Up</div>
-                    <div className="submit" style={submit}>Login</div>
+                    <div className="submit" style={action === "Login" ? { ...submit, ...gray } : submit} onClick={() => { setAction("Sign Up") }}>Sign Up</div>
+                    <div className="submit" style={action === "Sign Up" ? { ...submit, ...gray } : submit} onClick={() => { setAction("Login") }}>Login</div>
                 </div>
             </div>
         </div>
@@ -46,6 +59,7 @@ const container = {
     width: 600,
     backgroundColor: theme.colors.primaryLightBackground,
     paddingBottom: 30,
+    borderRadius: 9,
 }
 
 const header = {
@@ -94,7 +108,7 @@ const input = {
         background: "transparent",
         border: "none",
         outline: "none",
-        color: theme.colors.secondaryLightBackground,
+        color: theme.colors.textDarkOne,
         fontSize: 19,
     }
 }
@@ -107,7 +121,7 @@ const forgotPassword = {
     'span': {
         color: theme.colors.primaryLight,
         cursor: "pointer",
-    }
+    },
 }
 
 const submitContainer = {
@@ -128,4 +142,9 @@ const submit = {
     fontSize: 19,
     fontWeight: 700,
     cursor: "pointer",
+}
+
+const gray = {
+    backgroundColor: theme.colors.secondaryLightBackground,
+    color: theme.colors.textDark,
 }

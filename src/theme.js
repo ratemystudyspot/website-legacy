@@ -10,7 +10,8 @@ const theme = {
 		primaryDarkBackground: "#2A313C",
 		secondaryLightBackground: "#CED3DC",
 		secondaryDarkBackground: "#8A8A8A",
-		textDark: "#272A30",
+		textDarkOne: "#272A30",
+		textDarkTwo: "#989898",
 		textLight: "#FFFFFF",
 	},
 
