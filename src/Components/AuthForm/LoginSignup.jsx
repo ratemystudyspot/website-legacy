@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import theme from '../../../theme.js'
+import theme from '../../theme.js'
 import user_icon from '../person.png'
 import email_icon from '../email.png'
 import password_icon from '../password.png'
 
 const LoginSignup = () => {
     const [action, setAction] = useState("Sign Up");
-
 
     return (
         <div>
