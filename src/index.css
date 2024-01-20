@@ -17,10 +17,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url(./Components/Assets/background.jpg)
-  no-repeat;
-  background-size: cover;
-  background-position: center;
+  background: #ADD8E6;
 }
 
 code {

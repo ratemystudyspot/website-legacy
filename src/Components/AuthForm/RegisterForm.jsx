@@ -6,7 +6,7 @@ const EMAIL_REGEX =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 const PWD_REGEX = /^(?=.*[a-z]){8,}$/;
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
   const errRef = useRef();
 
   const [email, setEmail] = useState('');
@@ -20,7 +20,7 @@ const RegisterForm = () => {
   const [submit, setSubmit] = useState(false);
 
   const [errMsg, setErrMsg] = useState('');
-  // const [success, setSuccess] = useState('');s
+  // const [success, setSuccess] = useState('');
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
@@ -31,9 +31,14 @@ const RegisterForm = () => {
     setErrMsg('');
   }, [pwd])
 
+  const HandleSubmit= (e) => {
+    e.preventDefault();
+    console.log(email);
+  }
+
   return (
     <div className="wrapper">
-      <form action="">
+      <form className='form' onSubmit={HandleSubmit}>
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} >{errMsg}</p>
 
         <h1>Sign up for Seekr</h1>
@@ -82,11 +87,10 @@ const RegisterForm = () => {
         <button type="submit" onClick={() => setSubmit(true)}>
           Create Account
         </button>
-
-        <div className="register-link">
-          <p>Already have an account? <a href="#">Log in</a></p>
-        </div>
       </form>
+      <div className="register-link">
+        <p>Already have an account? <button onClick={() => props.onFormSwitch('login')}>Log in</button></p>
+      </div>
     </div>
   )
 }

@@ -2,11 +2,11 @@ import React from 'react'
 import './AuthForm.css'
 import { FaUser, FaLock } from "react-icons/fa";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
     return (
         <div className="wrapper">
-            <form action="">
-                <h1>Login</h1>
+            <form className='form' action="">
+                <h1>Sign in to Seekr</h1>
                 <div className="input-box">
                     <input type="email" placeholder="Email" required />
                     <FaUser className="icon" />
@@ -22,11 +22,10 @@ const LoginForm = () => {
                 </div>
 
                 <button type="submit">Login</button>
-
-                <div className="register-link">
-                    <p>Don't have an account? <a href="#">Register</a></p>
-                </div>
             </form>
+            <div className="register-link">
+                <p>Don't have an account? <button onClick={() => props.onFormSwitch('register')}>Register</button></p>
+            </div>
         </div>
     )
 }
