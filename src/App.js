@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import LoginForm from './Components/AuthForm/LoginForm';
 import RegisterForm from './Components/AuthForm/RegisterForm';
+import StudySpotCard from './Components/StudyCard/StudySpotCard';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
