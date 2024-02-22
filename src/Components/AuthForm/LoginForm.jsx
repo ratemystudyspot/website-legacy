@@ -6,7 +6,7 @@ const LoginForm = (props) => {
     return (
         <div className="wrapper">
             <form className='form' action="">
-                <h1>Sign in to Seekr</h1>
+                <h1>Login</h1>
                 <div className="input-box">
                     <input type="email" placeholder="Email" required />
                     <FaUser className="icon" />
@@ -16,10 +16,15 @@ const LoginForm = (props) => {
                     <FaLock className="icon" />
                 </div>
 
-                <div className="remember-forgot">
+                {/* <div className="remember-forgot">
                     <label><input type="checkbox" />Remember me</label>
-                    <a href="#">Forgot Password?</a>
+                    
+                </div> */}
+                <div className='forgot-password'>
+                    <a href="#">Forgot Password?</a> 
                 </div>
+
+                {/* add a link later !!! */}
 
                 <button type="submit">Login</button>
             </form>

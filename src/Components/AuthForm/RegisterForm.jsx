@@ -41,7 +41,7 @@ const RegisterForm = (props) => {
       <form className='form' onSubmit={HandleSubmit}>
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} >{errMsg}</p>
 
-        <h1>Sign up for Seekr</h1>
+        <h1>Register</h1>
         <div className="input-box">
           <input 
             type="email" 
