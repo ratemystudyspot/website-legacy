@@ -6,13 +6,15 @@ let initialState= {
             id: "u1",
             name: "Leo Shang",
             email: "leoshang12@gmail.com",
-            jobIds: [],
+            password:"abcdefg",
+            reviewIds: [],
         },
         {
             id: "u2",
             name: "Ray Zhou",
             email: "rayz04@gmail.com",
-            jobIds: [],
+            password:"hello",
+            reviewIds: [],
         }
     ]
 }; 
@@ -22,7 +24,10 @@ export const userSlice = createSlice({
     initialState: initialState,
     reducers: {
         createUser: (state, action) => {
-            
+            const { user } = action.payload;
+            console.log(user.email);
+            console.log(user.password);
+            // TEST REACT DISPATCH ON AUTHFORM!!!
         },
         readUser: (state, action) => {
             const { user } = action.payload;
