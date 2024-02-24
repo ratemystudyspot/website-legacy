@@ -10,7 +10,7 @@ const StudySpots = [
     {
         id: "2",
         name: "Forestry Building",
-        imageLink: "../Assets/ForestCenter.jpg",   
+        imageLink: "ForestCenter.jpg",   
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],
@@ -18,7 +18,7 @@ const StudySpots = [
     {
         id: "3",
         name: "TBD",
-        imageLink: "../Assets/ForestCenter.jpg",   
+        imageLink: "ForestCenter.jpg",   
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],
@@ -26,7 +26,7 @@ const StudySpots = [
     {
         id: "4",
         name: "TBD",
-        imageLink: "../Assets/ForestCenter.jpg",   
+        imageLink: "ForestCenter.jpg",   
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],

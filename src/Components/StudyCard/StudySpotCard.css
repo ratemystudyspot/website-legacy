@@ -1,8 +1,9 @@
 .studySpotCard {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
-    width: 30%;
-    border-radius: 20px;
+    width: 15%;
+    border-radius: 5%;
+    margin: 5px;
 }
 
 .studySpotCard:hover {
@@ -13,8 +14,17 @@
     padding: 2px 16px;
 }
 
-.image {
+.studySpotCard .image {
     object-fit: cover;
     padding: 3%;
     border-radius: 10%;
+    width: 100%;
 }
+
+/* .studySpotCard p {
+    font-size: 100%;
+}
+
+.studySpotCard h4 {
+    font-size: 100%;
+} */

@@ -13,7 +13,7 @@ const StudySpotCard = ({studySpot}) => {
   return (
     // !!! add location calculations!!!
     <div className="studySpotCard">
-      <img className="image" src={getImage(studySpot.imageLink)} style={{width : "100%"}}/>
+      <img className="image" src={getImage(studySpot.imageLink)}/>
       <div className="container">
         <h4><b> {studySpot.name} </b></h4>
         <p>500.0 m away</p>     
