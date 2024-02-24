@@ -1,6 +1,7 @@
 import { React, useRef, useState, useEffect } from 'react';
 import './AuthForm.css';
-import { FaUser, FaLock, FaInfoCircle, FaCheck, FaTimes } from "react-icons/fa";
+import { FaUser, FaLock } from "react-icons/fa";
+import { getUser, createUser, deleteUser, updateUser } from '../../Services/userService.js';
 
 const EMAIL_REGEX =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -83,10 +84,18 @@ const RegisterForm = (props) => {
         <p id='pwdnote' className={!enter || !submit || validPwd ? "offscreen" : "instructions"}>
           Please set a password longer than seven characters.
         </p>
-
+          
         <button type="submit" onClick={() => setSubmit(true)}>
           Create Account
         </button>
+
+        {/* !!! NEED TO EDIT STILL */}
+        {/* <button onClick={createUser}>creates</button>
+        <button onClick={deleteUser}>delete</button>
+        <button onClick={updateUser}>update</button>
+        <div>users: {getUser}</div> */}
+
+
       </form>
       <div className="register-link">
         <p>Already have an account? <button onClick={() => props.onFormSwitch('login')}>Log in</button></p>
