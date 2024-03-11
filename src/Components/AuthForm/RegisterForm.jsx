@@ -16,8 +16,6 @@ const RegisterForm = (props) => {
   const [pwd, setPwd] = useState('');
   const [validPwd, setValidPwd] = useState(false);
 
-  const [enter, setEnter] = useState(false);
-
   const [submit, setSubmit] = useState(false);
 
   const [errMsg, setErrMsg] = useState('');
@@ -36,7 +34,9 @@ const RegisterForm = (props) => {
     e.preventDefault();
     console.log(email);
   }
-
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <div className="wrapper">
       <form className='form' onSubmit={HandleSubmit}>
@@ -49,19 +49,10 @@ const RegisterForm = (props) => {
             placeholder="Email" 
             autoComplete='off' 
             onChange={(e) => setEmail(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                setEnter(true);
-              }
-            }}
             required
           />
           <FaUser className="icon" />
         </div>
-
-        <p id='pwdnote' className={!enter || !submit || validEmail ? "offscreen" : "instructions"}>
-          Please provide your email.
-        </p>
 
         <div className="input-box">
           <input 
@@ -69,11 +60,6 @@ const RegisterForm = (props) => {
             placeholder="Password" 
             autoComplete='off'
             onChange={(e) => setPwd(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                setEnter(true);
-              }
-            }}
             required
             aria-invalid={validPwd ? "false" : "true"}
             aria-describedby='pwdnote'
@@ -81,21 +67,10 @@ const RegisterForm = (props) => {
           <FaLock className="icon" />
         </div>        
         
-        <p id='pwdnote' className={!enter || !submit || validPwd ? "offscreen" : "instructions"}>
-          Please set a password longer than seven characters.
-        </p>
-          
-        <button type="submit" onClick={() => setSubmit(true)}>
+        <button type="submit" onClick={createUser}>
           Create Account
         </button>
-
-        {/* !!! NEED TO EDIT STILL */}
-        {/* <button onClick={createUser}>creates</button>
-        <button onClick={deleteUser}>delete</button>
-        <button onClick={updateUser}>update</button>
-        <div>users: {getUser}</div> */}
-
-
+    
       </form>
       <div className="register-link">
         <p>Already have an account? <button onClick={() => props.onFormSwitch('login')}>Log in</button></p>
