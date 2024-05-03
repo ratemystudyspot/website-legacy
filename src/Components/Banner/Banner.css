@@ -1,0 +1,79 @@
+.banner-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  position: absolute;
+  left: 5%; 
+  right: 5%;
+  top: 2%;
+}
+
+.a-logo {
+  width: 45px;
+  height: 45px;
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+}
+
+.user-nav {
+  outline: #b5b2b2;
+  outline-style: solid;
+  outline-width: 1px;
+  transition: 0.3s;
+  width: 60px;
+  height: 36px;
+  border-radius: 10%;
+  margin: 5px;
+  overflow: hidden;
+}
+
+.user-nav:hover {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-btn {
+  border: none;
+  outline: none;
+  color: white;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.icon {
+  color: #7c7c7c;
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  top: 50px;
+  right: 5px;
+  padding: 12px 0 12px;
+  min-width: 180px;
+  box-shadow: 0px 4px 4px 4px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 10%;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 10px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+

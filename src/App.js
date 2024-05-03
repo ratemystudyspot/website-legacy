@@ -8,6 +8,7 @@ import ButtonComponent from './Components/ButtonComponent';
 import  { getUser } from './Services/userService';
 import StudySpots from './SampleData/StudySpots';
 import ListOfStudySpotCards from './Components/StudyCard/ListOfStudySpotCards';
+import Homepage from './Components/Homepage';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -22,7 +23,8 @@ function App() {
   return (
     <div>
       {
-        currentForm === "login" ? <LoginForm onFormSwitch={toggleForm} /> : <RegisterForm onFormSwitch={toggleForm} />
+        // currentForm === "login" ? <LoginForm onFormSwitch={toggleForm} /> : <RegisterForm onFormSwitch={toggleForm} />
+        <Homepage></Homepage>
       }
     </div>
   );
