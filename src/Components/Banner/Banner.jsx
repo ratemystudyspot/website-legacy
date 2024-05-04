@@ -43,7 +43,7 @@ const Banner = () => {
             <img className="logo" src={require("../Assets/TempLogo.jpg")} alt="Temporary Logo" /> {/* CHANGE SRC AND ALT */}
           </a>
           <Link to="/about">
-            <button className="about">About us</button>
+            <button style={{ minWidth:"80px"}} className="about">About us</button>
           </Link>
         </div>
 
@@ -66,7 +66,7 @@ const Banner = () => {
           {/* Adding study spot btn */}
           <div className="sub-container">
             <Link to="/spots">
-              <button>Recommend study spot</button>
+              <button style={{ minWidth:"150px"}}>Recommend Spot</button>
             </Link>
           </div>
 
