@@ -39,12 +39,13 @@ const RegisterForm = (props) => {
   }, []);
   return (
     <div className="wrapper">
-      <form className='form' onSubmit={HandleSubmit}>
+      <form className='auth-form' onSubmit={HandleSubmit}>
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} >{errMsg}</p>
 
         <h1>Register</h1>
         <div className="input-box">
           <input 
+            className="auth-input"
             type="email" 
             placeholder="Email" 
             autoComplete='off' 
@@ -56,6 +57,7 @@ const RegisterForm = (props) => {
 
         <div className="input-box">
           <input 
+            className="auth-input"
             type="password" 
             placeholder="Password" 
             autoComplete='off'
@@ -67,7 +69,7 @@ const RegisterForm = (props) => {
           <FaLock className="icon" />
         </div>        
         
-        <button type="submit" onClick={createUser}>
+        <button className="auth-button" type="submit" onClick={createUser}>
           Create Account
         </button>
     
