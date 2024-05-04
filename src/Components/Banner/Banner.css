@@ -15,33 +15,37 @@
   display: flex;
   align-items: center;
   width: 180px;
+  .a-logo {
+    /* margin-right: 60px; */
+    /* width: 45px;
+    height: 45px; idk what to do with this*/
+    margin-right: 20px;
+    position: static;
+  }
+  .logo {
+    width: 70px;
+    height: 70px;
+  }
+  button {
+    color: #525252;
+    border: none;
+    background-color: white;
+    font-size: 13px;
+    font-weight: 600;
+    position: relative;
+    top: 5%;
+    right: 10px;
+    padding: 8px;
+    height: 34px;
+    border-radius: 4px;
+  }
 }
 
-.a-logo {
-  /* margin-right: 60px; */
-  /* width: 45px;
-  height: 45px; idk what to do with this*/
-  margin-right: 20px;
-}
 
-.logo {
-  width: 70px;
-  height: 70px;
-}
 
-.logo-container button {
-  color: #525252;
-  border: none;
-  background-color: white;
-  font-size: 13px;
-  font-weight: 600;
-  position: relative;
-  top: 5%;
-  right: 10px;
-  padding: 8px;
-  height: 34px;
-  border-radius: 4px;
-}
+
+
+.logo-container 
 
 .logo-container button:hover {
   background-color: #dcdcdc;

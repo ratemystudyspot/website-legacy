@@ -47,8 +47,6 @@ const Banner = () => {
           </Link>
         </div>
 
-
-
         <div className="middle-container">
           <form className="form">
             <input
