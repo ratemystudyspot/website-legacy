@@ -9,6 +9,7 @@ import  { getUser } from './Services/userService';
 import StudySpots from './SampleData/StudySpots';
 import ListOfStudySpotCards from './Components/StudyCard/ListOfStudySpotCards';
 import Homepage from './Components/Homepage';
+import UBCMap from './Components/UBCMap/UBCMap';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -24,7 +25,10 @@ function App() {
     <div>
       {
         // currentForm === "login" ? <LoginForm onFormSwitch={toggleForm} /> : <RegisterForm onFormSwitch={toggleForm} />
+        <>
+        <UBCMap></UBCMap>
         <Homepage></Homepage>
+        </>
       }
     </div>
   );
