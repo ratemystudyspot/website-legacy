@@ -8,25 +8,78 @@ import ButtonComponent from './Components/ButtonComponent';
 import  { getUser } from './Services/userService';
 import StudySpots from './SampleData/StudySpots';
 import ListOfStudySpotCards from './Components/StudyCard/ListOfStudySpotCards';
-import Homepage from './Components/Homepage';
+import Root from './routes/root';
+import ErrorPage from './Components/Pages/Errorpage';
+import Aboutpage from './Components/Pages/Aboutpage';
+import Spotspage from './Components/Pages/Spotspage';
+import { 
+  createBrowserRouter, 
+  createRoutesFromElements, 
+  Route,
+  Routes, 
+  Link,
+  RouterProvider,
+  Outlet 
+} from 'react-router-dom';
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login');
+  // const [currentForm, setCurrentForm] = useState('login');
 
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  };
+  // const toggleForm = (formName) => {
+  //   setCurrentForm(formName);
+  // };
+  
+  // init router
+  // const router = createBrowserRouter(
+  //   createRoutesFromElements(
+  //     <Route path="/" element={<Root />}>
+  //       <Route path="/about" element={<Aboutpage />} />
+  //       <Route path="/spots" element={<Spotspage />} />
+  //       <Route path="/login" element={<LoginForm /* onFormSwitch={toggleForm} */ />} />
+  //       <Route path="/signup" element={<RegisterForm /* onFormSwitch={toggleForm} */ />} />
+  //     </Route>
+  //   )
+  // )
 
-  useEffect(() => {
-    getUser();
-  }, []);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "about/",
+      element: <Aboutpage />,
+    },
+    {
+      path: "spots/",
+      element: <Spotspage />,
+    },
+    {
+      path: "login/",
+      element: <LoginForm />,
+    },
+    {
+      path: "signup/",
+      element: <RegisterForm />,
+    },
+  ]);
+
+
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
   return (
-    <div>
-      {
-        // currentForm === "login" ? <LoginForm onFormSwitch={toggleForm} /> : <RegisterForm onFormSwitch={toggleForm} />
-        <Homepage></Homepage>
-      }
-    </div>
+    // <div>
+    //   <RouterProvider router={router} />
+    // </div>
+    <RouterProvider router={router} />
+    // <div>
+    //   {
+    //     currentForm === "login" ? <LoginForm onFormSwitch={toggleForm} /> : <RegisterForm onFormSwitch={toggleForm} />
+    //     <Homepage></Homepage>
+    //   }
+    // </div>
   );
 }
 

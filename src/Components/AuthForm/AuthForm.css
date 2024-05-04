@@ -20,7 +20,11 @@
     margin: 20px 0;
 }
 
-.input-box input {
+.auth-form {
+    display: block;
+}
+
+.input-box .auth-input {
     width: 100%;
     height: 100%;
     background: transparent;
@@ -62,7 +66,7 @@
     text-decoration: underline;
 }
 
-.form button {
+.auth-form .auth-button {
     width: 100%;
     height: 45px;
     background: #fff;
@@ -76,7 +80,7 @@
     transition: background-color 0.3s;
 }
 
-.form button:hover {
+.auth-form .auth-button:hover {
     background: #F5F5F5;
 }
 

@@ -3,6 +3,7 @@ import './Banner.css'
 import { FaCircleUser } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from 'react-router-dom';
 
 const Banner = () => {
   // State to track whether a search term has been entered into search bar
@@ -41,7 +42,9 @@ const Banner = () => {
           <a className="a-logo" href="http://localhost:3000/">
             <img className="logo" src={require("../Assets/TempLogo.jpg")} alt="Temporary Logo" /> {/* CHANGE SRC AND ALT */}
           </a>
-          <button href="#" className="about">About us</button>
+          <Link to="/about">
+            <button className="about">About us</button>
+          </Link>
         </div>
 
 
@@ -55,13 +58,16 @@ const Banner = () => {
               onKeyDown={handleKeyDown}
               placeholder="Search study spots"
             />
+            <button><FaSearch className="icon" /></button>
           </form>
         </div>
 
         <div className="right-container">
           {/* Adding study spot btn */}
           <div className="sub-container">
-            <button>Recommend study spot</button> {/* !!! NEED TO ADD A LINK THAT THIS GOES TO */}
+            <Link to="/spots">
+              <button>Recommend study spot</button>
+            </Link>
           </div>
 
 
@@ -75,8 +81,8 @@ const Banner = () => {
             {/* User Navbar contents */}
             {isOpen && (
               <div class="dropdown-content">
-                <a href="#">Sign up</a>
-                <a href="#">Log in</a>
+                <Link to="/signup">Sign up</Link>
+                <Link to="/login">Log in</Link>
               </div>
             )}
           </div>

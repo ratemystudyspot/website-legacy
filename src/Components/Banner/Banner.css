@@ -10,7 +10,7 @@
 
 .logo-container {
   display: flex;
-  width: 120px;
+  width: 140px;
 }
 
 .a-logo {
@@ -25,11 +25,11 @@
 }
 
 .logo-container button {
-  color: black;
+  color: #525252;
   border: none;
   background-color: white;
-  font-size: 10px;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 600;
   position: relative;
   top: 5%;
   right: 10px;
@@ -46,34 +46,50 @@
   margin-top: 10px;
 }
 
-.form input {
-  border: 1px solid #dcdcdc;
-  border-radius: 4px; 
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
-  padding: 10px;
-  margin-top: -10px;
-  font-size: 16px;
-  width: 500px;
-}
+.form {
+  display: flex;
 
+  input {
+    border: 1px solid #dcdcdc;
+    border-radius: 4px; 
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    padding: 10px;
+    margin-top: -10px;
+    font-size: 16px;
+    width: 500px;
+    &:hover {
+      background-color: #dcdcdc;
+    }
+  }
 
-.form input:hover {
-  background-color: #dcdcdc;
+  button {
+    width: 50px;
+    border-radius: 4px;
+    border: 1px transparent;
+    padding: 10px;
+    margin-top: -10px;
+    background-color: #ADD8E6;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+  }
+
+  .icon {
+    color: #fff;
+  }
 }
 
 .banner-container .right-container {
   display: flex;
-  width: 198px;
+  width: 236px;
   margin: 0;
   padding: 0;
 }
 
 .right-container .sub-container button {
-  color: black;
+  color: #525252;
   border: none;
   background-color: white;
-  font-size: 10px;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 600;
   position: relative;
   top: 7px;
   right: 10px;
@@ -119,6 +135,7 @@
 }
 
 .dropdown-content {
+  background-color: white;
   display: block;
   position: absolute;
   top: 50px;
@@ -147,8 +164,7 @@
 
 hr {
   position: absolute;
-  top: 90px;
+  top: 10%;
   right: 0px;
   width: 120%;
-  
 }
