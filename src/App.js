@@ -14,12 +14,7 @@ import Aboutpage from './Components/Pages/Aboutpage';
 import Spotspage from './Components/Pages/Spotspage';
 import { 
   createBrowserRouter, 
-  createRoutesFromElements, 
-  Route,
-  Routes, 
-  Link,
   RouterProvider,
-  Outlet 
 } from 'react-router-dom';
 
 function App() {
@@ -30,17 +25,6 @@ function App() {
   // };
   
   // init router
-  // const router = createBrowserRouter(
-  //   createRoutesFromElements(
-  //     <Route path="/" element={<Root />}>
-  //       <Route path="/about" element={<Aboutpage />} />
-  //       <Route path="/spots" element={<Spotspage />} />
-  //       <Route path="/login" element={<LoginForm /* onFormSwitch={toggleForm} */ />} />
-  //       <Route path="/signup" element={<RegisterForm /* onFormSwitch={toggleForm} */ />} />
-  //     </Route>
-  //   )
-  // )
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -70,9 +54,6 @@ function App() {
   //   getUser();
   // }, []);
   return (
-    // <div>
-    //   <RouterProvider router={router} />
-    // </div>
     <RouterProvider router={router} />
     // <div>
     //   {
