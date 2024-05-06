@@ -1,4 +1,5 @@
 const Pool = require('pg').Pool
+const bcrypt = require('bcryptjs');
 
 // temp!! (don't put credentials in code)
 const pool = new Pool({
@@ -32,10 +33,15 @@ const getUsers = async () => {
 // create a new user record in the databsse
 const createUser = (body) => {
 	return new Promise(function (resolve, reject) {
-		const { name, email } = body;
+		const { email, pwd } = body;
+		
+		// salt and hash passwords for security
+		var salt = bcrypt.genSaltSync(10);
+		var hash_pwd = bcrypt.hashSync(pwd, salt);
+
 		pool.query(
-			"INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *",
-			[name, email],
+			"INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
+			[email, hash_pwd],
 			(error, results) => {
 				if (error) {
 					reject(error);
@@ -69,10 +75,10 @@ const deleteUser = (id) => {
 // update a user record
 const updateUser = (id, body) => {
 	return new Promise(function (resolve, reject) {
-		const { name, email } = body;
+		const { email, pwd } = body;
 		pool.query(
-			"UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *",
-			[name, email, id],
+			"UPDATE users SET email = $1, pwd = $2 WHERE id = $3 RETURNING *",
+			[email, pwd, id],
 			(error, results) => {
 				if (error) {
 					reject(error);

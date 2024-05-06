@@ -1,6 +1,7 @@
 import React from 'react'
 import './AuthForm.css'
 import { FaUser, FaLock } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const LoginForm = (props) => {
     return (
@@ -29,7 +30,11 @@ const LoginForm = (props) => {
                 <button className="auth-button" type="submit">Login</button>
             </form>
             <div className="register-link">
-                <p>Don't have an account? <button onClick={() => props.onFormSwitch('register')}>Register</button></p>
+                <p>Don't have an account?&nbsp;
+                    <Link to="/signup">
+                        <button>Register</button>
+                    </Link>
+                </p>
             </div>
         </div>
     )

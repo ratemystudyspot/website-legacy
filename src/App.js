@@ -14,18 +14,13 @@ import Root from './routes/root';
 import ErrorPage from './Components/Pages/Errorpage';
 import Aboutpage from './Components/Pages/Aboutpage';
 import Spotspage from './Components/Pages/Spotspage';
+import Verify from './Components/AuthForm/Verify';
 import { 
   createBrowserRouter, 
   RouterProvider,
 } from 'react-router-dom';
 
 function App() {
-  // const [currentForm, setCurrentForm] = useState('login');
-
-  // const toggleForm = (formName) => {
-  //   setCurrentForm(formName);
-  // };
-  
   // init router
   const router = createBrowserRouter([
     {
@@ -49,6 +44,10 @@ function App() {
       path: "signup/",
       element: <RegisterForm />,
     },
+    {
+      path: "verify/:userId",
+      element: <Verify />,
+    },
   ]);
 
 
@@ -58,10 +57,9 @@ function App() {
   return (
     <RouterProvider router={router} />
     // <div>
-    //   {
-    //     currentForm === "login" ? <LoginForm onFormSwitch={toggleForm} /> : <RegisterForm onFormSwitch={toggleForm} />
-    //     <Homepage></Homepage>
-    //   }
+    //   <LoginForm />
+    //   <RegisterForm />
+    //   <Homepage></Homepage>
     // </div>
   );
 }

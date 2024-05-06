@@ -30,9 +30,13 @@
     background: transparent;
     border: 1px solid #E8E8E8;
     outline: none;
-    border-radius: 7px;
+    border-radius: 4px;
     font-size: 16px;
     padding: 20px 45px 20px 20px; 
+}
+
+.input-box .error {
+    border: 1px solid #e27e7e;
 }
 
 
@@ -43,6 +47,11 @@
     transform: translateY(-50%);
     font-size: 16px;
     color: #7c7c7c;
+}
+
+.input-box .auth-error-msg {
+    font-size: 12px;
+    color: #e86c6c;
 }
 
 .wrapper .offscreen {

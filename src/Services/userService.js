@@ -1,5 +1,10 @@
 // !!! <-- indicates necessary changes before deployment
 // ## <-- indicates immediate changes needed
+const bcrypt = require('bcryptjs');
+
+const EMAIL_REGEX =
+  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+const PWD_REGEX = /.{8,}/;
 
 // get user from the database
 function getUser() {
@@ -8,38 +13,40 @@ function getUser() {
       .then(response => {
         return response.text();
       })
-      .then(data => {
-        // console.log(data); !test
-      });
+      // .then(data => {
+        // console.log(data); for testing!
+      // });
   } catch (error) {
     console.error('Error fetching user data: ', error);
   }
 }
-// creates new user record
-function createUser() {
-  let name = prompt('Enter user\'s name'); // ##
-  let email = prompt('Enter user\'s email'); // ## (need to have email regex)
 
+// creates new user record
+// param 1: pass in the user's email
+// param 2: pass in the user's password 
+function createUser(email, pwd) {
+  if (!EMAIL_REGEX.test(email)) throw new Error('Email error.');
+  if (!PWD_REGEX.test(pwd)) throw new Error('Password error.');
+  
   try {
     fetch('http://localhost:3001/users', { // !!! 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email }),
+      body: JSON.stringify({ email, pwd }),
     })
       .then(response => {
         return response.text();
       })
       .then(data => {
-        alert(data);
-        getUser();
+        return data;
       });
   } catch (error) {
     console.error('Error creating user data: ', error);
   }
-
 }
+
 // deletes a user record
 function deleteUser() {
   let id = prompt('Enter user\'s id');
@@ -60,6 +67,7 @@ function deleteUser() {
   }
 
 }
+
 // updates a user record
 function updateUser() {
   let id = prompt('Enter user\'s id');
