@@ -94,13 +94,6 @@
   
 }
 
-
-
-
-
-
-
-
 .container::after, .row::after {
   content: "";
   clear: both;

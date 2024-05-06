@@ -2,14 +2,12 @@ import React from 'react'
 import './Aboutpage.css'
 import { SocialIcon } from 'react-social-icons/component'
 import 'react-social-icons/linkedin'
+import LogoComponent from '../LogoComponent'
 
 const Aboutpage = () => {
   return (
     <div>  
-      <a className="a-logo" href="http://localhost:3000/"> {/* !!! CHANGE WHEN IN PRODUCTION */}
-        <img className="logo" src={require("../Assets/TempLogo.jpg")} alt="Temporary Logo" /> {/* CHANGE SRC AND ALT */}
-      </a>
-    
+      <LogoComponent />    
       <div className="about-section">
         <h1 className="title">About us</h1>
         <h6 className="subtitle">We made a website to find study spots at UBC. Enjoy!</h6>

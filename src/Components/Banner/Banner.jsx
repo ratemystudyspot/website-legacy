@@ -4,6 +4,7 @@ import { FaCircleUser } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from 'react-router-dom';
+import LogoComponent from '../LogoComponent';
 
 const Banner = () => {
   // State to track whether a search term has been entered into search bar
@@ -39,11 +40,9 @@ const Banner = () => {
     <header>
       <div className="banner-container">
         <div className="logo-container">
-          <a className="a-logo" href="http://localhost:3000/">
-            <img className="logo" src={require("../Assets/TempLogo.jpg")} alt="Temporary Logo" /> {/* CHANGE SRC AND ALT */}
-          </a>
+          <LogoComponent />
           <Link to="/about">
-            <button style={{ minWidth:"80px"}} className="about">About us</button>
+            <button style={{ minWidth: "80px" }} className="about">About us</button>
           </Link>
         </div>
 
@@ -64,7 +63,7 @@ const Banner = () => {
           {/* Adding study spot btn */}
           <div className="sub-container">
             <Link to="/spots">
-              <button style={{ minWidth:"150px"}}>Recommend Spot</button>
+              <button style={{ minWidth: "150px" }}>Recommend Spot</button>
             </Link>
           </div>
 
@@ -86,7 +85,7 @@ const Banner = () => {
           </div>
         </div>
       </div>
-      <hr/>
+      <hr />
     </header>
   )
 }
