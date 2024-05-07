@@ -2,7 +2,7 @@ import React from 'react'
 import './Aboutpage.css'
 import { SocialIcon } from 'react-social-icons/component'
 import 'react-social-icons/linkedin'
-import LogoComponent from '../LogoComponent'
+import LogoComponent from '../Components/LogoComponent'
 
 const Aboutpage = () => {
   return (
@@ -17,7 +17,7 @@ const Aboutpage = () => {
       <div className="contact">
         <div className="column">
           <div className="card">
-            <img src={require("../Assets/ray.jpg")} alt="Ray"/>
+            <img src={require("../Components/Assets/ray.jpg")} alt="Ray"/>
               <div className="container">
                 <h2>Ray Zhou</h2>
                 <p className="title">Co-Founder</p>
@@ -29,7 +29,7 @@ const Aboutpage = () => {
 
         <div className="column">
           <div className="card">
-            <img src={require("../Assets/leo.jpg")} alt="Leo"/>
+            <img src={require("../Components/Assets/leo.jpg")} alt="Leo"/>
               <div className="container">
                 <h2>Leo Shang</h2>
                 <p className="title">Co-Founder</p>

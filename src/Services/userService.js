@@ -13,20 +13,44 @@ function getUser() {
       .then(response => {
         return response.text();
       })
-      // .then(data => {
-        // console.log(data); for testing!
-      // });
+    // .then(data => {
+    // console.log(data); for testing!
+    // });
   } catch (error) {
     console.error('Error fetching user data: ', error);
+  }
+}
+
+// get user with specified email from database
+function getUsersByEmail(email) {
+  try {
+    return fetch(`http://localhost:3001/${email}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText); // create a new error with the status text
+        }
+        return response.text();
+      })
+      .then(data => {
+        return data;
+      })
+  } catch (error) {
+    console.error('Error fetching user data: ', error)
   }
 }
 
 // creates new user record
 // param 1: pass in the user's email
 // param 2: pass in the user's password 
+// return: void or error
 function createUser(email, pwd) {
-  if (!EMAIL_REGEX.test(email)) throw new Error('Email error.');
-  if (!PWD_REGEX.test(pwd)) throw new Error('Password error.');
+  if (!EMAIL_REGEX.test(email)) throw new Error('Email error');
+  if (!PWD_REGEX.test(pwd)) throw new Error('Password error');
   
   try {
     fetch('http://localhost:3001/users', { // !!! 
@@ -45,6 +69,29 @@ function createUser(email, pwd) {
   } catch (error) {
     console.error('Error creating user data: ', error);
   }
+}
+
+// checks if the given credentials match a user in the database
+// param 1: pass in the user's email
+// param 2: pass in the user's password
+// return: void or error
+async function checkCredentials(email, pwd) {
+  try {
+    const result = await getUsersByEmail(email);
+    const parsedResult = JSON.parse(result);
+
+    if (!bcrypt.compareSync(pwd, parsedResult.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
+  } catch (error) {
+    if (error.message === "Incorrect Password") {
+      throw new Error('Incorrect Password');
+    } else if (error.message === "Unauthorized") {
+      throw new Error('Email not found in system');
+    } else {
+      console.error('Error fetching user data: ', error);
+    }
+  }
+
+ 
 }
 
 // deletes a user record
@@ -95,4 +142,4 @@ function updateUser() {
 
 }
 
-export { getUser, createUser, deleteUser, updateUser };
+export { getUser, createUser, deleteUser, updateUser, checkCredentials };

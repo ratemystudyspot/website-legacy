@@ -30,6 +30,35 @@ const getUsers = async () => {
 		throw new Error("Internal server error");
 	}
 };
+
+// get a user by email in database
+const getUsersByEmail = async (email) => {
+	try {
+    return await new Promise(function (resolve, reject) {
+      pool.query("SELECT * FROM users WHERE email = $1", 
+			[email],
+			(error, results) => {
+        if (error) {
+          reject(error);
+        }
+        if (results && results.rows && results.rows.length > 0) {
+					resolve(results.rows[0]);
+        } else { // throw email not found error if email isn't found
+          reject(new Error("Email not found in system"));
+        }
+      });
+    });
+  } catch (error_1) {
+		if (error_1.message === "Email not found in system") {
+			throw new Error("Email not found in system");
+		} else {
+			throw new Error("Internal server error");
+		}
+    
+  }
+};
+
+
 // create a new user record in the databsse
 const createUser = (body) => {
 	return new Promise(function (resolve, reject) {
@@ -94,7 +123,8 @@ const updateUser = (id, body) => {
 };
 module.exports = {
 	getUsers,
+	getUsersByEmail,
 	createUser,
 	deleteUser,
-	updateUser
+	updateUser,
 };

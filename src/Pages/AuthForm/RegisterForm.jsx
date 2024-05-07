@@ -1,10 +1,10 @@
-import { React, useRef, useState, useEffect } from 'react';
+import { React, useState } from 'react';
 import './AuthForm.css';
 import { FaUser, FaLock } from "react-icons/fa";
 import { getUser, createUser } from '../../Services/userService.js';
 import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import LogoComponent from '../LogoComponent.jsx';
+import LogoComponent from '../../Components/LogoComponent.jsx';
 
 const RegisterForm = () => {
   const [email, setEmail] = useState('');
@@ -25,18 +25,18 @@ const RegisterForm = () => {
       setInvalidPwd(false);
       navigate("/verify/" + uuidv4());
     } catch (e) {
-      if (e.message === 'Email error.') { // if createUser throws an email error
+      if (e.message === 'Email error') { // if createUser throws an email error
         setInvalidEmail(true);
         setInvalidPwd(false);
         setPwd('');
         console.log("invalid email");
-      } else if (e.message === 'Password error.') { // if createUser throws a password error
+      } else if (e.message === 'Password error') { // if createUser throws a password error
         setInvalidPwd(true);
         setInvalidEmail(false);
         setPwd('');
         console.log("invalid pwd");
       } else { // if createUser throws an unexpected error
-        console.error("An error occurred:" + e);
+        console.error("An error occurred:", e);
       }
     }
   }

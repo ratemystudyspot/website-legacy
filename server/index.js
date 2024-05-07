@@ -21,6 +21,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+// gets all users
 app.get('/', (req, res) => {
   user_model.getUsers()
     .then(response => {
@@ -31,6 +32,21 @@ app.get('/', (req, res) => {
     })
 })
 
+// gets user by emailbv 
+app.get('/:email', (req, res) => {
+  user_model.getUsersByEmail(req.params.email)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(error => {
+      if (error.message === "Email not found in system") {
+        res.status(401).send(error);
+      } else {
+        res.status(500).send(error);
+      }
+    })
+})
+
 app.post('/users', (req, res) => {
   user_model.createUser(req.body)
     .then(response => {
@@ -38,7 +54,7 @@ app.post('/users', (req, res) => {
     })
     .catch(error => {
       res.status(500).send(error);
-    })
+    });
 })
 
 app.delete('/users/:id', (req, res) => {
