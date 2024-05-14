@@ -14,87 +14,68 @@ import Aboutpage from './Pages/Aboutpage';
 import Spotspage from './Pages/Spotspage';
 import Verify from './Pages/AuthForm/Verify';
 import { 
-  createBrowserRouter, 
+  createBrowserRouter,
+  Router,
+  Routes,
+  Route,
   RouterProvider,
+  BrowserRouter,
 } from 'react-router-dom';
-
-import { ProtectedRoute } from "./routes/ProtectedRoute";
-import { AuthProvider } from "./hooks/useAuth";
+import Layout from './Pages/Structure/Layout';
 
 function App() {
   // init router
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Homepage />,
-      errorElement: <ErrorPage />,
-    },
-    {
-      path: "about/",
-      element: <Aboutpage />,
-    },
-    {
-      path: "spots/",
-      element: <Spotspage />,
-    },
-    {
-      path: "login/",
-      element: <LoginForm />,
-    },
-    {
-      path: "signup/",
-      element: <RegisterForm />,
-    },
-    {
-      path: "verify/:userId",
-      element: <Verify />,
-    },
-    {
-      path: "/secret",
-      element: <ProtectedRoute />,
-      children: [
-        {
-          path: "",
-          element: <Verify />
-        }
-      ]
-    }
-  ])
+  // const router = createBrowserRouter([
+  //   {
+  //     path: "/",
+  //     element: <Homepage />,
+  //     errorElement: <ErrorPage />,
+  //   },
+  //   {
+  //     path: "about",
+  //     element: <Aboutpage />,
+  //   },
+  //   {
+  //     path: "spots",
+  //     element: <Spotspage />,
+  //   },
+  //   {
+  //     path: "login",
+  //     element: <LoginForm />,
+  //   },
+  //   {
+  //     path: "signup",
+  //     element: <RegisterForm />,
+  //   },
+  //   {
+  //     path: "verify/:userId",
+  //     element: <Verify />,
+  //   },
+  // ])
 
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <Route
-//       element={
-//         <ProtectedRoute >
-//           <Verify />
-//         </ProtectedRoute>}
-//       path="teams/:teamId"
-//       loader={async ({ params }) => {
-//         return fetch(
-//           `/fake/api/teams/${params.teamId}.json`
-//         );
-//       }}
-//       action={async ({ request }) => {
-//         return updateFakeTeam(await request.formData());
-//       }}
-//       errorElement={<ErrorBoundary />}
-//     />
-//   )
-// );
-
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* public routes */}
+        <Route index element={<Homepage />} />
+        <Route path="about" element={<Aboutpage />} />
+        <Route path="spots" element={<Spotspage />} />
+        <Route path="login" element={<LoginForm />} />
+        <Route path="signup" element={<RegisterForm />} />
+        <Route path="verify/:userId" element={<Verify />} />
+
+        {/* protected routes */}
+        {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}> */}
+          <Route path="spots/seek-a-spot" element={<Spotspage />} /> 
+        {/* </Route> */}
+
+        {/* error page */}
+        <Route path="*" element={<ErrorPage />} />
+      </Route>
+    </Routes>
     
-    // <div>
-    //   <LoginForm />
-    //   <RegisterForm />
-    //   <Homepage></Homepage>
-    // </div>
+    
+    // <RouterProvider router={router} />
   );
 }
 

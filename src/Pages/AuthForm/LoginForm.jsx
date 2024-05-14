@@ -34,7 +34,6 @@ const LoginForm = () => {
   }
   return (
     <div>
-      <LogoComponent />
       <div className="wrapper">
         <form className='auth-form' onSubmit={HandleSubmit}>
           <h1>Login</h1>

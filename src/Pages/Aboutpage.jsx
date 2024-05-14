@@ -6,8 +6,7 @@ import LogoComponent from '../Components/LogoComponent'
 
 const Aboutpage = () => {
   return (
-    <div>  
-      <LogoComponent />    
+    <div>     
       <div className="about-section">
         <h1 className="title">About us</h1>
         <h6 className="subtitle">We made a website to find study spots at UBC. Enjoy!</h6>

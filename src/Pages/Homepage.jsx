@@ -8,7 +8,6 @@ const Homepage = () => {
     <div className="container">
       <Banner />
       <ListOfStudySpotCards></ListOfStudySpotCards>
-      
     </div>
   )
 }
