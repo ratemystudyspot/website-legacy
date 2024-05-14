@@ -62,15 +62,15 @@ const getUsersByEmail = async (email) => {
 // create a new user record in the databsse
 const createUser = (body) => {
 	return new Promise(function (resolve, reject) {
-		const { email, pwd } = body;
+		const { email, pwd, roles } = body;
 		
 		// salt and hash passwords for security
 		var salt = bcrypt.genSaltSync(10);
 		var hash_pwd = bcrypt.hashSync(pwd, salt);
 
 		pool.query(
-			"INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
-			[email, hash_pwd],
+			"INSERT INTO users (email, password, roles) VALUES ($1, $2, $3) RETURNING *",
+			[email, hash_pwd, roles],
 			(error, results) => {
 				if (error) {
 					reject(error);

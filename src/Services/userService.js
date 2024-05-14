@@ -46,19 +46,19 @@ function getUsersByEmail(email) {
 
 // creates new user record
 // param 1: pass in the user's email
-// param 2: pass in the user's password 
+// param 2: pass in the user's password
 // return: void or error
 function createUser(email, pwd) {
   if (!EMAIL_REGEX.test(email)) throw new Error('Email error');
   if (!PWD_REGEX.test(pwd)) throw new Error('Password error');
-  
+  const roles = 2004;
   try {
     fetch('http://localhost:3001/users', { // !!! 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, pwd }),
+      body: JSON.stringify({ email, pwd, roles }),
     })
       .then(response => {
         return response.text();
@@ -79,8 +79,9 @@ async function checkCredentials(email, pwd) {
   try {
     const result = await getUsersByEmail(email);
     const parsedResult = JSON.parse(result);
-
+    
     if (!bcrypt.compareSync(pwd, parsedResult.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
+    return parsedResult;
   } catch (error) {
     if (error.message === "Incorrect Password") {
       throw new Error('Incorrect Password');
