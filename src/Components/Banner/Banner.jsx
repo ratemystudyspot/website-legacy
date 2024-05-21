@@ -1,10 +1,11 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import './Banner.css'
 import { FaCircleUser } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from 'react-router-dom';
 import LogoComponent from '../LogoComponent';
+import useAuth from "../../hooks/useAuth";
 
 const Banner = () => {
   // State to track whether a search term has been entered into search bar
@@ -35,6 +36,25 @@ const Banner = () => {
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+
+  // for authorization
+  const { setAuth, auth } = useAuth();
+  const handleAuth = (auth) => {
+    if (auth?.res_roles == 2004) {
+      return(
+        <div class="dropdown-content">
+          <button onClick={() => {setAuth({})}}>Sign out</button>
+        </div>
+      )
+    } else {
+      return(
+        <div class="dropdown-content">
+          <Link to="/signup">Sign up</Link>
+          <Link to="/login">Log in</Link>
+        </div>
+      )
+    }
+  }
 
   return (
     <header>
@@ -76,12 +96,7 @@ const Banner = () => {
             </button>
 
             {/* User Navbar contents */}
-            {isOpen && (
-              <div class="dropdown-content">
-                <Link to="/signup">Sign up</Link>
-                <Link to="/login">Log in</Link>
-              </div>
-            )}
+            {isOpen && handleAuth(auth)}
           </div>
         </div>
       </div>

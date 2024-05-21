@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 function LogoComponent() {
   return (
-    <a className="a-logo" href="http://localhost:3000/">
+    <Link className="a-logo" to="/">
       <img className="logo" src={require("./Assets/TempLogo.jpg")} alt="Temporary Logo" /> {/* CHANGE SRC AND ALT */}
-    </a>
+    </Link>
   )
 }
 

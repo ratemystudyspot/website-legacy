@@ -81,6 +81,10 @@
     margin-right: 10px;
     background-color: #ADD8E6;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    transition: 0.3s;
+  }
+  button:hover {
+    background-color: #89b8c7;
   }
 
   .icon {

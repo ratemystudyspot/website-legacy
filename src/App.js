@@ -15,12 +15,8 @@ import Spotspage from './Pages/Spotspage';
 import Seekpage from './Pages/Seekpage'
 import Verify from './Pages/AuthForm/Verify';
 import { 
-  createBrowserRouter,
-  Router,
   Routes,
   Route,
-  RouterProvider,
-  BrowserRouter,
 } from 'react-router-dom';
 import Layout from './Pages/Structure/Layout';
 import RequireAuth from './Pages/AuthForm/RequireAuth';
@@ -31,7 +27,7 @@ function App() {
   const ROLES = {
     'User': 2004,
   }
-  
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -53,9 +49,6 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>
-    
-    
-    // <RouterProvider router={router} />
   );
 }
 
