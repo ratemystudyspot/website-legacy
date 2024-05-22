@@ -13,26 +13,37 @@ const RegisterForm = () => {
   const [pwd, setPwd] = useState('');
   const [invalidPwd, setInvalidPwd] = useState(false);
 
+  const [duplicate, setDuplicate] = useState(false);
+
   const navigate = useNavigate();
 
-  const HandleSubmit = (e) => {
+  const HandleSubmit = async (e) => {
     e.preventDefault(); // if password doesn't meet the requirements, dont refresh page (prevents states resetting)
 
     try {
-      createUser(email, pwd);
+      await createUser(email, pwd);
       // if no error thrown get rid of errors and goto email verification page
       setInvalidEmail(false);
       setInvalidPwd(false);
+      setDuplicate(false);
       navigate("/verify/" + uuidv4());
     } catch (e) {
       if (e.message === 'Email error') { // if createUser throws an email error
         setInvalidEmail(true);
         setInvalidPwd(false);
+        setDuplicate(false);
         setPwd('');
         console.log("invalid email");
+      } else if (e.message === 'Duplicate email error') { // if createUser throws a duplicate email error
+        setInvalidEmail(false);
+        setInvalidPwd(false);
+        setDuplicate(true);
+        setPwd('');
+        console.log("duplicate email")
       } else if (e.message === 'Password error') { // if createUser throws a password error
         setInvalidPwd(true);
         setInvalidEmail(false);
+        setDuplicate(false);
         setPwd('');
         console.log("invalid pwd");
       } else { // if createUser throws an unexpected error
@@ -48,7 +59,7 @@ const RegisterForm = () => {
           <h1>Register</h1>
           <div className="input-box">
             <input
-              className={invalidEmail ? "auth-input error" : "auth-input"}
+              className={(invalidEmail || duplicate) ? "auth-input error" : "auth-input"}
               type="email"
               placeholder="Email"
               autoComplete='off'
@@ -57,6 +68,7 @@ const RegisterForm = () => {
             />
             <FaUser className="icon" />
             {invalidEmail && (<p className="auth-error-msg">Hmm, that email address doesn't look right.</p>)}
+            {duplicate && (<p className="auth-error-msg">Email address already in use, please log in.</p>)}
           </div>
 
           <div className="input-box">

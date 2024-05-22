@@ -25,8 +25,8 @@ const getUsers = async () => {
 				}
 			});
 		});
-	} catch (error_1) {
-		console.error(error_1);
+	} catch (error) {
+		console.error(error);
 		throw new Error("Internal server error");
 	}
 };
@@ -48,26 +48,39 @@ const getUsersByEmail = async (email) => {
         }
       });
     });
-  } catch (error_1) {
-		if (error_1.message === "Email not found in system") {
+  } catch (error) {
+		if (error.message === "Email not found in system") {
 			throw new Error("Email not found in system");
 		} else {
 			throw new Error("Internal server error");
 		}
-    
   }
 };
 
 
 // create a new user record in the databsse
-const createUser = (body) => {
-	return new Promise(function (resolve, reject) {
-		const { email, pwd, roles } = body;
+const createUser = async (body) => {
+	const { email, pwd, roles } = body;
 		
-		// salt and hash passwords for security
-		var salt = bcrypt.genSaltSync(10);
-		var hash_pwd = bcrypt.hashSync(pwd, salt);
+	// check uniqueness of email by throwing error if found in database
+	try {
+    await getUsersByEmail(email);
+    // If getUsersByEmail does not throw an error, it means email exists in the system and hence not unique
+    throw new Error("Email found in system");
+  } catch (error) {
+    if (error.message === "Email not found in system") {
+      // Email is not found, proceed with user creation
+    } else {
+      // Other errors, including "Email found in system", rethrow them to be handled by the caller
+      throw error;
+    }
+  }
 
+	// salt and hash passwords for security
+	var salt = bcrypt.genSaltSync(10);
+	var hash_pwd = bcrypt.hashSync(pwd, salt);
+	
+	return new Promise(function (resolve, reject) {
 		pool.query(
 			"INSERT INTO users (email, password, roles) VALUES ($1, $2, $3) RETURNING *",
 			[email, hash_pwd, roles],
@@ -86,6 +99,7 @@ const createUser = (body) => {
 		);
 	});
 };
+
 // delete a user record
 const deleteUser = (id) => {
 	return new Promise(function (resolve, reject) {

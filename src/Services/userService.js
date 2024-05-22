@@ -48,12 +48,12 @@ function getUsersByEmail(email) {
 // param 1: pass in the user's email
 // param 2: pass in the user's password
 // return: void or error
-function createUser(email, pwd) {
+async function createUser(email, pwd) {
   if (!EMAIL_REGEX.test(email)) throw new Error('Email error');
   if (!PWD_REGEX.test(pwd)) throw new Error('Password error');
   const roles = 2004;
   try {
-    fetch('http://localhost:3001/users', { // !!! 
+    await fetch('http://localhost:3001/users', { // !!! 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,12 +61,19 @@ function createUser(email, pwd) {
       body: JSON.stringify({ email, pwd, roles }),
     })
       .then(response => {
+        if (response.status === 401) {
+          throw new Error('Duplicate email error')
+        }
         return response.text();
       })
       .then(data => {
-        return data;
+        return data
       });
   } catch (error) {
+    console.log(error)
+    if (error.message === "Duplicate email error") {
+      throw error;
+    }
     console.error('Error creating user data: ', error);
   }
 }

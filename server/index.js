@@ -53,7 +53,13 @@ app.post('/users', (req, res) => {
       res.status(200).send(response);
     })
     .catch(error => {
-      res.status(500).send(error);
+      if (error.message === "Email found in system") {
+        res.status(401).send(error);
+      } else if (error.message === "Email not found in system") {
+        res.status(401).send(error);
+      } else {
+        res.status(500).send(error);
+      }
     });
 })
 
