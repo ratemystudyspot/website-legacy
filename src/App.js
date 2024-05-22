@@ -37,7 +37,7 @@ function App() {
         <Route path="spots" element={<Spotspage />} />
         <Route path="login" element={<LoginForm />} />
         <Route path="signup" element={<RegisterForm />} />
-        <Route path="verify/:userId" element={<Verify />} />
+        {/* <Route path="verify/:userId" element={<Verify />} /> !!!future todo*/}
         <Route path="unauthorized" element={<Unauthorized />} />
 
         {/* protected routes */}

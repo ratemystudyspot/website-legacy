@@ -23,7 +23,7 @@ const LoginForm = () => {
     e.preventDefault();
     
     try {
-      const response = await checkCredentials(email, pwd);
+      const response = await checkCredentials(email.toLowerCase(), pwd);
       const res_id = response.id;
       const res_email = response.email;
       const res_pwd = response.password;
