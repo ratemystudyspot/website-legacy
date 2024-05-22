@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import './AuthForm.css';
 import { FaUser, FaLock } from "react-icons/fa";
-import { createUser } from '../../Services/userService.js';
+import { createUser } from '../../Services/user.js';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from "../../hooks/useAuth";
 

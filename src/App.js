@@ -4,7 +4,7 @@ import LoginForm from './Pages/AuthForm/LoginForm';
 import RegisterForm from './Pages/AuthForm/RegisterForm';
 import StudySpotCard from './Components/StudyCard/StudySpotCard';
 import ButtonComponent from './Components/ButtonComponent';
-import  { getUser } from './Services/userService';
+import  { getUser } from './Services/user';
 import StudySpots from './SampleData/StudySpots';
 import ListOfStudySpotCards from './Components/StudyCard/ListOfStudySpotCards';
 import Homepage from './Pages/Homepage';
