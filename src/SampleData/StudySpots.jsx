@@ -30,6 +30,38 @@ const StudySpots = [
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],
+    },
+    {
+        id: "5",
+        name: "TBD",
+        imageLink: "ForestCenter.jpg",   
+        lat: 49.260029,
+        long:-123.248642,
+        ratingIds: [],
+    },
+    {
+        id: "6",
+        name: "TBD",
+        imageLink: "ForestCenter.jpg",   
+        lat: 49.260029,
+        long:-123.248642,
+        ratingIds: [],
+    },
+    {
+        id: "7",
+        name: "TBD",
+        imageLink: "ForestCenter.jpg",   
+        lat: 49.260029,
+        long:-123.248642,
+        ratingIds: [],
+    },
+    {
+        id: "8",
+        name: "TBD",
+        imageLink: "ForestCenter.jpg",   
+        lat: 49.260029,
+        long:-123.248642,
+        ratingIds: [],
     }
 ]
 

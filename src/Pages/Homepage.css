@@ -4,3 +4,7 @@
   overflow: clip;
 }
 
+.study-spot-list {
+  align-self: flex-start;
+  width: 100%; 
+}

@@ -8,7 +8,6 @@
   left: 2%; 
   right: 5%;
   top: 1%;
-  
 }
 
 .logo-container {
@@ -40,8 +39,6 @@
     border-radius: 4px;
   }
 }
-
-
 
 
 
@@ -178,9 +175,8 @@
   background-color: #ddd;
 }
 
-hr {
+/* hr {
   position: absolute;
-  top: 10%;
+  top: 90px;
   right: 0px;
-  width: 120%;
-}
+} */

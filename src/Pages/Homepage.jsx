@@ -7,7 +7,12 @@ const Homepage = () => {
   return (
     <div className="container">
       <Banner />
-      <ListOfStudySpotCards></ListOfStudySpotCards>
+      
+      <div className="study-spot-list">
+        <ListOfStudySpotCards/>
+      </div>
+     
+      
     </div>
   )
 }
