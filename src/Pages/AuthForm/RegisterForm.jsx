@@ -1,10 +1,9 @@
 import { React, useState } from 'react';
 import './AuthForm.css';
 import { FaUser, FaLock } from "react-icons/fa";
-import { getUser, createUser } from '../../Services/userService.js';
+import { createUser } from '../../Services/user.js';
 import { Link, useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
-import LogoComponent from '../../Components/LogoComponent.jsx';
+import useAuth from "../../hooks/useAuth";
 
 const RegisterForm = () => {
   const [email, setEmail] = useState('');
@@ -15,18 +14,22 @@ const RegisterForm = () => {
 
   const [duplicate, setDuplicate] = useState(false);
 
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
+
+  const { auth } = useAuth();
 
   const HandleSubmit = async (e) => {
     e.preventDefault(); // if password doesn't meet the requirements, dont refresh page (prevents states resetting)
-
     try {
-      await createUser(email, pwd);
+      await createUser(email.toLowerCase(), pwd);
       // if no error thrown get rid of errors and goto email verification page
       setInvalidEmail(false);
       setInvalidPwd(false);
       setDuplicate(false);
-      navigate("/verify/" + uuidv4());
+      
+      navigate("/login");
+      // navigate to a verify page (for future !!!)
+      // navigate("/verify/" + email);
     } catch (e) {
       if (e.message === 'Email error') { // if createUser throws an email error
         setInvalidEmail(true);

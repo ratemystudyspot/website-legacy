@@ -1,10 +1,13 @@
 const express = require('express')
+const cors = require("cors");
 const app = express()
 const port = 3001
 
-const user_model = require('./userModel')
+const user_model = require('./models/user')
 
 app.use(express.json())
+app.use(express.json({ limit: "25mb" }));
+app.use(express.urlencoded({ limit: "25mb" }));
 // app.use(function (req, res, next) {
 //   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
 //   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
@@ -49,9 +52,7 @@ app.get('/:email', (req, res) => {
 
 app.post('/users', (req, res) => {
   user_model.createUser(req.body)
-    .then(response => {
-      res.status(200).send(response);
-    })
+    .then(response => res.status(200).send(response))
     .catch(error => {
       if (error.message === "Email found in system") {
         res.status(401).send(error);
@@ -62,6 +63,13 @@ app.post('/users', (req, res) => {
       }
     });
 })
+
+app.post("/send_recovery_email", (req, res) => {
+  sendEmail(req.body)
+    .then(response => res.status(200).send(response))
+    .catch(error => res.status(500).send(error));
+});
+
 
 app.delete('/users/:id', (req, res) => {
   user_model.deleteUser(req.params.id)

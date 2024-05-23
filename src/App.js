@@ -4,7 +4,7 @@ import LoginForm from './Pages/AuthForm/LoginForm';
 import RegisterForm from './Pages/AuthForm/RegisterForm';
 import StudySpotCard from './Components/StudyCard/StudySpotCard';
 import ButtonComponent from './Components/ButtonComponent';
-import  { getUser } from './Services/userService';
+import  { getUser } from './Services/user';
 import StudySpots from './SampleData/StudySpots';
 import ListOfStudySpotCards from './Components/StudyCard/ListOfStudySpotCards';
 import Homepage from './Pages/Homepage';
@@ -37,7 +37,7 @@ function App() {
         <Route path="spots" element={<Spotspage />} />
         <Route path="login" element={<LoginForm />} />
         <Route path="signup" element={<RegisterForm />} />
-        <Route path="verify/:userId" element={<Verify />} />
+        {/* <Route path="verify/:userId" element={<Verify />} /> !!!future todo*/}
         <Route path="unauthorized" element={<Unauthorized />} />
 
         {/* protected routes */}

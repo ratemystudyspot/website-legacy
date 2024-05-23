@@ -3,7 +3,7 @@ import './AuthForm.css'
 import { FaUser, FaLock } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import LogoComponent from '../../Components/LogoComponent.jsx';
-import { getUser, createUser, checkCredentials } from '../../Services/userService.js';
+import { getUser, createUser, checkCredentials } from '../../Services/user.js';
 import useAuth from '../../hooks/useAuth.js';
 
 const LoginForm = () => {
@@ -23,7 +23,7 @@ const LoginForm = () => {
     e.preventDefault();
     
     try {
-      const response = await checkCredentials(email, pwd);
+      const response = await checkCredentials(email.toLowerCase(), pwd);
       const res_id = response.id;
       const res_email = response.email;
       const res_pwd = response.password;

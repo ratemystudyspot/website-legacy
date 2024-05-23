@@ -45,7 +45,7 @@ function getUsersByEmail(email) {
 }
 
 // creates new user record
-// param 1: pass in the user's email
+// param 1: pass in the user's email (must be all lowercase)
 // param 2: pass in the user's password
 // return: void or error
 async function createUser(email, pwd) {
@@ -79,7 +79,7 @@ async function createUser(email, pwd) {
 }
 
 // checks if the given credentials match a user in the database
-// param 1: pass in the user's email
+// param 1: pass in the user's email (must be all lowercase)
 // param 2: pass in the user's password
 // return: void or error
 async function checkCredentials(email, pwd) {
