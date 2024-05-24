@@ -40,7 +40,7 @@ const Banner = () => {
   // for authorization
   const { setAuth, auth } = useAuth();
   const handleAuth = (auth) => {
-    if (auth?.res_roles == 2004) {
+    if (auth?.roles == 2004) {
       return(
         <div class="dropdown-content">
           <button onClick={() => {setAuth({})}}>Sign out</button>

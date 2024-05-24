@@ -32,7 +32,6 @@ const RecoveryPage = () => {
   }
 
   const handleSubmit = async (e) => {    
-    e.preventDefault();
     sendEmail(email, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     return <Loading type="page" hook={setRecoveryState} page="alert" items={{email:recoveryState?.email}}/>
   }

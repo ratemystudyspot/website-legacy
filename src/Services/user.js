@@ -111,11 +111,9 @@ function sendEmail(email, link) {
       body: JSON.stringify({ email, link }),
     })
       .then(response => {
-        console.log(response);
         return response.text();
       })
       .then(data => {
-        console.log(data);
         return data;
       });
   } catch (error) {
