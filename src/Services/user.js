@@ -97,10 +97,32 @@ async function checkCredentials(email, pwd) {
     } else {
       console.error('Error fetching user data: ', error);
     }
-  }
-
- 
+  } 
 }
+
+// sends email to specified email (potentially remove and put to new file later)
+function sendEmail(email, link) {
+  try {
+    fetch('http://localhost:3001/send-email', { // !!! 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, link }),
+    })
+      .then(response => {
+        console.log(response);
+        return response.text();
+      })
+      .then(data => {
+        console.log(data);
+        return data;
+      });
+  } catch (error) {
+    console.error('Error creating user data: ', error);
+  }
+}
+
 
 // deletes a user record
 function deleteUser() {
@@ -150,4 +172,11 @@ function updateUser() {
 
 }
 
-export { getUser, createUser, deleteUser, updateUser, checkCredentials };
+export { 
+  getUser, 
+  createUser, 
+  checkCredentials,
+  sendEmail,
+  deleteUser, 
+  updateUser, 
+};

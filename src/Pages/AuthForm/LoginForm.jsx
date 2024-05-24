@@ -5,15 +5,17 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import LogoComponent from '../../Components/LogoComponent.jsx';
 import { getUser, createUser, checkCredentials } from '../../Services/user.js';
 import useAuth from '../../hooks/useAuth.js';
+import useRecovery from '../../hooks/useRecovery.js';
 
 const LoginForm = () => {
   const { setAuth } = useAuth();
+  const { recoveryState, setRecoveryState } = useRecovery();
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";  
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(recoveryState?.email);
   const [pwd, setPwd] = useState('');
   
   const [invalidEmail, setInvalidEmail] = useState(false);
@@ -32,7 +34,7 @@ const LoginForm = () => {
       setInvalidEmail(false);
       setInvalidPwd(false);
       
-      setAuth({ res_id, res_email, res_pwd, res_roles });
+      setAuth({ id:res_id, email:res_email, pwd:res_pwd, roles:res_roles });
       navigate(from, { replace: true });
     } catch (e) {
       if (e.message === "Email not found in system") { // if given credentials don't match any in the database
@@ -40,12 +42,14 @@ const LoginForm = () => {
       } else if (e.message === "Incorrect Password") { // if given credentials don't match the one in the system
         setInvalidEmail(false);
         setInvalidPwd(true);
+        setPwd('');
       }
       else { // unexpected error
         console.error("An error occurred:", e);
       }
     }
   }
+
   return (
     <div>
       <div className="wrapper">
@@ -58,29 +62,27 @@ const LoginForm = () => {
           ) : (null))}
           <div className="input-box">
             <input 
-              className="auth-input" 
-              type="email" 
+              className={invalidEmail ? "auth-input error" : "auth-input"}
+              type="email"
               placeholder="Email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required 
             />
             <FaUser className="icon" />
           </div>
           <div className="input-box">
             <input 
-              className="auth-input" 
+              className={invalidPwd ? "auth-input error" : "auth-input"}
               type="password" 
               placeholder="Password" 
               value={pwd}
               onChange={(e) => setPwd(e.target.value)}
-              required 
             />
             <FaLock className="icon" />
           </div>
 
           <div className='forgot-password'>
-            <a href="#">Forgot Password?</a>
+            <button type="button" onClick={() => {setRecoveryState({page:"recover", email:email})}}>Forgot Password?</button>
           </div>
 
           <button className="auth-button" type="submit">Login</button>

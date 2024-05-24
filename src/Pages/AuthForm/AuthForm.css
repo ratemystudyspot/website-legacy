@@ -82,32 +82,40 @@
     margin-bottom: 7px;
 }
 
-.forgot-password a {
+.forgot-password button {
     text-decoration: none;
+    background: none;
+    border: none;
     color: #333;
     font-size: small;
 }
 
-.forgot-password a:hover {
+.forgot-password button:hover {
     text-decoration: underline;
 }
 
-.auth-form .auth-button {
-    width: 100%;
-    height: 45px;
-    background: #fff;
-    border: 1px solid #E8E8E8;
-    outline: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 16px;
-    color: #333;
-    font-weight: 700;
-    transition: background-color 0.3s;
-}
-
-.auth-form .auth-button:hover {
-    background: #F5F5F5;
+.auth-form {
+    .auth-button {
+        width: 100%;
+        height: 45px;
+        background: #fff;
+        border: 1px solid #E8E8E8;
+        outline: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 16px;
+        color: #333;
+        font-weight: 700;
+        transition: background-color 0.3s;
+    }
+    .auth-button:hover {
+        background: #F5F5F5;
+    }
+    .auth-button.error {
+        background: #DCDCDC;
+        color: #7c7c7c;
+        pointer-events: none;
+    }
 }
 
 .wrapper .register-link {
@@ -128,4 +136,19 @@
 
 .register-link p button:hover {
     text-decoration: underline;
+}
+
+/* RETURN BUTTON (for password recovery pages) */
+.return {
+    display: flex;
+    justify-content: center;
+    button {
+        margin: 15px 0 -10px 0;
+        background: transparent;
+        border: none;
+        color: #448EE4;
+    }
+    button:hover {
+        text-decoration: underline;
+    }
 }

@@ -21,6 +21,8 @@ import {
 import Layout from './Pages/Structure/Layout';
 import RequireAuth from './Pages/AuthForm/RequireAuth';
 import Unauthorized from './Pages/Structure/Unauthorized';
+import Reset from './Pages/AuthForm/PasswordRecovery/ResetPage';
+import AuthForm from './Pages/AuthForm/AuthForm';
 
 function App() {
   // init roles
@@ -35,8 +37,8 @@ function App() {
         <Route index element={<Homepage />} />
         <Route path="about" element={<Aboutpage />} />
         <Route path="spots" element={<Spotspage />} />
-        <Route path="login" element={<LoginForm />} />
-        <Route path="signup" element={<RegisterForm />} />
+        <Route path="login" element={<AuthForm />} />
+        <Route path="signup" element={<RegisterForm />} /> { /* MAYBE DELETE */ }
         {/* <Route path="verify/:userId" element={<Verify />} /> !!!future todo*/}
         <Route path="unauthorized" element={<Unauthorized />} />
 
@@ -44,6 +46,11 @@ function App() {
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
           <Route path="spots/seek-a-spot" element={<Seekpage />} /> 
         </Route>
+        
+        {/* !!! protect these routes so that you cannot just access these pages */}
+        {/* <Route path="forgot-password/OTP" element={<OTPForm />} /> 
+        <Route path="forgot-password/reset-password" element={<Reset />} /> 
+        <Route path="forgot-password/recovered" element={<Recovered />} />  */}
 
         {/* error page */}
         <Route path="*" element={<ErrorPage />} />

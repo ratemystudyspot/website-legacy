@@ -4,6 +4,9 @@ const app = express()
 const port = 3001
 
 const user_model = require('./models/user')
+const password_recovery = require('./modules/authentication/password_recovery')
+
+require("dotenv").config();
 
 app.use(express.json())
 app.use(express.json({ limit: "25mb" }));
@@ -64,12 +67,11 @@ app.post('/users', (req, res) => {
     });
 })
 
-app.post("/send_recovery_email", (req, res) => {
-  sendEmail(req.body)
+app.post("/send-email", (req, res) => {
+  password_recovery.sendEmail(req.body)
     .then(response => res.status(200).send(response))
     .catch(error => res.status(500).send(error));
 });
-
 
 app.delete('/users/:id', (req, res) => {
   user_model.deleteUser(req.params.id)
