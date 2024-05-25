@@ -1,13 +1,11 @@
 import { React, useState, useEffect } from 'react';
 import '../AuthForm.css'
-import { FaUser, FaLock } from "react-icons/fa";
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { FaUser } from "react-icons/fa";
 import useRecovery from '../../../hooks/useRecovery';
-import { sendEmail } from '../../../Services/user';
 import Loading from '../../Structure/LoadingPage';
 
 const validateEmail = (email) => {
-  const email_regex=/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  const email_regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{1,})$/i
   return email_regex.test(email.toLowerCase());
 };
 
@@ -16,51 +14,50 @@ const RecoveryPage = () => {
 
   const [email, setEmail] = useState(recoveryState?.email);
   const [invalidEmail, setInvalidEmail] = useState(!validateEmail(email));
-
-  const handleButton = () => {
-    if (invalidEmail) {
-      return <button className="auth-button error" type="submit" disabled>Reset Password</button>
-    } else {
-      return <button className="auth-button" type="submit" >Reset Password</button>
-    }
-  }
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setEmail(e.target.value)
-    setInvalidEmail(!validateEmail(email))
-    handleButton();
+    const newEmail = e.target.value;
+    setEmail(newEmail)
+    setInvalidEmail(!validateEmail(newEmail))
   }
 
-  const handleSubmit = async (e) => {    
-    sendEmail(email, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-    return <Loading type="page" hook={setRecoveryState} page="alert" items={{email:recoveryState?.email}}/>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // sendEmail(email, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // UNCOMMENT LATER!!!
+    setLoading(true);
   }
 
   return (
     <div>
-      <div className="wrapper">
-        <form className={invalidEmail ? 'auth-form error' : "auth-form"} onSubmit={handleSubmit}>
-          <h1>Enter your email to reset password</h1>
-          <div className="input-box">
-            <input 
-              className="auth-input"
-              type="email" 
-              placeholder="Email" 
-              value={email}
-              onChange={handleChange}
-              required
-            />
-            <FaUser className="icon" />
-          </div>
+      {loading ? (
+        <Loading type="page" hook={setRecoveryState} to="alert" items={{ ...recoveryState, email: email }} /> // change recoveryState here instead of at handleSubmit b/c of ???
+      ) : (
+        <div className="wrapper">
+          <form className={invalidEmail ? 'auth-form error' : "auth-form"} onSubmit={handleSubmit}>
+            <h1>Enter your email to reset password</h1>
+            <div className="input-box">
+              <input
+                className="auth-input"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={handleChange}
+                required
+              />
+              <FaUser className="icon" />
+            </div>
 
-          {handleButton()}
-          <div className="return">
-            <button onClick={() => {setRecoveryState({page:"login",email})}}>Cancel</button>
-          </div>
-          
-          
-        </form>
-      </div>
+            <button className={`auth-button ${invalidEmail ? 'error' : ''}`} type="submit" disabled={invalidEmail}>
+              Reset Password
+            </button>
+
+            <div className="return">
+              <button onClick={(e) => { e.preventDefault(); setRecoveryState(prevState => ({ ...prevState, email: email, page: "login" })) }}>Cancel</button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   )
 }

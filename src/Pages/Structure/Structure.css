@@ -1,0 +1,15 @@
+.loaderIcon {
+  animation: spin 1s infinite linear;
+  height: 3em;
+  width: 3em;
+  color: #DCDCDC;
+}
+
+@keyframes spin {
+  from {
+      transform: scale(1) rotate(0deg);
+  }
+  to {
+      transform: scale(1) rotate(360deg);
+  }
+}

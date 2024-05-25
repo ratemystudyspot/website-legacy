@@ -21,7 +21,7 @@ const LoginForm = () => {
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [invalidPwd, setInvalidPwd] = useState(false);
 
-  const HandleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     try {
@@ -53,7 +53,7 @@ const LoginForm = () => {
   return (
     <div>
       <div className="wrapper">
-        <form className='auth-form' onSubmit={HandleSubmit}>
+        <form className='auth-form' onSubmit={handleSubmit}>
           <h1>Login</h1>
           {invalidEmail ? ( 
             <p className="auth-error-msg login">No associated account with that email, sign up <Link className={"link login"} to="/signup">here</Link>.</p>

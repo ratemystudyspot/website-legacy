@@ -1,10 +1,6 @@
-import { React, useState, useEffect } from 'react';
+import React from 'react';
 import '../AuthForm.css'
-import { FaUser, FaLock } from "react-icons/fa";
-import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useRecovery from '../../../hooks/useRecovery';
-import { sendEmail } from '../../../Services/user';
-import Loading from '../../Structure/LoadingPage';
 
 const AlertPage = () => {
   const { recoveryState, setRecoveryState } = useRecovery();
@@ -12,7 +8,7 @@ const AlertPage = () => {
   return (
     <div>
       <div className="wrapper">
-
+        <p>{`If an account exists for ${recoveryState?.email}, you will get an email with instructions on resetting your password. If it doesn't arrive, be sure to check your spam folder.`}</p>
         <div className="return">
           <button onClick={() => { setRecoveryState({ page: "login", email: recoveryState?.email }) }}>Back to Log in</button>
         </div>
