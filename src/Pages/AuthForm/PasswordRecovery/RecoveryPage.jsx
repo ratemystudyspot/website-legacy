@@ -3,6 +3,7 @@ import '../AuthForm.css'
 import { FaUser } from "react-icons/fa";
 import useRecovery from '../../../hooks/useRecovery';
 import Loading from '../../Structure/LoadingPage';
+import { sendEmail } from '../../../Services/user';
 
 const validateEmail = (email) => {
   const email_regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{1,})$/i
@@ -24,7 +25,7 @@ const RecoveryPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // sendEmail(email, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // UNCOMMENT LATER!!!
+    sendEmail(email, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // UNCOMMENT LATER!!!
     setLoading(true);
   }
 

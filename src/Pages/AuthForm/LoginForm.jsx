@@ -56,9 +56,9 @@ const LoginForm = () => {
         <form className='auth-form' onSubmit={handleSubmit}>
           <h1>Login</h1>
           {invalidEmail ? ( 
-            <p className="auth-error-msg login">No associated account with that email, sign up <Link className={"link login"} to="/signup">here</Link>.</p>
+            <p className="auth-error-msg top">No associated account with that email, sign up <Link className={"link login"} to="/signup">here</Link>.</p>
           ) : (invalidPwd ? (
-            <p className="auth-error-msg login">That email and password combination is incorrect.</p>
+            <p className="auth-error-msg top">That email and password combination is incorrect.</p>
           ) : (null))}
           <div className="input-box">
             <input 

@@ -64,9 +64,12 @@
     }
 }
 
-.login {
+.auth-error-msg.top {
     margin-bottom: -15px;
+}
 
+.auth-error-msg.bottom {
+    /* make there more space below the text*/
 }
 
 .wrapper .offscreen {

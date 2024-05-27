@@ -60,6 +60,7 @@ const RegisterForm = () => {
       <div className="wrapper">
         <form className='auth-form' onSubmit={HandleSubmit}>
           <h1>Register</h1>
+          {duplicate && (<p className="auth-error-msg top">Email address already in use, please log in.</p>)}
           <div className="input-box">
             <input
               className={(invalidEmail || duplicate) ? "auth-input error" : "auth-input"}
@@ -70,8 +71,8 @@ const RegisterForm = () => {
               required
             />
             <FaUser className="icon" />
-            {invalidEmail && (<p className="auth-error-msg">Hmm, that email address doesn't look right.</p>)}
-            {duplicate && (<p className="auth-error-msg">Email address already in use, please log in.</p>)}
+            {invalidEmail && (<p className="auth-error-msg bottom">Hmm, that email address doesn't look right.</p>)}
+            
           </div>
 
           <div className="input-box">

@@ -82,7 +82,7 @@ const createUser = async (body) => {
 	
 	return new Promise(function (resolve, reject) {
 		pool.query(
-			"INSERT INTO users (email, password, roles) VALUES ($1, $2, $3) RETURNING *",
+			"INSERT INTO users (email, password, role) VALUES ($1, $2, $3) RETURNING *",
 			[email, hash_pwd, roles],
 			(error, results) => {
 				if (error) {

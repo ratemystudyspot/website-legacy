@@ -38,6 +38,8 @@ app.get('/', (req, res) => {
     })
 })
 
+
+
 // gets user by email
 app.get('/:email', (req, res) => {
   user_model.getUsersByEmail(req.params.email)
