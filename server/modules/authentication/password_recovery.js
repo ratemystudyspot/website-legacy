@@ -88,7 +88,7 @@ const putToken = async (body) => {
     const user_info = await getUsersByEmail(body.email); // get user to match token
 
     // store token in database
-    await updateUser(user_info.id, { ...user_info, password_recovery_url: `http://localhost:3000/password/${token}` }); /// !!! change on production deployment
+    await updateUser({ ...user_info, password_recovery_url: `http://localhost:3000/password/${token}` }); /// !!! change on production deployment
   } catch (error) {
     console.error("Error:", error);
     throw error;

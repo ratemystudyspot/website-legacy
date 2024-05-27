@@ -155,7 +155,6 @@ const updateUser = (body) => {
 				}
 				if (results && results.rows) {
 					resolve(`User updated: ${JSON.stringify(results.rows[0])}`);
-					console.log("good");
 				} else {
 					reject(new Error("No results found"));
 				}
