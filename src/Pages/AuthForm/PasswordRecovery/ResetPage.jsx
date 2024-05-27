@@ -3,7 +3,7 @@ import React from "react";
 const ResetPage = () => {
 
   function changePassword() {
-    // set page to recovered
+    
   }
 
   return (

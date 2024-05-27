@@ -48,9 +48,10 @@ function App() {
         </Route>
         
         {/* !!! protect these routes so that you cannot just access these pages */}
-        {/* <Route path="forgot-password/OTP" element={<OTPForm />} /> 
-        <Route path="forgot-password/reset-password" element={<Reset />} /> 
+        <Route path="password/:token" element={<Reset />} />
+        {/* <Route path="forgot-password/OTP" element={<OTPForm />} />  
         <Route path="forgot-password/recovered" element={<Recovered />} />  */}
+        
 
         {/* error page */}
         <Route path="*" element={<ErrorPage />} />

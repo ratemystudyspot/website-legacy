@@ -60,7 +60,7 @@ const getUsersByEmail = async (email) => {
 
 // create a new user record in the databsse
 const createUser = async (body) => {
-	const { email, pwd, roles } = body;
+	const { email, pwd, role } = body;
 		
 	// check uniqueness of email by throwing error if found in database
 	try {
@@ -83,7 +83,7 @@ const createUser = async (body) => {
 	return new Promise(function (resolve, reject) {
 		pool.query(
 			"INSERT INTO users (email, password, role) VALUES ($1, $2, $3) RETURNING *",
-			[email, hash_pwd, roles],
+			[email, hash_pwd, role],
 			(error, results) => {
 				if (error) {
 					reject(error);
@@ -115,13 +115,14 @@ const deleteUser = (id) => {
 		);
 	});
 };
+
 // update a user record
 const updateUser = (id, body) => {
 	return new Promise(function (resolve, reject) {
-		const { email, pwd } = body;
+		const { email, password, role, password_recovery_url } = body;
 		pool.query(
-			"UPDATE users SET email = $1, pwd = $2 WHERE id = $3 RETURNING *",
-			[email, pwd, id],
+			"UPDATE users SET email = $1, password = $2, role = $3, password_recovery_url = $4 WHERE id = $5 RETURNING *",
+			[email, password, role, password_recovery_url, id],
 			(error, results) => {
 				if (error) {
 					reject(error);
