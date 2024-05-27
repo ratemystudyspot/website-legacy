@@ -138,6 +138,7 @@ const deleteUser = (id) => {
 	});
 };
 
+
 // update a user record
 const updateUser = (body) => {
 	const { id, email, password, role, password_recovery_url } = body;
