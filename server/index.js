@@ -1,5 +1,4 @@
 const express = require('express')
-const cors = require("cors");
 const app = express()
 const port = 3001
 
@@ -38,8 +37,6 @@ app.get('/', (req, res) => {
     })
 })
 
-
-
 // gets user by email
 app.get('/:email', (req, res) => {
   user_model.getUsersByEmail(req.params.email)
@@ -53,6 +50,13 @@ app.get('/:email', (req, res) => {
         res.status(500).send(error);
       }
     })
+})
+
+// gets user by token
+app.get("/url/:token", (req, res) => {
+  user_model.getUsersByToken(req.params.token)
+    .then(response => { res.status(200).send(response) })
+    .catch(error => { res.status(500).send(error) })
 })
 
 app.post('/users', (req, res) => {
@@ -75,6 +79,18 @@ app.post("/send-email", (req, res) => {
     .catch(error => res.status(500).send(error));
 });
 
+app.post("/generate-token", (req, res) => {
+  password_recovery.generateToken()
+    .then(response => res.status(200).send(response))
+    .catch(error => res.status(500).send(error));
+})
+
+app.put("/put-token", (req, res) => {
+  password_recovery.putToken(req.body)
+    .then(response => res.status(200).send(response))
+    .catch(error => res.status(500).send(error));
+})
+
 app.delete('/users/:id', (req, res) => {
   user_model.deleteUser(req.params.id)
     .then(response => {
@@ -85,10 +101,9 @@ app.delete('/users/:id', (req, res) => {
     })
 })
 app.put("/users/:id", (req, res) => {
-  const id = req.params.id;
   const body = req.body;
   user_model
-    .updateUser(id, body)
+    .updateUser(body)
     .then((response) => {
       res.status(200).send(response);
     })

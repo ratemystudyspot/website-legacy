@@ -24,8 +24,7 @@ const AuthForm = () => {
     if (recoveryState?.page === "login") return <Login />
     if (recoveryState?.page === "recover") return <Recovery />
     if (recoveryState?.page === "alert") return <Alert />
-    if (recoveryState?.page === "reset") return <Reset />
-    return navigate("/404-error-page-not-found");
+    return navigate("/404-error-page-not-found"); // !!! fix
   }
 
   return (

@@ -1,87 +1,89 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { getUsersByURL, updateUser } from "../../../Services/user";
 
 const ResetPage = () => {
+  const [pwd, setPwd] = useState('');
+  const [confirmPwd, setConfirmPwd] = useState('');
+  const [match, setMatch] = useState(true);
+  const [invalidPwd, setInvalidPwd] = useState(false);
+  const [submit, setSubmit] = useState(false);
 
-  function changePassword() {
-    // set page to recovered
+  const navigate = useNavigate();
+
+  const validatePwd = (pwd) => {
+    const pwd_regex = /.{8,}/;
+    return pwd_regex.test(pwd);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setInvalidPwd(!validatePwd(pwd)); // for password requirement case
+    // for matching case
+    if (pwd === confirmPwd) {
+      setMatch(true);
+    } else {
+      setMatch(false);
+    }
+
+    setSubmit(true); // if passwords reach the password criteria and match, update password for user by enabling useEffect's conditional
   }
 
+  useEffect(() => {
+    const updatePassword = async () => {
+      try {
+        if (submit && !invalidPwd && match) {
+          const user_info = await getUsersByURL(window.location.href);
+          const parsed_user_info = JSON.parse(user_info);
+          await updateUser({ ...parsed_user_info, password: pwd });
+          return navigate('/login');
+        }
+      } catch (error) {
+        console.log("Error:", error)
+      }
+    }
+    updatePassword();
+    setSubmit(false);
+    return () => {
+      // Clean-up code here, if necessary
+    };
+  }, [invalidPwd, match, submit])
+
   return (
-    <div>
-      <section className="bg-gray-50 w-screen dark:bg-gray-900">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
-            <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Change Password
-            </h2>
-            <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5">
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
-                ></input>
-              </div>
-              <div>
-                <label
-                  htmlFor="confirm-password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Confirm password
-                </label>
-                <input
-                  type="password"
-                  name="confirm-password"
-                  id="confirm-password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
-                ></input>
-              </div>
-              <div className="flex items-start">
-                <div className="flex items-center h-5">
-                  <input
-                    id="newsletter"
-                    aria-describedby="newsletter"
-                    type="checkbox"
-                    className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    required=""
-                  ></input>
-                </div>
-                <div className="ml-3 text-sm">
-                  <label
-                    htmlFor="newsletter"
-                    className="font-light text-gray-500 dark:text-gray-300"
-                  >
-                    I accept the{" "}
-                    <a
-                      className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                      href="#"
-                    >
-                      Terms and Conditions
-                    </a>
-                  </label>
-                </div>
-              </div>
-            </form>
-            <button
-              onClick={() => changePassword()}
-              className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            >
-              Reset passwod
-            </button>
-          </div>
+    <div className="wrapper">
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <h1>Choose a new password</h1>
+        {!match ? (
+          <p className="auth-error-msg top">These passwords don't match. Try again?</p>
+        ) : (invalidPwd ? (
+          <p className="auth-error-msg top">Please set a password longer than seven characters.</p>
+        ) : (null))}
+        <div className="input-box">
+          <input
+            className={(invalidPwd || !match) ? "auth-input error" : "auth-input"}
+            type="password"
+            placeholder="Password"
+            value={pwd}
+            onChange={(e) => setPwd(e.target.value)}
+          />
         </div>
-      </section>
+        <div className="input-box">
+          <input
+            className={(invalidPwd || !match) ? "auth-input error" : "auth-input"}
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPwd}
+            onChange={(e) => setConfirmPwd(e.target.value)}
+          />
+        </div>
+
+        <button className="auth-button" type="submit">Submit</button>
+
+        <div className="return">
+          <button onClick={() => navigate('/login')}>Back to Log in</button>
+        </div>
+      </form>
     </div>
   );
 }

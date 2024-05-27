@@ -29,7 +29,7 @@ const LoginForm = () => {
       const res_id = response.id;
       const res_email = response.email;
       const res_pwd = response.password;
-      const res_roles = [response.roles];
+      const res_roles = [response.role];
 
       setInvalidEmail(false);
       setInvalidPwd(false);

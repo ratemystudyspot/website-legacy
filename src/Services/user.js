@@ -22,9 +22,35 @@ function getUser() {
 }
 
 // get user with specified email from database
+// param 1: email
+// returns: 
 function getUsersByEmail(email) {
   try {
     return fetch(`http://localhost:3001/${email}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText); // create a new error with the status text
+        }
+        return response.text();
+      })
+      .then(data => {
+        return data;
+      })
+  } catch (error) {
+    console.error('Error fetching user data: ', error)
+  }
+}
+
+function getUsersByURL(url) {
+const parts = url.split('/');
+const token = parts[parts.length - 1];
+  try {
+    return fetch(`http://localhost:3001/url/${token}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -51,14 +77,14 @@ function getUsersByEmail(email) {
 async function createUser(email, pwd) {
   if (!EMAIL_REGEX.test(email)) throw new Error('Email error');
   if (!PWD_REGEX.test(pwd)) throw new Error('Password error');
-  const roles = 2004;
+  const role = 2004;
   try {
     await fetch('http://localhost:3001/users', { // !!! 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, pwd, roles }),
+      body: JSON.stringify({ email, pwd, role }),
     })
       .then(response => {
         if (response.status === 401) {
@@ -85,10 +111,10 @@ async function createUser(email, pwd) {
 async function checkCredentials(email, pwd) {
   try {
     const result = await getUsersByEmail(email);
-    const parsedResult = JSON.parse(result);
-    
-    if (!bcrypt.compareSync(pwd, parsedResult.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
-    return parsedResult;
+    const parsed_result = JSON.parse(result);
+
+    if (!bcrypt.compareSync(pwd, parsed_result.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
+    return parsed_result;
   } catch (error) {
     if (error.message === "Incorrect Password") {
       throw new Error('Incorrect Password');
@@ -97,7 +123,7 @@ async function checkCredentials(email, pwd) {
     } else {
       console.error('Error fetching user data: ', error);
     }
-  } 
+  }
 }
 
 // sends email to specified email (potentially remove and put to new file later)
@@ -121,6 +147,26 @@ function sendEmail(email, link) {
   }
 }
 
+// resets password
+async function putToken(email) {
+  try {
+    await fetch('http://localhost:3001/put-token', { // !!! 
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        return data;
+      });
+  } catch (error) {
+    console.error('Error putting token data: ', error);
+  }
+}
 
 // deletes a user record
 function deleteUser() {
@@ -144,25 +190,20 @@ function deleteUser() {
 }
 
 // updates a user record
-function updateUser() {
-  let id = prompt('Enter user\'s id');
-  let name = prompt('Enter new user\'s name');
-  let email = prompt('Enter new user\'s email');
-
+function updateUser(user_body) {
   try {
-    fetch(`http://localhost:3001/users/${id}`, { // !!!
+    fetch(`http://localhost:3001/users/${user_body.id}`, { // !!!
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email }),
+      body: JSON.stringify(user_body),
     })
       .then(response => {
         return response.text();
       })
       .then(data => {
-        alert(data);
-        getUser();
+        return data;
       });
   } catch (error) {
     console.error('Error updating user: ', error);
@@ -170,11 +211,14 @@ function updateUser() {
 
 }
 
-export { 
-  getUser, 
-  createUser, 
+export {
+  getUser,
+  getUsersByEmail,
+  getUsersByURL,
+  createUser,
   checkCredentials,
   sendEmail,
-  deleteUser, 
-  updateUser, 
+  putToken,
+  deleteUser,
+  updateUser,
 };

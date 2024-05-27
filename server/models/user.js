@@ -34,56 +34,78 @@ const getUsers = async () => {
 // get a user by email in database
 const getUsersByEmail = async (email) => {
 	try {
-    return await new Promise(function (resolve, reject) {
-      pool.query("SELECT * FROM users WHERE email = $1", 
-			[email],
-			(error, results) => {
-        if (error) {
-          reject(error);
-        }
-        if (results && results.rows && results.rows.length > 0) {
-					resolve(results.rows[0]);
-        } else { // throw email not found error if email isn't found
-          reject(new Error("Email not found in system"));
-        }
-      });
-    });
-  } catch (error) {
+		return await new Promise(function (resolve, reject) {
+			pool.query("SELECT * FROM users WHERE email = $1",
+				[email],
+				(error, results) => {
+					if (error) {
+						reject(error);
+					}
+					if (results && results.rows && results.rows.length > 0) {
+						resolve(results.rows[0]);
+					} else { // throw email not found error if email isn't found
+						reject(new Error("Email not found in system"));
+					}
+				});
+		});
+	} catch (error) {
 		if (error.message === "Email not found in system") {
 			throw new Error("Email not found in system");
 		} else {
 			throw new Error("Internal server error");
 		}
-  }
+	}
 };
 
+// get a user by url in database
+const getUsersByToken = async (token) => {
+	const url = `http://localhost:3000/password/${token}`;
+	try {
+		return await new Promise(function (resolve, reject) {
+			pool.query("SELECT * FROM users WHERE password_recovery_url = $1",
+				[url],
+				(error, results) => {
+					if (error) {
+						reject(error);
+					}
+					if (results && results.rows && results.rows.length > 0) {
+						resolve(results.rows[0]);
+					} else { // throw email not found error if email isn't found
+						reject(new Error("User not found in system"));
+					}
+				});
+		});
+	} catch (error) {
+		throw new Error("Internal server error");
+	}
+};
 
 // create a new user record in the databsse
 const createUser = async (body) => {
-	const { email, pwd, roles } = body;
-		
+	const { email, pwd, role } = body;
+
 	// check uniqueness of email by throwing error if found in database
 	try {
-    await getUsersByEmail(email);
-    // If getUsersByEmail does not throw an error, it means email exists in the system and hence not unique
-    throw new Error("Email found in system");
-  } catch (error) {
-    if (error.message === "Email not found in system") {
-      // Email is not found, proceed with user creation
-    } else {
-      // Other errors, including "Email found in system", rethrow them to be handled by the caller
-      throw error;
-    }
-  }
+		await getUsersByEmail(email);
+		// If getUsersByEmail does not throw an error, it means email exists in the system and hence not unique
+		throw new Error("Email found in system");
+	} catch (error) {
+		if (error.message === "Email not found in system") {
+			// Email is not found, proceed with user creation
+		} else {
+			// Other errors, including "Email found in system", rethrow them to be handled by the caller
+			throw error;
+		}
+	}
 
 	// salt and hash passwords for security
 	var salt = bcrypt.genSaltSync(10);
 	var hash_pwd = bcrypt.hashSync(pwd, salt);
-	
+
 	return new Promise(function (resolve, reject) {
 		pool.query(
 			"INSERT INTO users (email, password, role) VALUES ($1, $2, $3) RETURNING *",
-			[email, hash_pwd, roles],
+			[email, hash_pwd, role],
 			(error, results) => {
 				if (error) {
 					reject(error);
@@ -115,19 +137,24 @@ const deleteUser = (id) => {
 		);
 	});
 };
+
 // update a user record
-const updateUser = (id, body) => {
+const updateUser = (body) => {
+	const { id, email, password, role, password_recovery_url } = body;
+	var salt = bcrypt.genSaltSync(10);
+	var hash_pwd = bcrypt.hashSync(password, salt);
+
 	return new Promise(function (resolve, reject) {
-		const { email, pwd } = body;
 		pool.query(
-			"UPDATE users SET email = $1, pwd = $2 WHERE id = $3 RETURNING *",
-			[email, pwd, id],
+			"UPDATE users SET email = $1, password = $2, role = $3, password_recovery_url = $4 WHERE id = $5 RETURNING *",
+			[email, hash_pwd, role, password_recovery_url, id],
 			(error, results) => {
 				if (error) {
 					reject(error);
 				}
 				if (results && results.rows) {
 					resolve(`User updated: ${JSON.stringify(results.rows[0])}`);
+					console.log("good");
 				} else {
 					reject(new Error("No results found"));
 				}
@@ -138,6 +165,7 @@ const updateUser = (id, body) => {
 module.exports = {
 	getUsers,
 	getUsersByEmail,
+	getUsersByToken,
 	createUser,
 	deleteUser,
 	updateUser,
