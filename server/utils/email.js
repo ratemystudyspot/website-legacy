@@ -1,6 +1,6 @@
 const { uuid } = require('uuidv4');
 const nodemailer = require("nodemailer");
-const { getUsersByEmail, updateUser } = require('../../models/user');
+const { findAll, updateUser } = require('../models/userModel');
 
 const sendEmail = (body) => {
   const { email, link } = body 
@@ -82,21 +82,19 @@ const generateToken = async () => {
   }
 };
 
-const putToken = async (body) => {
-  try {
-    const token = await generateToken(); // generate token
-    const user_info = await getUsersByEmail(body.email); // get user to match token
+// const putToken = async (body) => {
+//   try {
+//     const token = await generateToken(); // generate token
+//     const user_info = await getUsersByEmail(body.email); // get user to match token
 
-    // store token in database
-    await updateUser({ ...user_info, password_recovery_url: `http://localhost:3000/password/${token}` }); /// !!! change on production deployment
-  } catch (error) {
-    console.error("Error:", error);
-    throw error;
-  }
-}
+//     // store token in database
+//     await updateUser({ ...user_info, password_recovery_url: `http://localhost:3000/password/${token}` }); /// !!! change on production deployment
+//   } catch (error) {
+//     console.error("Error:", error);
+//     throw error;
+//   }
+// }
 
 module.exports = {
   sendEmail,
-  generateToken,
-  putToken,
 };

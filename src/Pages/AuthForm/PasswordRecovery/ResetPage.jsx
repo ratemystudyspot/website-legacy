@@ -31,18 +31,7 @@ const ResetPage = () => {
   }
 
   useEffect(() => {
-    const updatePassword = async () => {
-      try {
-        if (submit && !invalidPwd && match) {
-          const user_info = await getUsersByURL(window.location.href);
-          const parsed_user_info = JSON.parse(user_info);
-          await updateUser({ ...parsed_user_info, password: pwd });
-          return navigate('/login');
-        }
-      } catch (error) {
-        console.log("Error:", error)
-      }
-    }
+    
     updatePassword();
     setSubmit(false);
     return () => {

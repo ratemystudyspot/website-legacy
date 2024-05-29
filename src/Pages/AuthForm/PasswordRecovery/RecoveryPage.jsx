@@ -3,7 +3,7 @@ import '../AuthForm.css'
 import { FaUser } from "react-icons/fa";
 import useRecovery from '../../../hooks/useRecovery';
 import Loading from '../../Structure/LoadingPage';
-import { sendEmail, putToken, getUsersByEmail } from '../../../Services/user';
+import { sendRecoveryEmail } from '../../../Services/auth';
 
 const RecoveryPage = () => {
   const { recoveryState, setRecoveryState } = useRecovery();
@@ -26,10 +26,7 @@ const RecoveryPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await putToken(email);
-      const user_info = await getUsersByEmail(email);
-      const parsed_user_info = JSON.parse(user_info);
-      sendEmail(email, parsed_user_info.password_recovery_url);
+      await sendRecoveryEmail(email);
       setLoading(true);
     } catch (error) {
       console.log("Error:", error)

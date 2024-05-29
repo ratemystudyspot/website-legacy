@@ -14,10 +14,7 @@ import Aboutpage from './Pages/Aboutpage';
 import Spotspage from './Pages/Spotspage';
 import Seekpage from './Pages/Seekpage'
 import Verify from './Pages/AuthForm/Verify';
-import { 
-  Routes,
-  Route,
-} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Layout from './Pages/Structure/Layout';
 import RequireAuth from './Pages/AuthForm/RequireAuth';
 import Unauthorized from './Pages/Structure/Unauthorized';
