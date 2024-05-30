@@ -4,7 +4,12 @@
   overflow: clip;
 }
 
+.banner {
+  
+}
+
 .study-spot-list {
   align-self: flex-start;
-  width: 100%; 
+  width: 100%;
+  z-index: -99;
 }

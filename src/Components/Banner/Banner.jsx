@@ -48,7 +48,7 @@ const Banner = () => {
       )
     } else {
       return (
-        <div class="dropdown-content">
+        <div className="dropdown-content">
           <Link to="/signup">Sign up</Link>
           <Link to="/login">Log in</Link>
         </div>
@@ -60,7 +60,8 @@ const Banner = () => {
     <header>
       <div className="banner-container">
         <div className="logo-container">
-          <div style={{ width: "70px", height: "70px", marginRight: "20px" }}></div>
+          {/* <div style={{ width: "70px", height: "70px", marginRight: "20px" }}></div> */}
+          <LogoComponent />
           <Link to="/about">
             <button style={{ minWidth: "80px" }} className="about">About us</button>
           </Link>
@@ -88,7 +89,7 @@ const Banner = () => {
           </div>
 
 
-          <div className="user-nav">
+          <div className={isOpen ? "user-nav open" : "user-nav"}>
             {/* User Navbar button */}
             <button className="dropdown-btn" onClick={toggleNavbar}>
               <GiHamburgerMenu className="icon" />
@@ -100,7 +101,6 @@ const Banner = () => {
           </div>
         </div>
       </div>
-      <hr />
     </header>
   )
 }

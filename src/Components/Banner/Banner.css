@@ -4,20 +4,17 @@
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  margin-top: 10px;
-  left: 2%; 
-  right: 5%;
-  top: 1%;
+  top: 50px;
+  transform: translate(-50%, -50%);
+  width: 85%;
 }
 
 .logo-container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 180px;
   .a-logo {
-    /* margin-right: 60px; */
-    /* width: 45px;
-    height: 45px; idk what to do with this*/
     margin-right: 20px;
     position: static;
   }
@@ -39,10 +36,6 @@
     border-radius: 4px;
   }
 }
-
-
-
-.logo-container 
 
 .logo-container button:hover {
   background-color: #dcdcdc;
@@ -91,6 +84,7 @@
 
 .banner-container .right-container {
   display: flex;
+  justify-content: space-between;
   width: 236px;
   margin: 0;
   padding: 0;
@@ -118,11 +112,15 @@
   outline-style: solid;
   outline-width: 1px;
   transition: 0.3s;
-  min-width: 70px;
+  width: 70px;
   height: 36px;
   border-radius: 4px;
   margin: 5px;
-  overflow: hidden;
+  overflow: visible;
+}
+
+.user-nav.open {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .user-nav:hover {
@@ -150,9 +148,9 @@
 .dropdown-content {
   background-color: white;
   display: block;
-  position: absolute;
-  top: 50px;
-  right: 5px;
+  position: relative;
+  transform: translate(-60%,0);
+  top: 5px;
   padding: 12px 0 12px;
   min-width: 180px;
   box-shadow: 0px 4px 4px 4px rgba(0,0,0,0.2);
