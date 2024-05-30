@@ -3,10 +3,8 @@ import { AuthContext } from "../context/AuthProvider";
 
 /*
 auth: {
-    id, 
     email, 
-    pwd, 
-    roles
+    roles,
 }  
 */
 

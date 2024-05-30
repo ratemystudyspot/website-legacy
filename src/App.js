@@ -23,7 +23,7 @@ import AuthForm from './Pages/AuthForm/AuthForm';
 function App() {
   // init roles
   const ROLES = {
-    'User': 2004,
+    'User': process.env.USER_ROLE || 2004,
   }
 
   return (

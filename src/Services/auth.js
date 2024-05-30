@@ -4,18 +4,18 @@ const API_URL = process.env.REACT_APP_API_URL_AUTH || 'http://localhost:3001/api
 
 async function login(email, password) {
   try {
-    await axios.post(`${API_URL}/login`, { email, password });
+    const response = await axios.post(`${API_URL}/login`, { email, password });
+    return response.data.response;
   } catch (error) {
-    console.error('Error authenticating user:', error);
+    throw error.response.data;
   }
 }
 
 async function register(email, password) {
   try {
-    console.log("here");
     await axios.post(`${API_URL}/register`, { email, password });
   } catch (error) {
-    console.error('Error registering user:', error);
+    throw error.response.data;
   }
 }
 

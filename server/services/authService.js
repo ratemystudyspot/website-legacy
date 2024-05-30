@@ -3,9 +3,6 @@ const User = require('../models/userModel');
 const tokenUtil = require('../utils/token');
 const emailUtil = require('../utils/email');
 
-const EMAIL_REGEX =
-  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-const PWD_REGEX = /.{8,}/;
 
 // checks if the given credentials match a user in the database
 // param 1: pass in the user's email
@@ -13,38 +10,45 @@ const PWD_REGEX = /.{8,}/;
 // return: void or error
 async function authenticateUser(credentials) {
   const email = credentials.email.toLowerCase();
-  const password = JSON.stringify(credentials.password);
+  const password = credentials.password;
 
   try {
-    const result = await getUsersByEmail(email);
-    const parsed_result = JSON.parse(result);
+    const user = await User.findAll({ email });
+    const user_data = user[0]?.dataValues;
 
-    if (!bcrypt.compareSync(password, parsed_result.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
-    return parsed_result;
+    if (!user_data) throw new Error("Email not found");
+    if (!bcrypt.compareSync(password, user_data?.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
+    const safe_user_data = { email: user_data.email, role: user_data.role };
+    return safe_user_data;
   } catch (error) {
-    if (error.message === "Incorrect Password") {
-      throw new Error('Incorrect Password');
-    } else if (error.message === "Unauthorized") {
-      throw new Error('Email not found in system');
-    } else {
-      console.error('Error fetching user data: ', error);
-    }
+    console.error(error);
+    throw error;
   }
 }
 
 async function registerUser(credentials) {
   const email = credentials.email.toLowerCase();
-  const password = JSON.stringify(credentials.password);
-  const role = 2004;
+  const password = credentials.password; //check later
+  const role = process.env.USER_ROLE || 2004;
+
+  try {
+    const EMAIL_REGEX =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const PWD_REGEX = /.{8,}/;
+    if (!EMAIL_REGEX.test(email)) throw new Error('Email error');
+    if (!PWD_REGEX.test(password)) throw new Error('Password error');
+  } catch (error) {
+    console.error("Error passing credential requirements:", error);
+    throw error;
+  }
 
   // checking for uniqueness of email
   try {
     const users = await User.findAll({ email });
     if (users.length != 0) { // if email exists, then not unique, then stop creating new user
-      console.error("Error: Email not unique");
-      throw new Error("Email not unique");
+      console.error("Error: Email duplicate Error");
+      throw new Error("Email duplicate Error");
     }
-
   } catch (error) {
     console.error("Error:", error);
     throw error;
@@ -52,13 +56,13 @@ async function registerUser(credentials) {
 
   // salting and hashing password
   try {
-    var salt = bcrypt.genSaltSync(10);
-    var hash_password = bcrypt.hashSync(password, salt);
+    // var salt = bcrypt.genSaltSync(10);
+    var hash_password = bcrypt.hashSync(password, 10);
   } catch (error) {
     console.log("Error salting and hashing:", error);
     throw error;
   }
-  console.log("C");
+
   // creating a new user
   try {
     return await User.createUser({ email, password: hash_password, role });
@@ -66,7 +70,7 @@ async function registerUser(credentials) {
     console.error("Error creating user:", error);
     throw error;
   }
-  
+
 }
 
 async function sendRecoveryEmail(body) {
@@ -76,7 +80,7 @@ async function sendRecoveryEmail(body) {
 
   // generate password recovery token and store in user's data
   try {
-    const password_recovery_token = await tokenUtil.generateToken();
+    const password_recovery_token = await tokenUtil.generateRandomToken();
     await User.updateUser(user.id, { password_recovery_token });
     email_info.password_recovery_token = password_recovery_token;
   } catch (error) {

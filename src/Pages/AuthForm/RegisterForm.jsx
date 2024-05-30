@@ -31,25 +31,22 @@ const RegisterForm = () => {
       // navigate to a verify page (for future !!!)
       // navigate("/verify/" + email);
     } catch (e) {
-      if (e.message === 'Email error') { // if createUser throws an email error
+      if (e === "Email error") { // if register throws an email error
         setInvalidEmail(true);
         setInvalidPwd(false);
         setDuplicate(false);
         setPwd('');
-        console.log("invalid email");
-      } else if (e.message === 'Duplicate email error') { // if createUser throws a duplicate email error
+      } else if (e === 'Email duplicate Error') { // if register throws a duplicate email error
         setInvalidEmail(false);
         setInvalidPwd(false);
         setDuplicate(true);
         setPwd('');
-        console.log("duplicate email")
-      } else if (e.message === 'Password error') { // if createUser throws a password error
+      } else if (e === 'Password error') { // if register throws a password error
         setInvalidPwd(true);
         setInvalidEmail(false);
         setDuplicate(false);
         setPwd('');
-        console.log("invalid pwd");
-      } else { // if createUser throws an unexpected error
+      } else { // if register throws an unexpected error
         console.error("An error occurred:", e);
       }
     }

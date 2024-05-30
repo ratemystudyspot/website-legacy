@@ -26,26 +26,22 @@ const LoginForm = () => {
 
     try {
       const response = await login(email, pwd);
-      const res_id = response.id;
-      const res_email = response.email;
-      const res_pwd = response.password;
-      const res_roles = [response.role];
 
       setInvalidEmail(false);
       setInvalidPwd(false);
 
-      setAuth({ id: res_id, email: res_email, pwd: res_pwd, roles: res_roles });
+      setAuth({ email: response?.email, roles: response?.role });
       navigate(from, { replace: true });
     } catch (e) {
-      if (e.message === "Email not found in system") { // if given credentials don't match any in the database
+      console.error("An error occurred:", e);
+      if (e.message === "Email not found") { // if given credentials don't match any in the database
         setInvalidEmail(true);
-      } else if (e.message === "Incorrect Password") { // if given credentials don't match the one in the system
+        setPwd('');
+      } 
+      if (e.message === "Incorrect Password") { // if given credentials don't match the one in the system
         setInvalidEmail(false);
         setInvalidPwd(true);
         setPwd('');
-      }
-      else { // unexpected error
-        console.error("An error occurred:", e);
       }
     }
   }
@@ -62,7 +58,7 @@ const LoginForm = () => {
           ) : (null))}
           <div className="input-box">
             <input
-              className={invalidEmail ? "auth-input error" : "auth-input"}
+              className={(invalidEmail || invalidPwd) ? "auth-input error" : "auth-input"}
               type="email"
               placeholder="Email"
               value={email}
