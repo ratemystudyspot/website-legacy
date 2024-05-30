@@ -9,6 +9,15 @@ async function login(req, res) {
   }
 }
 
+async function register(req, res) {
+  try {
+    await authService.registerUser(req.body); // {email, password}
+    res.sendStatus(200);
+  } catch (error) {
+    res.sendStatus(404);
+  }
+}
+ 
 async function sendRecoveryEmail(req, res) {
   try {
     await authService.sendRecoveryEmail(req.body); // {email}
@@ -29,6 +38,7 @@ async function resetPassword() {
 
 module.exports = { 
   login,
+  register,
   sendRecoveryEmail,
   resetPassword,
 };

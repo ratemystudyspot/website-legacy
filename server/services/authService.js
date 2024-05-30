@@ -12,13 +12,14 @@ const PWD_REGEX = /.{8,}/;
 // param 2: pass in the user's password
 // return: void or error
 async function authenticateUser(credentials) {
-  const { email, pwd } = credentials;
-  email = email.lowercase();
+  const email = credentials.email.toLowerCase();
+  const password = JSON.stringify(credentials.password);
+
   try {
     const result = await getUsersByEmail(email);
     const parsed_result = JSON.parse(result);
 
-    if (!bcrypt.compareSync(pwd, parsed_result.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
+    if (!bcrypt.compareSync(password, parsed_result.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
     return parsed_result;
   } catch (error) {
     if (error.message === "Incorrect Password") {
@@ -29,6 +30,43 @@ async function authenticateUser(credentials) {
       console.error('Error fetching user data: ', error);
     }
   }
+}
+
+async function registerUser(credentials) {
+  const email = credentials.email.toLowerCase();
+  const password = JSON.stringify(credentials.password);
+  const role = 2004;
+
+  // checking for uniqueness of email
+  try {
+    const users = await User.findAll({ email });
+    if (users.length != 0) { // if email exists, then not unique, then stop creating new user
+      console.error("Error: Email not unique");
+      throw new Error("Email not unique");
+    }
+
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+
+  // salting and hashing password
+  try {
+    var salt = bcrypt.genSaltSync(10);
+    var hash_password = bcrypt.hashSync(password, salt);
+  } catch (error) {
+    console.log("Error salting and hashing:", error);
+    throw error;
+  }
+  console.log("C");
+  // creating a new user
+  try {
+    return await User.createUser({ email, password: hash_password, role });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error;
+  }
+  
 }
 
 async function sendRecoveryEmail(body) {
@@ -72,6 +110,7 @@ async function resetPassword(body) {
 
 module.exports = {
   authenticateUser,
+  registerUser,
   sendRecoveryEmail,
   resetPassword,
 };

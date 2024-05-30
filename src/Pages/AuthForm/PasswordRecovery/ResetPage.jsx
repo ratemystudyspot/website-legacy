@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { getUsersByURL, updateUser } from "../../../Services/user";
+import { updatePassword } from "../../../Services/auth";
 
 const ResetPage = () => {
   const [pwd, setPwd] = useState('');
@@ -31,8 +31,7 @@ const ResetPage = () => {
   }
 
   useEffect(() => {
-    
-    updatePassword();
+    if (submit && match && !invalidPwd) updatePassword(window.location.href, pwd);
     setSubmit(false);
     return () => {
       // Clean-up code here, if necessary

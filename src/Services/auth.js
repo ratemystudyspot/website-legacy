@@ -10,6 +10,15 @@ async function login(email, password) {
   }
 }
 
+async function register(email, password) {
+  try {
+    console.log("here");
+    await axios.post(`${API_URL}/register`, { email, password });
+  } catch (error) {
+    console.error('Error registering user:', error);
+  }
+}
+
 async function sendRecoveryEmail(email) {
   try {
     await axios.post(`${API_URL}/send-recovery-email`, { email });
@@ -28,6 +37,8 @@ async function updatePassword(url, password) {
 
 export {
   login,
+  register,
   sendRecoveryEmail,
-  reset
+  updatePassword,
+  // reset,
 }

@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import './AuthForm.css';
 import { FaUser, FaLock } from "react-icons/fa";
-import { createUser } from '../../Services/user.js';
+import { register } from '../../Services/auth.js';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from "../../hooks/useAuth.js";
 
@@ -21,7 +21,7 @@ const RegisterForm = () => {
   const HandleSubmit = async (e) => {
     e.preventDefault(); // if password doesn't meet the requirements, dont refresh page (prevents states resetting)
     try {
-      await createUser(email.toLowerCase(), pwd);
+      await register(email, pwd);
       // if no error thrown get rid of errors and goto email verification page
       setInvalidEmail(false);
       setInvalidPwd(false);
