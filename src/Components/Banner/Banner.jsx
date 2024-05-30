@@ -41,13 +41,13 @@ const Banner = () => {
   const { setAuth, auth } = useAuth();
   const handleAuth = (auth) => {
     if (auth?.roles == 2004) {
-      return(
+      return (
         <div class="dropdown-content">
-          <button onClick={() => {setAuth({})}}>Sign out</button>
+          <button onClick={() => { setAuth({}) }}>Sign out</button>
         </div>
       )
     } else {
-      return(
+      return (
         <div class="dropdown-content">
           <Link to="/signup">Sign up</Link>
           <Link to="/login">Log in</Link>
@@ -60,7 +60,7 @@ const Banner = () => {
     <header>
       <div className="banner-container">
         <div className="logo-container">
-          <LogoComponent />
+          <div style={{ width: "70px", height: "70px", marginRight: "20px" }}></div>
           <Link to="/about">
             <button style={{ minWidth: "80px" }} className="about">About us</button>
           </Link>
