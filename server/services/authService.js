@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 const tokenUtil = require('../utils/token');
 const emailUtil = require('../utils/email');
 
+const WEB_APP_URL = process.env.WEB_APP_URL || "http://localhost:3000";
 
 // checks if the given credentials match a user in the database
 // param 1: pass in the user's email
@@ -76,15 +77,16 @@ async function registerUser(credentials) {
 async function sendRecoveryEmail(body) {
   const { email } = body;
   const user = await User.findAll({ email });
+  const user_data = user[0]?.dataValues;
   const email_info = { email, password_recovery_token: '' };
 
   // generate password recovery token and store in user's data
   try {
     const password_recovery_token = await tokenUtil.generateRandomToken();
-    await User.updateUser(user.id, { password_recovery_token });
-    email_info.password_recovery_token = password_recovery_token;
+    await User.updateUser(user_data.id, { password_recovery_token });
+    email_info.link = `${WEB_APP_URL}/password/${password_recovery_token}`;
   } catch (error) {
-    console.error("Error generating and storing Password Recovery Token:", error);
+    console.error("Error generating and storing Password Recovery Token:", error.message);
     throw error;
   }
 
@@ -92,7 +94,7 @@ async function sendRecoveryEmail(body) {
   try {
     await emailUtil.sendEmail(email_info);
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Error sending email:", error.message);
     throw error;
   }
 }
@@ -101,11 +103,11 @@ async function resetPassword(body) {
   const { url, password } = body;
   const password_recovery_token = url.split('/').pop();
   const user = await User.findAll({ password_recovery_token }); // retrieve user info
-
+  const user_data = user[0]?.dataValues;
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash_password = bcrypt.hashSync(password, salt);
-    await User.updateUser(user.id, { password: hash_password });
+    await User.updateUser(user_data.id, { password: hash_password });
   } catch (error) {
     console.error("Error resetting password:", error);
     throw error;

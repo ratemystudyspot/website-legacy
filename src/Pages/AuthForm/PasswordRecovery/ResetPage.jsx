@@ -31,11 +31,12 @@ const ResetPage = () => {
   }
 
   useEffect(() => {
-    if (submit && match && !invalidPwd) updatePassword(window.location.href, pwd);
+    if (submit && match && !invalidPwd) {
+      updatePassword(window.location.href, pwd);
+      navigate("/login");
+    }
     setSubmit(false);
-    return () => {
-      // Clean-up code here, if necessary
-    };
+    return () => {};
   }, [invalidPwd, match, submit])
 
   return (

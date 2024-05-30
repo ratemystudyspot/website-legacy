@@ -31,17 +31,17 @@ const RegisterForm = () => {
       // navigate to a verify page (for future !!!)
       // navigate("/verify/" + email);
     } catch (e) {
-      if (e === "Email error") { // if register throws an email error
+      if (e.message === "Email error") { // if register throws an email error
         setInvalidEmail(true);
         setInvalidPwd(false);
         setDuplicate(false);
         setPwd('');
-      } else if (e === 'Email duplicate Error') { // if register throws a duplicate email error
+      } else if (e.message === 'Email duplicate Error') { // if register throws a duplicate email error
         setInvalidEmail(false);
         setInvalidPwd(false);
         setDuplicate(true);
         setPwd('');
-      } else if (e === 'Password error') { // if register throws a password error
+      } else if (e.message === 'Password error') { // if register throws a password error
         setInvalidPwd(true);
         setInvalidEmail(false);
         setDuplicate(false);

@@ -4,6 +4,9 @@ const { findAll, updateUser } = require('../models/userModel');
 
 const sendEmail = (body) => {
   const { email, link } = body 
+  
+  if (!email) throw new Error("No email provided");
+  if (!link) throw new Error("No link provided");
 
   return new Promise((resolve, reject) => {
     var transporter = nodemailer.createTransport({
