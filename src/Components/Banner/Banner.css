@@ -30,7 +30,7 @@
 
   .middle-container {
     grid-column: 1 / span 2;
-    grid-row: 2;    
+    grid-row: 2;
   }
 
   .right-container {
@@ -60,9 +60,10 @@
     position: relative;
     right: 0%;
   }
-  
+
   .middle-container {
     margin: 0 auto;
+
     .form {
       width: 70vw;
     }
@@ -113,15 +114,77 @@
 }
 
 .middle-container {
-  margin-top: 10px;
+
+  .search-box {
+    width: 400px;
+    height: fit-content;
+    position: relative;
+  }
+
+  .input-search {
+    height: 50px;
+    width: 400px;
+    padding: 10px;
+    border: none;
+    font-size: 18px;
+    padding-right: 40px;
+    color: #ADD8E6;
+    border-radius: 30px;
+    box-shadow: 0 3px 8px 4px rgba(0, 0, 0, .1);
+    transition: 0.2s;
+
+    &:hover {
+      box-shadow: 0 3px 8px 8px rgba(0, 0, 0, .1);
+    }
+
+    &::placeholder {
+      color: #dcdcdc;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    &:focus {
+      box-shadow: 0 3px 8px 8px rgba(0, 0, 0, .1);
+    }
+  }
+
+  .btn-search {
+    position: absolute;
+    top: 7.5px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    border-style: none;
+    font-size: 10px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #ADD8E6;
+
+    .icon {
+      position: relative;
+      bottom: 1px;
+      &:hover {
+        background-color: #525252;
+      }
+    }
+
+    &:hover {
+      background-color:  #64ADC6;
+    }
+  }
+
+
+
 }
 
-.form {
+/* .form {
   display: flex;
   margin-left: 10px;
   margin-right: 10px;
-
-  input {
+ } */
+/*  input {
     border: 1px solid #dcdcdc;
     border-radius: 4px;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .1);
@@ -133,7 +196,7 @@
     &:hover {
       background-color: #dcdcdc;
     }
-  }
+  } 
 
   button {
     width: 50px;
@@ -154,7 +217,7 @@
   .icon {
     color: #fff;
   }
-}
+}*/
 
 .banner-container .right-container {
   display: flex;
@@ -248,9 +311,3 @@
 .dropdown-content a:hover {
   background-color: #ddd;
 }
-
-/* hr {
-  position: absolute;
-  top: 90px;
-  right: 0px;
-} */

@@ -68,15 +68,16 @@ const Banner = () => {
         </div>
 
         <div className="middle-container">
-          <form className="form">
+          <form className="search-box">
             <input
+              className="input-search"
               type="text"
               value={searchTerm}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               placeholder="Search study spots"
             />
-            <button><FaSearch className="icon" /></button>
+            <button className='btn-search'><FaSearch className="icon" /></button>
           </form>
         </div>
 
