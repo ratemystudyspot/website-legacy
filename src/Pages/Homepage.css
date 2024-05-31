@@ -5,19 +5,23 @@
 }
 
 .study-spot-filter {
-  margin: 0 auto;
-  margin-bottom: 1000px;
+  position: absolute;
+  top: 170px;
+  transform: translate(-50%, -50%);
 }
 
 .study-spot-list {
   position: fixed;
   left: 6%;
   right: 6%;
-  top: 20%;
+  top: 220px;
 }
 
 @media (max-width: 1080px) {
   .study-spot-filter {
-    margin-top: 90px;
+    top: 230px;
+  }
+  .study-spot-list {
+    top: 280px;
   }
 }
