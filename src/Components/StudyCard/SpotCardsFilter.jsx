@@ -1,30 +1,44 @@
 import StudySpots from "../../SampleData/StudySpots";
 import StudySpotCard from "./StudySpotCard";
 import "./SpotCardsFilter.css";
+import { BiVolumeMute } from "react-icons/bi";
+import { TbSofa, TbBatteryCharging2, TbLockOpen } from "react-icons/tb";
+import { MdOutlineGroupOff, MdOutlineDoorFront  } from "react-icons/md";
 
-const SpotCardsFilter = () => {
+const SpotCardsFilter = ({ filterSelected, onFilterSelect }) => {
+  const filterOptions = [
+    { label: 'Quiet', value: 'quiet', icon: <BiVolumeMute size={20} className="filter-icon"/> },
+    { label: 'Comfy', value: 'comfy', icon: <TbSofa size={20} className="filter-icon"/> },
+    { label: 'Not busy', value: 'not-busy', icon: <MdOutlineGroupOff size={20} className="filter-icon"/> },
+    { label: 'Outlets', value: 'outlets', icon: <TbBatteryCharging2 size={20} className="filter-icon"/> },
+    { label: 'Open Now', value: 'open-now', icon: <MdOutlineDoorFront size={20} className="filter-icon"/> },
+    // Add more filter options as needed
+  ];
+
+  const selected = (value) => {
+    return filterSelected.includes(value);
+  }
+
+  const handleFilterSelect = (option) => {
+    onFilterSelect((prevFilters) =>
+      selected(option.value)
+        ? prevFilters.filter((filter) => filter !== option.value)
+        : prevFilters.concat([option.value]));
+  };
+
   return (
     <div className="filter-container">
-      <div className="filter-item">
-        <img src="src\Components\Assets\ForestCenter.jpg" alt="Filter 1"/>
-        <span>Filter 1</span>
-      </div>
-      <div className="filter-item">
-        <img src="placeholder.jpg" alt="Filter 2"/>
-        <span>Filter 2</span>
-      </div>
-      <div className="filter-item">
-        <img src="placeholder.jpg" alt="Filter 3"/>
-        <span>Filter 3</span>
-      </div>
-      <div className="filter-item">
-        <img src="placeholder.jpg" alt="Filter 4"/>
-        <span>Filter 4</span>
-      </div>
-      <div className="filter-item">
-        <img src="placeholder.jpg" alt="Filter 5"/>
-        <span>Filter 5</span>
-      </div>
+      {filterOptions.map((option) => (
+        <div
+          key={option.label}
+          className={selected(option.value) ? "filter-item selected" : "filter-item"}
+          data-filter={option.value}
+          onClick={() => handleFilterSelect(option)}
+        >
+          {option.icon}
+          <span>{option.label}</span>
+        </div>
+      ))}
     </div>
   )
 }

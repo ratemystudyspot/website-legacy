@@ -1,22 +1,48 @@
 .filter-container {
   display: flex;
+  justify-content: space-evenly;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(100px, 1fr);
+  gap: 10px;
   overflow-x: auto;
   padding: 10px 0;
-  margin-bottom: 20px;
+  max-width: min-content;
+  margin: 0 auto;
 }
 
 .filter-item {
   flex: 0 0 auto;
   display: flex;
+  width: 70px;
+  padding: 8px 0;
   flex-direction: column;
+  margin: 0 20px;
   align-items: center;
-  margin-right: 10px;
   text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 4px;
+
+  span {
+    font-size: 9px;
+    font-weight: 700;
+    color: #7c7c7c;
+  }
+
+  .filter-icon {
+    color: #7c7c7c;
+  }
 }
 
-.filter-item img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-bottom: 5px;
+
+.filter-item:hover {
+  background-color: #F5F5F5;
+}
+
+.filter-item.selected {
+  background-color: #F5F5F5;
+}
+
+.filter-item.selected:hover {
+  background-color: #DCDCDC;
 }

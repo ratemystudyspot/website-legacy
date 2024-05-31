@@ -6,6 +6,7 @@ const StudySpots = [
         lat: 49.265999,
         long:-123.248489,
         ratingIds: [],
+        filters: [],
     },
     {
         id: "2",
@@ -14,6 +15,7 @@ const StudySpots = [
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],
+        filters: ['quiet'],
     },
     {
         id: "3",
@@ -22,6 +24,7 @@ const StudySpots = [
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],
+        filters: [],
     },
     {
         id: "4",
@@ -30,6 +33,7 @@ const StudySpots = [
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],
+        filters: [],
     },
     {
         id: "5",
@@ -38,6 +42,7 @@ const StudySpots = [
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],
+        filters: [],
     },
     {
         id: "6",
@@ -46,6 +51,7 @@ const StudySpots = [
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],
+        filters: [],
     },
     {
         id: "7",
@@ -54,6 +60,7 @@ const StudySpots = [
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],
+        filters: [],
     },
     {
         id: "8",
@@ -62,6 +69,7 @@ const StudySpots = [
         lat: 49.260029,
         long:-123.248642,
         ratingIds: [],
+        filters: [],
     }
 ]
 

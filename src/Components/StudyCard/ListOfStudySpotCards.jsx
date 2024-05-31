@@ -2,10 +2,10 @@ import StudySpots from "../../SampleData/StudySpots";
 import StudySpotCard from "./StudySpotCard";
 import "./ListOfStudySpotCards.css";
 
-const ListOfStudySpotCards = () => {
+const ListOfStudySpotCards = ({ cards }) => {
     return (
         <div className="listOfStudySpotCards">
-            {StudySpots.map((studySpot) => (
+            {cards.map((studySpot) => (
                 <StudySpotCard key={studySpot.id} studySpot={studySpot} />
             ))}
         </div>

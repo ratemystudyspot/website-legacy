@@ -8,6 +8,8 @@
   position: absolute;
   top: 170px;
   transform: translate(-50%, -50%);
+  width: 100vw;
+  border-top: 1px solid #DCDCDC;
 }
 
 .study-spot-list {
