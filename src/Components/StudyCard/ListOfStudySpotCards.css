@@ -1,40 +1,7 @@
 .listOfStudySpotCards {
-    display: flex;
-    flex-flow: row wrap;
-    /* align-content: center; */
-    /* width: max-content; */
-    position: absolute;
-    margin-top: 20px;
-    left: 6%; 
-    top: 110px;
-   
-   
-  }
-
-  @media (max-width: 1280px) {
-    .listOfStudySpotCards {
-      width: 90%;
-      left: 5%; 
-    }
-  }    
-
-    @media (max-width: 1080px) {
-      .listOfStudySpotCards {
-        width: 90%;
-        left: 12%; 
-      }
-    }
-
-    @media (max-width: 412px) {
-      .listOfStudySpotCards {
-        width: 100%;
-        left: 6%; 
-      }
-    }
-
-    @media (max-width: 375px) {
-      .listOfStudySpotCards {
-        width: 250%;
-        left: 25%; 
-      }
-    }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin: 0 auto;
+}

@@ -5,23 +5,94 @@
   align-items: center;
   position: absolute;
   top: 50px;
-  transform: translate(-50%, -50%);
+  /* transform: translate(-50%, -50%); */
+  left: 6%;
+  right: 6%;
   width: 85%;
 }
+
+@media (max-width: 1080px) {
+  .banner-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    width: max-content;
+    margin-bottom: 100px;
+    margin: 0 auto;
+  }
+
+  .logo-container {
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    right: 7%;
+  }
+
+  .middle-container {
+    grid-column: 1 / span 2;
+    grid-row: 2;    
+  }
+
+  .right-container {
+    grid-column: 2;
+    /* Second column */
+    grid-row: 1;
+    /* First row */
+    position: relative;
+    left: 15%;
+    bottom: 3px;
+  }
+}
+
+/* !!! make mobile-looking design */
+@media (max-width: 800px) {
+
+  .banner-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    margin: 0 auto;
+  }
+
+  .logo-container {
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    right: 0%;
+  }
+  
+  .middle-container {
+    margin: 0 auto;
+    .form {
+      width: 70vw;
+    }
+  }
+
+  .right-container {
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+    left: -5%;
+  }
+}
+
 
 .logo-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 180px;
+
   .a-logo {
     margin-right: 20px;
     position: static;
   }
+
   .logo {
     width: 70px;
     height: 70px;
   }
+
   button {
     color: #525252;
     border: none;
@@ -49,14 +120,16 @@
   display: flex;
   margin-left: 10px;
   margin-right: 10px;
+
   input {
     border: 1px solid #dcdcdc;
-    border-radius: 4px; 
-    box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    border-radius: 4px;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .1);
     padding: 10px;
     margin-top: -10px;
     font-size: 16px;
     width: 500px;
+
     &:hover {
       background-color: #dcdcdc;
     }
@@ -70,9 +143,10 @@
     margin-top: -10px;
     margin-right: 10px;
     background-color: #ADD8E6;
-    box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .1);
     transition: 0.3s;
   }
+
   button:hover {
     background-color: #89b8c7;
   }
@@ -132,8 +206,10 @@
   outline: none;
   color: white;
   background-color: inherit;
-  font-family: inherit; /* Important for vertical align on mobile phones */
-  margin: 0; /* Important for vertical align on mobile phones */
+  font-family: inherit;
+  /* Important for vertical align on mobile phones */
+  margin: 0;
+  /* Important for vertical align on mobile phones */
   padding: 10px;
   width: 100%;
   min-width: 10px;
@@ -149,11 +225,11 @@
   background-color: white;
   display: block;
   position: relative;
-  transform: translate(-60%,0);
+  transform: translate(-60%, 0);
   top: 5px;
   padding: 12px 0 12px;
   min-width: 180px;
-  box-shadow: 0px 4px 4px 4px rgba(0,0,0,0.2);
+  box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 10%;
 }

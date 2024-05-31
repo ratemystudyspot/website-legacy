@@ -1,23 +1,31 @@
 .studySpotCard {
+    background-color: white;
+    border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
-    width: 19%;
-    max-width: 320px;
-    border-radius: 5%;
-    margin: 5px;
+    overflow: hidden;
 }
 
 .studySpotCard:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-.container {
-    padding: 2px 16px;
+.studySpotCard img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
 }
 
-.studySpotCard .image {
-    object-fit: cover;
-    padding: 3%;
-    border-radius: 10%;
-    width: 100%;
+.card-details {
+    padding: 15px;
+}
+
+.card-details h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.card-details p {
+    margin: 5px 0 0;
+    color: #555;
 }

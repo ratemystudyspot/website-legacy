@@ -4,12 +4,20 @@
   overflow: clip;
 }
 
-.banner {
-  
+.study-spot-filter {
+  margin: 0 auto;
+  margin-bottom: 1000px;
 }
 
 .study-spot-list {
-  align-self: flex-start;
-  width: 100%;
-  z-index: -99;
+  position: fixed;
+  left: 6%;
+  right: 6%;
+  top: 20%;
+}
+
+@media (max-width: 1080px) {
+  .study-spot-filter {
+    margin-top: 90px;
+  }
 }
