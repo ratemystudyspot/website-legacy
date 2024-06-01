@@ -1,16 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require("../config/db");
 
-
-// temp!! (don't put credentials in code)
-// const pool = new Pool({
-// 	user: 'my_user',
-// 	host: 'localhost',
-// 	database: 'seeker',
-// 	password: 'root',
-// 	port: 5432,
-// });
-
 // User model
 const User = sequelize.define("User",
 	{
@@ -38,6 +28,7 @@ const User = sequelize.define("User",
 	{
 		timestamps: false,
 		createdAt: false,
+		tableName: "user"
 	}
 );
 

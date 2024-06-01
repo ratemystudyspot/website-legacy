@@ -2,6 +2,7 @@ const express = require('express')
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const { testDbConnection } = require('./config/db');
+const { test } = require('./models/userModel');
 
 const app = express()
 const PORT = 3001
