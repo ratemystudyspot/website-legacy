@@ -3,7 +3,7 @@ import './Banner.css'
 import { FaCircleUser } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LogoComponent from '../LogoComponent';
 import useAuth from "../../hooks/useAuth";
 
@@ -12,6 +12,7 @@ const Banner = () => {
   const [searchTerm, setSearchTerm] = useState('');
   // State to track whether the auth navbar is open or closed
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Function to handle the change in the search bar
   const handleChange = (event) => {
@@ -60,11 +61,10 @@ const Banner = () => {
     <header>
       <div className="banner-container">
         <div className="logo-container">
-          {/* <div style={{ width: "70px", height: "70px", marginRight: "20px" }}></div> */}
           <LogoComponent />
-          <Link to="/about">
-            <button style={{ minWidth: "80px" }} className="about">About us</button>
-          </Link>
+          {/* <Link to="/about"> */}
+            <button className="about" onClick={() => navigate("/about")}>About us</button>
+          {/* </Link> */}
         </div>
 
         <div className="middle-container">
@@ -84,9 +84,7 @@ const Banner = () => {
         <div className="right-container">
           {/* Adding study spot btn */}
           <div className="sub-container">
-            <Link to="/spots">
-              <button style={{ minWidth: "150px" }}>Recommend Spot</button>
-            </Link>
+            <button className="recommend-btn" onClick={() => navigate("spots")}>Recommend Spot</button>
           </div>
 
 

@@ -8,11 +8,15 @@ import Banner from '../Components/Banner/Banner'
 const Homepage = () => {
   const [filterOptions, setFilterOptions] = useState([]);
 
-  const filteredCards = filterOptions.length === 0
-    ? StudySpots
-    : StudySpots.filter((card) =>
-      filterOptions.every((filter) => card.filters.includes(filter))
-    );
+  const getCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      let user_lat = position.coords.latitude;
+      let user_lon = position.coords.longitude;
+      setCurrentLocation([user_lat, user_lon]);
+    });    
+  }
+
+  const [currentLocation, setCurrentLocation] = useState(getCurrentLocation());
 
   // for debugging
   // useEffect(() => {
@@ -28,10 +32,8 @@ const Homepage = () => {
       </div>
 
       <div className="study-spot-list">
-        <ListOfStudySpotCards cards={filteredCards} />
+        <ListOfStudySpotCards filterSelected={filterOptions} currentLocation={currentLocation} />
       </div>
-
-
     </div>
   )
 }

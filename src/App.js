@@ -10,7 +10,7 @@ import Homepage from './Pages/Homepage';
 import UBCMap from './Components/UBCMap/UBCMap';
 import ErrorPage from './Pages/Structure/Errorpage';
 import Aboutpage from './Pages/Aboutpage';
-import Spotspage from './Pages/Spotspage';
+import RecommendSpotspage from './Pages/RecommendSpotspage';
 import Seekpage from './Pages/Seekpage'
 import Verify from './Pages/AuthForm/Verify';
 import { Route, Routes } from 'react-router-dom';
@@ -32,7 +32,7 @@ function App() {
         {/* public routes */}
         <Route index element={<Homepage />} />
         <Route path="about" element={<Aboutpage />} />
-        <Route path="spots" element={<Spotspage />} />
+        <Route path="spots" element={<RecommendSpotspage />} />
         <Route path="login" element={<AuthForm />} />
         <Route path="signup" element={<RegisterForm />} /> { /* MAYBE DELETE */ }
         {/* <Route path="verify/:userId" element={<Verify />} /> !!!future todo*/}

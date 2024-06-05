@@ -6,8 +6,8 @@
 
 .study-spot-filter {
   position: absolute;
-  top: 170px;
-  transform: translate(-50%, -50%);
+  top: 120px;
+  transform: translate(-50%, 0);
   width: 100vw;
   border-top: 1px solid #DCDCDC;
 }
@@ -16,7 +16,7 @@
   position: fixed;
   left: 6%;
   right: 6%;
-  top: 220px;
+  top: 190px;
 }
 
 @media (max-width: 1080px) {

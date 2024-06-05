@@ -1,6 +1,7 @@
 const express = require('express')
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const studySpotRoutes = require('./routes/studySpotRoutes');
 const { testDbConnection } = require('./config/db');
 const { test } = require('./models/userModel');
 
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
 // routes
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/studyspot', studySpotRoutes);
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}.`);

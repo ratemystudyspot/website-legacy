@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const { sequelize } = require("../config/db");
 
 // User model
@@ -76,16 +76,6 @@ async function deleteUser(id) {
 		throw new Error(error.message);
 	}
 };
-
-// get a user by email in database
-// const getUsersByEmail = async (email) => {
-
-// get a user by url in database
-// const getUsersByToken = async (token) => {
-
-
-
-
 
 module.exports = {
 	test,
