@@ -4,19 +4,25 @@ import ListOfStudySpotCards from '../Components/StudyCard/ListOfStudySpotCards'
 import SpotCardsFilter from '../Components/StudyCard/SpotCardsFilter'
 import './Homepage.css'
 import Banner from '../Components/Banner/Banner'
+import { getLocation } from '../Services/Utils/location';
 
 const Homepage = () => {
   const [filterOptions, setFilterOptions] = useState([]);
 
   const getCurrentLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      let user_lat = position.coords.latitude;
-      let user_lon = position.coords.longitude;
-      setCurrentLocation([user_lat, user_lon]);
-    });    
+    navigator.geolocation.getCurrentPosition(
+      (position) => { // success case
+        let user_lon = position.coords.longitude;
+        let user_lat = position.coords.latitude;
+        setCurrentLocation([user_lon, user_lat]);
+      },
+      async () => { // error case
+        const {lon, lat} = await getLocation();
+        setCurrentLocation([lon,lat]);
+      });
   }
 
-  const [currentLocation, setCurrentLocation] = useState(getCurrentLocation());
+  const [currentLocation, setCurrentLocation] = useState(async () => await getCurrentLocation());
 
   // for debugging
   // useEffect(() => {

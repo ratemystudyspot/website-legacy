@@ -32,6 +32,10 @@ const StudySpot = sequelize.define("StudySpot",
 		image_link: {
 			type: DataTypes.TEXT,
 		},
+		image_links: {
+			type: DataTypes.ARRAY(DataTypes.TEXT), // Array of text for features
+			defaultValue: []
+		},
 	},
 	{
 		timestamps: false,

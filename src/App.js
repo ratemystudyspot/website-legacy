@@ -17,6 +17,7 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './Pages/Structure/Layout';
 import RequireAuth from './Pages/AuthForm/RequireAuth';
 import Unauthorized from './Pages/Structure/Unauthorized';
+import SpotDetail from './Pages/SpotDetailpage';
 import Reset from './Pages/AuthForm/PasswordRecovery/ResetPage';
 import AuthForm from './Pages/AuthForm/AuthForm';
 
@@ -32,11 +33,12 @@ function App() {
         {/* public routes */}
         <Route index element={<Homepage />} />
         <Route path="about" element={<Aboutpage />} />
-        <Route path="spots" element={<RecommendSpotspage />} />
+        {/* <Route path="spots" element={<RecommendSpotspage />} /> */}
         <Route path="login" element={<AuthForm />} />
         <Route path="signup" element={<RegisterForm />} /> { /* MAYBE DELETE */ }
         {/* <Route path="verify/:userId" element={<Verify />} /> !!!future todo*/}
         <Route path="unauthorized" element={<Unauthorized />} />
+        <Route path="spots/:id" element={<SpotDetail />} />
 
         {/* protected routes */}
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
