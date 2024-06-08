@@ -70,7 +70,6 @@ async function findAllByFeatures(features) {
 			}
 		});
 	} catch (error) {
-		console.log("MADE IT !!", features)
 		console.error("Error fetching spots:", error);
 		throw new Error(error.message);
 	}

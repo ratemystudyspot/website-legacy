@@ -3,8 +3,8 @@ import getDistanceFromLatLonInKm from '../Helpers/GetDistanceLatLon';
 import { useLocation } from 'react-router-dom';
 import { getLocation } from '../Services/Utils/location';
 import { BiVolumeMute } from "react-icons/bi";
-import { TbSofa, TbBatteryCharging2 } from "react-icons/tb";
-import { MdOutlineGroupOff, MdOutlineDoorFront } from "react-icons/md";
+import { TbSofa, TbBatteryCharging2, TbLockOpen, TbMicrowave  } from "react-icons/tb";
+import { MdOutlineFastfood, MdOutlineDoorFront,   } from "react-icons/md";
 import './SpotDetailpage.css'
 
 const images = require.context('../Components/Assets', true);
@@ -19,11 +19,14 @@ const SpotDetailpage = () => {
   let studySpot = location.state;
 
   const filterOptions = [
-    { label: 'Quiet', value: 'quiet', icon: <BiVolumeMute size={20} className="filter-icon" /> },
-    { label: 'Comfy', value: 'comfy', icon: <TbSofa size={20} className="filter-icon" /> },
-    { label: 'Not busy', value: 'not-busy', icon: <MdOutlineGroupOff size={20} className="filter-icon" /> },
-    { label: 'Outlets', value: 'outlets', icon: <TbBatteryCharging2 size={20} className="filter-icon" /> },
-    { label: 'Open Now', value: 'open-now', icon: <MdOutlineDoorFront size={20} className="filter-icon" /> },
+    { label: 'Quiet', value: 'quiet', icon: <BiVolumeMute size={20} className="filter-icon"/> },
+    // { label: 'Comfy', value: 'comfy', icon: <TbSofa size={20} className="filter-icon"/> },
+    // { label: 'Not busy', value: 'not-busy', icon: <MdOutlineGroupOff size={20} className="filter-icon"/> },
+    { label: 'Outlets', value: 'outlets', icon: <TbBatteryCharging2 size={20} className="filter-icon"/> },
+    { label: 'Microwaves', value: 'microwaves', icon: <TbMicrowave  size={20} className="filter-icon"/> },
+    { label: 'Restaurants', value: 'restaurants', icon: <MdOutlineFastfood  size={20} className="filter-icon"/> },
+    { label: 'Open Now', value: 'open-now', icon: <MdOutlineDoorFront size={20} className="filter-icon"/> },
+    
     // Add more filter options as needed
   ];
 
