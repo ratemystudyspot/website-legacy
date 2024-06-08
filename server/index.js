@@ -6,7 +6,7 @@ const { testDbConnection } = require('./config/db');
 const { test } = require('./models/userModel');
 
 const app = express()
-const PORT = 3001
+const PORT = process.env.PORT || 3001;
 
 require("dotenv").config();
 
