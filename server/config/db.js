@@ -7,7 +7,6 @@ const DB_HOST = process.env.DB_HOST;
 const DB_PORT = process.env.DB_PORT;
 const DB_DIALECT = process.env.DB_DIALECT;
 const DB_SSL_STATUS = process.env.DB_SSL_STATUS;
-//`${DB_DIALECT}://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
 
 const dialectOptions = DB_SSL_STATUS === 'true' ? { ssl: { require: true, rejectUnauthorized: false } } : {};
 

@@ -18,7 +18,7 @@ app.use(cors({
 }));
 
 // Basic route
-app.get('/', (req, res) => {
+app.get('/api/test', (req, res) => {
   res.send('Welcome to the API');
 });
 
@@ -28,9 +28,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/studyspot', studySpotRoutes);
 
 app.listen(PORT, () => {
-  console.log(CORS_ORIGINS);
   console.log(`App running on port ${PORT}.`);
   testDbConnection();
 })
-
-// module.exports = app;
