@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Map from 'react-map-gl';
 
-const mapApiKey = process.env.REACT_APP_MAPBOX_API_KEY;
+const mapApiKey = process.env.MAPBOX_API_KEY;
 
 const UBCMap = () => {
 
