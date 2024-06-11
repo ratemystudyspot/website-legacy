@@ -1,33 +1,21 @@
-const express = require('express')
+const express = require('express');
+const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const studySpotRoutes = require('./routes/studySpotRoutes');
 const { testDbConnection } = require('./config/db');
-const { test } = require('./models/userModel');
+const { PORT, CORS_ORIGINS } = require('./config/config');
 
-const app = express()
-const PORT = process.env.PORT || 3001;
+const app = express();
 
-require("dotenv").config();
-
-app.use(express.json())
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ limit: "25mb" }));
-// app.use(function (req, res, next) {
-//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
-//   next();
-// });
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Access-Control-Allow-Headers"
-  );
-  next();
-});
+
+app.use(cors({
+  origin: CORS_ORIGINS,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Access-Control-Allow-Headers']
+}));
 
 // Basic route
 app.get('/', (req, res) => {
@@ -40,6 +28,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/studyspot', studySpotRoutes);
 
 app.listen(PORT, () => {
+  console.log(CORS_ORIGINS);
   console.log(`App running on port ${PORT}.`);
   testDbConnection();
 })
+
+// module.exports = app;
