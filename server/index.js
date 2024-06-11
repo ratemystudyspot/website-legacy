@@ -18,7 +18,7 @@ app.use(cors({
 }));
 
 // Basic route
-app.get('/api/test', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Welcome to the API');
 });
 
