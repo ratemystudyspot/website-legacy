@@ -41,7 +41,6 @@ const SpotDetailpage = () => {
       },
       async () => { // error case
         const { location: {longitude, latitude} } = await getLocation();
-        console.log(longitude, latitude)
         setCurrentLocation([longitude, latitude]);
       });
   }
