@@ -17,8 +17,9 @@ const Homepage = () => {
         setCurrentLocation([user_lon, user_lat]);
       },
       async () => { // error case
-        const {lon, lat} = await getLocation();
-        setCurrentLocation([lon,lat]);
+        const { location: {longitude, latitude} } = await getLocation();
+        console.log(longitude, latitude)
+        setCurrentLocation([longitude, latitude]);
       });
   }
 
