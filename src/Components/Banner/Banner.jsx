@@ -62,11 +62,11 @@ const Banner = () => {
       <div className="banner-container">
         <div className="logo-container">
           <LogoComponent />
+          <button className="about-button" onClick={() => navigate("/about")}>About Us</button>
           {/* <Link to="/about"> */}
-            <button className="about" onClick={() => navigate("/about")}>About us</button>
           {/* </Link> */}
         </div>
-
+        
         <div className="middle-container">
           <form className="search-box">
             <input
@@ -77,17 +77,14 @@ const Banner = () => {
               onKeyDown={handleKeyDown}
               placeholder="Search study spots"
             />
-            <button className='btn-search'><FaSearch className="icon" /></button>
+            <button className='search-button'><FaSearch className="icon" /></button>
           </form>
         </div>
 
         <div className="right-container">
           {/* Adding study spot btn */}
-          <div className="sub-container">
-            <button className="recommend-btn" onClick={() => navigate("spots")}>Recommend Spot</button>
-          </div>
-
-
+          
+            <button className="suggest-button" onClick={() => navigate("spots")}>Suggest Spot</button>
           <div className={isOpen ? "user-nav open" : "user-nav"}>
             {/* User Navbar button */}
             <button className="dropdown-btn" onClick={toggleNavbar}>
