@@ -11,7 +11,7 @@ const Layout = () => {
 
   return (
     <main className="App">
-      <Display />
+      {/* <Display /> Double Logo*/}
       <Outlet />
     </main>
   )

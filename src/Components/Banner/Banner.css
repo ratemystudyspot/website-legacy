@@ -49,7 +49,7 @@
 
 .suggest-button {
   max-width: 125px;
-  min-width: 100px;
+  min-width: 110px;
   width: 10vw;
 }
 
@@ -68,7 +68,7 @@
   }
 
   .logo {
-    width: 30px;
+    width: 40px;
     height: 40px;
   }
 }
