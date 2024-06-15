@@ -1,17 +1,46 @@
+
+/* .about-banner {
+  color: #BFE0FF;
+  height: 60vh;
+  width: 100vw; 
+} */
+
+.banner {
+  .search-box {
+    visibility: hidden;
+  }
+  .about-button {
+    visibility: hidden;
+  }
+  
+  .goBack-button {
+    visibility: visible;
+  }
+  
+}
+
+/* .container {
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+} */
+
+/* .logo {
+  width: 70px;
+  height: 70px;
+} */
+/* 
+
 .a-logo {
-  /* margin-right: 60px; */
-  /* width: 45px;
-  height: 45px; idk what to do with this*/
+  margin-right: 60px; 
+  width: 45px;
+  height: 45px; 
   margin-right: 20px;
   position: absolute;
   left: 29px;
   top: 17.5px;
 }
 
-.logo {
-  width: 70px;
-  height: 70px;
-}
 
 .logo-container button {
   color: #525252;
@@ -98,4 +127,4 @@
   content: "";
   clear: both;
   display: table;
-}
+} */

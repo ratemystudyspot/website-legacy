@@ -63,6 +63,7 @@ const Banner = () => {
         <div className="logo-container">
           <LogoComponent />
           <button className="about-button" onClick={() => navigate("/about")}>About Us</button>
+          <button className="goBack-button" onClick={() => navigate("/")}>Go Back</button>
           {/* <Link to="/about"> */}
           {/* </Link> */}
         </div>

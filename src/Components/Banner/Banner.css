@@ -19,6 +19,7 @@
 }
 
 /* Buttons */
+.goBack-button,
 .about-button,
 .suggest-button {
   color: #7c7c7c;
@@ -34,6 +35,7 @@
   cursor: pointer;
 }
 
+.goBack-button:hover,
 .about-button:hover,
 .suggest-button:hover {
   color: #363636;
@@ -41,10 +43,16 @@
   transition: 0.2s;
 }
 
+.goBack-button,
 .about-button {
   max-width: 90px;
   min-width: 75px;
   width: 8vw;
+}
+
+.goBack-button {
+  visibility: hidden;
+  transform: translate(-130%, 0);
 }
 
 .suggest-button {
@@ -52,7 +60,6 @@
   min-width: 110px;
   width: 10vw;
 }
-
 
 .logo-container {
   display: flex;
@@ -68,7 +75,7 @@
   }
 
   .logo {
-    width: 40px;
+    width: 43px;
     height: 40px;
   }
 }
