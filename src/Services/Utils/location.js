@@ -1,6 +1,6 @@
 async function getLocation() {
   try {
-    const response = await fetch(`http://ip-api.com/json/`);
+    const response = await fetch(`https://api.ipgeolocation.io/getip`);
     const locationData = await response.json();
     return locationData;
   } catch (error) {
