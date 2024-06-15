@@ -6,7 +6,7 @@ function LogoComponent() {
 
   return (
     <Link className="a-logo" to="/">
-      <img className="logo" src={require("./Assets/TempLogo.jpg")} alt="Temporary Logo" /> {/* CHANGE SRC AND ALT */}
+      <img className="logo" src={require("./Assets/Seeker Logo White.png")} alt="Temporary Logo" /> {/* CHANGE SRC AND ALT */}
     </Link>
   )
 }

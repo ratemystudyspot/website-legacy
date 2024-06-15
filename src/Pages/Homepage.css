@@ -9,7 +9,6 @@
   top: 120px;
   transform: translate(-50%, 0);
   width: 100vw;
-  border-top: 1px solid #DCDCDC;
 }
 
 .study-spot-list {
@@ -18,7 +17,7 @@
   right: 6%;
   top: 190px;
 }
-
+/* 
 @media (max-width: 1080px) {
   .study-spot-filter {
     top: 230px;
@@ -26,4 +25,4 @@
   .study-spot-list {
     top: 280px;
   }
-}
+} */
