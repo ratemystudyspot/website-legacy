@@ -40,7 +40,7 @@ const SpotDetailpage = () => {
         setCurrentLocation([user_lon, user_lat]);
       },
       async () => { // error case
-        const { lon, lat } = await getLocation();
+        const { longitude: lon, latitude: lat } = await getLocation();
         setCurrentLocation([lon, lat]);
       });
   }
