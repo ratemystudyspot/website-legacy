@@ -102,7 +102,7 @@ async function findAllByTime(filters) {
 	try {
 		const timeFilters = {};
 		if (filters.time) { // given a time, find all study spots that are open
-			timeFilters.day_of_week = { [Op.is]: filters.day_of_week }
+			timeFilters.day_of_week = { [Op.eq]: filters.day_of_week }
 			timeFilters.opening_time = { [Op.lte]: filters.time };
 			timeFilters.closing_time = { [Op.gte]: filters.time };
 		}
