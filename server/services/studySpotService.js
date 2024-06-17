@@ -28,7 +28,7 @@ async function getSpotsByTime(filters) {
 
 async function getOpeningHourById(query) {
   try {
-    return await studySpotModel.findAllOpeningHour(query.study_spot_id);
+    return await studySpotModel.findAllOpeningHour(query);
   } catch (error) {
     throw error;
   }

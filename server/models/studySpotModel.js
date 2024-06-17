@@ -102,12 +102,10 @@ async function findAllByTime(filters) {
 	try {
 		const timeFilters = {};
 		if (filters.time) { // given a time, find all study spots that are open
+			timeFilters.day_of_week = { [Op.is]: filters.day_of_week }
 			timeFilters.opening_time = { [Op.lte]: filters.time };
 			timeFilters.closing_time = { [Op.gte]: filters.time };
-
-			// timeFilters = (!timeFilters.opening_time || !timeFilters.closing_time) ? {} : timeFilters;
 		}
-		console.log("TIME FILTERS:", {...timeFilters}); //delte
 		return await StudySpot.findAll({
 			include: [{
 				model: OpeningHour,
@@ -122,11 +120,13 @@ async function findAllByTime(filters) {
 	}
 }
 
-async function findAllOpeningHour(studySpotId) {
+async function findAllOpeningHour(query) {
 	try {
+		const study_spot_id = query.study_spot_id;
+
 		const openingHours = await OpeningHour.findAll({
 			where: {
-				study_spot_id: studySpotId
+				study_spot_id: study_spot_id,
 			},
 			order: [
 				[sequelize.literal(`
