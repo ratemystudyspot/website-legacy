@@ -30,7 +30,7 @@ body {
   top: 119px;
   z-index: -1;
   background-color: #BFE0FF;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
   .about-title {
     font-size: 100px;
     font-weight: bold;
@@ -49,7 +49,7 @@ body {
   flex-direction: row;
   position: absolute;
   width: 90vw;
-  transform: translate(-50%, 70%);
+  transform: translate(-50%, -15vh);
   justify-content: center;
   
   .developer-cards {
