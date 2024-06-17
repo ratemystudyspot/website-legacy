@@ -18,7 +18,25 @@ async function getSpotsByFeatures(features) {
   }
 }
 
+async function getSpotsByTime(filters) {
+  try {
+    return await studySpotModel.findAllByTime(filters);
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getOpeningHourById(query) {
+  try {
+    return await studySpotModel.findAllOpeningHour(query.study_spot_id);
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
-	getSpots,
+  getSpots,
   getSpotsByFeatures,
+  getSpotsByTime,
+  getOpeningHourById,
 }
