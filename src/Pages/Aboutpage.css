@@ -49,7 +49,7 @@ body {
   flex-direction: row;
   position: absolute;
   width: 90vw;
-  transform: translate(-50%, -12vh);
+  transform: translate(-50%, 70%);
   justify-content: center;
   
   .developer-cards {
