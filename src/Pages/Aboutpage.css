@@ -1,10 +1,4 @@
-
-/* .about-banner {
-  color: #BFE0FF;
-  height: 60vh;
-  width: 100vw; 
-} */
-
+/* Common About Banner */
 .banner {
   .search-box {
     visibility: hidden;
@@ -16,8 +10,136 @@
   .goBack-button {
     visibility: visible;
   }
-  
+  .banner-container {
+    box-shadow: none;
+  }
 }
+
+body {
+  color: #7c7c7c;
+}
+
+.about-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  height: 50vh;
+  width: 100vw; 
+  transform: translate(-50%, 0);
+  top: 119px;
+  z-index: -1;
+  background-color: #BFE0FF;
+
+  .about-title {
+    font-size: 100px;
+    font-weight: bold;
+  }
+  .about-description {
+    font-size: 17px;
+    font-weight: bolder;
+    width: fit-content;
+    text-align: justify;
+  }
+}
+
+/* Leo and Ray about us cards */
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  width: 90vw;
+  transform: translate(-50%, -12vh);
+  justify-content: center;
+  
+  .developer-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    width: 43vw;
+    height: 50vh;
+    border-radius: 20px;
+    background-color: white;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .personal-banner {
+    display: flex;
+    padding: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    height: 40%;
+
+    .pfp {
+      border-radius: 100px;
+      height: 90%;
+      min-width: 90px;
+    }
+
+    .social-media-links {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+
+      .icon {
+        margin: 4px;
+        border-radius: 100px;
+        height: 20%;
+      }
+
+      .icon:hover {
+        filter: brightness(0.7);
+      }
+    }
+  }
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 200%;
+}
+
+.developer-description {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  height: 45%;
+  margin-top: 20px;
+  font-size: 17px;
+}
+@media (min-width: 1080px) {
+
+  .about-banner {
+    .about-title {
+      font-size: 125px;
+      font-weight: bold;
+    }
+    .about-description {
+      font-size: 20px;
+    }
+  }
+
+  .developer-description {
+    margin-top: 20px;
+    font-size: 19px;
+  }
+
+  .user-name {
+    font-weight: bold;
+    font-size: 275%;
+  }
+
+  .user-title {
+    font-size: 150%;
+  }
+
+}
+
 
 /* .container {
   display: flex;
