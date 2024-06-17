@@ -3,7 +3,6 @@ import StudySpotCard from "./StudySpotCard";
 import "./ListOfStudySpotCards.css";
 import { getSpots, getSpotsByFeatures, getSpotsByTime } from "../../Services/studySpot";
 import { useEffect, useState } from "react";
-import { GiConsoleController } from "react-icons/gi";
 
 const ListOfStudySpotCards = ({ filterSelected, currentLocation }) => {
   const [cards, setCards] = useState([]);
@@ -45,7 +44,6 @@ const ListOfStudySpotCards = ({ filterSelected, currentLocation }) => {
           const featureCardsIDs = featureCards.map(featureCard => featureCard.id) // get ids of all spots from filters (excluding open-now filter)
           const filteredCards = openCards.filter(openCard => featureCardsIDs.includes(openCard.id)) // get all opened spots AND with given filters (excluding open-now filter)
 
-          console.log("FILTERED CARDS:", filteredCards)
           setCards(filteredCards);
         } else { // if code reaches this line, means that all cards are shown
           const allCards = featureCards; 
