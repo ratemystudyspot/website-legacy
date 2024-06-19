@@ -26,14 +26,6 @@ async function getSpotsByTime(filters) {
   }
 }
 
-async function getOpeningHourById(query) {
-  try {
-    return await studySpotModel.findAllOpeningHour(query);
-  } catch (error) {
-    throw error;
-  }
-}
-
 module.exports = {
   getSpots,
   getSpotsByFeatures,

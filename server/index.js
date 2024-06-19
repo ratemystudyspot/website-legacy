@@ -3,6 +3,8 @@ const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const studySpotRoutes = require('./routes/studySpotRoutes');
+const openingHourRoutes = require('./routes/openingHourRoutes');
+const review = require('./routes/reviewRoutes');
 const { testDbConnection } = require('./config/db');
 const { PORT, CORS_ORIGINS } = require('./config/config');
 
@@ -26,6 +28,8 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/studyspot', studySpotRoutes);
+app.use('/api/openinghour', openingHourRoutes);
+app.use('/api/review', review);
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}.`);

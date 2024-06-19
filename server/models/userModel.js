@@ -78,6 +78,7 @@ async function deleteUser(id) {
 };
 
 module.exports = {
+	User,
 	test,
 	findAll,
 	createUser,

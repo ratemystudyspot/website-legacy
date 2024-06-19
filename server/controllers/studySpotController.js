@@ -27,18 +27,8 @@ async function getSpotsByTime(req, res) {
   }
 }
 
-async function getOpeningHourById(req, res) {
-  try {
-    const openingHour = await studySpotService.getOpeningHourById(req.query);
-    res.status(200).send(openingHour);
-  } catch (error) {
-    res.status(404).send(error);
-  }
-}
-
 module.exports = {
   getSpots,
   getSpotsByFeatures,
   getSpotsByTime,
-  getOpeningHourById
 };
