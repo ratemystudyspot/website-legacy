@@ -10,6 +10,7 @@ import { getLocation } from '../Services/Utils/location';
 
 const Homepage = () => {
   const [filterOptions, setFilterOptions] = useState([]);
+  const [cards, setCards] = useState([]);
   const [locationAlert, setLocationAlert] = useState(false);
 
   const getCurrentLocation = () => {
@@ -31,14 +32,14 @@ const Homepage = () => {
 
   return (
     <div className="container">
-      <Banner/>
+      <Banner filterSelected={filterOptions} onFilterSelect={setFilterOptions} cards={cards} setCards={setCards}/>
 
       <div className='study-spot-filter'>
         <SpotCardsFilter filterSelected={filterOptions} onFilterSelect={setFilterOptions} />
       </div>
 
       <div className="study-spot-list">
-        <ListOfStudySpotCards filterSelected={filterOptions} currentLocation={currentLocation} />
+        <ListOfStudySpotCards filterSelected={filterOptions} currentLocation={currentLocation} cards={cards} setCards={setCards} />
       </div>
 
       <div className="alert">

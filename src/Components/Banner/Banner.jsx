@@ -6,31 +6,33 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, useNavigate } from 'react-router-dom';
 import LogoComponent from '../LogoComponent';
 import useAuth from "../../hooks/useAuth";
+import StudySpots from '../../Data/StudySpots';
 
-const Banner = () => {
-  // State to track whether a search term has been entered into search bar
-  const [searchTerm, setSearchTerm] = useState('');
-  // State to track whether the auth navbar is open or closed
-  const [isOpen, setIsOpen] = useState(false);
+const Banner = ({ filterSelected, onFilterSelect, cards, setCards }) => {
+  const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
+  const [isOpen, setIsOpen] = useState(false); // State to track whether the auth navbar is open or closed
   const navigate = useNavigate();
 
   // Function to handle the change in the search bar
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value.toLowerCase());
   };
 
-  // Function to handle when user presses enter key
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  // Function to handle search from search bar !!! -> NEED TO CHANGE EVENT FIRED
-  const handleSearch = () => {
+  // Function to handle search from search bar
+  const handleSearch = async (e) => {
     // Perform search operation with searchTerm
-    console.log('Searching for:', searchTerm);
-    // You can implement your search logic here
+    e.preventDefault();
+    if (searchTerm.length === 0) {
+      await onFilterSelect([]);
+      await setCards(StudySpots);
+    }
+    if (searchTerm.length > 0) {
+      const queriedStudySpots = StudySpots.filter((studySpot) => {
+        return studySpot.name.toLowerCase().match(searchTerm);
+      })
+      await onFilterSelect([]);
+      await setCards(queriedStudySpots);
+    }
   };
 
   // Function to toggle the auth navbar state
@@ -41,7 +43,7 @@ const Banner = () => {
   // for authorization
   const { setAuth, auth } = useAuth();
   const handleAuth = (auth) => {
-    if (auth?.roles == 2004) {
+    if (auth?.roles === 2004) {
       return (
         <div class="dropdown-content">
           <button onClick={() => { setAuth({}) }}>Sign out</button>
@@ -67,25 +69,25 @@ const Banner = () => {
           {/* <Link to="/about"> */}
           {/* </Link> */}
         </div>
-        
+
         <div className="middle-container">
-          <form className="search-box">
+          <form className="search-box" onSubmit={handleSearch}>
             <input
               className="input-search"
               type="text"
               value={searchTerm}
               onChange={handleChange}
-              onKeyDown={handleKeyDown}
+              // onKeyDown={handleKeyDown}
               placeholder="Search study spots"
             />
-            <button className='search-button'><FaSearch className="icon" /></button>
+            <button type="submit" className='search-button'><FaSearch className="icon" /></button>
           </form>
         </div>
 
         <div className="right-container">
           {/* Adding study spot btn */}
-          
-            <button className="suggest-button" onClick={() => navigate("spots")}>Suggest Spot</button>
+
+          <button className="suggest-button" onClick={() => navigate("spots")}>Suggest Spot</button>
           <div className={isOpen ? "user-nav open" : "user-nav"}>
             {/* User Navbar button */}
             <button className="dropdown-btn" onClick={toggleNavbar}>

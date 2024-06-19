@@ -1,12 +1,10 @@
-import StudySpots from "../../SampleData/StudySpots";
+import AllStudySpots from "../../Data/StudySpots";
 import StudySpotCard from "./StudySpotCard";
 import "./ListOfStudySpotCards.css";
 import { getSpots, getSpotsByFeatures, getSpotsByTime } from "../../Services/studySpot";
 import { useEffect, useState } from "react";
 
-const ListOfStudySpotCards = ({ filterSelected, currentLocation }) => {
-  const [cards, setCards] = useState([]);
-
+const ListOfStudySpotCards = ({ filterSelected, currentLocation, cards, setCards }) => {
   const convertTimeTo24h = (time12h) => {
     const [time, modifier] = time12h.split(' ');
     let [hours, minutes, seconds] = time.split(':');
@@ -29,24 +27,45 @@ const ListOfStudySpotCards = ({ filterSelected, currentLocation }) => {
     return { currentDayOfWeek, currentTime24h };
   }
 
+  const displayCards = () => {
+    if (cards.length === 0) {
+      return (
+        <div style={{
+          position: 'absolute',
+          top: '30vh',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}>404: No Spots Found :/</div>
+      )
+    }
+
+    if (cards.length > 0) {
+      return (
+        cards.map((studySpot) => (
+          <StudySpotCard studySpot={studySpot} currentLocation={currentLocation} />
+        ))
+      );
+    }
+  }
+
   useEffect(() => {
     const getFilteredCards = async () => {
       try {
         const featureCards =
           (filterSelected.length === 0 || (filterSelected.length === 1 && filterSelected.includes('open-now')))
-            ? await getSpots()
+            ? AllStudySpots
             : await getSpotsByFeatures(filterSelected.filter(filter => filter !== 'open-now')); // get all spots with all selected filters (excluding open-now filter)
 
         if (filterSelected.includes('open-now')) { // if open-now selected, find opened spots PLUS with given filters 
           const { currentDayOfWeek, currentTime24h } = getCurrentDate();
           const openCards = await getSpotsByTime(currentDayOfWeek, currentTime24h);
-          
+
           const featureCardsIDs = featureCards.map(featureCard => featureCard.id) // get ids of all spots from filters (excluding open-now filter)
           const filteredCards = openCards.filter(openCard => featureCardsIDs.includes(openCard.id)) // get all opened spots AND with given filters (excluding open-now filter)
 
           setCards(filteredCards);
-        } else { // if code reaches this line, means that all cards are shown
-          const allCards = featureCards; 
+        } else { // if code reaches this line, means that all cards are shown (dangerous code here: query search overrides this setCards line -> check Banner.jsx's search functions)
+          const allCards = featureCards;
           setCards(allCards);
         }
       } catch (error) {
@@ -57,11 +76,10 @@ const ListOfStudySpotCards = ({ filterSelected, currentLocation }) => {
     getFilteredCards(filterSelected);
   }, [filterSelected]);
 
+
   return (
     <div className="listOfStudySpotCards">
-      {cards.map((studySpot) => (
-        <StudySpotCard studySpot={studySpot} currentLocation={currentLocation} />
-      ))}
+      {displayCards()}
     </div>
   )
 }
