@@ -30,5 +30,4 @@ module.exports = {
   getSpots,
   getSpotsByFeatures,
   getSpotsByTime,
-  getOpeningHourById,
 }
