@@ -1,6 +1,6 @@
 const { Op, DataTypes } = require('sequelize');
 const { sequelize } = require("../config/db");
-const OpeningHour = require('./openingHourModel');
+const { OpeningHour } = require('./openingHourModel');
 
 // Studyspot model
 const StudySpot = sequelize.define("StudySpot", {
@@ -43,6 +43,9 @@ const StudySpot = sequelize.define("StudySpot", {
 		tableName: "study_spot"
 	}
 );
+
+StudySpot.hasMany(OpeningHour, { foreignKey: 'study_spot_id', onDelete: 'CASCADE' });
+OpeningHour.belongsTo(StudySpot, { foreignKey: 'study_spot_id', onDelete: 'CASCADE' });
 
 // delete later
 const test = () => {

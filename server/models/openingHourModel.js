@@ -2,6 +2,19 @@ const { Op, DataTypes } = require('sequelize');
 const { sequelize } = require("../config/db");
 
 const OpeningHour = sequelize.define('OpeningHour', {
+	id: {
+		type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+	},
+	study_spot_id: {
+		type: DataTypes.INTEGER,
+		references: {
+			model: 'user',
+			key: 'id'
+		},
+		onDelete: 'CASCADE'
+	},
 	day_of_week: {
 		type: DataTypes.STRING,
 		allowNull: false
