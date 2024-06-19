@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 
 const ListOfStudySpotCards = ({ filterSelected, currentLocation, cards, setCards }) => {
   const convertTimeTo24h = (time12h) => {
-    const [time, modifier] = time12h.split(' ');
+    const [time, modifier] = time12h.split(' ').slice(0,2);
     let [hours, minutes, seconds] = time.split(':');
 
     if (hours === '12') {
       hours = '00';
     }
-    if (modifier === 'PM') {
+    if (modifier === 'p.m.') {
       hours = parseInt(hours, 10) + 12;
     }
     return `${hours}:${minutes}:${seconds}`;
