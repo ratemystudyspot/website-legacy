@@ -8,7 +8,7 @@ import LogoComponent from '../LogoComponent';
 import useAuth from "../../hooks/useAuth";
 import StudySpots from '../../Data/StudySpots';
 
-const Banner = ({ filterSelected, onFilterSelect, cards, setCards }) => {
+const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch=false }) => {
   const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
   const [isOpen, setIsOpen] = useState(false); // State to track whether the auth navbar is open or closed
   const navigate = useNavigate();
@@ -71,17 +71,22 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards }) => {
         </div>
 
         <div className="middle-container">
-          <form className="search-box" onSubmit={handleSearch}>
-            <input
-              className="input-search"
-              type="text"
-              value={searchTerm}
-              onChange={handleChange}
-              // onKeyDown={handleKeyDown}
-              placeholder="Search study spots"
-            />
-            <button type="submit" className='search-button'><FaSearch className="icon" /></button>
-          </form>
+          {(showSearch)
+            ? (
+              <form className="search-box" onSubmit={handleSearch}>
+                <input
+                  className="input-search"
+                  type="text"
+                  value={searchTerm}
+                  onChange={handleChange}
+                  // onKeyDown={handleKeyDown}
+                  placeholder="Search study spots"
+                />
+                <button type="submit" className='search-button'><FaSearch className="icon" /></button>
+              </form>
+            )
+            : (null)
+          }
         </div>
 
         <div className="right-container">
