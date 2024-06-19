@@ -10,8 +10,8 @@
   color: #333;
 }
 
-.listing-header p {
-  margin: 10px 0 20px;
+.listing-header .distance {
+  margin: 5px 0 20px 5px;
   color: #666;
 }
 
@@ -49,21 +49,16 @@
 }
 
 .amenities ul {
-  list-style: none;
+  list-style-type: none;
+  /* list-style: none; */
   padding: 0;
 }
 
 .amenities li {
-  background: #f9f9f9;
-  padding: 12px 15px;
-  border-radius: 8px;
-  margin: 8px 0;
-  display: flex;
+  display: inline-block;
+  background: #ADD8E6;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-right: 14px;
   align-items: center;
-}
-
-.amenities li::before {
-  content: '✓';
-  margin-right: 10px;
-  color: #007bff;
 }

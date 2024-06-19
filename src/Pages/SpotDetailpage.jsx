@@ -1,11 +1,13 @@
 import { React, useState, useEffect } from 'react'
 import getDistanceFromLatLonInKm from '../Helpers/GetDistanceLatLon';
+import Banner from '../Components/Banner/Banner';
 import { useLocation } from 'react-router-dom';
 import { getLocation } from '../Services/Utils/location';
 import { BiVolumeMute } from "react-icons/bi";
-import { TbSofa, TbBatteryCharging2, TbLockOpen, TbMicrowave  } from "react-icons/tb";
-import { MdOutlineFastfood, MdOutlineDoorFront,   } from "react-icons/md";
+import { TbSofa, TbBatteryCharging2, TbLockOpen, TbMicrowave } from "react-icons/tb";
+import { MdOutlineFastfood, MdOutlineDoorFront, } from "react-icons/md";
 import { GoRepoLocked } from "react-icons/go";
+import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 import './SpotDetailpage.css'
 
 const images = require.context('../Components/Assets', true);
@@ -20,15 +22,15 @@ const SpotDetailpage = () => {
   let studySpot = location.state;
 
   const filterOptions = [
-    { label: 'Quiet', value: 'quiet', icon: <BiVolumeMute size={20} className="filter-icon"/> },
+    { label: 'Quiet', value: 'quiet', icon: <BiVolumeMute size={20} className="filter-icon" /> },
     // { label: 'Comfy', value: 'comfy', icon: <TbSofa size={20} className="filter-icon"/> },
     // { label: 'Not busy', value: 'not-busy', icon: <MdOutlineGroupOff size={20} className="filter-icon"/> },
-    { label: 'Outlets', value: 'outlets', icon: <TbBatteryCharging2 size={20} className="filter-icon"/> },
-    { label: 'Study Rooms', value: 'study-rooms', icon: <GoRepoLocked  size={20} className="filter-icon"/> },
-    { label: 'Microwaves', value: 'microwaves', icon: <TbMicrowave  size={20} className="filter-icon"/> },
-    { label: 'Food Near', value: 'food-near', icon: <MdOutlineFastfood  size={20} className="filter-icon"/> },
-    { label: 'Open Now', value: 'open-now', icon: <MdOutlineDoorFront size={20} className="filter-icon"/> },
-    
+    { label: 'Outlets', value: 'outlets', icon: <TbBatteryCharging2 size={20} className="filter-icon" /> },
+    { label: 'Study Rooms', value: 'study-rooms', icon: <GoRepoLocked size={20} className="filter-icon" /> },
+    { label: 'Microwaves', value: 'microwaves', icon: <TbMicrowave size={20} className="filter-icon" /> },
+    { label: 'Food Near', value: 'food-near', icon: <MdOutlineFastfood size={20} className="filter-icon" /> },
+    { label: 'Open Now', value: 'open-now', icon: <MdOutlineDoorFront size={20} className="filter-icon" /> },
+
     // Add more filter options as needed
   ];
 
@@ -40,7 +42,7 @@ const SpotDetailpage = () => {
         setCurrentLocation([user_lon, user_lat]);
       },
       async () => { // error case
-        const { location: {longitude, latitude} } = await getLocation();
+        const { location: { longitude, latitude } } = await getLocation();
         setCurrentLocation([longitude, latitude]);
       });
   }
@@ -48,46 +50,82 @@ const SpotDetailpage = () => {
   const [currentLocation, setCurrentLocation] = useState(async () => await getCurrentLocation());
 
   const getDistance = () => {
-    console.log(studySpot)
     let user_lon = currentLocation[0];
     let user_lat = currentLocation[1];
     let spot_lon = studySpot.location.coordinates[0];
     let spot_lat = studySpot.location.coordinates[1];
 
     let distance = getDistanceFromLatLonInKm(user_lat, user_lon, spot_lat, spot_lon);
-    if (distance >= 10) distance = Math.round(distance);
-    return distance;
+    let unit = "km"
+
+    if (distance >= 10) { // if distance is more or equal than 10 km away, remove float
+      distance = Math.round(distance);
+    }
+    if (distance < 1) { // if ditance is lesser than 1 km away, use meters
+      distance *= 1000.0;
+      distance = distance.toFixed(1);
+      unit = "m"
+    }
+    return `${distance} ${unit}`;
   }
 
-  // useEffect(() => {
-  //   getCurrentLocation();
-  // }, [])
+  const [galleryImages, setGalleryImages] = useState([]);
+  const [imageIndex, setImageIndex] = useState(0);
+
+  const nextSlide = () => {
+    setImageIndex((prevIndex) => {
+      if (prevIndex + 1 < galleryImages.length) return prevIndex + 1; // return next image
+      else return 0; // return first image
+    });
+  }
+
+  const prevSlide = () => {
+    setImageIndex((prevIndex) => {
+      if (prevIndex - 1 >= 0) return prevIndex - 1; // return prev image
+      else return galleryImages.length - 1; // return last image
+    });
+  }
+
+  useEffect(() => {
+    studySpot.image_links.map((image_link) => {
+      setGalleryImages((prevGalleryImages) => {
+        return prevGalleryImages.concat(
+          [<img src={getImage(image_link)} alt="Gallery Image" />]
+        )
+      })
+    })
+  }, [])
 
   return (
     <div className="listing-detail">
-      <header className="listing-header">
-        <h1>{studySpot.name}</h1>
-        <p>{getDistance()} km</p>
-      </header>
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: '50%',
+        transform: 'translate(-50%, 0)',
+      }}>
+        <Banner />
+      </div>
 
       <section className="gallery">
-        {studySpot.image_links.map((image_link) => {
-          return <img src={getImage(image_link)} alt="Gallery Image" />
-        })}
+        <button onClick={prevSlide}><IoIosArrowDropleftCircle /></button>
+        {galleryImages[imageIndex]}
+        <button onClick={nextSlide}><IoIosArrowDroprightCircle /></button>
       </section>
 
+      <div className="listing-header">
+        <h1><b>{studySpot.name}</b></h1>
+        <p className="distance">{getDistance()} away</p>
+      </div>
+
       <section className="details">
-        <h2>About this space</h2>
-        <p>
-          {studySpot.description}
-        </p>
+        ADD MAP HERE
       </section>
 
       <section className="amenities">
-        <h2>Amenities</h2>
         <ul>
           {filterOptions.map((filter) => {
-            if (studySpot.features.includes(filter.value)) return(<span>{filter.icon} {filter.label}</span>)
+            if (studySpot.features.includes(filter.value)) return (<li>{filter.icon} {filter.label}</li>)
           })}
         </ul>
       </section>
