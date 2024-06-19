@@ -29,8 +29,6 @@ async function getSpotsByTime(day_of_week, time) {
   }
 }
 
-
-
 export {
   getSpots,
   getSpotsByFeatures,
