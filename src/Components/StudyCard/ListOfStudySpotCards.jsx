@@ -22,7 +22,10 @@ const ListOfStudySpotCards = ({ filterSelected, currentLocation, cards, setCards
     const date = new Date();
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const currentDayOfWeek = daysOfWeek[date.getDay()];
-    const currentTime12h = date.toLocaleTimeString();
+    const currentTime12h = date.toLocaleTimeString("en-CA", {
+      timeZone: "America/Vancouver",
+      timeZoneName: "long",
+    });
     const currentTime24h = convertTimeTo24h(currentTime12h);
     return { currentDayOfWeek, currentTime24h };
   }
