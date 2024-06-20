@@ -90,6 +90,7 @@ body {
         margin: 4px;
         border-radius: 100px;
         height: 20%;
+        cursor: pointer;
       }
 
       .icon:hover {
