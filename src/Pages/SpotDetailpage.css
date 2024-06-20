@@ -1,6 +1,8 @@
 .listing-detail {
   background: #fff;
   padding: 30px;
+  width: 100vw;
+  height: 80vh;
   margin-top: 100px;
 }
 
@@ -15,17 +17,58 @@
   color: #666;
 }
 
+
 .gallery {
   display: flex;
-  gap: 15px;
-  margin: 20px 0;
+  overflow: hidden;
+  width: 50%;
+  height: 70%;
   flex-wrap: wrap;
+  position: relative;
+  border-radius: 20px;
 }
 
+.slider-button {
+  visibility: hidden;
+  position: absolute;
+  top: 47%;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 1; /* Ensure buttons are on top of the image */
+  font-size: 40px;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  visibility: hidden;
+}
+
+.gallery:hover {
+  .slider-button {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.slider-button.prev {
+  left: 10px; 
+}
+
+.slider-button.next {
+   /* Adjust as needed to position the button */
+   right: 10px;
+}
+
+/* .slider-button{
+  position: absolute;
+} */
+
+
 .gallery img {
-  width: calc(33.333% - 10px);
-  height: auto;
-  border-radius: 8px;
+  /* width: calc(33.333% - 10px); */
+  overflow: hidden;
+  width: 100%;
+  border-radius: 20px;
   transition: 0.3s;
 }
 
