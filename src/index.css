@@ -28,3 +28,18 @@ code {
 header {
   z-index: 1;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 5px;
+}
+
+/* Track on hover */
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
