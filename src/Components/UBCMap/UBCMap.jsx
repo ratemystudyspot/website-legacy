@@ -1,22 +1,32 @@
-import { useState } from 'react';
-import Map from 'react-map-gl';
+import React, { useEffect, useState, useRef } from 'react';
+import maplibregl from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
-const mapApiKey = process.env.MAPBOX_API_KEY;
-
-const UBCMap = () => {
-
+const UBCMap = ({ markerCoordinates = [-123.2460, 49.2606], mapWidth = '600px', mapHeight = '400px', mapCenter = [-123.2460, 49.2626], mapZoom = 13 }) => {
+    const mapContainer = useRef(null);
     const [viewState, setViewState] = useState({
-        longitude: -123.2460,
-        latitude: 49.2606,
-        zoom: 12})
+        center: mapCenter,
+        zoom: mapZoom
+    })
 
-    return <Map
-        mapboxAccessToken={mapApiKey}
-        {... viewState}
-        onMove={evt => setViewState(evt.viewState)}
-        style={{width: 600, height: 400, marginBottom:50}}
-        mapStyle="mapbox://styles/tangman/clvrlyodq01i001q128b9dagu"
+    useEffect(() => {
+        const map = new maplibregl.Map({
+            container: mapContainer.current,
+            style: 'https://tiles.basemaps.cartocdn.com/gl/positron-gl-style/style.json', // DARK THEME: https://tiles.basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json 
+            ...viewState,
+        })
+        map.addControl(new maplibregl.NavigationControl())
+
+        if (markerCoordinates) new maplibregl.Marker().setLngLat(markerCoordinates).addTo(map)
+    }, []);
+
+
+    return (
+        <div
+            ref={mapContainer}
+            style={{ width: mapWidth, height: mapHeight, position: 'absolute' }}
         />
+    )
 
 }
 
