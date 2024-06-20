@@ -42,11 +42,15 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch=fa
 
   // for authorization
   const { setAuth, auth } = useAuth();
+  const handleSignOut = async () => {
+    await setAuth({});
+    alert("Sign out successful.") // definitely need to change !!!
+  }
   const handleAuth = (auth) => {
     if (auth?.roles === 2004) {
       return (
         <div class="dropdown-content">
-          <button onClick={() => { setAuth({}) }}>Sign out</button>
+          <a onClick={handleSignOut}>Sign out</a>
         </div>
       )
     } else {
