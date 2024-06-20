@@ -108,9 +108,11 @@ const SpotDetailpage = () => {
       </div>
 
       <section className="gallery">
-        <button onClick={prevSlide}><IoIosArrowDropleftCircle /></button>
-        {galleryImages[imageIndex]}
-        <button onClick={nextSlide}><IoIosArrowDroprightCircle /></button>
+        <div className='slider-container'>
+          <button className='slider-button prev' onClick={prevSlide}><IoIosArrowDropleftCircle /></button>
+          <button className='slider-button next' onClick={nextSlide}><IoIosArrowDroprightCircle /></button>
+        </div>
+          {galleryImages[imageIndex]}      
       </section>
 
       <div className="listing-header">
