@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import LogoComponent from '../LogoComponent';
 import useAuth from "../../hooks/useAuth";
 import StudySpots from '../../Data/StudySpots';
+import { logout } from '../../Services/auth';
 
 const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch=false }) => {
   const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
@@ -39,17 +40,19 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch=fa
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
-
+  
   // for authorization
   const { setAuth, auth } = useAuth();
   const handleSignOut = async () => {
+    await logout();
     await setAuth({});
-    alert("Sign out successful.") // definitely need to change !!!
+    alert("Sign out successful.") // TODO: make a custom alert
   }
   const handleAuth = (auth) => {
     if (auth?.roles === 2004) {
       return (
         <div class="dropdown-content">
+          <Link to="/user/settings">Account Settings</Link>
           <a onClick={handleSignOut}>Sign out</a>
         </div>
       )

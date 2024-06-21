@@ -1,10 +1,13 @@
 import { React, useState, } from 'react';
 import './AuthForm.css'
-import { FaUser, FaLock } from "react-icons/fa";
+import { IoMdMail } from "react-icons/io";
+import { FaLock } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
 import { login } from '../../Services/auth.js';
 import useAuth from '../../hooks/useAuth.js';
 import useRecovery from '../../hooks/useRecovery.js';
+import { Password } from '@mui/icons-material';
 
 
 const LoginForm = () => {
@@ -25,13 +28,20 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const response = await login(email, pwd);
-
+      let response = await login(email, pwd);
+      let accessToken = response.access_token;
+      let accessTokenDecoded = jwtDecode(accessToken); // decode access token
+      
       setInvalidEmail(false);
       setInvalidPwd(false);
 
-      setAuth({ email: response?.email, roles: response?.role });
+      setAuth({ access_token: accessToken, roles: accessTokenDecoded?.UserInfo?.role });
       navigate(from, { replace: true });
+      
+      // delete all info related to access token
+      response = null;
+      accessToken = null;
+      accessTokenDecoded = null;
     } catch (e) {
       console.error("An error occurred:", e);
       if (e.message === "Email not found") { // if given credentials don't match any in the database
@@ -64,7 +74,7 @@ const LoginForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <FaUser className="icon" />
+            <IoMdMail className="icon" />
           </div>
           <div className="input-box">
             <input

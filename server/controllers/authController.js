@@ -20,6 +20,7 @@ async function login(req, res) {
     if (error.message === "Compromised Refresh Token") {
       return res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true }); // clear cookie after being compromised
     }
+    console.log(error)
     return res.status(500).send({ message: error.message });
   }
 }
@@ -69,7 +70,7 @@ async function handleRefreshToken(req, res) {
 
     res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true }); // clear access token
     res.cookie('jwt', response.refresh_token, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 30 * 24 * 60 * 60 * 1000 }); // create a secure cookie with refresh token
-    res.status(200).send({ message: "Handle refresh token successful" });
+    res.status(200).send({ message: "Handle refresh token successful", access_token: response.access_token });
     return;
   } catch (error) {
     if (error.message === "Unauthorized") {
