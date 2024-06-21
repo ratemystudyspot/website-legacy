@@ -1,13 +1,25 @@
+.banner {
+  .goBack-button {
+    visibility: visible;
+    transform: translate(0, 0);
+  }
+}
+
 .listing-detail {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   background: #fff;
-  padding: 30px;
+  padding-top: 30px;
   width: 100vw;
   height: 80vh;
-  margin-top: 100px;
+  margin-top: 20px;
+  transform: translate(-50%, -50%);
 }
 
 .listing-header h1 {
-  margin: 0;
+  margin-top: 20px;
   font-size: 2.5rem;
   color: #333;
 }
@@ -17,30 +29,46 @@
   color: #666;
 }
 
+.study-info-container {
+  display: flex;
+  flex-direction: column;
+  width: 45vw;
+  height: 100%;
+}
 
 .gallery {
   display: flex;
   overflow: hidden;
-  width: 50%;
+  width: 100%;
   height: 70%;
   flex-wrap: wrap;
   position: relative;
   border-radius: 20px;
+  box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
 }
 
 .slider-button {
   visibility: hidden;
   position: absolute;
+  border-radius: 20px;
+  height: min-content;
   top: 47%;
   background: none;
   border: none;
-  font-size: 2rem;
   cursor: pointer;
   z-index: 1; /* Ensure buttons are on top of the image */
-  font-size: 40px;
   opacity: 0;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
   visibility: hidden;
+  color: rgb(255, 255, 255);
+}
+
+.slider-button svg {
+  width: 40px; 
+  height: 40px;
+  padding: none;
+  border-radius: 50%; /* Make the icon container circular */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Shadow under the icon */
 }
 
 .gallery:hover {
@@ -77,7 +105,7 @@
 }
 
 .details, .amenities {
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 
 .details h2, .amenities h2 {
@@ -95,13 +123,26 @@
   list-style-type: none;
   /* list-style: none; */
   padding: 0;
+  margin-top: 20px;
 }
 
 .amenities li {
   display: inline-block;
-  background: #ADD8E6;
+  background: #BFE0FF;
   padding: 4px 14px;
   border-radius: 20px;
   margin-right: 14px;
   align-items: center;
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.15);
+}
+
+.amenities li svg {
+  margin: 2px;
+}
+
+.reviews-container {
+  display: flex;
+  width: 45%;
+  height: 70%;
+  flex-direction: column;
 }

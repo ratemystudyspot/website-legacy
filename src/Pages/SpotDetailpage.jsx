@@ -9,6 +9,9 @@ import { MdOutlineFastfood, MdOutlineDoorFront, } from "react-icons/md";
 import { GoRepoLocked } from "react-icons/go";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 import './SpotDetailpage.css'
+import ReviewCard from '../Components/Review/ReviewCard';
+import { Rating } from "@mui/material";
+import AllReviewsCard from '../Components/Review/AllReviewsCard';
 
 const images = require.context('../Components/Assets', true);
 
@@ -97,40 +100,45 @@ const SpotDetailpage = () => {
   }, [])
 
   return (
-    <div className="listing-detail">
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: '50%',
-        transform: 'translate(-50%, 0)',
-      }}>
+    <div>
+       <div className='banner'>
         <Banner />
       </div>
+      <div className="listing-detail">
+      
+        {/* Left Container */}
+        <div className='study-info-container'>
 
-      <section className="gallery">
-        <div className='slider-container'>
-          <button className='slider-button prev' onClick={prevSlide}><IoIosArrowDropleftCircle /></button>
-          <button className='slider-button next' onClick={nextSlide}><IoIosArrowDroprightCircle /></button>
-        </div>
-          {galleryImages[imageIndex]}      
-      </section>
+          <section className="gallery">
+            <div className='slider-container'>
+              <button className='slider-button prev' onClick={prevSlide}><IoIosArrowDropleftCircle /></button>
+              <button className='slider-button next' onClick={nextSlide}><IoIosArrowDroprightCircle /></button>
+            </div>
+              {galleryImages[imageIndex]}      
+          </section>
 
-      <div className="listing-header">
-        <h1><b>{studySpot.name}</b></h1>
-        <p className="distance">{getDistance()} away</p>
+          <div className="listing-header">
+            <h1><b>{studySpot.name}</b></h1>
+            <p className="distance">{getDistance()} away</p>
+          </div>
+
+          <section className="details">
+            ADD MAP HERE
+          </section>
+          
+          <section className="amenities">
+            <ul>
+              {filterOptions.map((filter) => {
+                if (studySpot.features.includes(filter.value)) return (<li>{filter.icon} {filter.label}</li>)
+              })}
+            </ul>
+          </section>
+
+        </div>  {/* Replace with loop!
+          {/* Right Container */}
+        
+        <AllReviewsCard />
       </div>
-
-      <section className="details">
-        ADD MAP HERE
-      </section>
-
-      <section className="amenities">
-        <ul>
-          {filterOptions.map((filter) => {
-            if (studySpot.features.includes(filter.value)) return (<li>{filter.icon} {filter.label}</li>)
-          })}
-        </ul>
-      </section>
     </div>
   )
 }
