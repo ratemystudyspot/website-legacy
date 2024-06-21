@@ -10,6 +10,7 @@
   position: absolute;
   top: 0px;
   transform: translate(-50%, 0);
+  z-index: 1;
   /* height: 13vh; */
   height: 119px;
   width: 100vw;
@@ -153,6 +154,7 @@
   height: 100%;
   align-items: center;
   justify-content: end;
+  flex-direction: row;
   /* min padding add later? */
   margin: 0;
   padding-right: 1vw;

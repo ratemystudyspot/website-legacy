@@ -1,8 +1,8 @@
+
 .container {
   display: flex;
   flex-direction: column;
   /* height: 200vh; */
-  /* overflow: clip; */
 }
 
 .study-spot-filter {

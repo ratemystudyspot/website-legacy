@@ -10,7 +10,7 @@ import { Button } from 'react-bootstrap'
 const Aboutpage = () => {
   return (
     <div className="container">
-      <div className='banner'>
+      <div className='about-page-banner'>
         <Banner/>
       </div>
       <div className='about-banner'>
