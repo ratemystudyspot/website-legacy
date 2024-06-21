@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthProvider";
 
 /*
 auth: {
-    email, 
+    access_token, 
     roles,
 }  
 */

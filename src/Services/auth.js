@@ -12,7 +12,7 @@ async function login(email, password) {
     });
     return response.data;
   } catch (error) {
-    throw error.response;
+    throw error.response.data;
   }
 }
 
@@ -24,9 +24,9 @@ async function logout() {
   }
 }
 
-async function register(email, password) {
+async function register(name, email, password) {
   try {
-    await axios.post(`${API_URL}/register`, { email, password });
+    await axios.post(`${API_URL}/register`, { name, email, password });
   } catch (error) {
     throw error.response.data;
   }

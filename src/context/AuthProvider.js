@@ -7,8 +7,8 @@ const AuthProvider = ({ children }) => {
 
     /*
     auth: {
-        email, 
-        roles
+        access_token, 
+        role
     }  
     */
 

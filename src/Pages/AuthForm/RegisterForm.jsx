@@ -1,11 +1,13 @@
 import { React, useState } from 'react';
 import './AuthForm.css';
+import { IoMdMail } from "react-icons/io";
 import { FaUser, FaLock } from "react-icons/fa";
 import { register } from '../../Services/auth.js';
 import { Link, useNavigate } from 'react-router-dom';
-import useAuth from "../../hooks/useAuth.js";
 
 const RegisterForm = () => {
+  const [name, setName] = useState('');
+
   const [email, setEmail] = useState('');
   const [invalidEmail, setInvalidEmail] = useState(false);
 
@@ -14,21 +16,19 @@ const RegisterForm = () => {
 
   const [duplicate, setDuplicate] = useState(false);
 
-  const navigate = useNavigate();  
-
-  const { auth } = useAuth();
+  const navigate = useNavigate();
 
   const HandleSubmit = async (e) => {
     e.preventDefault(); // if password doesn't meet the requirements, dont refresh page (prevents states resetting)
     try {
-      await register(email, pwd);
+      await register(name, email, pwd);
       // if no error thrown get rid of errors and goto email verification page
       setInvalidEmail(false);
       setInvalidPwd(false);
       setDuplicate(false);
-      
+
       navigate("/login");
-      // navigate to a verify page (for future !!!)
+      // TODO: navigate to a verify page (for future !!!)
       // navigate("/verify/" + email);
     } catch (e) {
       if (e.message === "Email error") { // if register throws an email error
@@ -58,6 +58,19 @@ const RegisterForm = () => {
         <form className='auth-form' onSubmit={HandleSubmit}>
           <h1>Register</h1>
           {duplicate && (<p className="auth-error-msg top">Email address already in use, please log in.</p>)}
+
+          <div className='input-box'>
+            <input
+              className="auth-input"
+              type="text"
+              placeholder="Name"
+              autoComplete='off'
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <FaUser className="icon" />
+          </div>
+
           <div className="input-box">
             <input
               className={(invalidEmail || duplicate) ? "auth-input error" : "auth-input"}
@@ -67,9 +80,9 @@ const RegisterForm = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <FaUser className="icon" />
+            <IoMdMail className="icon" />
             {invalidEmail && (<p className="auth-error-msg bottom">Hmm, that email address doesn't look right.</p>)}
-            
+
           </div>
 
           <div className="input-box">

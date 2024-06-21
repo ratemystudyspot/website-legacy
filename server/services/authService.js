@@ -88,7 +88,11 @@ async function logoutUser(cookies) {
 }
 
 async function registerUser(credentials) {
-  const name = credentials.name;
+  const capitalize = (str) => {return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()};
+  const [rawFirstName, rawLastName] = credentials.name.trim().split(/\s+/);
+  console.log(rawLastName)
+  const name = `${capitalize(rawFirstName)} ${capitalize(rawLastName)}`
+  console.log(name);
   const email = credentials.email.toLowerCase();
   const password = credentials.password;
   const role = process.env.USER_ROLE || 2004;
