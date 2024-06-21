@@ -4,26 +4,39 @@ const API_URL = process.env.REACT_APP_API_URL_AUTH || 'http://localhost:3001/api
 
 async function login(email, password) {
   try {
-    const response = await axios.post(`${API_URL}/login`, { email, password });
+    const response = await axios.post(`${API_URL}/login`, {
+      email,
+      password
+    }, {
+      withCredentials: true
+    });
     return response.data;
   } catch (error) {
-    console.log(error)
     throw error.response;
   }
 }
 
 async function logout() {
   try {
-    const response = await axios.get(`${API_URL}/logout`);
-    return response.data.response;
+    await axios.get(`${API_URL}/logout`, { withCredentials: true });
   } catch (error) {
-    throw error.response.data;
+    throw error.response;
   }
 }
 
 async function register(email, password) {
   try {
     await axios.post(`${API_URL}/register`, { email, password });
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
+async function handleRefreshToken() {
+  try {
+    const response = await axios.get(`${API_URL}/refresh-token`, { withCredentials: true });
+    console.log(response);
+    return response.data;
   } catch (error) {
     throw error.response.data;
   }
@@ -49,6 +62,7 @@ export {
   login,
   logout,
   register,
+  handleRefreshToken,
   sendRecoveryEmail,
   updatePassword,
   // reset,

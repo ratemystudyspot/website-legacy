@@ -13,7 +13,7 @@ const WEB_APP_URL = process.env.WEB_APP_URL || "http://localhost:3000";
 async function authenticateUser(cookies, credentials) {
   const email = credentials.email.toLowerCase();
   const password = credentials.password;
-
+  console.log(`cookies available at login: ${JSON.stringify(cookies)}`);
   try {
     const user = await findOne({ email });
 
@@ -47,7 +47,7 @@ async function authenticateUser(cookies, credentials) {
 
     if (cookies?.jwt) {
       const refreshToken = cookies.jwt;
-      const foundToken = await findOne({ where: { refresh_token: refreshToken } });
+      const foundToken = await findOne({ refresh_token: refreshToken });
 
       // Detected refresh token reuse!
       if (!foundToken) {
@@ -58,9 +58,6 @@ async function authenticateUser(cookies, credentials) {
       // Saving refreshToken with current user
       user.refresh_token = [...newRefreshTokenArray, newRefreshToken];
       await user.save();
-
-      // tell controller that refresh token is compromised
-      throw new Error("Compromised Refresh Token");
     }
 
     // Saving refreshToken with current user
@@ -76,7 +73,6 @@ async function authenticateUser(cookies, credentials) {
 
 async function logoutUser(cookies) {
   // TODO: on client, delete accessToken !!!
-  console.log(cookies);
   if (!cookies?.jwt) throw new Error("No Content");
   const refreshToken = cookies.jwt;
 
@@ -142,60 +138,58 @@ async function handleRefreshToken(cookies) {
 
   // Detected refresh token reuse!
   if (!user) {
-    jwt.verify(
-      refreshToken,
-      process.env.REFRESH_TOKEN_SECRET,
-      async (err, decoded) => {
-        if (err) throw new Error("Forbidden"); // 403
-        console.log('attempted refresh token reuse!')
-        const hackedUser = await findOne({ id: decoded.id });
-        hackedUser.refresh_token = [];
-        const result = await hackedUser.save();
-        console.log(result); //FIXME:
-      }
-    )
-    throw new Error("Forbidden"); // 403
+    try {
+      const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+      console.log('attempted refresh token reuse!') // debuggin purposes
+
+      // find hacked user and clear all refresh tokens
+      const hackedUser = await findOne({ id: decoded.id });
+      hackedUser.refresh_token = [];
+      await hackedUser.save();
+    } catch (err) {
+      throw new Error("Forbidden"); // 403
+    }
   }
 
   const newRefreshTokenArray = user.refresh_token.filter(rt => rt !== refreshToken);
 
   // evaluate jwt 
-  jwt.verify(
-    refreshToken,
-    process.env.REFRESH_TOKEN_SECRET,
-    async (err, decoded) => {
-      if (err) {
-        console.log('expired refresh token')
-        user.refresh_token = [...newRefreshTokenArray];
-        const result = await user.save();
-        console.log(result); //FIXME:
-      }
-      if (err || user.id !== decoded.id) throw new Error("Forbidden"); // 403
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 
-      // Refresh token was still valid
-      const accessToken = jwt.sign(
-        {
-          UserInfo: {
-            id: user.id,
-            role: user.role
-          }
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: process.env.ACCESS_TOKEN_EXPIRATION }
-      );
+    if (user.id !== decoded.id) throw new Error("Forbidden"); // 403
 
-      const newRefreshToken = jwt.sign(
-        { id: user.id },
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION }
-      );
-      // Saving refreshToken with current user
-      user.refresh_token = [...newRefreshTokenArray, newRefreshToken];
-      await user.save();
+    // Refresh token was still valid
+    const accessToken = jwt.sign(
+      {
+        UserInfo: {
+          id: user.id,
+          role: user.role
+        }
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: process.env.ACCESS_TOKEN_EXPIRATION }
+    );
 
-      return { access_token: accessToken, refresh_token: newRefreshToken };
-    }
-  );
+    const newRefreshToken = jwt.sign(
+      { id: user.id },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION }
+    );
+    
+    // Saving refreshToken with current user
+    user.refresh_token = [...newRefreshTokenArray, newRefreshToken];
+    await user.save();
+    
+    return { access_token: accessToken, refresh_token: newRefreshToken };
+  } catch (err) {
+    console.log('expired refresh token')
+    user.refresh_token = [...newRefreshTokenArray];
+    await user.save();
+
+    throw new Error("Forbidden") // 403
+  }
 }
 
 async function sendRecoveryEmail(body) {

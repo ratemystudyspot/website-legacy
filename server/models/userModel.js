@@ -1,4 +1,4 @@
-const { DataTypes, TEXT } = require('sequelize');
+const { DataTypes, Op } = require('sequelize');
 const { sequelize } = require("../config/db");
 
 // User model
@@ -55,9 +55,20 @@ async function findAll(filters) {
 	}
 }
 
-async function findOne(filters) {
+async function findOne(query) {
 	try {
-		return await User.findOne({ where: filters });
+		const filters = {}
+
+		// add filters
+		for (const key in query) {
+			if (key === 'refresh_token') {
+				filters[key] = { [Op.contains]: [query.refresh_token] };
+			} else {
+				filters[key] = query[key];
+			}
+		}
+
+		return await User.findOne({ where: filters  });
 	} catch (error) {
 		console.error("Error fetching users:", error);
 		throw new Error(error.message);
@@ -96,23 +107,23 @@ async function deleteUser(id) {
 
 // create a refresh token
 async function createRefreshToken(user) {
-  try {
-    const expiredAt = new Date(Date.now() + process.env.JWT_REFRESH_EXPIRATION * 1000); // get expiry date in ms
-    const _token = uuidv4();
-    return await AuthToken.create({
-      token: _token,
-      user: user.id,
-      expiry_date: expiredAt, 
-    })
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    throw new Error(error.message);
-  }
+	try {
+		const expiredAt = new Date(Date.now() + process.env.JWT_REFRESH_EXPIRATION * 1000); // get expiry date in ms
+		const _token = uuidv4();
+		return await AuthToken.create({
+			token: _token,
+			user: user.id,
+			expiry_date: expiredAt,
+		})
+	} catch (error) {
+		console.error("Error fetching users:", error);
+		throw new Error(error.message);
+	}
 }
 
 // verify refresh token by looking at expiration
 async function verifyRefreshToken(refreshToken) {
-  return refreshToken.expiry_date.getTime() < new Date().getTime();
+	return refreshToken.expiry_date.getTime() < new Date().getTime();
 }
 
 

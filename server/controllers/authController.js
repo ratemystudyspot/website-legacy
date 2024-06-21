@@ -5,7 +5,9 @@ async function login(req, res) {
   var response = {}
   try {
     response = await authService.authenticateUser(req.cookies, req.body); // {cookies, {email, password} }
-    res.cookie('jwt', response.refresh_token, { httpOnly: true, secure: true, sameSite: 'strict', maxAge: 30 * 24 * 60 * 60 * 1000 }); // create a secure cookie with refresh token
+
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+    res.cookie('jwt', response.refresh_token, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 30 * 24 * 60 * 60 * 1000 }); // create a secure cookie with refresh token
     res.status(200).json({ message: "Login successful:", access_token: response.access_token });
     return;
   } catch (error) {
@@ -16,7 +18,7 @@ async function login(req, res) {
       return res.status(401).send({ message: error.message });
     }
     if (error.message === "Compromised Refresh Token") {
-      return res.clearCookie('jwt', { httpOnly: true, sameSite: 'strict', secure: true }); // clear cookie after being compromised
+      return res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true }); // clear cookie after being compromised
     }
     return res.status(500).send({ message: error.message });
   }
@@ -25,8 +27,7 @@ async function login(req, res) {
 async function logout(req, res) {
   try {
     await authService.logoutUser(req.cookies);
-    console.log("success")
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'strict', secure: true });
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
     res.sendStatus(204);
     return;
   } catch (error) {
@@ -36,7 +37,7 @@ async function logout(req, res) {
     }
     if (error.message === "No User found") {
       console.log("no user found")
-      res.clearCookie('jwt', { httpOnly: true, sameSite: 'strict', secure: true });
+      res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
       res.sendStatus(204);
     }
     return res.status(500).send({ message: error.message });
@@ -65,15 +66,19 @@ async function handleRefreshToken(req, res) {
   var response = {}
   try {
     response = await authService.handleRefreshToken(req.cookies);
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'strict', secure: true }); // clear access token
-    res.cookie('jwt', response.refresh_token, { httpOnly: true, secure: true, sameSite: 'strict', maxAge: 30 * 24 * 60 * 60 * 1000 }); // create a secure cookie with refresh token
-    return res.status(200).send({ message: "Refesh token retrieval successful" });
+
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true }); // clear access token
+    res.cookie('jwt', response.refresh_token, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 30 * 24 * 60 * 60 * 1000 }); // create a secure cookie with refresh token
+    res.status(200).send({ message: "Handle refresh token successful" });
+    return;
   } catch (error) {
     if (error.message === "Unauthorized") {
       return res.status(401).send({ message: error.message });
     }
     if (error.message === "Forbidden") {
-      return res.status(403).send({ message: error.message });
+      res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true }); // clear access token
+      res.status(403).send({ message: error.message });
+      return;
     }
     return res.status(500).send({ message: error.message });
   }
