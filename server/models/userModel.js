@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Op } = require('sequelize');
 const { sequelize } = require("../config/db");
 
 // User model
@@ -8,6 +8,10 @@ const User = sequelize.define("User",
 			type: DataTypes.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
+		},
+		name: {
+			type: DataTypes.TEXT,
+			allowNull: false,
 		},
 		email: {
 			type: DataTypes.TEXT,
@@ -19,11 +23,15 @@ const User = sequelize.define("User",
 		},
 		role: {
 			type: DataTypes.INTEGER,
-			defaultValue: 0,
+			defaultValue: 2001,
 		},
 		password_recovery_token: {
 			type: DataTypes.TEXT,
-		}
+		},
+		refresh_token: {
+			type: DataTypes.ARRAY(DataTypes.TEXT),
+			defaultValue: []
+		},
 	},
 	{
 		timestamps: false,
@@ -41,6 +49,26 @@ const test = () => {
 async function findAll(filters) {
 	try {
 		return await User.findAll({ where: filters });
+	} catch (error) {
+		console.error("Error fetching users:", error);
+		throw new Error(error.message);
+	}
+}
+
+async function findOne(query) {
+	try {
+		const filters = {}
+
+		// add filters
+		for (const key in query) {
+			if (key === 'refresh_token') {
+				filters[key] = { [Op.contains]: [query.refresh_token] };
+			} else {
+				filters[key] = query[key];
+			}
+		}
+
+		return await User.findOne({ where: filters  });
 	} catch (error) {
 		console.error("Error fetching users:", error);
 		throw new Error(error.message);
@@ -77,10 +105,34 @@ async function deleteUser(id) {
 	}
 };
 
+// create a refresh token
+async function createRefreshToken(user) {
+	try {
+		const expiredAt = new Date(Date.now() + process.env.JWT_REFRESH_EXPIRATION * 1000); // get expiry date in ms
+		const _token = uuidv4();
+		return await AuthToken.create({
+			token: _token,
+			user: user.id,
+			expiry_date: expiredAt,
+		})
+	} catch (error) {
+		console.error("Error fetching users:", error);
+		throw new Error(error.message);
+	}
+}
+
+// verify refresh token by looking at expiration
+async function verifyRefreshToken(refreshToken) {
+	return refreshToken.expiry_date.getTime() < new Date().getTime();
+}
+
+
+
 module.exports = {
 	User,
 	test,
 	findAll,
+	findOne,
 	createUser,
 	updateUser,
 	deleteUser,
