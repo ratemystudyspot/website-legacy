@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
-const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const { createUser, findOne, findAll } = require('../models/userModel');
 const tokenUtil = require('../utils/token');
 const emailUtil = require('../utils/email');
 
@@ -9,27 +10,91 @@ const WEB_APP_URL = process.env.WEB_APP_URL || "http://localhost:3000";
 // param 1: pass in the user's email
 // param 2: pass in the user's password
 // return: void or error
-async function authenticateUser(credentials) {
+async function authenticateUser(cookies, credentials) {
   const email = credentials.email.toLowerCase();
   const password = credentials.password;
 
   try {
-    const user = await User.findAll({ email });
-    const user_data = user[0]?.dataValues;
+    const user = await findOne({ email });
 
-    if (!user_data) throw new Error("Email not found");
-    if (!bcrypt.compareSync(password, user_data?.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
-    const safe_user_data = { email: user_data.email, role: user_data.role };
-    return safe_user_data;
+    if (!user) throw new Error("Email not found"); // if user not in db, throw error
+
+    if (!await bcrypt.compare(password, user.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
+
+    const accessToken = jwt.sign(
+      {
+        UserInfo: {
+          id: user.id,
+          role: user.role
+        }
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: process.env.ACCESS_TOKEN_EXPIRATION }
+    );
+
+    const newRefreshToken = jwt.sign(
+      { id: user.id },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION }
+    );
+
+    // if no jwt in cookie, init to found refreshToken array in the DB
+    // else if jwt in cookie, init to remove the jwt from the refreshToken array in the DB
+    let newRefreshTokenArray =
+      (!cookies?.jwt)
+        ? user.refresh_token
+        : user.refresh_token.filter(rt => rt !== cookies.jwt);
+
+    if (cookies?.jwt) {
+      const refreshToken = cookies.jwt;
+      const foundToken = await findOne({ where: { refresh_token: refreshToken } });
+
+      // Detected refresh token reuse!
+      if (!foundToken) {
+        console.log('attempted refresh token reuse at login!')
+        newRefreshTokenArray = []; // clear out ALL previous refresh tokenss
+      }
+
+      // Saving refreshToken with current user
+      user.refresh_token = [...newRefreshTokenArray, newRefreshToken];
+      await user.save();
+
+      // tell controller that refresh token is compromised
+      throw new Error("Compromised Refresh Token");
+    }
+
+    // Saving refreshToken with current user
+    user.refresh_token = [...newRefreshTokenArray, newRefreshToken];
+    await user.save();
+
+    return { access_token: accessToken, refresh_token: newRefreshToken };
   } catch (error) {
     console.error(error);
     throw error;
   }
 }
 
+async function logoutUser(cookies) {
+  // TODO: on client, delete accessToken !!!
+  console.log(cookies);
+  if (!cookies?.jwt) throw new Error("No Content");
+  const refreshToken = cookies.jwt;
+
+  // is user in db?
+  const user = await findOne({ refresh_token: refreshToken });
+  if (!user) {
+    throw new Error("No User found");
+  }
+
+  // delete refreshToken in DB
+  user.refresh_token = user.refresh_token.filter(rt => rt !== refreshToken);
+  await user.save();
+}
+
 async function registerUser(credentials) {
+  const name = credentials.name;
   const email = credentials.email.toLowerCase();
-  const password = credentials.password; //check later
+  const password = credentials.password;
   const role = process.env.USER_ROLE || 2004;
 
   try {
@@ -45,8 +110,8 @@ async function registerUser(credentials) {
 
   // checking for uniqueness of email
   try {
-    const users = await User.findAll({ email });
-    if (users.length != 0) { // if email exists, then not unique, then stop creating new user
+    const users = await findAll({ email });
+    if (users.length !== 0) { // if email exists, then not unique, then stop creating new user
       console.error("Error: Email duplicate Error");
       throw new Error("Email duplicate Error");
     }
@@ -55,35 +120,94 @@ async function registerUser(credentials) {
     throw error;
   }
 
-  // salting and hashing password
-  try {
-    // var salt = bcrypt.genSaltSync(10);
-    var hash_password = bcrypt.hashSync(password, 10);
-  } catch (error) {
-    console.log("Error salting and hashing:", error);
-    throw error;
-  }
-
   // creating a new user
   try {
-    return await User.createUser({ email, password: hash_password, role });
+    return await createUser({
+      name,
+      email,
+      password: await bcrypt.hash(password, 15), // auto-gen salt and hash
+      role: process.env.USER_ROLE
+    });
   } catch (error) {
     console.error("Error creating user:", error);
     throw error;
   }
+}
 
+async function handleRefreshToken(cookies) {
+  if (!cookies?.jwt) throw new Error("Unauthorized");
+  const refreshToken = cookies.jwt;
+
+  const user = await findOne({ refresh_token: refreshToken });
+
+  // Detected refresh token reuse!
+  if (!user) {
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      async (err, decoded) => {
+        if (err) throw new Error("Forbidden"); // 403
+        console.log('attempted refresh token reuse!')
+        const hackedUser = await findOne({ id: decoded.id });
+        hackedUser.refresh_token = [];
+        const result = await hackedUser.save();
+        console.log(result); //FIXME:
+      }
+    )
+    throw new Error("Forbidden"); // 403
+  }
+
+  const newRefreshTokenArray = user.refresh_token.filter(rt => rt !== refreshToken);
+
+  // evaluate jwt 
+  jwt.verify(
+    refreshToken,
+    process.env.REFRESH_TOKEN_SECRET,
+    async (err, decoded) => {
+      if (err) {
+        console.log('expired refresh token')
+        user.refresh_token = [...newRefreshTokenArray];
+        const result = await user.save();
+        console.log(result); //FIXME:
+      }
+      if (err || user.id !== decoded.id) throw new Error("Forbidden"); // 403
+
+      // Refresh token was still valid
+      const accessToken = jwt.sign(
+        {
+          UserInfo: {
+            id: user.id,
+            role: user.role
+          }
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRATION }
+      );
+
+      const newRefreshToken = jwt.sign(
+        { id: user.id },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION }
+      );
+      // Saving refreshToken with current user
+      user.refresh_token = [...newRefreshTokenArray, newRefreshToken];
+      await user.save();
+
+      return { access_token: accessToken, refresh_token: newRefreshToken };
+    }
+  );
 }
 
 async function sendRecoveryEmail(body) {
   const { email } = body;
-  const user = await User.findAll({ email });
+  const user = await findAll({ email });
   const user_data = user[0]?.dataValues;
   const email_info = { email, password_recovery_token: '' };
 
   // generate password recovery token and store in user's data
   try {
     const password_recovery_token = await tokenUtil.generateRandomToken();
-    await User.updateUser(user_data.id, { password_recovery_token });
+    await updateUser(user_data.id, { password_recovery_token });
     email_info.link = `${WEB_APP_URL}/password/${password_recovery_token}`;
   } catch (error) {
     console.error("Error generating and storing Password Recovery Token:", error.message);
@@ -102,12 +226,12 @@ async function sendRecoveryEmail(body) {
 async function resetPassword(body) {
   const { url, password } = body;
   const password_recovery_token = url.split('/').pop();
-  const user = await User.findAll({ password_recovery_token }); // retrieve user info
+  const user = await findAll({ password_recovery_token }); // retrieve user info
   const user_data = user[0]?.dataValues;
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash_password = bcrypt.hashSync(password, salt);
-    await User.updateUser(user_data.id, { password: hash_password });
+    await updateUser(user_data.id, { password: hash_password });
   } catch (error) {
     console.error("Error resetting password:", error);
     throw error;
@@ -116,7 +240,9 @@ async function resetPassword(body) {
 
 module.exports = {
   authenticateUser,
+  logoutUser,
   registerUser,
+  handleRefreshToken,
   sendRecoveryEmail,
   resetPassword,
 };

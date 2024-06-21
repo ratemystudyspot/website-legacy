@@ -5,6 +5,16 @@ const API_URL = process.env.REACT_APP_API_URL_AUTH || 'http://localhost:3001/api
 async function login(email, password) {
   try {
     const response = await axios.post(`${API_URL}/login`, { email, password });
+    return response.data;
+  } catch (error) {
+    console.log(error)
+    throw error.response;
+  }
+}
+
+async function logout() {
+  try {
+    const response = await axios.get(`${API_URL}/logout`);
     return response.data.response;
   } catch (error) {
     throw error.response.data;
@@ -37,6 +47,7 @@ async function updatePassword(url, password) {
 
 export {
   login,
+  logout,
   register,
   sendRecoveryEmail,
   updatePassword,

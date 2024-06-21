@@ -7,6 +7,7 @@ const openingHourRoutes = require('./routes/openingHourRoutes');
 const review = require('./routes/reviewRoutes');
 const { testDbConnection } = require('./config/db');
 const { PORT, CORS_ORIGINS } = require('./config/config');
+const verifyJWT = require('./middleware/verifyJWT');
 
 const app = express();
 
@@ -25,11 +26,15 @@ app.get('/', (req, res) => {
 });
 
 // routes
-app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/studyspot', studySpotRoutes);
 app.use('/api/openinghour', openingHourRoutes);
 app.use('/api/review', review);
+
+// middleware to protect protected routes through JWT verification
+app.use(verifyJWT);
+// protected routes
+app.use('/api/user', userRoutes);
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}.`);
