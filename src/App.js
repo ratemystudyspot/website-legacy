@@ -39,8 +39,8 @@ function App() {
         let response = await handleRefreshToken();
         let accessToken = response.access_token;
         let accessTokenDecoded = jwtDecode(accessToken); // decode access token
-        
-        setAuth({ access_token: accessToken, roles: accessTokenDecoded?.UserInfo?.role }); // authorize user
+
+        setAuth({ access_token: accessToken, user_info: accessTokenDecoded?.UserInfo }); // authorize user
         
         // delete all info related to access token
         response = null;

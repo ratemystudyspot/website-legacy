@@ -35,7 +35,7 @@ const LoginForm = () => {
       setInvalidEmail(false);
       setInvalidPwd(false);
 
-      setAuth({ access_token: accessToken, roles: accessTokenDecoded?.UserInfo?.role });
+      setAuth({ access_token: accessToken, user_info: accessTokenDecoded?.UserInfo });
       navigate(from, { replace: true });
       
       // delete all info related to access token

@@ -9,7 +9,7 @@ import useAuth from "../../hooks/useAuth";
 import StudySpots from '../../Data/StudySpots';
 import { logout } from '../../Services/auth';
 
-const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch=false }) => {
+const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = false }) => {
   const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
   const [isOpen, setIsOpen] = useState(false); // State to track whether the auth navbar is open or closed
   const navigate = useNavigate();
@@ -40,16 +40,16 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch=fa
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
-  
+
   // for authorization
   const { setAuth, auth } = useAuth();
   const handleSignOut = async () => {
     await logout();
-    await setAuth({});
-    alert("Sign out successful.") // TODO: make a custom alert
+    await setAuth({ access_token: null, user_info: null });
+    alert("Sign out successful.") // TODO: make a custom alert + redirect user to loading screen (looks better that way)
   }
   const handleAuth = (auth) => {
-    if (auth?.roles === 2004) {
+    if (auth?.user_info?.role === 2004) {
       return (
         <div class="dropdown-content">
           <Link to="/user/settings">Account Settings</Link>

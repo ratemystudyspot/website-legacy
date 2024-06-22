@@ -88,11 +88,12 @@ async function logoutUser(cookies) {
 }
 
 async function registerUser(credentials) {
-  const capitalize = (str) => {return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()};
+  const capitalize = (str) => { return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() };
   const [rawFirstName, rawLastName] = credentials.name.trim().split(/\s+/);
-  console.log(rawLastName)
+
+  if (!rawFirstName || !rawLastName) throw new Error("Name error");
+
   const name = `${capitalize(rawFirstName)} ${capitalize(rawLastName)}`
-  console.log(name);
   const email = credentials.email.toLowerCase();
   const password = credentials.password;
   const role = process.env.USER_ROLE || 2004;
@@ -181,11 +182,11 @@ async function handleRefreshToken(cookies) {
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION }
     );
-    
+
     // Saving refreshToken with current user
     user.refresh_token = [...newRefreshTokenArray, newRefreshToken];
     await user.save();
-    
+
     return { access_token: accessToken, refresh_token: newRefreshToken };
   } catch (err) {
     console.log('expired refresh token')

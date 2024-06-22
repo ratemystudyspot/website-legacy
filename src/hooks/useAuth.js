@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthProvider";
 /*
 auth: {
     access_token, 
-    roles,
+    user_info,
 }  
 */
 
