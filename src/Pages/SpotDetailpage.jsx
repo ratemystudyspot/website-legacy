@@ -23,7 +23,7 @@ function getImage(imageLink) {
 
 const SpotDetailpage = () => {
   let location = useLocation();
-  let studySpot = location.state;
+  let state = location.state;
 
   const [reviews, setReviews] = useState([]);
 
@@ -40,26 +40,26 @@ const SpotDetailpage = () => {
     // Add more filter options as needed
   ];
 
-  const getCurrentLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => { // success case
-        let user_lon = position.coords.longitude;
-        let user_lat = position.coords.latitude;
-        setCurrentLocation([user_lon, user_lat]);
-      },
-      async () => { // error case
-        const { location: { longitude, latitude } } = await getLocation();
-        setCurrentLocation([longitude, latitude]);
-      });
-  }
+  // const getCurrentLocation = () => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => { // success case
+  //       let user_lon = position.coords.longitude;
+  //       let user_lat = position.coords.latitude;
+  //       setCurrentLocation([user_lon, user_lat]);
+  //     },
+  //     async () => { // error case
+  //       const { location: { longitude, latitude } } = await getLocation();
+  //       setCurrentLocation([longitude, latitude]);
+  //     });
+  // }
 
-  const [currentLocation, setCurrentLocation] = useState(async () => await getCurrentLocation());
+  const [currentLocation, setCurrentLocation] = useState(state?.currentLocation);
 
   const getDistance = () => {
     let user_lon = currentLocation[0];
     let user_lat = currentLocation[1];
-    let spot_lon = studySpot.location.coordinates[0];
-    let spot_lat = studySpot.location.coordinates[1];
+    let spot_lon = state?.studySpot.location.coordinates[0];
+    let spot_lat = state?.studySpot.location.coordinates[1];
 
     let distance = getDistanceFromLatLonInKm(user_lat, user_lon, spot_lat, spot_lon);
     let unit = "km"
@@ -93,8 +93,8 @@ const SpotDetailpage = () => {
   }
 
   useEffect(() => {
-    // fetch all study spot images and then store in studySpot array
-    studySpot.image_links.map((image_link) => {
+    // fetch all study spot images and then store in state array
+    state?.studySpot?.image_links.map((image_link) => {
       setGalleryImages((prevGalleryImages) => {
         return prevGalleryImages.concat(
           [<img src={getImage(image_link)} alt="Gallery Image" />]
@@ -105,7 +105,7 @@ const SpotDetailpage = () => {
     // fetch reviews
     const getReviews = async () => {
       try {
-        const foundReviews = await getReviewsByStudySpot(studySpot?.id);
+        const foundReviews = await getReviewsByStudySpot(state?.studySpot?.id);
         await setReviews(foundReviews);
       } catch (error) {
         console.error(error);
@@ -134,7 +134,7 @@ const SpotDetailpage = () => {
           </section>
 
           <div className="listing-header">
-            <h1><b>{studySpot.name}</b></h1>
+            <h1><b>{state?.studySpot?.name}</b></h1>
             <p className="distance">{getDistance()} away</p>
           </div>
 
@@ -145,7 +145,7 @@ const SpotDetailpage = () => {
           <section className="amenities">
             <ul>
               {filterOptions.map((filter) => {
-                if (studySpot.features.includes(filter.value)) return (<li>{filter.icon} {filter.label}</li>)
+                if (state?.studySpot?.features.includes(filter.value)) return (<li>{filter.icon} {filter.label}</li>)
               })}
             </ul>
           </section>
