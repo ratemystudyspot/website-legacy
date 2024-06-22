@@ -9,6 +9,26 @@ async function getReviews(query) {
   }
 }
 
+async function createReview(query) {
+  try {
+    return await reviewModel.createReview(query);
+  } catch (error) {
+    console.error("Error creating review:", error);
+    throw error;
+  }
+}
+
+async function updateReview(query) {
+  try {
+    return await reviewModel.updateReview(query);
+  } catch (error) {
+    console.error("Error updating reviews:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   getReviews,
+  createReview,
+  updateReview,
 };
