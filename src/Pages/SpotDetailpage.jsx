@@ -12,6 +12,7 @@ import './SpotDetailpage.css'
 import ReviewCard from '../Components/Review/ReviewCard';
 import { Rating } from "@mui/material";
 import AllReviewsCard from '../Components/Review/AllReviewsCard';
+import { getReviewsByStudySpot } from '../Services/review';
 
 const images = require.context('../Components/Assets', true);
 
@@ -23,6 +24,8 @@ function getImage(imageLink) {
 const SpotDetailpage = () => {
   let location = useLocation();
   let studySpot = location.state;
+
+  const [reviews, setReviews] = useState([]);
 
   const filterOptions = [
     { label: 'Quiet', value: 'quiet', icon: <BiVolumeMute size={20} className="filter-icon" /> },
@@ -90,6 +93,7 @@ const SpotDetailpage = () => {
   }
 
   useEffect(() => {
+    // fetch all study spot images and then store in studySpot array
     studySpot.image_links.map((image_link) => {
       setGalleryImages((prevGalleryImages) => {
         return prevGalleryImages.concat(
@@ -97,15 +101,27 @@ const SpotDetailpage = () => {
         )
       })
     })
+
+    // fetch reviews
+    const getReviews = async () => {
+      try {
+        const foundReviews = await getReviewsByStudySpot(studySpot?.id);
+        await setReviews(foundReviews);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+    getReviews();
   }, [])
 
   return (
     <div>
-       <div className='banner'>
+      <div className='banner'>
         <Banner />
       </div>
       <div className="listing-detail">
-      
+
         {/* Left Container */}
         <div className='study-info-container'>
 
@@ -114,7 +130,7 @@ const SpotDetailpage = () => {
               <button className='slider-button prev' onClick={prevSlide}><IoIosArrowDropleftCircle /></button>
               <button className='slider-button next' onClick={nextSlide}><IoIosArrowDroprightCircle /></button>
             </div>
-              {galleryImages[imageIndex]}      
+            {galleryImages[imageIndex]}
           </section>
 
           <div className="listing-header">
@@ -125,7 +141,7 @@ const SpotDetailpage = () => {
           <section className="details">
             ADD MAP HERE
           </section>
-          
+
           <section className="amenities">
             <ul>
               {filterOptions.map((filter) => {
@@ -136,8 +152,8 @@ const SpotDetailpage = () => {
 
         </div>  {/* Replace with loop!
           {/* Right Container */}
-        
-        <AllReviewsCard />
+
+        <AllReviewsCard reviews={reviews} />
       </div>
     </div>
   )

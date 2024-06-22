@@ -20,18 +20,18 @@ async function getReviewsByStudySpot(study_spot_id) {
   }
 }
 
-async function createReview(user_id, rating, comment) {
+async function createReview(user_id, study_spot_id, rating, comment) {
   try {
-    const response = await axios.post(`${API_URL}`, {user_id, rating, comment});
+    const response = await axios.post(`${API_URL}`, {user_id, study_spot_id, rating, comment});
     return response.data;
   } catch (error) {
     throw error.response.data;
   }
 }
 
-async function editReview(id, user_id, comment, rating) {
+async function editReview(id, user_id, study_spot_id, comment, rating) {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, {user_id, comment, rating});
+    const response = await axios.put(`${API_URL}/${id}`, {user_id, study_spot_id, comment, rating});
     return response.data;
   } catch (error) {
     throw error.response.data;

@@ -4,6 +4,7 @@ const { sequelize } = require('../config/db');
 const { User } = require('./userModel');
 const { Review } = require('./reviewModel');
 
+// Reaction model
 const Reaction = sequelize.define('Reaction', {
   id: {
     type: DataTypes.INTEGER,
@@ -39,11 +40,9 @@ const Reaction = sequelize.define('Reaction', {
       },
     ],
     timestamps: false,
-    tableName: 'review',
+    tableName: 'reaction',
   }
 );
-
-module.exports = Reaction;
 
 // a user has many reactions
 User.hasMany(Reaction, { foreignKey: 'user_id' });
@@ -58,7 +57,7 @@ async function findAll(query) {
     if (query.user_id) filters.user_id = query.user_id;
     if (query.review_id) filters.review_id = query.review_id;
     
-    return await Review.findAll({
+    return await Reaction.findAll({
       where: {
         ...filters
       }
@@ -88,12 +87,13 @@ async function updateReaction(query) {
     const updated_attributes = query;
     delete updated_attributes[id];
 
-    return await Review.update(updated_attributes, { where: { id } });
+    return await Reaction.update(updated_attributes, { where: { id } });
   } catch (error) {
     console.error("Error updating reviews:", error);
     throw new Error(error.message);
   }
 };
+
 module.exports = {
 	Reaction,
 	findAll,
