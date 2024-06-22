@@ -105,29 +105,6 @@ async function deleteUser(id) {
 	}
 };
 
-// create a refresh token
-async function createRefreshToken(user) {
-	try {
-		const expiredAt = new Date(Date.now() + process.env.JWT_REFRESH_EXPIRATION * 1000); // get expiry date in ms
-		const _token = uuidv4();
-		return await AuthToken.create({
-			token: _token,
-			user: user.id,
-			expiry_date: expiredAt,
-		})
-	} catch (error) {
-		console.error("Error fetching users:", error);
-		throw new Error(error.message);
-	}
-}
-
-// verify refresh token by looking at expiration
-async function verifyRefreshToken(refreshToken) {
-	return refreshToken.expiry_date.getTime() < new Date().getTime();
-}
-
-
-
 module.exports = {
 	User,
 	test,

@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 const studySpotRoutes = require('./routes/studySpotRoutes');
 const openingHourRoutes = require('./routes/openingHourRoutes');
 const review = require('./routes/reviewRoutes');
+const reaction = require('./routes/reactionRoutes');
 const { testDbConnection } = require('./config/db');
 const { PORT, CORS_ORIGINS } = require('./config/config');
 const verifyJWT = require('./middleware/verifyJWT');
@@ -43,6 +44,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/studyspot', studySpotRoutes);
 app.use('/api/openinghour', openingHourRoutes);
 app.use('/api/review', review);
+app.use('/api/reaction', reaction);
 
 // middleware to protect protected routes through JWT verification
 app.use(verifyJWT);
