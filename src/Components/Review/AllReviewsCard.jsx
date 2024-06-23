@@ -3,6 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import "./AllReviewsCard.css"
 import ReviewCard from "./ReviewCard";
 import { getReactionsByReview } from "../../Services/reaction";
+import ReviewSummaryCard from "./ReviewSummaryCard";
 
 const AllReviewsCard = ({ reviews }) => {
     const { auth } = useAuth();
@@ -17,6 +18,7 @@ const AllReviewsCard = ({ reviews }) => {
 
     return (
         <div className="all-reviews-card">
+            <ReviewSummaryCard reviews={reviews}/>
             {(reviews.length > 0)
                 ? reviews.map((review) => {
                     // for the likes + dislikes

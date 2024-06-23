@@ -16,7 +16,7 @@ const ReviewCard = ({ ratingValue = 0, description, createdAt = 0, isOwner = fal
                 <Rating
                     name="read-only"
                     value={ratingValue}
-                    precision={0.1}
+                    precision={1}
                     size="large"
                     readOnly
                 />
