@@ -62,6 +62,7 @@ Review.belongsTo(StudySpot, { foreignKey: 'study_spot_id', onDelete: 'CASCADE' }
 async function findAll(query) {
   try {
     const filters = {}
+    if (query.id) filters.id = query.id;
     if (query.user_id) filters.user_id = query.user_id;
     if (query.study_spot_id) filters.study_spot_id = query.study_spot_id;
 
@@ -85,13 +86,13 @@ async function createReview(query) {
   }
 }
 
-async function updateReview(query) {
+async function updateReview(query, body) {
   try {
     if (!query.id) throw new Error("No id provided");
 
     const id = query.id;
-    const updated_attributes = query;
-    delete updated_attributes[id];
+    const updated_attributes = body;
+    if (body.user_id) delete updated_attributes[body.user_id];
 
     return await Review.update(updated_attributes, { where: { id } });
   } catch (error) {

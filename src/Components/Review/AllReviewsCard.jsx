@@ -47,6 +47,7 @@ const AllReviewsCard = ({ reviews }) => {
 
                     return (
                         <ReviewCard
+                            review_id={review.id}
                             ratingValue={review.rating}
                             description={review.comment}
                             createdAt={formattedDate}

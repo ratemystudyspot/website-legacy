@@ -20,21 +20,26 @@ async function getReviewsByStudySpot(study_spot_id) {
   }
 }
 
-async function createReview(user_id, study_spot_id, rating, comment) {
+async function createReview(user_id, study_spot_id, rating, comment, access_token) {
   try {
-    const response = await axios.post(`${API_URL}`, {user_id, study_spot_id, rating, comment});
+    const response = await axios.post(`${API_URL}`,
+      { user_id, study_spot_id, rating, comment },
+      { headers: { Authorization: `Bearer ${access_token}` } });
     return response.data;
   } catch (error) {
     throw error.response.data;
   }
 }
 
-async function editReview(id, user_id, study_spot_id, comment, rating) {
+async function editReview(id, user_id, rating, comment, access_token) {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, {user_id, study_spot_id, comment, rating});
+    console.log(id, user_id, rating, comment)
+    const response = await axios.put(`${API_URL}?id=${id}`,
+      { user_id, comment, rating },
+      { headers: { Authorization: `Bearer ${access_token}` } });
     return response.data;
   } catch (error) {
-    throw error.response.data;
+    throw error.response;
   }
 }
 

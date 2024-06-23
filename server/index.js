@@ -19,17 +19,9 @@ app.use(express.urlencoded({ limit: "25mb" }));
 app.use(cors({
   origin: CORS_ORIGINS,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Access-Control-Allow-Headers'],
+  allowedHeaders: ['Content-Type', 'Access-Control-Allow-Headers', 'Authorization'],
   credentials: true,
 }));
-
-const credentials = (req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-      res.header('Access-Control-Allow-Credentials', true);
-  }
-  next();
-}
 
 //middleware for cookies
 app.use(cookieParser());
