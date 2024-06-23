@@ -33,6 +33,7 @@ function App() {
 
   const { setAuth } = useAuth();
 
+  // on reload, fetch refresh token
   useEffect(() => {
     const fetchRefreshToken = async () => {
       try {
@@ -53,7 +54,7 @@ function App() {
       }
     }
     fetchRefreshToken();
-  }, [window.location.href])
+  }, [window.location.href]);
 
   return (
     <Routes>

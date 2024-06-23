@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthProvider';
 import { RecoveryProvider } from './context/RecoveryProvider';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,9 +19,11 @@ root.render(
   <BrowserRouter>
     <AuthProvider>
       <RecoveryProvider>
-        <Routes>
-          <Route path="/*" element={<App />} />
-        </Routes>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route path="/*" element={<App />} />
+          </Routes>
+        </ThemeProvider>
       </RecoveryProvider>
     </AuthProvider>
   </BrowserRouter>

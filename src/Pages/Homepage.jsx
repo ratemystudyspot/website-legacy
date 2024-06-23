@@ -6,40 +6,53 @@ import AlertComponenet from '../Components/AlertComponenet';
 import './Homepage.css'
 import Banner from '../Components/Banner/Banner'
 import { getLocation } from '../Services/Utils/location';
+import { CircularProgress } from '@mui/material';
 
 
 const Homepage = () => {
+  const [currentLocation, setCurrentLocation] = useState();
   const [filterOptions, setFilterOptions] = useState([]);
   const [cards, setCards] = useState([]);
   const [locationAlert, setLocationAlert] = useState(false);
 
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition(
-      (position) => { // success case
+      async (position) => { // success case
         let user_lon = position.coords.longitude;
         let user_lat = position.coords.latitude;
-        setCurrentLocation([user_lon, user_lat]);
+        // setCurrentLocation([user_lon, user_lat]);
+        await setCurrentLocation([user_lon, user_lat]);
       },
       async () => { // error case
-        setLocationAlert(true);
+        await setLocationAlert(true);
         // Alert("Location services reduced because blocked location sharing. Please share location for the best experience.", "info");
         const { location: { longitude, latitude } } = await getLocation();
-        setCurrentLocation([longitude, latitude]);
+        await setCurrentLocation([longitude, latitude]);
       });
   }
 
-  const [currentLocation, setCurrentLocation] = useState(async () => await getCurrentLocation());
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
 
   return (
     <div className="container">
-        <Banner filterSelected={filterOptions} onFilterSelect={setFilterOptions} cards={cards} setCards={setCards} showSearch={true}/>
-  
+      <Banner filterSelected={filterOptions} onFilterSelect={setFilterOptions} cards={cards} setCards={setCards} showSearch={true} />
+
       <div className='study-spot-filter'>
         <SpotCardsFilter filterSelected={filterOptions} onFilterSelect={setFilterOptions} />
       </div>
 
       <div className="study-spot-list">
-        <ListOfStudySpotCards filterSelected={filterOptions} currentLocation={currentLocation} cards={cards} setCards={setCards} />
+        {(currentLocation)
+          ? (<ListOfStudySpotCards filterSelected={filterOptions} currentLocation={currentLocation} cards={cards} setCards={setCards} />)
+          : (<div style={{
+            position: 'absolute',
+            top: '30vh',
+            left: '50%',
+          }}>
+            <CircularProgress color="blue" />
+          </div>)}
       </div>
 
       <div className="alert">
