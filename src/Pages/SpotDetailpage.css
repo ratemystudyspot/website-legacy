@@ -1,7 +1,9 @@
 .banner {
   .goBack-button {
     visibility: visible;
-    transform: translate(0, 0);
+  }
+  .about-button {
+    visibility: hidden;
   }
 }
 
@@ -59,7 +61,6 @@
   z-index: 1; /* Ensure buttons are on top of the image */
   opacity: 0;
   transition: opacity 0.5s ease, visibility 0.5s ease;
-  visibility: hidden;
   color: rgb(255, 255, 255);
 }
 
