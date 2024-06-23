@@ -12,6 +12,7 @@ const Review = sequelize.define("Review", {
   },
   user_id: {
     type: DataTypes.INTEGER,
+    allowNull: false,
     references: {
       model: 'user',
       key: 'id'
@@ -20,6 +21,7 @@ const Review = sequelize.define("Review", {
   },
   study_spot_id: {
     type: DataTypes.INTEGER,
+    allowNull: false,
     references: {
       model: 'study_spot',
       key: 'id'
@@ -27,7 +29,7 @@ const Review = sequelize.define("Review", {
     onDelete: 'CASCADE'
   },
   rating: {
-    type: DataTypes.DECIMAL(3,1),
+    type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
       min: 1,
@@ -40,6 +42,7 @@ const Review = sequelize.define("Review", {
   },
   created_at: {
     type: DataTypes.DATE,
+    allowNull: false,
     defaultValue: DataTypes.NOW
   }
 },
