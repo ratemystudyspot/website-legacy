@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-const UBCMap = ({ markerCoordinates = [-123.2460, 49.2606], mapWidth = '600px', mapHeight = '400px', mapCenter = [-123.2460, 49.2626], mapZoom = 13 }) => {
+const UBCMap = ({ markerCoordinates = [-123.2460, 49.2606], mapWidth = '500px', mapHeight = '500px', mapCenter = [-123.2460, 49.2626], mapZoom = 13 }) => {
     const mapContainer = useRef(null);
     const [viewState, setViewState] = useState({
         center: mapCenter,
@@ -23,8 +23,9 @@ const UBCMap = ({ markerCoordinates = [-123.2460, 49.2606], mapWidth = '600px', 
 
     return (
         <div
+            className='ubc-map'
             ref={mapContainer}
-            style={{ width: mapWidth, height: mapHeight, position: 'absolute' }}
+            style={{ width: "100%", height: "100%", borderRadius: "20px", position: 'absolute' }}
         />
     )
 

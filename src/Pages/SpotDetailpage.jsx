@@ -13,6 +13,7 @@ import ReviewCard from '../Components/Review/ReviewCard';
 import { Rating } from "@mui/material";
 import AllReviewsCard from '../Components/Review/AllReviewsCard';
 import { getReviewsByStudySpot } from '../Services/review';
+import UBCMap from '../Components/UBCMap/UBCMap';
 
 const images = require.context('../Components/Assets', true);
 
@@ -138,8 +139,8 @@ const SpotDetailpage = () => {
             <p className="distance">{getDistance()} away</p>
           </div>
 
-          <section className="details">
-            ADD MAP HERE
+          <section className="ubc-map">
+            <UBCMap />
           </section>
 
           <section className="amenities">

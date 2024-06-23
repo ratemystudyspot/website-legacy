@@ -27,7 +27,7 @@
 }
 
 .listing-header .distance {
-  margin: 5px 0 20px 5px;
+  margin: 5px 0 15px 5px;
   color: #666;
 }
 
@@ -107,6 +107,25 @@
 
 .details, .amenities {
   /* margin-top: 30px; */
+}
+
+.ubc-map {
+  position: relative;
+  height: 150px;
+  width: 45vw;
+  /* .maplibregl-ctrl button .maplibregl-ctrl-icon {
+    background-position: 50%;
+    background-repeat: no-repeat;
+    display: block;
+    height: 100%;
+    width: 100%;
+  } */
+  .maplibregl-ctrl-attrib.maplibregl-compact {
+    visibility: hidden;
+  }
+  .maplibregl-ctrl {
+    visibility: hidden;
+  }
 }
 
 .details h2, .amenities h2 {
