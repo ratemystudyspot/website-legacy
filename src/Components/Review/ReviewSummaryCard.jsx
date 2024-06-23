@@ -4,16 +4,18 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import { Height } from "@mui/icons-material";
 import { styled } from '@mui/material/styles';
 
+const defaultProgressBarValue = -1;
+
 const initialProgressBarValues = {
-    fiveStarProgressBarValue: 0,
-    fourStarProgressBarValue: 0,
-    threeStarProgressBarValue: 0,
-    twoStarProgressBarValue: 0,
-    oneStarProgressBarValue: 0,
+    fiveStarProgressBarValue: defaultProgressBarValue,
+    fourStarProgressBarValue: defaultProgressBarValue,
+    threeStarProgressBarValue: defaultProgressBarValue,
+    twoStarProgressBarValue: defaultProgressBarValue,
+    oneStarProgressBarValue: defaultProgressBarValue,
 };
 
 const CustomLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 10,
+    height: 12,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
       backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
@@ -24,59 +26,91 @@ const CustomLinearProgress = styled(LinearProgress)(({ theme }) => ({
     },
   }));
 
+  const calculateAverage = (reviews) => {
+    let averageRating = 0;
+    const totalNumReviews = reviews.length;
+
+    if (totalNumReviews == 0) {
+        return "N/A";
+    }
+
+    reviews.forEach((review) => {
+        averageRating = averageRating + review.rating;
+    })
+    averageRating = (Math.round((averageRating / totalNumReviews) * 10) / 10).toFixed(1); // round to the nearest tenth
+    console.log(averageRating);
+    console.log(totalNumReviews);
+    return averageRating; 
+  }
+
+  const calculateProgressBar = (reviews) => {
+    let num5StarReviews = 0;
+    let num4StarReviews = 0;
+    let num3StarReviews = 0;
+    let num2StarReviews = 0;
+    let num1StarReviews = 0;
+    const totalNumReviews = reviews.length;
+
+    reviews.forEach((review) => {
+    
+        if (review.rating == 5) {
+            num5StarReviews++;
+        } else if (review.rating == 4) {
+            num4StarReviews++;
+        } else if (review.rating == 3) {
+            num3StarReviews++;
+        } else if (review.rating == 2) {
+            num2StarReviews++;
+        } else if (review.rating == 1) {
+            num1StarReviews++;
+        }
+        // console.log(review.rating)
+
+    });
+
+    if (totalNumReviews === 0) {
+        return initialProgressBarValues;
+    } else {
+        // console.log(num5StarReviews);
+        // console.log(totalNumReviews);
+        // console.log( (num5StarReviews / totalNumReviews) * 100);
+        const fiveStarProgressBarValue = (num5StarReviews / totalNumReviews) * 100; 
+        const fourStarProgressBarValue = (num4StarReviews / totalNumReviews) * 100; 
+        const threeStarProgressBarValue = (num3StarReviews / totalNumReviews) * 100; 
+        const twoStarProgressBarValue = (num2StarReviews / totalNumReviews) * 100; 
+        const oneStarProgressBarValue = (num1StarReviews / totalNumReviews) * 100; 
+        return {
+            fiveStarProgressBarValue: (fiveStarProgressBarValue == 0 ?  defaultProgressBarValue  : fiveStarProgressBarValue),
+            fourStarProgressBarValue: (fourStarProgressBarValue == 0 ?  defaultProgressBarValue  : fourStarProgressBarValue),
+            threeStarProgressBarValue: (threeStarProgressBarValue == 0 ?  defaultProgressBarValue  : threeStarProgressBarValue),
+            twoStarProgressBarValue: (twoStarProgressBarValue == 0 ?  defaultProgressBarValue  : twoStarProgressBarValue),
+            oneStarProgressBarValue: (oneStarProgressBarValue == 0 ?  defaultProgressBarValue  : oneStarProgressBarValue),
+        };
+    }
+};
+
 const ReviewSummaryCard = ({ reviews }) => {
     const [progressBarsState, setProgressBarsState] = useState(initialProgressBarValues);
+    const [averageRatingState, setAverageRatingState] = useState("N/A");
+    const [totalNumReviewsState, setTotalNumReviewsState] = useState(reviews.length);
 
     useEffect(() => {
         const progressBarValues = calculateProgressBar(reviews);
+        const averageRating = calculateAverage(reviews);
+        setTotalNumReviewsState(reviews.length); // TODO: include totalNumReviewsState into calculations!
+        setAverageRatingState(averageRating);
         setProgressBarsState(progressBarValues);
     }, [reviews]);
 
-    const calculateProgressBar = (reviews) => {
-        let num5StarReviews = 0;
-        let num4StarReviews = 0;
-        let num3StarReviews = 0;
-        let num2StarReviews = 0;
-        let num1StarReviews = 0;
-        let totalNumReviews = 0;
-
-        reviews.forEach((review) => {
-        
-            if (review.rating == 5) {
-                num5StarReviews++;
-            } else if (review.rating == 4) {
-                num4StarReviews++;
-            } else if (review.rating == 3) {
-                num3StarReviews++;
-            } else if (review.rating == 2) {
-                num2StarReviews++;
-            } else if (review.rating == 1) {
-                num1StarReviews++;
-            }
-            totalNumReviews++;
-            
-            console.log(review.rating)
-
-        });
-
-        if (totalNumReviews === 0) {
-            return initialProgressBarValues;
-        } else {
-            console.log(num5StarReviews);
-            console.log(totalNumReviews);
-            console.log( (num5StarReviews / totalNumReviews) * 100);
-            return {
-                fiveStarProgressBarValue: (num5StarReviews / totalNumReviews) * 100,
-                fourStarProgressBarValue: (num4StarReviews / totalNumReviews) * 100,
-                threeStarProgressBarValue: (num3StarReviews / totalNumReviews) * 100,
-                twoStarProgressBarValue: (num2StarReviews / totalNumReviews) * 100,
-                oneStarProgressBarValue: (num1StarReviews / totalNumReviews) * 100,
-            };
-        }
-    };
-
     return (
         <div className="review-summary-card">
+            <div className="progress-bar-labels-container">
+                <div className="progress-bar-labels"> 5 </div>
+                <div className="progress-bar-labels"> 4 </div>
+                <div className="progress-bar-labels"> 3 </div>
+                <div className="progress-bar-labels"> 2 </div>
+                <div className="progress-bar-labels"> 1 </div>
+            </div>
             <div className="progress-bar-container"> 
                 <div className="progress-bar five-star-bar">
                     <CustomLinearProgress variant="determinate" value={progressBarsState.fiveStarProgressBarValue} />
@@ -94,6 +128,13 @@ const ReviewSummaryCard = ({ reviews }) => {
                     <CustomLinearProgress variant="determinate" value={progressBarsState.oneStarProgressBarValue} />
                 </div>
             </div>
+            <div className="review-summary-text">
+                <div className="average-rating-text">
+                    {averageRatingState}
+                </div>
+                {totalNumReviewsState} Reviews
+            </div>
+          
         </div>
     );
 };
