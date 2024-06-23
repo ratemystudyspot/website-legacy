@@ -8,7 +8,10 @@ const AuthProvider = ({ children }) => {
     /*
     auth: {
         access_token, 
-        user_info
+        user_info: {
+            id,
+            role
+        }
     }  
     */
 
