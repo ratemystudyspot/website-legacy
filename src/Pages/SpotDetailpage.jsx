@@ -14,6 +14,7 @@ import { Rating } from "@mui/material";
 import AllReviewsCard from '../Components/Review/AllReviewsCard';
 import { getReviewsByStudySpot } from '../Services/review';
 import UBCMap from '../Components/UBCMap/UBCMap';
+import { CircularProgress } from '@mui/material';
 
 const images = require.context('../Components/Assets', true);
 
@@ -26,6 +27,7 @@ const SpotDetailpage = () => {
   let location = useLocation();
   let state = location.state;
 
+  const [summaryCardLoaded, setSummaryCardLoaded] = useState(false);
   const [reviews, setReviews] = useState([]);
 
   const filterOptions = [
@@ -112,7 +114,7 @@ const SpotDetailpage = () => {
         console.error(error);
       }
     }
-    
+
     getReviews();
   }, [])
 
@@ -121,8 +123,28 @@ const SpotDetailpage = () => {
       <div className='banner'>
         <Banner />
       </div>
-      <div className="listing-detail">
 
+      {(reviews.length !== 0 && galleryImages.length !== 0 && summaryCardLoaded) // add more things that need to load before shown to user
+        ? (null)
+        : (<div style={{
+          position: 'absolute',
+          width: '100vw',
+          height: '100vh',
+          background: 'white',
+          top: '0',
+          left: '0',
+          zIndex: 1,
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: '50vh',
+            left: '50%',
+          }}>
+            <CircularProgress color="blue" />
+          </div>
+        </div>)}
+
+      <div className="listing-detail">
         {/* Left Container */}
         <div className='study-info-container'>
 
@@ -154,7 +176,7 @@ const SpotDetailpage = () => {
         </div>  {/* Replace with loop!
           {/* Right Container */}
 
-        <AllReviewsCard reviews={reviews} />
+        <AllReviewsCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} />
       </div>
     </div>
   )

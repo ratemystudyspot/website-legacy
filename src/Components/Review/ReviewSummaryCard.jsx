@@ -92,7 +92,7 @@ const calculateProgressBar = (reviews) => {
     }
 };
 
-const ReviewSummaryCard = ({ reviews }) => {
+const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
     const [progressBarsState, setProgressBarsState] = useState(initialProgressBarValues);
     const [averageRatingState, setAverageRatingState] = useState("N/A");
     const [totalNumReviewsState, setTotalNumReviewsState] = useState(reviews.length);
@@ -109,6 +109,10 @@ const ReviewSummaryCard = ({ reviews }) => {
         setTotalNumReviewsState(reviews.length); // TODO: include totalNumReviewsState into calculations!
         setAverageRatingState(averageRating);
         setProgressBarsState(progressBarValues);
+
+        if (averageRating !== "N/A") {
+            setSummaryCardLoaded(true);
+        }
     }, [reviews]);
 
     return (

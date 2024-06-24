@@ -5,7 +5,7 @@ import ReviewCard from "./ReviewCard";
 import { getReactionsByReview } from "../../Services/reaction";
 import ReviewSummaryCard from "./ReviewSummaryCard";
 
-const AllReviewsCard = ({ reviews }) => {
+const AllReviewsCard = ({ reviews, setSummaryCardLoaded }) => {
     const { auth } = useAuth();
 
     const getReactions = async (review_id) => {
@@ -18,7 +18,7 @@ const AllReviewsCard = ({ reviews }) => {
 
     return (
         <div className="all-reviews-card">
-            <ReviewSummaryCard reviews={reviews}/>
+            <ReviewSummaryCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} />
             {(reviews.length > 0)
                 ? reviews.map((review) => {
                     // for the likes + dislikes
@@ -61,7 +61,6 @@ const AllReviewsCard = ({ reviews }) => {
                 })
                 : (null) // TODO: add a "be the first one to post" type of component here
             }
-            {/* <ReviewCard /> */}
         </div>
     )
 }
