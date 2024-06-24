@@ -18,8 +18,8 @@ const initialProgressBarValues = {
 };
 
 const CustomLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 12,
-    borderRadius: 5,
+    height: 15,
+    borderRadius: 10,
     [`&.${linearProgressClasses.colorPrimary}`]: {
         backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
     },
@@ -74,9 +74,6 @@ const calculateProgressBar = (reviews) => {
     if (totalNumReviews === 0) {
         return initialProgressBarValues;
     } else {
-        // console.log(num5StarReviews);
-        // console.log(totalNumReviews);
-        // console.log( (num5StarReviews / totalNumReviews) * 100);
         const fiveStarProgressBarValue = (num5StarReviews / totalNumReviews) * 100;
         const fourStarProgressBarValue = (num4StarReviews / totalNumReviews) * 100;
         const threeStarProgressBarValue = (num3StarReviews / totalNumReviews) * 100;
@@ -117,39 +114,46 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
 
     return (
         <div className="review-summary-card">
-            <div className="progress-bar-labels-container">
-                <div className="progress-bar-labels"> 5 </div>
-                <div className="progress-bar-labels"> 4 </div>
-                <div className="progress-bar-labels"> 3 </div>
-                <div className="progress-bar-labels"> 2 </div>
-                <div className="progress-bar-labels"> 1 </div>
+            <div className="bar-label-container">
+                <div className="labels-container">
+                    <div className="bar-labels"> 5 </div>
+                    <div className="bar-labels"> 4 </div>
+                    <div className="bar-labels" style={{marginTop:"17px"}}> 3 </div>
+                    <div className="bar-labels" style={{marginTop:"17px"}}> 2 </div>
+                    <div className="bar-labels"> 1 </div>
+                </div>
+                <div className="progress-bar-container">
+                    <div className="progress-bar five-star-bar">
+                        <CustomLinearProgress variant="determinate" value={progressBarsState.fiveStarProgressBarValue} />
+                    </div>
+                    <div className="progress-bar four-star-bar">
+                        <CustomLinearProgress variant="determinate" value={progressBarsState.fourStarProgressBarValue} />
+                    </div>
+                    <div className="progress-bar three-star-bar">
+                        <CustomLinearProgress variant="determinate" value={progressBarsState.threeStarProgressBarValue} />
+                    </div>
+                    <div className="progress-bar two-star-bar">
+                        <CustomLinearProgress variant="determinate" value={progressBarsState.twoStarProgressBarValue} />
+                    </div>
+                    <div className="progress-bar one-star-bar">
+                        <CustomLinearProgress variant="determinate" value={progressBarsState.oneStarProgressBarValue} />
+                    </div>
             </div>
-            <div className="progress-bar-container">
-                <div className="progress-bar five-star-bar">
-                    <CustomLinearProgress variant="determinate" value={progressBarsState.fiveStarProgressBarValue} />
-                </div>
-                <div className="progress-bar four-star-bar">
-                    <CustomLinearProgress variant="determinate" value={progressBarsState.fourStarProgressBarValue} />
-                </div>
-                <div className="progress-bar three-star-bar">
-                    <CustomLinearProgress variant="determinate" value={progressBarsState.threeStarProgressBarValue} />
-                </div>
-                <div className="progress-bar two-star-bar">
-                    <CustomLinearProgress variant="determinate" value={progressBarsState.twoStarProgressBarValue} />
-                </div>
-                <div className="progress-bar one-star-bar">
-                    <CustomLinearProgress variant="determinate" value={progressBarsState.oneStarProgressBarValue} />
-                </div>
             </div>
-            <div className="review-summary-text">
+        
+            {/* TODO: use button component for add review */}
+            <div className="review-summary-right-container">
                 <div className="average-rating-text">
                     {averageRatingState}
                 </div>
-                {totalNumReviewsState} Reviews
+                <div className="num-reviews-text">
+                    {totalNumReviewsState} Reviews
+                </div>
+                <div> 
+                <button className="add-review-button" onClick={() => setShowAddReviewCard(true)}>Add Review</button> 
             </div>
-            <div> {/* TODO: style button (very out of place currently) */}
-                <button onClick={() => setShowAddReviewCard(true)}>Add Review</button>
             </div>
+            
             {handleAddReview()} {/* TODO: change to do another method */}
         </div>
     );
