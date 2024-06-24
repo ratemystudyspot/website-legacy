@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import useAuth from '../../hooks/useAuth';
 import { createReview } from '../../Services/review';
-
-
+import "./AddReviewCard.css";
+import { Rating } from '@mui/material';
 
 // TODO: all of this needs styling
 const AddReviewCard = () => {
   const { auth } = useAuth();
-  const [rating, setRating] = useState('');
+  const [overallRating, setOverallRating] = useState('');
   const [comment, setComment] = useState('');
 
   const handleSubmit = async (e) => {
@@ -18,22 +18,33 @@ const AddReviewCard = () => {
     const study_spot_id = window.location.href.split("/").at(-1);
 
     try {
-      await createReview(user_id, study_spot_id, rating, comment, access_token);
+      await createReview(user_id, study_spot_id, overallRating, comment, access_token);
     } catch (error) {
       console.error(error);
     }
   }
 
   return (
-    <div>
+    <div className='add-review-card'>
       <form onSubmit={handleSubmit}>
-        <input
+        <Rating 
+          name='overall-rating'
+          value={overallRating}
+          onChange={(event, newOverallRating) => {setOverallRating(newOverallRating)}}
+          required/>
+
+        {/* <Rating 
+          name='comfort-rating'
+          value={rating}
+          onChange={(event, newRating) => {setRating(newRating)}}
+          required/> */}
+        {/* <input
           type="text"
           placeholder="Add a Rating... (1-5)"
           value={rating}
           onChange={(e) => setRating(e.target.value)}
           required
-        />
+        /> */}
         <input
           type="text"
           placeholder="Add a Review..."

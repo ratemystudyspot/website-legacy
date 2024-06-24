@@ -1,0 +1,13 @@
+.add-review-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the card */
+    z-index: 1000; /* Ensure it's above the overlay background */
+    height: 70vh;
+    width: 700px; /* Adjust the width as needed */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add some shadow for better visual */
+    padding: 20px; /* Optional: add some padding inside the card */
+    border-radius: 8px; /* Optional: rounded corners */
+}
