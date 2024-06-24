@@ -28,7 +28,7 @@ const Review = sequelize.define("Review", {
     },
     onDelete: 'CASCADE'
   },
-  rating: {
+  overall_rating: {
     type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
@@ -44,7 +44,28 @@ const Review = sequelize.define("Review", {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: DataTypes.NOW
-  }
+  },
+  quietness_rating: {
+    type: DataTypes.INTEGER,
+    validate: {
+      min: 1,
+      max: 5
+    }
+  },
+  comfort_rating: {
+    type: DataTypes.INTEGER,
+    validate: {
+      min: 1,
+      max: 5
+    }
+  },
+  space_rating: {
+    type: DataTypes.INTEGER,
+    validate: {
+      min: 1,
+      max: 5
+    }
+  },
 },
   {
     timestamps: false,

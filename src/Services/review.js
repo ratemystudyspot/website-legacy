@@ -20,10 +20,14 @@ async function getReviewsByStudySpot(study_spot_id) {
   }
 }
 
-async function createReview(user_id, study_spot_id, rating, comment, access_token) {
+async function createReview(user_id, study_spot_id, overall_rating, rating_body, comment, access_token) {
   try {
+    const new_rating_body = {};
+    for (const key in rating_body) {
+      new_rating_body[key] = rating_body[key];
+    }
     const response = await axios.post(`${API_URL}`,
-      { user_id, study_spot_id, rating, comment },
+      { user_id, study_spot_id, overall_rating, ...new_rating_body, comment },
       { headers: { Authorization: `Bearer ${access_token}` } });
     return response.data;
   } catch (error) {
@@ -31,11 +35,14 @@ async function createReview(user_id, study_spot_id, rating, comment, access_toke
   }
 }
 
-async function editReview(id, user_id, rating, comment, access_token) {
+async function editReview(id, user_id, overall_rating, rating_body, comment, access_token) {
   try {
-    console.log(id, user_id, rating, comment)
+    const new_rating_body = {};
+    for (const key in rating_body) {
+      new_rating_body[key] = rating_body[key];
+    }
     const response = await axios.put(`${API_URL}?id=${id}`,
-      { user_id, comment, rating },
+      { user_id, overall_rating, ...new_rating_body, comment },
       { headers: { Authorization: `Bearer ${access_token}` } });
     return response.data;
   } catch (error) {

@@ -18,7 +18,8 @@ const AddReviewCard = () => {
     const study_spot_id = window.location.href.split("/").at(-1);
 
     try {
-      await createReview(user_id, study_spot_id, overallRating, comment, access_token);
+      const rating_body = {}; // TODO: add rating_body (only add the ratings that the user has given)
+      await createReview(user_id, study_spot_id, overallRating, rating_body, comment, access_token);
     } catch (error) {
       console.error(error);
     }

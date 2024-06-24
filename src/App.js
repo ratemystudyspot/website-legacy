@@ -42,7 +42,7 @@ function App() {
         let accessTokenDecoded = jwtDecode(accessToken); // decode access token
 
         setAuth({ access_token: accessToken, user_info: accessTokenDecoded?.UserInfo }); // authorize user
-        
+        console.log(accessToken);
         // delete all info related to access token
         response = null;
         accessToken = null;

@@ -127,7 +127,7 @@ const SpotDetailpage = () => {
         <Banner />
       </div>
 
-      {(reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) // add more things that need to load before shown to user
+      {(!reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) // add more things that need to load before shown to user
         ? (null)
         : (<div style={{
           position: 'absolute',
