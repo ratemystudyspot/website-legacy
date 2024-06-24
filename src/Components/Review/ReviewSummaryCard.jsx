@@ -96,6 +96,8 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
 
     const [showAddReviewCard, setShowAddReviewCard] = useState(false);
 
+    const [counter, setCounter] = useState(0);
+
     const handleAddReview = () => { // TODO: make it a proper popup
         if (showAddReviewCard) return (<AddReviewCard />);
     }
@@ -106,11 +108,25 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
         setTotalNumReviewsState(reviews.length); // TODO: include totalNumReviewsState into calculations!
         setAverageRatingState(averageRating);
         setProgressBarsState(progressBarValues);
-
-        if ((reviews.length > 0 && averageRatingState !== "N/A") || (reviews.length === 0 && averageRatingState === "N/A")) {
-            setSummaryCardLoaded(true); // tells the loaders in the parent page that everything's been loaded
-        }        
     }, [reviews]);
+
+    // useEffect for counter to give ample to for components to load up
+    useEffect(() => {
+        if (counter >= 2) return;
+
+        const intervalId = setInterval(() => {
+            setCounter((prevCounter) => prevCounter + 1);
+        }, 1000);
+
+        console.log(counter)
+
+        if ((counter === 1) && ((reviews.length > 0 && averageRatingState !== "N/A") || (reviews.length === 0 && averageRatingState === "N/A"))) {
+            console.log("here,", counter===2)
+            setSummaryCardLoaded(true); // tells the loaders in the parent page that everything's been loaded
+        }
+
+        return () => clearInterval(intervalId);
+    }, [counter])
 
     return (
         <div className="review-summary-card">
@@ -118,8 +134,8 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
                 <div className="labels-container">
                     <div className="bar-labels"> 5 </div>
                     <div className="bar-labels"> 4 </div>
-                    <div className="bar-labels" style={{marginTop:"17px"}}> 3 </div>
-                    <div className="bar-labels" style={{marginTop:"17px"}}> 2 </div>
+                    <div className="bar-labels" style={{ marginTop: "17px" }}> 3 </div>
+                    <div className="bar-labels" style={{ marginTop: "17px" }}> 2 </div>
                     <div className="bar-labels"> 1 </div>
                 </div>
                 <div className="progress-bar-container">
@@ -138,9 +154,9 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
                     <div className="progress-bar one-star-bar">
                         <CustomLinearProgress variant="determinate" value={progressBarsState.oneStarProgressBarValue} />
                     </div>
+                </div>
             </div>
-            </div>
-        
+
             {/* TODO: use button component for add review */}
             <div className="review-summary-right-container">
                 <div className="average-rating-text">
@@ -149,11 +165,11 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
                 <div className="num-reviews-text">
                     {totalNumReviewsState} Reviews
                 </div>
-                <div> 
-                <button className="add-review-button" onClick={() => setShowAddReviewCard(true)}>Add Review</button> 
+                <div>
+                    <button className="add-review-button" onClick={() => setShowAddReviewCard(true)}>Add Review</button>
+                </div>
             </div>
-            </div>
-            
+
             {handleAddReview()} {/* TODO: change to do another method */}
         </div>
     );
