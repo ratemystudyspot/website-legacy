@@ -1,6 +1,8 @@
+/* TODO: CSS Container names SUCK!!! Please fix  LEOOO*/
 .review-summary-card {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     height: fit-content;
     width: 100%;
     background-color: white;
@@ -10,28 +12,62 @@
     box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
 }
 
+.bar-label-container {
+    margin: 0 5px 0 20px;
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+}
+
 .progress-bar-container {
     width: 100%;
 }
 
-.progress-bar-labels-container {
+.labels-container {
     margin-top: 7px;
-    margin-right: 5px;
+    margin-right: 20px;
 }
 
-.progress-bar-labels {
-    margin: 3px;
+.bar-labels {
+    margin: 15px 0 15px 0;
 }
 
 .progress-bar {
     display: flex;
-    width: 40%;
-    margin: 15px;
+    width: 100%;
+    margin: 25px 0 25px 0;
 }
 
-.average-rating-text {
-    font-weight: bolder;
-    font-size: 75px;
+/* TODO: create new button component for the different buttons! */
+.review-summary-right-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translate(0,-5px);
+    margin: 0 30px 0 5px;
+    .average-rating-text {
+        transform: translate(0,20%);
+        font-weight: bolder;
+        font-size: 75px;
+    }
+
+    .num-reviews-text {
+        margin: 5px 0 5px 0;
+    }
+
+    .add-review-button {
+        border-radius: 20px;
+        height: 30px;
+        width: 115px;
+        background-color: #BFE0FF;
+        border: none;
+        color: #7c7c7c;
+    }
+    .add-review-button:hover {
+        color: #636363;
+        background-color: #a9c6e2;
+    }
+
 }
 
 

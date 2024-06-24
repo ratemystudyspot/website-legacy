@@ -11,7 +11,7 @@
   position: absolute;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   background: #fff;
   padding-top: 30px;
   width: 100vw;
@@ -34,8 +34,9 @@
 .study-info-container {
   display: flex;
   flex-direction: column;
-  width: 45vw;
+  width: 40vw;
   height: 100%;
+  margin-right: 50px;
 }
 
 .gallery {
@@ -112,7 +113,7 @@
 .ubc-map {
   position: relative;
   height: 150px;
-  width: 45vw;
+  width: 100%;
   /* .maplibregl-ctrl button .maplibregl-ctrl-icon {
     background-position: 50%;
     background-repeat: no-repeat;

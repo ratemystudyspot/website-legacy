@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     min-height: 80vh;
-    width: 45vw;
+    width: 30vw;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: rgb(240, 240, 240);
