@@ -38,7 +38,7 @@ const calculateAverage = (reviews) => {
     }
 
     reviews.forEach((review) => {
-        averageRating = averageRating + review.rating;
+        averageRating = averageRating + review.overall_rating;
     })
     averageRating = (Math.round((averageRating / totalNumReviews) * 10) / 10).toFixed(1); // round to the nearest tenth
     console.log(averageRating);
@@ -55,19 +55,19 @@ const calculateProgressBar = (reviews) => {
     const totalNumReviews = reviews.length;
 
     reviews.forEach((review) => {
-
-        if (review.rating == 5) {
+        const overall_rating = review.overall_rating;
+        if (overall_rating == 5) {
             num5StarReviews++;
-        } else if (review.rating == 4) {
+        } else if (overall_rating == 4) {
             num4StarReviews++;
-        } else if (review.rating == 3) {
+        } else if (overall_rating == 3) {
             num3StarReviews++;
-        } else if (review.rating == 2) {
+        } else if (overall_rating == 2) {
             num2StarReviews++;
-        } else if (review.rating == 1) {
+        } else if (overall_rating == 1) {
             num1StarReviews++;
         }
-        // console.log(review.rating)
+        // console.log(overall_rating)
 
     });
 

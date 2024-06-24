@@ -48,7 +48,7 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded }) => {
                     return (
                         <ReviewCard
                             review_id={review.id}
-                            ratingValue={review.rating}
+                            ratingValue={review.overall_rating}
                             description={review.comment}
                             createdAt={formattedDate}
                             isOwner={review.user_id === auth?.user_info?.id}
