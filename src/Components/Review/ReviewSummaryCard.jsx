@@ -107,9 +107,9 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
         setAverageRatingState(averageRating);
         setProgressBarsState(progressBarValues);
 
-        if (averageRating !== "N/A") {
-            setSummaryCardLoaded(true);
-        }
+        if ((reviews.length > 0 && averageRatingState !== "N/A") || (reviews.length === 0 && averageRatingState === "N/A")) {
+            setSummaryCardLoaded(true); // tells the loaders in the parent page that everything's been loaded
+        }        
     }, [reviews]);
 
     return (

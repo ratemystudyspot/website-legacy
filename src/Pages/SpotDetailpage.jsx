@@ -15,6 +15,7 @@ import AllReviewsCard from '../Components/Review/AllReviewsCard';
 import { getReviewsByStudySpot } from '../Services/review';
 import UBCMap from '../Components/UBCMap/UBCMap';
 import { CircularProgress } from '@mui/material';
+import { GiConsoleController } from 'react-icons/gi';
 
 const images = require.context('../Components/Assets', true);
 
@@ -29,6 +30,7 @@ const SpotDetailpage = () => {
 
   const [summaryCardLoaded, setSummaryCardLoaded] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [reviewsLoaded, setReviewsLoaded] = useState(false);
 
   const filterOptions = [
     { label: 'Quiet', value: 'quiet', icon: <BiVolumeMute size={20} className="filter-icon" /> },
@@ -110,6 +112,7 @@ const SpotDetailpage = () => {
       try {
         const foundReviews = await getReviewsByStudySpot(state?.studySpot?.id);
         await setReviews(foundReviews);
+        await setReviewsLoaded(true);
       } catch (error) {
         console.error(error);
       }
@@ -124,7 +127,7 @@ const SpotDetailpage = () => {
         <Banner />
       </div>
 
-      {(reviews.length !== 0 && galleryImages.length !== 0 && summaryCardLoaded) // add more things that need to load before shown to user
+      {(reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) // add more things that need to load before shown to user
         ? (null)
         : (<div style={{
           position: 'absolute',
