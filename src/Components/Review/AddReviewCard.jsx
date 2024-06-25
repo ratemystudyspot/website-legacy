@@ -29,8 +29,10 @@ const AddReviewCard = ( {toggleAddReviewCardVisibility}) => {
         space_rating: spaceRating === 0 ? null : spaceRating
       };
       await createReview(user_id, study_spot_id, overallRating, rating_body, comment, access_token);
+      toggleAddReviewCardVisibility();
     } catch (error) {
       console.error(error);
+      toggleAddReviewCardVisibility();
     }
   }
 
