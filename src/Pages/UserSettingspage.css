@@ -1,0 +1,141 @@
+.container {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.settings-banner {
+  .goBack-button {
+    visibility: visible;
+  }
+  .about-button {
+    visibility: hidden;
+  }
+  .suggest-button {
+    visibility: hidden;
+  }
+  .banner-container {
+    background-color: #F5F5F5;
+    box-shadow: none;
+  }
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header span {
+  color: gray;
+  font-size: 14px;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #525252;
+  margin: 10px 0;
+}
+
+.form-container {
+  position: absolute;
+  top: 25vh;
+  left: 10vw;
+}
+
+.form {
+  flex: 1;
+  margin-right: 40px;
+}
+
+.form-group {
+  display: flex;
+  justify-content: right;
+  width: 50vw;
+  border-bottom: #DCDCDC solid 1.5px;
+  padding: 25px 0;
+  
+}
+
+.form-group.blocked {
+  cursor: default;
+  opacity: 0.4;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+}
+
+.form-group .label-info p {
+  margin-bottom: 0;
+}
+
+.save-button {
+  background-color: #292929;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: #000;
+  }
+}
+
+.show-button,
+.cancel-button {
+  margin: 0 0 auto auto;
+  margin-right: 0px;
+  margin-left: auto;
+  background-color: transparent;
+  border: none;
+  color: #7c7c7c;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.show-button.blocked {
+  pointer-events: none;
+}
+
+.name-fields {
+  display: flex;
+  gap: 30px;
+  margin: 30px 0;
+  .input-field {
+
+  }
+}
+
+.name-fields input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.name-fields .input-placeholder {
+  font-size: 12px;
+  margin-left: 2px;
+}
+
+.info-box {
+  flex: 0 0 300px;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.info-item {
+  margin-bottom: 20px;
+}
+
+.info-item h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}

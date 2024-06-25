@@ -12,6 +12,7 @@ const Layout = () => {
   return (
     <main className="App">
       {/* <Display /> Double Logo*/}
+      {/* TODO: refactoring: add the banner component here because it shows up on every page (becomes redundant to add every page) */}
       <Outlet />
     </main>
   )
