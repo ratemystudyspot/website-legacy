@@ -8,6 +8,9 @@ import { Rating } from '@mui/material';
 const AddReviewCard = () => {
   const { auth } = useAuth();
   const [overallRating, setOverallRating] = useState('');
+  const [comfortRating, setComfortRating] = useState('');
+  const [spaceRating, setSpaceRating] = useState('');
+  const [quietRating, setQuietRating] = useState('');
   const [comment, setComment] = useState('');
 
   const handleSubmit = async (e) => {
@@ -27,11 +30,23 @@ const AddReviewCard = () => {
 
   return (
     <div className='add-review-card'>
-      <form onSubmit={handleSubmit}>
+      <form className='add-review-form' onSubmit={handleSubmit}>
         <Rating 
-          name='overall-rating'
+          name='overallRating'
           value={overallRating}
           onChange={(event, newOverallRating) => {setOverallRating(newOverallRating)}}
+          required/>
+
+        <Rating 
+          name='comfortRating'
+          value={comfortRating}
+          onChange={(event, newComfortRating) => {setComfortRating(newComfortRating)}}
+          required/>
+
+        <Rating 
+          name='spaceRating'
+          value={spaceRating}
+          onChange={(event, newSpaceRating) => {setSpaceRating(newSpaceRating)}}
           required/>
 
         {/* <Rating 

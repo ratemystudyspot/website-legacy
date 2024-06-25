@@ -3,6 +3,7 @@ import "./ReviewSummaryCard.css";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { Height } from "@mui/icons-material";
 import { styled } from '@mui/material/styles';
+import { Rating } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 import { createReview } from "../../Services/review";
 import AddReviewCard from "./AddReviewCard";
@@ -20,12 +21,13 @@ const initialProgressBarValues = {
 const CustomLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 15,
     borderRadius: 10,
+    minWidth: '100px',
     [`&.${linearProgressClasses.colorPrimary}`]: {
         backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
-        backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+        backgroundColor: theme.palette.mode === 'light' ? '#FAAF00' : '#308fe8',
     },
 }));
 
@@ -98,9 +100,9 @@ const calculateProgressBar = (reviews) => {
     }
 };
 
-const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
+const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisibility}) => {
     const [progressBarsState, setProgressBarsState] = useState(initialProgressBarValues);
-    const [averageRatingState, setAverageRatingState] = useState("N/A");
+    const [averageRating, setAverageRating] = useState("N/A");
     const [totalNumReviewsState, setTotalNumReviewsState] = useState(reviews.length);
 
     const [showAddReviewCard, setShowAddReviewCard] = useState(false);
@@ -115,7 +117,7 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
         const progressBarValues = calculateProgressBar(reviews);
         const averageRating = calculateAverage(reviews);
         setTotalNumReviewsState(reviews.length); // TODO: include totalNumReviewsState into calculations!
-        setAverageRatingState(averageRating);
+        setAverageRating(averageRating);
         setProgressBarsState(progressBarValues);
     }, [reviews]);
 
@@ -129,7 +131,7 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
 
         console.log(counter)
 
-        if ((counter === 1) && ((reviews.length > 0 && averageRatingState !== "N/A") || (reviews.length === 0 && averageRatingState === "N/A"))) {
+        if ((counter === 1) && ((reviews.length > 0 && averageRating !== "N/A") || (reviews.length === 0 && averageRating === "N/A"))) {
             console.log("here,", counter===2)
             setSummaryCardLoaded(true); // tells the loaders in the parent page that everything's been loaded
         }
@@ -139,7 +141,7 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
 
     return (
         <div className="review-summary-card">
-            <div className="bar-label-container">
+            <div className="review-summary-left-container">
                 <div className="labels-container">
                     <div className="bar-labels"> 5 </div>
                     <div className="bar-labels"> 4 </div>
@@ -169,17 +171,21 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
             {/* TODO: use button component for add review */}
             <div className="review-summary-right-container">
                 <div className="average-rating-text">
-                    {averageRatingState}
+                    {averageRating}
                 </div>
+                <Rating
+                    value={averageRating}
+                    precision={0.1}
+                    size="small"
+                    readOnly
+                />
                 <div className="num-reviews-text">
                     {totalNumReviewsState} Reviews
                 </div>
                 <div>
-                    <button className="add-review-button" onClick={() => setShowAddReviewCard(true)}>Add Review</button>
+                    <button className="add-review-button" onClick={toggleAddReviewCardVisibility}>Add Review</button>
                 </div>
             </div>
-
-            {handleAddReview()} {/* TODO: change to do another method */}
         </div>
     );
 };

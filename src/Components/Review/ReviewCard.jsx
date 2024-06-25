@@ -28,7 +28,6 @@ const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 
         <div className="review-card">
             <div className="review-header">
                 <Rating
-                    name="read-only"
                     value={ratingValue}
                     precision={1}
                     size="large"

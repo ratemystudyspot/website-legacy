@@ -11,3 +11,8 @@
     padding: 20px; /* Optional: add some padding inside the card */
     border-radius: 8px; /* Optional: rounded corners */
 }
+
+.add-review-form {
+    display: flex;
+    flex-direction: column;
+}
