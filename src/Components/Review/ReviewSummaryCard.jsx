@@ -56,16 +56,25 @@ const calculateProgressBar = (reviews) => {
 
     reviews.forEach((review) => {
         const overall_rating = review.overall_rating;
-        if (overall_rating == 5) {
-            num5StarReviews++;
-        } else if (overall_rating == 4) {
-            num4StarReviews++;
-        } else if (overall_rating == 3) {
-            num3StarReviews++;
-        } else if (overall_rating == 2) {
-            num2StarReviews++;
-        } else if (overall_rating == 1) {
-            num1StarReviews++;
+        switch (overall_rating) {
+            case 5:
+                num5StarReviews++;
+                break;
+            case 4:
+                num4StarReviews++;
+                break;
+            case 3:
+                num3StarReviews++;
+                break;
+            case 2:
+                num2StarReviews++;
+                break;
+            case 1:
+                num1StarReviews++;
+                break;
+            default:
+                console.warn(`Unexpected rating value: ${overall_rating}`);
+                break;
         }
         // console.log(overall_rating)
 
