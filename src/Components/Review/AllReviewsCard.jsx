@@ -1,28 +1,33 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import "./AllReviewsCard.css"
 import ReviewCard from "./ReviewCard";
 import { getReactionsByReview } from "../../Services/reaction";
 import ReviewSummaryCard from "./ReviewSummaryCard";
 
-const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisibility}) => {
+const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisibility }) => {
     const { auth } = useAuth();
+    const [reactions, setReactions] = useState([]);
 
-    const getReactions = async (review_id) => {
-        try {
-            return await getReactionsByReview(review_id);
-        } catch (error) {
-            console.error(error);
+    useEffect(() => {
+        const getReactions = async (review_id) => {
+            try {
+                const foundReactions = await getReactionsByReview(review_id);
+                setReactions(foundReactions);
+            } catch (error) {
+                console.error(error);
+            }
         }
-    }
+        
+        if (reviews.length > 0 && reactions.length === 0) reviews.map((review) => getReactions(review.id))
+    }, [reviews]);
 
     return (
         <div className="all-reviews-card">
-            <ReviewSummaryCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility}/>
+            <ReviewSummaryCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
             {(reviews.length > 0)
                 ? reviews.map((review) => {
                     // for the likes + dislikes
-                    const reactions = getReactions(review.id);
                     var likes, dislikes = [];
                     var liked, disliked = false;
                     if (reactions.length > 0) {
