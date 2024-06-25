@@ -109,9 +109,9 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardV
 
     const [counter, setCounter] = useState(0);
 
-    const handleAddReview = () => { // TODO: make it a proper popup
-        if (showAddReviewCard) return (<AddReviewCard />);
-    }
+    // const handleAddReview = () => { // TODO: make it a proper popup
+    //     if (showAddReviewCard) return (<AddReviewCard />);
+    // }
 
     useEffect(() => {
         const progressBarValues = calculateProgressBar(reviews);

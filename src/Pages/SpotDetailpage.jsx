@@ -131,7 +131,7 @@ const SpotDetailpage = () => {
   return (
     <div>
       <div style={{display: showAddReviewCard ? 'block' : 'none'}}>
-        <AddReviewCard />
+        <AddReviewCard toggleAddReviewCardVisibility={toggleAddReviewCardVisibility}/>
       </div>
       
       <div className='banner'>
