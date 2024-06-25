@@ -96,7 +96,6 @@ async function registerUser(credentials) {
   const name = `${capitalize(rawFirstName)} ${capitalize(rawLastName)}`
   const email = credentials.email.toLowerCase();
   const password = credentials.password;
-  const role = process.env.USER_ROLE || 2004;
 
   try {
     const EMAIL_REGEX =

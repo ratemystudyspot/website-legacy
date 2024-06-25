@@ -17,7 +17,7 @@ async function createUser(email, password) {
     return await axios.post(API_URL, {
       email,
       password,
-      role: 2004,
+      role: process.env.USER_ROLE,
     });
   } catch (error) {
     console.error(error);
