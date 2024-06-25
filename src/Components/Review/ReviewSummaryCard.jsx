@@ -127,10 +127,7 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded }) => {
             setCounter((prevCounter) => prevCounter + 1);
         }, 1000);
 
-        console.log(counter)
-
         if ((counter === 1) && ((reviews.length > 0 && averageRatingState !== "N/A") || (reviews.length === 0 && averageRatingState === "N/A"))) {
-            console.log("here,", counter===2)
             setSummaryCardLoaded(true); // tells the loaders in the parent page that everything's been loaded
         }
 
