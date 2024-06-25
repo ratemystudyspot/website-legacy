@@ -129,7 +129,7 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardV
             setCounter((prevCounter) => prevCounter + 1);
         }, 1000);
 
-        if ((counter === 1) && ((reviews.length > 0 && averageRatingState !== "N/A") || (reviews.length === 0 && averageRatingState === "N/A"))) {
+        if ((counter === 1) && ((reviews.length > 0 && averageRating !== "N/A") || (reviews.length === 0 && averageRating === "N/A"))) {
             setSummaryCardLoaded(true); // tells the loaders in the parent page that everything's been loaded
         }
 
