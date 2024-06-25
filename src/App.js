@@ -28,7 +28,7 @@ import { jwtDecode } from "jwt-decode";
 function App() {
   // init roles
   const ROLES = {
-    'User': process.env.USER_ROLE,
+    'User': process.env.REACT_APP_USER_ROLE,
   }
 
   const { setAuth } = useAuth();

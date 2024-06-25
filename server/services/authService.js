@@ -126,7 +126,7 @@ async function registerUser(credentials) {
       name,
       email,
       password: await bcrypt.hash(password, 15), // auto-gen salt and hash
-      role: process.env.USER_ROLE
+      role: process.env.REACT_APP_USER_ROLE
     });
   } catch (error) {
     console.error("Error creating user:", error);

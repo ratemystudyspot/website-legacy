@@ -49,7 +49,8 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
     alert("Sign out successful.") // TODO: make a custom alert + redirect user to loading screen (looks better that way)
   }
   const handleAuth = (auth) => {
-    if (auth?.user_info?.role === process.env.USER_ROLE) {
+    console.log(auth, process.env.REACT_APP_USER_ROLE)
+    if (auth?.user_info?.role.toString() === process.env.REACT_APP_USER_ROLE) {
       return (
         <div class="dropdown-content">
           <Link to="/user/settings">Account Settings</Link>
