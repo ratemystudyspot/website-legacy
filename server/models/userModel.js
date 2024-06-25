@@ -55,6 +55,19 @@ async function findAll(filters) {
 	}
 }
 
+// get all users with the given filters (excluding certain info)
+async function findAllSafe(filters) {
+	try {
+		return await User.findAll({
+			where: filters,
+			attributes: { exclude: ['refresh_token', 'password_recovery_token'] },
+		});
+	} catch (error) {
+		console.error("Error fetching users:", error);
+		throw new Error(error.message);
+	}
+}
+
 async function findOne(query) {
 	try {
 		const filters = {}
@@ -68,7 +81,7 @@ async function findOne(query) {
 			}
 		}
 
-		return await User.findOne({ where: filters  });
+		return await User.findOne({ where: filters });
 	} catch (error) {
 		console.error("Error fetching users:", error);
 		throw new Error(error.message);
@@ -109,6 +122,7 @@ module.exports = {
 	User,
 	test,
 	findAll,
+	findAllSafe,
 	findOne,
 	createUser,
 	updateUser,

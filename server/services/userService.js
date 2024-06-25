@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 async function getUsers(filters) {
   try {
-    return await User.findAll(filters);
+    return await User.findAllSafe(filters);
   } catch (error) {
     console.error("Error fetching user:", error);
     throw error;
