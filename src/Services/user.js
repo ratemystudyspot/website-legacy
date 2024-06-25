@@ -11,6 +11,17 @@ async function getUsers() {
   }
 }
 
+// TODO: will fix this to recieve only ONE user (currently gets an array of users that match a given id) + will need to change other code affected by this change
+async function getUserByID(user_id, access_token) { 
+  try {
+    return await axios.get(`${API_URL}?id=${user_id}`,
+      { headers: { Authorization: `Bearer ${access_token}` } }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // creates new user record
 async function createUser(email, password) {
   try {
@@ -46,7 +57,8 @@ async function deleteUser(user_body) {
 
 export {
   getUsers,
+  getUserByID,
   createUser,
   updateUser,
-  deleteUser,  
+  deleteUser,
 };
