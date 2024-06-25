@@ -16,6 +16,8 @@ import { getReviewsByStudySpot } from '../Services/review';
 import UBCMap from '../Components/UBCMap/UBCMap';
 import { CircularProgress } from '@mui/material';
 import { GiConsoleController } from 'react-icons/gi';
+import AddReviewCard from '../Components/Review/AddReviewCard';
+import { Visibility } from '@mui/icons-material';
 
 const images = require.context('../Components/Assets', true);
 
@@ -59,6 +61,11 @@ const SpotDetailpage = () => {
   // }
 
   const [currentLocation, setCurrentLocation] = useState(state?.currentLocation);
+  const [showAddReviewCard, setShowAddReviewCard] = useState(false);
+
+  const toggleAddReviewCardVisibility = () => {
+    setShowAddReviewCard((prevState) =>  !prevState)
+  }
 
   const getDistance = () => {
     let user_lon = currentLocation[0];
@@ -123,6 +130,10 @@ const SpotDetailpage = () => {
 
   return (
     <div>
+      <div style={{display: showAddReviewCard ? 'block' : 'none'}}>
+        <AddReviewCard toggleAddReviewCardVisibility={toggleAddReviewCardVisibility}/>
+      </div>
+      
       <div className='banner'>
         <Banner />
       </div>
@@ -178,7 +189,7 @@ const SpotDetailpage = () => {
         </div>  {/* Replace with loop!
           {/* Right Container */}
 
-        <AllReviewsCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} />
+        <AllReviewsCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility}/>
       </div>
     </div>
   )

@@ -5,6 +5,7 @@
     align-items: center;
     min-height: 80vh;
     width: 30vw;
+    min-width: fit-content;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: rgb(240, 240, 240);

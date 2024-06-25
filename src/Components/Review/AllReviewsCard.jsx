@@ -5,7 +5,7 @@ import ReviewCard from "./ReviewCard";
 import { getReactionsByReview } from "../../Services/reaction";
 import ReviewSummaryCard from "./ReviewSummaryCard";
 
-const AllReviewsCard = ({ reviews, setSummaryCardLoaded }) => {
+const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisibility}) => {
     const { auth } = useAuth();
 
     const getReactions = async (review_id) => {
@@ -18,7 +18,7 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded }) => {
 
     return (
         <div className="all-reviews-card">
-            <ReviewSummaryCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} />
+            <ReviewSummaryCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility}/>
             {(reviews.length > 0)
                 ? reviews.map((review) => {
                     // for the likes + dislikes

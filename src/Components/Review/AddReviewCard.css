@@ -1,13 +1,85 @@
+.overlay-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 4; 
+}
+
 .add-review-card {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Center the card */
-    z-index: 1000; /* Ensure it's above the overlay background */
-    height: 70vh;
-    width: 700px; /* Adjust the width as needed */
+    transform: translate(-50%, -50%);
+    z-index: 5; 
+    height: 60vh;
+    width: 500px; 
     background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add some shadow for better visual */
-    padding: 20px; /* Optional: add some padding inside the card */
-    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px; 
+    border-radius: 8px;
 }
+
+.add-review-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+
+    .star-container {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        margin: 10px 0 10px 0;
+    }
+
+    .add-review-description {
+        width: 100%;
+        height: 40%; 
+        box-sizing: border-box; 
+        padding: 10px; 
+        line-height: 1.5; 
+        overflow-y: auto; 
+        white-space: pre-wrap;
+        text-align: left; 
+        vertical-align: top;
+        border-radius: 10px;
+        margin: 10px 0 10px 0;
+    }
+
+    .add-review-button-container {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 330px;
+        height: 40px;
+        .submit-button,
+        .cancel-button {
+            width: 140px;
+            border-radius: 10px;
+        }
+        .cancel-button {
+            background-color: white;
+            color: #2177E8;
+            border: 1px solid #2177E8;
+        }
+        .submit-button {
+            background-color: #BFE0FF;
+            border: none;
+        }
+        .submit-button:hover {
+            background-color: #a1d0fc;
+        }
+        
+        
+    }
+}
+
+
