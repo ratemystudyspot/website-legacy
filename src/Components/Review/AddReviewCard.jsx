@@ -9,10 +9,10 @@ import CloseIcon from '@mui/icons-material/Close';
 // TODO: If open form and reload page, it spins inifnite
 const AddReviewCard = ( {toggleAddReviewCardVisibility}) => {
   const { auth } = useAuth();
-  const [overallRating, setOverallRating] = useState('');
-  const [comfortRating, setComfortRating] = useState('');
-  const [spaceRating, setSpaceRating] = useState('');
-  const [quietRating, setQuietRating] = useState('');
+  const [overallRating, setOverallRating] = useState(0);
+  const [comfortRating, setComfortRating] = useState(0);
+  const [spaceRating, setSpaceRating] = useState(0);
+  const [quietRating, setQuietRating] = useState(0);
   const [comment, setComment] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,7 +23,11 @@ const AddReviewCard = ( {toggleAddReviewCardVisibility}) => {
     const study_spot_id = window.location.href.split("/").at(-1);
 
     try {
-      const rating_body = {}; // TODO: add rating_body (only add the ratings that the user has given)
+      const rating_body = {
+        quietness_rating: quietRating === 0 ? null : quietRating,
+        comfort_rating: comfortRating === 0 ? null : comfortRating,
+        space_rating: spaceRating === 0 ? null : spaceRating
+      };
       await createReview(user_id, study_spot_id, overallRating, rating_body, comment, access_token);
     } catch (error) {
       console.error(error);
