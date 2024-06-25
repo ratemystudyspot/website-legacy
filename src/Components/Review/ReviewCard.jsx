@@ -42,9 +42,10 @@ const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 
                 {description}
             </div>
 
-            <div className="review-buttons">
+            <div style={{justifyContent: isOwner ? "space-between" : "flex-end"}} className="review-buttons">
                 <Button
                     className="edit-button"
+                    style={{display: isOwner ? 'block' : 'none'}}
                     onClick={() => handleEditReview( // TODO: currently will edit the review as soon as you click button --> but idealy we should be editting in a popup
                         review_id,
                         user_id,

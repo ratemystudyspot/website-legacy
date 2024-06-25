@@ -3,10 +3,7 @@ import useAuth from '../../hooks/useAuth';
 import { createReview } from '../../Services/review';
 import "./AddReviewCard.css";
 import { Rating } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 
-// TODO: all of this needs styling 
-// TODO: If open form and reload page, it spins inifnite
 const AddReviewCard = ( {toggleAddReviewCardVisibility}) => {
   const { auth } = useAuth();
   const [overallRating, setOverallRating] = useState(0);
@@ -29,11 +26,11 @@ const AddReviewCard = ( {toggleAddReviewCardVisibility}) => {
         space_rating: spaceRating === 0 ? null : spaceRating
       };
       await createReview(user_id, study_spot_id, overallRating, rating_body, comment, access_token);
-      toggleAddReviewCardVisibility();
+      
     } catch (error) {
-      console.error(error);
-      toggleAddReviewCardVisibility();
+      console.error(error); // TODO: Add proper popup error
     }
+    toggleAddReviewCardVisibility();
   }
 
   return (
@@ -73,8 +70,8 @@ const AddReviewCard = ( {toggleAddReviewCardVisibility}) => {
             required
           />
           <div className='add-review-button-container'>
-            <button className='cancel-button' type="button" onClick={toggleAddReviewCardVisibility}>Cancel</button>
-            <button className='submit-button' type="submit">Submit</button>
+            <button className='add-review-cancel-button' type="button" onClick={toggleAddReviewCardVisibility}>Cancel</button>
+            <button className='add-review-submit-button' type="submit">Submit</button>
           </div>
         </form>
       </div >

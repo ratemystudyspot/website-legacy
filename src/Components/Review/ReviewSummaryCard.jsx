@@ -6,7 +6,6 @@ import { styled } from '@mui/material/styles';
 import { Rating } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 import { createReview } from "../../Services/review";
-import AddReviewCard from "./AddReviewCard";
 
 const defaultProgressBarValue = -1;
 
@@ -104,8 +103,6 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardV
     const [progressBarsState, setProgressBarsState] = useState(initialProgressBarValues);
     const [averageRating, setAverageRating] = useState("N/A");
     const [totalNumReviewsState, setTotalNumReviewsState] = useState(reviews.length);
-
-    const [showAddReviewCard, setShowAddReviewCard] = useState(false);
 
     const [counter, setCounter] = useState(0);
 

@@ -60,17 +60,18 @@
         justify-content: space-between;
         width: 330px;
         height: 40px;
-        .submit-button,
-        .cancel-button {
+        
+        .add-review-submit-button,
+        .add-review-cancel-button{
             width: 140px;
             border-radius: 10px;
         }
-        .cancel-button {
+        .add-review-cancel-button {
             background-color: white;
             color: #2177E8;
             border: 1px solid #2177E8;
         }
-        .submit-button {
+        .add-review-submit-button {
             background-color: #BFE0FF;
             border: none;
         }

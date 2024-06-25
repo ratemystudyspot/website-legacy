@@ -17,7 +17,6 @@ import UBCMap from '../Components/UBCMap/UBCMap';
 import { CircularProgress } from '@mui/material';
 import { GiConsoleController } from 'react-icons/gi';
 import AddReviewCard from '../Components/Review/AddReviewCard';
-import { Visibility } from '@mui/icons-material';
 
 const images = require.context('../Components/Assets', true);
 
