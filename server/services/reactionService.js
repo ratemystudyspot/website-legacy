@@ -27,8 +27,18 @@ async function updateReaction(body) {
   }
 }
 
+async function deleteReaction(query) {
+  try {
+    return await reactionModel.deleteReaction(query);
+  } catch (error) {
+    console.error("Error updating reaction:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   getReactions,
   createReaction,
   updateReaction,
+  deleteReaction,
 };

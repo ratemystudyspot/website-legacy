@@ -73,7 +73,7 @@ async function createReaction(body) {
 	try {
 		return await Reaction.create(body);
 	} catch (error) {
-		console.error("Error creating reaction:", error);
+		console.error("Error creating reactions:", error);
 		throw new Error(error.message);
 	}
 };
@@ -89,7 +89,19 @@ async function updateReaction(body) {
 
     return await Reaction.update(updated_attributes, { where: { id } });
   } catch (error) {
-    console.error("Error updating reviews:", error);
+    console.error("Error updating reactions:", error);
+    throw new Error(error.message);
+  }
+};
+
+// update a user record
+async function deleteReaction(query) {
+	try {
+    if (!query.id) throw new Error("No id provided");
+
+    return await Reaction.destroy({ where: { id: query.id } });
+  } catch (error) {
+    console.error("Error deleting reactions:", error);
     throw new Error(error.message);
   }
 };
@@ -99,4 +111,5 @@ module.exports = {
 	findAll,
 	createReaction,
   updateReaction, 
+  deleteReaction,
 };

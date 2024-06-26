@@ -7,7 +7,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Padding } from "maplibre-gl";
 import { editReview } from "../../Services/review";
 import useAuth from "../../hooks/useAuth";
-import { createReaction, getReactionsByFilter, updateReaction } from "../../Services/reaction";
+import { createReaction, getReactionsByFilter, updateReaction, deleteReaction } from "../../Services/reaction";
+import { RestaurantMenu } from "@mui/icons-material";
 
 // Add state management!!!
 const handleEditReview = async (review_id, user_id, rating, comment, access_token) => {
@@ -18,6 +19,7 @@ const handleEditReview = async (review_id, user_id, rating, comment, access_toke
     }
 }
 
+// TODO: optimiation - should probably only save to backend once user exits page (results in less calls to backend)
 const handleReaction = async (updated_reaction, user_liked, user_disliked, review_id, user_id, reaction, access_token) => { // reaction: true = like, false = dislike    
     try {
         if ((user_liked && !reaction) || (user_disliked && reaction)) { // two truth cases: user previously liked and wants to dislike OR user previously disliked and wants to like
@@ -27,7 +29,12 @@ const handleReaction = async (updated_reaction, user_liked, user_disliked, revie
             return;
         }
 
-        if ((user_liked && reaction) || (user_disliked && ! reaction)) return; // prevents user from flooding backend calls when re-liking / re-disliking a review
+        if ((user_liked && reaction) || (user_disliked && !reaction)) { // undo the liking and disling of a post
+            const foundReaction = (await getReactionsByFilter({ review_id, user_id }))[0]; // find the specific reaction's id to update (indexed at 0 since service function returns array)
+            await deleteReaction(foundReaction.id, access_token); // delete that specific reaction
+            updated_reaction(true); // tell app to refresh reactions
+            return;
+        }
 
         await createReaction(review_id, user_id, reaction, access_token); // if user hasn't liked or dislike a given review, create a reaction
         updated_reaction(true); // tell app to refresh reactions

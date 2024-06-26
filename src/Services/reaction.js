@@ -57,8 +57,20 @@ async function updateReaction(body, access_token) {
   }
 }
 
+async function deleteReaction(id, access_token) {
+  try {
+    const response = await axios.delete(`${API_URL}?id=${id}`,
+      { headers: { Authorization: `Bearer ${access_token}` } }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
 export {
   getReactionsByFilter,
   createReaction,
   updateReaction,
+  deleteReaction
 }

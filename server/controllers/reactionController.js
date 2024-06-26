@@ -27,8 +27,18 @@ async function updateReaction(req, res) {
   }
 }
 
+async function deleteReaction(req, res) {
+  try {
+    await reactionService.deleteReaction(req.query);
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+}
+
 module.exports = {
   getReactions,
   createReaction,
   updateReaction,
+  deleteReaction,
 };
