@@ -33,7 +33,7 @@ const ListOfStudySpotCards = ({ filterSelected, currentLocation, cards, setCards
   const displayCards = () => {
     if (cards.length === 0) {
       return (
-        <div style={{
+        <div style={{ // TODO: improve UI by making sure this doesn't show when then app is still loading the list of study spots
           position: 'absolute',
           top: '30vh',
           left: '50%',

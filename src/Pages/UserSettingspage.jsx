@@ -2,7 +2,8 @@ import { React, useState, useEffect } from 'react'
 import Banner from '../Components/Banner/Banner';
 import './UserSettingspage.css';
 import useAuth from '../hooks/useAuth';
-import { getUserByID } from '../Services/user';
+import { getUserByID, updateUser } from '../Services/user';
+import { Email } from '@mui/icons-material';
 
 // TODO: when user is logged in, and they reload this page, it still redirects to login page --> must be because of authprovider issue
 const UserSettingsPage = () => {
@@ -16,23 +17,41 @@ const UserSettingsPage = () => {
   const [showEditEmail, setShowEditEmail] = useState(false);
   const [showEditPassword, setShowEditPassword] = useState(false);
 
-  const savingFullName = (e) => {
-    e.preventDefault();
+  const savingFullName = async (e) => {
+    try {
+      const { firstName, lastName } = { firstName: e.target.firstName.value, lastName: e.target.lastName.value };
+      const fullName = `${firstName} ${lastName}`;
+      const id = auth?.user_info?.id;
+      setName(fullName);
 
-
-    // TODO: finish function
+      await updateUser({ id, name: fullName }, auth?.access_token);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  const savingEmail = (e) => {
-    e.preventDefault();
+  const savingEmail = async (e) => {
+    try {
+      const inputEmail = e.target.email.value;
+      const id = auth?.user_info?.id;
+      setEmail(inputEmail);
 
-    // TODO: finish function
+      await updateUser({ id, email: inputEmail }, auth?.access_token);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  const savingPassword = (e) => {
-    e.preventDefault();
+  const savingPassword = async (e) => {
+    try {
+      const inputPassword = e.target.password.value;
+      const id = auth?.user_info?.id;
+      setPassword(inputPassword);
 
-    // TODO: finish function
+      await updateUser({ id, password: inputPassword }, auth?.access_token);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {
@@ -72,11 +91,21 @@ const UserSettingsPage = () => {
                   <div className="name-fields">
                     <div className='input-field'>
                       <label className="input-placeholder">First Name</label>
-                      <input type="text" defaultValue={name.split(" ")[0]} required />
+                      <input
+                        type="text"
+                        name="firstName"
+                        defaultValue={name.split(" ")[0]}
+                        required
+                      />
                     </div>
                     <div className='input-field'>
                       <label className="input-placeholder">Last Name</label>
-                      <input type="text" defaultValue={name.split(" ")[1]} required />
+                      <input
+                        type="text"
+                        name="lastName"
+                        defaultValue={name.split(" ")[1]}
+                        required
+                      />
                     </div>
                   </div>
                   <button className="save-button">Save</button>
@@ -103,7 +132,12 @@ const UserSettingsPage = () => {
                   <div className="name-fields">
                     <div className='input-field'>
                       <label className="input-placeholder">Email Address</label>
-                      <input type="text" defaultValue={email} required />
+                      <input
+                        type="text"
+                        name="email"
+                        defaultValue={email}
+                        required
+                      />
                     </div>
                   </div>
                   <button className="save-button">Save</button>
@@ -130,7 +164,11 @@ const UserSettingsPage = () => {
                   <div className="name-fields">
                     <div className='input-field'>
                       <label className="input-placeholder">Password</label>
-                      <input type="text" required />
+                      <input
+                        type="text"
+                        name="password"
+                        required
+                      />
                     </div>
                   </div>
                   <button className="save-button">Save</button>
