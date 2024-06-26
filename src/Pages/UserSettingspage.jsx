@@ -11,7 +11,8 @@ const UserSettingsPage = () => {
   const [name, setName] = useState(userInfo?.name);
   const [email, setEmail] = useState(userInfo?.email);
   const [invalidPassword, setInvalidPassword] = useState(true);
-  const [justSubmittedForm, setJustSubmittedForm] = useState(false); // used to determine password saved state
+  const [justSubmittedForm, setJustSubmittedForm] = useState(false);
+  const [savedPassword, setSavedPassword] = useState(false);
   const [showEditFullName, setShowEditFullName] = useState(false);
   const [showEditEmail, setShowEditEmail] = useState(false);
   const [showEditPassword, setShowEditPassword] = useState(false);
@@ -56,7 +57,8 @@ const UserSettingsPage = () => {
 
       // update if currentPassword is correct
       await updateUser({ id, old_password: currentPassword, new_password: newPassword }, auth?.access_token)
-      setJustSubmittedForm(false); // have submitted form for a while
+      setJustSubmittedForm(false);
+      setSavedPassword(true);
     } catch (error) {
       e.preventDefault();
       setInvalidPassword(true);
@@ -198,14 +200,27 @@ const UserSettingsPage = () => {
                     </div>
                   </div>
                   <button className="save-button">Save</button>
-                  {(invalidPassword && justSubmittedForm)
-                    ? <p className='request-label'>Request failed, please try again.</p>
-                    : (justSubmittedForm)
-                      ? <p className='request-label'>Loading...</p>
-                      : <p className='request-label'>Saved!</p>}
+                  {
+                    (invalidPassword && justSubmittedForm)
+                      ? <p className='request-label'>Request failed, please try again.</p> // if user has submitted but api returns error
+                      : (justSubmittedForm)
+                        ? <p className='request-label'>Loading...</p> // if user has submitted, but waiting for api
+                        : (savedPassword)
+                          ? <p className='request-label'>Saved!</p> // if user has subitted, and successfully saves
+                          : (null) // if user has not done anything yet
+                  }
                 </div>
 
-                <button className="cancel-button" onClick={() => setShowEditPassword(false)}>Cancel</button>
+                <button
+                  className="cancel-button"
+                  onClick={() => { // close form and reset request label states 
+                    setShowEditPassword(false);
+                    setInvalidPassword(true);
+                    setJustSubmittedForm(false);
+                    setSavedPassword(false);
+                  }}>
+                  Cancel
+                </button>
               </form>
             ) : (
               <div className={(showEditFullName || showEditEmail) ? "form-group blocked" : "form-group"}>
