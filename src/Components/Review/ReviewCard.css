@@ -27,18 +27,20 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
     .edit-button {
         color: #7c7c7c;
         background-color: #BFE0FF;
         width: 90px;
         border-radius: 20px;
     }
+
     .edit-button:hover {
         color: #636363;
         background-color: #a9c6e2;
     }
 
-    .thumbs-container{
+    .thumbs-container {
         display: flex;
         justify-content: row;
 
@@ -47,6 +49,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        .liked,
+        .disliked {
+            color: #64ADC6;
         }
     }
 }

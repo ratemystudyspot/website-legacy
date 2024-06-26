@@ -84,7 +84,7 @@ async function updateReaction(body) {
     if (!body.id) throw new Error("No id provided");
 
     const id = body.id;
-    const updated_attributes = query;
+    const updated_attributes = body;
     delete updated_attributes[id];
 
     return await Reaction.update(updated_attributes, { where: { id } });
