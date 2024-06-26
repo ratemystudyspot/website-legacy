@@ -13,11 +13,10 @@
   flex-direction: row;
   justify-content: center;
   background: #fff;
-  padding-top: 30px;
   width: 100vw;
   height: 80vh;
-  margin-top: 20px;
   transform: translate(-50%, -50%);
+  margin-top: 60px;
 }
 
 .listing-header h1 {
@@ -166,4 +165,21 @@
   width: 45%;
   height: 70%;
   flex-direction: column;
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .listing-detail {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    transform: translate(-46.5%, -50%);
+  }
+  .study-info-container {
+    width: 90vw;
+    margin-right: none;
+  }
 }
