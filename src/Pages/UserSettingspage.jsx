@@ -10,7 +10,8 @@ const UserSettingsPage = () => {
   const [userInfo, setUserInfo] = useState({});
   const [name, setName] = useState(userInfo?.name);
   const [email, setEmail] = useState(userInfo?.email);
-  const [password, setPassword] = useState(userInfo?.password);
+  const [invalidPassword, setInvalidPassword] = useState(true);
+  const [justSubmittedForm, setJustSubmittedForm] = useState(false); // used to determine password saved state
   const [showEditFullName, setShowEditFullName] = useState(false);
   const [showEditEmail, setShowEditEmail] = useState(false);
   const [showEditPassword, setShowEditPassword] = useState(false);
@@ -42,12 +43,23 @@ const UserSettingsPage = () => {
 
   const savingPassword = async (e) => {
     try {
-      const inputPassword = e.target.password.value;
-      const id = auth?.user_info?.id;
-      setPassword(inputPassword);
+      e.preventDefault();
+      setJustSubmittedForm(true); // just submitted the form
 
-      await updateUser({ id, password: inputPassword }, auth?.access_token);
+      const [currentPassword, newPassword, confirmPassword] = [e.target.oldPassword.value, e.target.newPassword.value, e.target.confirmPassword.value];
+      const id = auth?.user_info?.id;
+
+      // check if newPassword and confirmPassword match
+      if (newPassword !== confirmPassword) throw new Error("Passwords don't match");
+
+      setInvalidPassword(false);
+
+      // update if currentPassword is correct
+      await updateUser({ id, old_password: currentPassword, new_password: newPassword }, auth?.access_token)
+      setJustSubmittedForm(false); // have submitted form for a while
     } catch (error) {
+      e.preventDefault();
+      setInvalidPassword(true);
       console.error(error);
     }
   }
@@ -60,7 +72,6 @@ const UserSettingsPage = () => {
         setUserInfo(parsedUserInfo);
         setName(parsedUserInfo?.name);
         setEmail(parsedUserInfo?.email);
-        setPassword(parsedUserInfo?.password)
       } catch (error) {
         console.error(error);
       }
@@ -127,7 +138,7 @@ const UserSettingsPage = () => {
                 <div className='label-info'>
                   <label>Email address</label>
                   <p>Use an email address you'll always have access to.</p>
-                  <div className="name-fields">
+                  <div className="email-fields">
                     <div className='input-field'>
                       <label className="input-placeholder">Email Address</label>
                       <input
@@ -155,21 +166,43 @@ const UserSettingsPage = () => {
             )}
           {(showEditPassword)
             ? (
-              <form className="form-group">
+              <form className="form-group" onSubmit={savingPassword}>
                 <div className='label-info'>
                   <label>Password</label>
                   <p>This is the password you will use to login with.</p>
-                  <div className="name-fields">
+                  <div className="password-fields">
                     <div className='input-field'>
-                      <label className="input-placeholder">Password</label>
+                      <label className="input-placeholder">Current Password</label>
                       <input
-                        type="text"
-                        name="password"
+                        type="password"
+                        name="oldPassword"
+                        required
+                      />
+                      <button className='forget-password-button'>Forgot Password?</button>
+                    </div>
+                    <div className='input-field'>
+                      <label className="input-placeholder">New Password</label>
+                      <input
+                        type="password"
+                        name="newPassword"
+                        required
+                      />
+                    </div>
+                    <div className='input-field'>
+                      <label className="input-placeholder">Confirm Password</label>
+                      <input
+                        type="password"
+                        name="confirmPassword"
                         required
                       />
                     </div>
                   </div>
                   <button className="save-button">Save</button>
+                  {(invalidPassword && justSubmittedForm)
+                    ? <p className='request-label'>Request failed, please try again.</p>
+                    : (justSubmittedForm)
+                      ? <p className='request-label'>Loading...</p>
+                      : <p className='request-label'>Saved!</p>}
                 </div>
 
                 <button className="cancel-button" onClick={() => setShowEditPassword(false)}>Cancel</button>

@@ -10,6 +10,7 @@ async function getUsers(access_token) {
     );
   } catch (error) {
     console.error(error);
+    throw error.response;
   }
 }
 
@@ -21,6 +22,7 @@ async function getUserByID(user_id, access_token) {
     );
   } catch (error) {
     console.error(error);
+    throw error.response;
   }
 }
 
@@ -37,6 +39,7 @@ async function createUser(email, password, access_token) {
     );
   } catch (error) {
     console.error(error);
+    throw error.response;
   }
 }
 
@@ -50,6 +53,7 @@ async function updateUser(user_body, access_token) {
     );
   } catch (error) {
     console.error('Error updating user: ', error);
+    throw error;
   }
 }
 
@@ -63,6 +67,7 @@ async function deleteUser(user_body, access_token) {
     )
   } catch (error) {
     console.error('Error deleting user data: ', error);
+    throw error;
   }
 }
 

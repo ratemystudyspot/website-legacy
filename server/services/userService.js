@@ -49,22 +49,26 @@ async function updateUser(body) {
     console.error("Error: No ID provided");
     throw new Error("Error No ID");
   }
+  const id = body.id
+  delete body["id"]; // prevents updating id
 
-  // salting and hashing password ONLY IF NEEDED
-  if (body.password) {
+  // salting and hashing password, old_password to confirm identification, new_password to change to
+  if (body.old_password && body.new_password) {
     try {
-      var salt = bcrypt.genSaltSync(10);
-      var hash_password = bcrypt.hashSync(password, salt);
-      body.password = hash_password;
+      const user = await User.findOne({ id });
+      if (!await bcrypt.compare(body.old_password, user.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
+      body.password = await bcrypt.hash(body.new_password, 15) // set body.password to auto-gen salt and hash
+      delete body["old_password"]; // db only has "password" column
+      delete body["new_password"];
     } catch (error) {
-      console.log("Error salting and hashing:", error);
+      console.log("Error updating password:", error);
       throw error;
     }
   }
 
   // updating the user
   try {
-    return await User.updateUser(body.id, body);
+    return await User.updateUser(id, body);
   } catch (error) {
     console.error("Error updating user:", error);
     throw error;
