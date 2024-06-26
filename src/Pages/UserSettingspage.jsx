@@ -2,11 +2,14 @@ import { React, useState, useEffect } from 'react'
 import Banner from '../Components/Banner/Banner';
 import './UserSettingspage.css';
 import useAuth from '../hooks/useAuth';
+import useRecovery from '../hooks/useRecovery';
 import { getUserByID, updateUser } from '../Services/user';
+import { useNavigate } from 'react-router-dom';
+
 
 const UserSettingsPage = () => {
   const { auth } = useAuth();
-
+  const { setRecoveryState } = useRecovery();
   const [userInfo, setUserInfo] = useState({});
   const [name, setName] = useState(userInfo?.name);
   const [email, setEmail] = useState(userInfo?.email);
@@ -16,6 +19,8 @@ const UserSettingsPage = () => {
   const [showEditFullName, setShowEditFullName] = useState(false);
   const [showEditEmail, setShowEditEmail] = useState(false);
   const [showEditPassword, setShowEditPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const savingFullName = async (e) => {
     try {
@@ -66,6 +71,7 @@ const UserSettingsPage = () => {
     }
   }
 
+  // get user info
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
@@ -180,7 +186,14 @@ const UserSettingsPage = () => {
                         name="oldPassword"
                         required
                       />
-                      <button className='forget-password-button'>Forgot Password?</button>
+                      <button
+                        className='forget-password-button'
+                        onClick={() => {
+                          setRecoveryState({ page: "recover", email: email });
+                          navigate('/login', { state: { from_not_login: true } });
+                        }}>
+                        Forgot Password?
+                      </button>
                     </div>
                     <div className='input-field'>
                       <label className="input-placeholder">New Password</label>
@@ -226,7 +239,7 @@ const UserSettingsPage = () => {
               <div className={(showEditFullName || showEditEmail) ? "form-group blocked" : "form-group"}>
                 <div className='label-info'>
                   <label>Password</label>
-                  <p>**************</p>
+                  <p>Hidden</p>
                 </div>
 
                 <button className={(showEditFullName || showEditEmail) ? "show-button blocked" : "show-button"} onClick={() => setShowEditPassword(true)}>Edit</button>
@@ -250,7 +263,7 @@ const UserSettingsPage = () => {
           </div>
         </div> */}
       </div>
-    </div>
+    </div >
   );
 }
 // const [fullName, setFullName] = useState('John Doe'); // Example state for full name

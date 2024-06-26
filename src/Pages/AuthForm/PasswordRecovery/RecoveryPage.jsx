@@ -4,10 +4,14 @@ import { FaUser } from "react-icons/fa";
 import useRecovery from '../../../hooks/useRecovery';
 import Loading from '../../Structure/LoadingPage';
 import { sendRecoveryEmail } from '../../../Services/auth';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const RecoveryPage = () => {
   const { recoveryState, setRecoveryState } = useRecovery();
   
+  const navigate = useNavigate();
+  const state = useLocation();
+
   const validateEmail = (email) => {
     const email_regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{1,})$/i
     return email_regex.test(email.toLowerCase());
@@ -31,7 +35,7 @@ const RecoveryPage = () => {
     } catch (error) {
       console.log("Error:", error)
     }
-    
+
   }
 
   return (
@@ -59,7 +63,15 @@ const RecoveryPage = () => {
             </button>
 
             <div className="return">
-              <button onClick={(e) => { e.preventDefault(); setRecoveryState(prevState => ({ ...prevState, email: email, page: "login" })) }}>Cancel</button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (state?.state?.from_not_login) navigate(-1); // go back to previous page if not from login page
+                  setRecoveryState(prevState => ({ ...prevState, email, page: "login" }));
+                }}
+              >
+                Cancel
+              </button>
             </div>
           </form>
         </div>
