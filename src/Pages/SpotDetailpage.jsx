@@ -63,7 +63,7 @@ const SpotDetailpage = () => {
   const [showAddReviewCard, setShowAddReviewCard] = useState(false);
 
   const toggleAddReviewCardVisibility = () => {
-    setShowAddReviewCard((prevState) =>  !prevState)
+    setShowAddReviewCard((prevState) => !prevState)
   }
 
   const getDistance = () => {
@@ -127,12 +127,13 @@ const SpotDetailpage = () => {
     getReviews();
   }, [])
 
+  let key = 0; // added to get rid of unqiue key prop warnings in the map function
   return (
     <div>
-      <div style={{display: showAddReviewCard ? 'block' : 'none'}}>
-        <AddReviewCard toggleAddReviewCardVisibility={toggleAddReviewCardVisibility}/>
+      <div style={{ display: showAddReviewCard ? 'block' : 'none' }}>
+        <AddReviewCard toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
       </div>
-      
+
       <div className='banner'>
         <Banner />
       </div>
@@ -179,8 +180,8 @@ const SpotDetailpage = () => {
 
           <section className="amenities">
             <ul>
-              {filterOptions.map((filter) => {
-                if (state?.studySpot?.features.includes(filter.value)) return (<li>{filter.icon} {filter.label}</li>)
+              {filterOptions.map((filter) => { 
+                if (state?.studySpot?.features.includes(filter.value)) return (<li key={key++}>{filter.icon} {filter.label}</li>)
               })}
             </ul>
           </section>
@@ -188,7 +189,7 @@ const SpotDetailpage = () => {
         </div>  {/* Replace with loop!
           {/* Right Container */}
 
-        <AllReviewsCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility}/>
+        <AllReviewsCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
       </div>
     </div>
   )
