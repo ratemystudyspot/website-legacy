@@ -168,7 +168,7 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardV
                     {averageRating}
                 </div>
                 <Rating
-                    value={averageRating}
+                    value={(averageRating === "N/A") ? null : averageRating}
                     precision={0.1}
                     size="small"
                     readOnly

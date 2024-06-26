@@ -51,7 +51,7 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
   const handleAuth = (auth) => {
     if (auth?.user_info?.role.toString() === process.env.REACT_APP_USER_ROLE) {
       return (
-        <div class="dropdown-content">
+        <div className="dropdown-content">
           <Link to="/user/settings">Account Settings</Link>
           <a onClick={handleSignOut}>Sign out</a>
         </div>

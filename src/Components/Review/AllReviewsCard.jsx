@@ -22,6 +22,7 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
         if (reviews.length > 0 && reactions.length === 0) reviews.map((review) => getReactions(review.id))
     }, [reviews]);
 
+    let key = 0; // added to get rid of unqiue key prop warning in the ReviewCard component for the map function
     return (
         <div className="all-reviews-card">
             <ReviewSummaryCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
@@ -49,9 +50,10 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
                         hour12: true // This will format the time in 12-hour format (with AM/PM)
                     };
                     const formattedDate = dateLocal.toLocaleString('en-us', options);
-
+                    
                     return (
                         <ReviewCard
+                            key={key++} 
                             review_id={review.id}
                             ratingValue={review.overall_rating}
                             description={review.comment}
