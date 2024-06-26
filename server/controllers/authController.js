@@ -97,7 +97,7 @@ async function sendRecoveryEmail(req, res) {
 async function resetPassword(req, res) {
   try {
     await authService.resetPassword(req.body); // {url, password}
-    return res.status(200).send({ message: "Sending recovery email successful" });
+    return res.status(200).send({ message: "Resetting password successful" });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
