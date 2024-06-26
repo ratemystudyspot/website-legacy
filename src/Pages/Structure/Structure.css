@@ -13,3 +13,14 @@
       transform: scale(1) rotate(360deg);
   }
 }
+
+.go-back button {
+  border: none;
+  border-radius: 4px;
+  padding: 12px 14px;
+  color: white;
+  background-color: #7c7c7c;
+  &:hover {
+    background-color: #525252;
+  }
+}

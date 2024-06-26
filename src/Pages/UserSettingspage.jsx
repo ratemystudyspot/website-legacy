@@ -3,9 +3,7 @@ import Banner from '../Components/Banner/Banner';
 import './UserSettingspage.css';
 import useAuth from '../hooks/useAuth';
 import { getUserByID, updateUser } from '../Services/user';
-import { Email } from '@mui/icons-material';
 
-// TODO: when user is logged in, and they reload this page, it still redirects to login page --> must be because of authprovider issue
 const UserSettingsPage = () => {
   const { auth } = useAuth();
 

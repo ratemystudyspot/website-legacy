@@ -15,7 +15,7 @@ import Seekpage from './Pages/Seekpage'
 import Verify from './Pages/AuthForm/Verify';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './Pages/Structure/Layout';
-import RequireAuth from './Pages/AuthForm/RequireAuth';
+import RequireAuth from './Pages/Structure/RequireAuth';
 import Unauthorized from './Pages/Structure/Unauthorized';
 import SpotDetail from './Pages/SpotDetailpage';
 import Reset from './Pages/AuthForm/PasswordRecovery/ResetPage';
@@ -31,7 +31,8 @@ function App() {
     'User': process.env.REACT_APP_USER_ROLE,
   }
 
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
+  const [authLoaded, setAuthLoaded] = useState(false);
 
   // on reload, fetch refresh token
   useEffect(() => {
@@ -54,7 +55,12 @@ function App() {
       }
     }
     fetchRefreshToken();
-  }, [window.location.href]);
+  }, []);
+
+  // use to check if auth has been recieved and can be readily used in app
+  useEffect(() => {
+    if (!authLoaded && Object.keys(auth).length !== 0) setAuthLoaded(true); // only use when authLoaded is false to prevent redundant reloads and when auth has information to ensure user has been authenticated
+  }, [auth])
 
   return (
     <Routes>
@@ -70,7 +76,7 @@ function App() {
         <Route path="spots/:id" element={<SpotDetail />} />
 
         {/* protected routes */}
-        <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+        <Route element={<RequireAuth authLoaded={authLoaded} allowedRoles={[ROLES.User]} />}>
           <Route path="spots/seek-a-spot" element={<Seekpage />} />
           <Route path="user/settings" element={<UserSettings />} />
         </Route>
