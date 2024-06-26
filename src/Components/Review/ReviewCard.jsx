@@ -26,6 +26,9 @@ const handleReaction = async (updated_reaction, user_liked, user_disliked, revie
             updated_reaction(true); // tell app to refresh reactions
             return;
         }
+
+        if ((user_liked && reaction) || (user_disliked && ! reaction)) return; // prevents user from flooding backend calls when re-liking / re-disliking a review
+
         await createReaction(review_id, user_id, reaction, access_token); // if user hasn't liked or dislike a given review, create a reaction
         updated_reaction(true); // tell app to refresh reactions
     } catch (error) {
