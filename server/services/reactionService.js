@@ -9,18 +9,18 @@ async function getReactions(query) {
   }
 }
 
-async function createReaction(query) {
+async function createReaction(body) {
   try {
-    return await reactionModel.createReaction(query);
+    return await reactionModel.createReaction(body);
   } catch (error) {
     console.error("Error creating reaction:", error);
     throw error;
   }
 }
 
-async function updateReaction(query) {
+async function updateReaction(body) {
   try {
-    return await reactionModel.updateReaction(query);
+    return await reactionModel.updateReaction(body);
   } catch (error) {
     console.error("Error updating reaction:", error);
     throw error;

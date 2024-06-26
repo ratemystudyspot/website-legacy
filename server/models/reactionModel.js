@@ -79,11 +79,11 @@ async function createReaction(body) {
 };
 
 // update a user record
-async function updateReaction(query) {
+async function updateReaction(body) {
 	try {
-    if (!query.id) throw new Error("No id provided");
+    if (!body.id) throw new Error("No id provided");
 
-    const id = query.id;
+    const id = body.id;
     const updated_attributes = query;
     delete updated_attributes[id];
 

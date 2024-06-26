@@ -20,18 +20,24 @@ async function getReactionsByReview(review_id) {
   }
 }
 
-async function createReaction(review_id, user_id, reaction) {
+async function createReaction(review_id, user_id, reaction, access_token) { // reaction: true = like, false = dislike
   try {
-    const response = await axios.post(`${API_URL}`, { review_id, user_id, reaction });
+    const response = await axios.post(`${API_URL}`,
+      { review_id, user_id, reaction },
+      { headers: { Authorization: `Bearer ${access_token}` } }
+    );
     return response.data;
   } catch (error) {
     throw error.response.data;
   }
 }
 
-async function updateReaction() {
+async function updateReaction(body, access_token) {
   try {
-    const response = await axios.put(`${API_URL}`, {});
+    const response = await axios.put(`${API_URL}`,
+      body,
+      { headers: { Authorization: `Bearer ${access_token}` } }
+    );
     return response.data;
   } catch (error) {
     throw error.response.data;
