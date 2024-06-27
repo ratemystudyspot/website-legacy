@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import './AuthForm.css';
+import './AuthForm.scss'
 import { IoMdMail } from "react-icons/io";
 import { FaUser, FaLock } from "react-icons/fa";
 import { register } from '../../Services/auth.js';
@@ -64,65 +64,63 @@ const RegisterForm = () => {
   }
 
   return (
-    <div>
-      <div className="wrapper">
-        <form className='auth-form' onSubmit={HandleSubmit}>
-          <h1>Register</h1>
-          {duplicate && (<p className="auth-error-msg top">Email address already in use, please log in.</p>)}
-          
-          <div className='input-box'>
-            <input
-              className={invalidName ? "auth-input error" : "auth-input"}
-              type="text"
-              placeholder="Full Name"
-              autoComplete='off'
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <FaUser className="icon" />
-            {invalidName && (<p className="auth-error-msg bottom">Hmm, that name looks wrong, please enter your full name.</p>)}
-          </div>
+    <div className="auth-box">
+      <form className="auth-box__auth-form" onSubmit={HandleSubmit}>
+        <h1 className="auth-box__title">Register</h1>
+        {duplicate && (<p className="auth-box__auth-error-msg auth-box__auth-error-msg--top">Email address already in use, please log in.</p>)}
 
-          <div className="input-box">
-            <input
-              className={(invalidEmail || duplicate) ? "auth-input error" : "auth-input"}
-              type="email"
-              placeholder="Email"
-              autoComplete='off'
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <IoMdMail className="icon" />
-            {invalidEmail && (<p className="auth-error-msg bottom">Hmm, that email address doesn't look right.</p>)}
-
-          </div>
-
-          <div className="input-box">
-            <input
-              className={invalidPwd ? "auth-input error" : "auth-input"}
-              type="password"
-              placeholder="Password"
-              autoComplete='off'
-              value={pwd}
-              onChange={(e) => setPwd(e.target.value)}
-              required
-            />
-            <FaLock className="icon" />
-            {invalidPwd && (<p className="auth-error-msg">Please set a password longer than eight characters.</p>)}
-          </div>
-
-          <button className="auth-button" type="submit" >
-            Create Account
-          </button>
-
-        </form>
-        <div className="register-link">
-          <p>Already have an account?&nbsp;
-            <Link to="/login">
-              <button>Log in</button>
-            </Link>
-          </p>
+        <div className="auth-box__input-box">
+          <input
+            className={invalidName ? "auth-box__auth-input auth-box__auth-input--error" : "auth-box__auth-input"}
+            type="text"
+            placeholder="Full Name"
+            autoComplete='off'
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <FaUser className="auth-box__icon" />
+          {invalidName && (<p className="auth-box__auth-error-msg bottom">Hmm, that name looks wrong, please enter your full name.</p>)}
         </div>
+
+        <div className="auth-box__input-box">
+          <input
+            className={(invalidEmail || duplicate) ? "auth-box__auth-input auth-box__auth-input--error" : "auth-box__auth-input"}
+            type="email"
+            placeholder="Email"
+            autoComplete='off'
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <IoMdMail className="auth-box__icon" />
+          {invalidEmail && (<p className="auth-box__auth-error-msg bottom">Hmm, that email address doesn't look right.</p>)}
+
+        </div>
+
+        <div className="auth-box__input-box">
+          <input
+            className={invalidPwd ? "auth-box__auth-input auth-box__auth-input--error" : "auth-box__auth-input"}
+            type="password"
+            placeholder="Password"
+            autoComplete='off'
+            value={pwd}
+            onChange={(e) => setPwd(e.target.value)}
+            required
+          />
+          <FaLock className="auth-box__icon" />
+          {invalidPwd && (<p className="auth-box__auth-error-msg">Please set a password longer than eight characters.</p>)}
+        </div>
+
+        <button className="auth-box__auth-button" type="submit" >
+          Create Account
+        </button>
+
+      </form>
+      <div className="auth-box__register-link-container">
+        <p>Already have an account?&nbsp;
+          <Link to="/login">
+            <button className="auth-box__register-link-button">Log in</button>
+          </Link>
+        </p>
       </div>
     </div>
   )

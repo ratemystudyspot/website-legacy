@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import '../AuthForm.css'
+import '../AuthForm.scss'
 import { FaUser } from "react-icons/fa";
 import useRecovery from '../../../hooks/useRecovery';
 import Loading from '../../Structure/LoadingPage';
@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const RecoveryPage = () => {
   const { recoveryState, setRecoveryState } = useRecovery();
-  
+
   const navigate = useNavigate();
   const state = useLocation();
 
@@ -39,44 +39,47 @@ const RecoveryPage = () => {
   }
 
   return (
-    <div>
-      {loading ? (
-        <Loading type="page" hook={setRecoveryState} to="alert" items={{ ...recoveryState, email: email }} /> // change recoveryState here instead of at handleSubmit b/c of ???
-      ) : (
-        <div className="wrapper">
-          <form className={invalidEmail ? 'auth-form error' : "auth-form"} onSubmit={handleSubmit}>
-            <h1>Enter your email to reset password</h1>
-            <div className="input-box">
-              <input
-                className="auth-input"
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={handleChange}
-                required
-              />
-              <FaUser className="icon" />
-            </div>
+    <>
+      {
+        loading ? (
+          <Loading type="page" hook={setRecoveryState} to="alert" items={{ ...recoveryState, email: email }} /> // change recoveryState here instead of at handleSubmit b/c of ???
+        ) : (
+          <div className="auth-box">
+            <form className={invalidEmail ? 'auth-box__auth-form error' : "auth-box__auth-form"} onSubmit={handleSubmit}>
+              <h1 className="auth-box__title">Enter your email to reset password</h1>
+              <div className="auth-box__input-box">
+                <input
+                  className="auth-box__auth-input"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={handleChange}
+                  required
+                />
+                <FaUser className="auth-box__icon" />
+              </div>
 
-            <button className={`auth-button ${invalidEmail ? 'error' : ''}`} type="submit" disabled={invalidEmail}>
-              Reset Password
-            </button>
-
-            <div className="return">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (state?.state?.from_not_login) navigate(-1); // go back to previous page if not from login page
-                  setRecoveryState(prevState => ({ ...prevState, email, page: "login" }));
-                }}
-              >
-                Cancel
+              <button className={invalidEmail ? 'auth-box__auth-button auth-box__auth-button--error' : 'auth-box__auth-button'} type="submit" disabled={invalidEmail}>
+                Reset Password
               </button>
-            </div>
-          </form>
-        </div>
-      )}
-    </div>
+
+              <div className="auth-box__return-container">
+                <button
+                  className="auth-box__return-button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (state?.state?.from_not_login) navigate(-1); // go back to previous page if not from login page
+                    setRecoveryState(prevState => ({ ...prevState, email, page: "login" }));
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        )
+      }
+    </>
   )
 }
 

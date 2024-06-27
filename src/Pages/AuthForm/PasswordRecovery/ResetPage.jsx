@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { updatePassword } from "../../../Services/auth";
+import '../AuthForm.scss';
 
 const ResetPage = () => {
   const [pwd, setPwd] = useState('');
@@ -36,30 +37,30 @@ const ResetPage = () => {
       navigate("/login");
     }
     setSubmit(false);
-    return () => {};
+    return () => { };
   }, [invalidPwd, match, submit])
 
   return (
-    <div className="wrapper">
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <h1>Choose a new password</h1>
+    <div className="auth-box">
+      <form className="auth-box__auth-form" onSubmit={handleSubmit}>
+        <h1 className="auth-box__title">Choose a new password</h1>
         {!match ? (
-          <p className="auth-error-msg top">These passwords don't match. Try again?</p>
+          <p className="auth-box__auth-error-msg auth-box__auth-error-msg--top">These passwords don't match. Try again?</p>
         ) : (invalidPwd ? (
-          <p className="auth-error-msg top">Please set a password longer than seven characters.</p>
+          <p className="auth-box__auth-error-msg auth-box__auth-error-msg--top">Please set a password longer than seven characters.</p>
         ) : (null))}
-        <div className="input-box">
+        <div className="auth-box__input-box">
           <input
-            className={(invalidPwd || !match) ? "auth-input error" : "auth-input"}
+            className={(invalidPwd || !match) ? "auth-box__auth-input auth-box__auth-input--error" : "auth-box__auth-input"}
             type="password"
             placeholder="Password"
             value={pwd}
             onChange={(e) => setPwd(e.target.value)}
           />
         </div>
-        <div className="input-box">
+        <div className="auth-box__input-box">
           <input
-            className={(invalidPwd || !match) ? "auth-input error" : "auth-input"}
+            className={(invalidPwd || !match) ? "auth-box__auth-input auth-box__auth-input--error" : "auth-box__auth-input"}
             type="password"
             placeholder="Confirm Password"
             value={confirmPwd}
@@ -67,10 +68,10 @@ const ResetPage = () => {
           />
         </div>
 
-        <button className="auth-button" type="submit">Submit</button>
+        <button className="auth-box__auth-button" type="submit">Submit</button>
 
-        <div className="return">
-          <button onClick={() => navigate('/login')}>Back to Log in</button>
+        <div className="auth-box__return-container">
+          <button className="auth-box__return-button" onClick={() => navigate('/login')}>Back to Log in</button>
         </div>
       </form>
     </div>

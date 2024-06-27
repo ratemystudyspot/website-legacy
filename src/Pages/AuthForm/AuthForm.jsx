@@ -1,5 +1,5 @@
 import { React } from 'react';
-import './AuthForm.css'
+import './AuthForm.scss'
 import Login from './LoginForm.jsx'
 import Recovery from './PasswordRecovery/RecoveryPage.jsx';
 import Alert from './PasswordRecovery/AlertPage.jsx';
