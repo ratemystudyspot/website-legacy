@@ -135,7 +135,7 @@ const SpotDetailpage = () => {
       </div>
 
       <div className='banner'>
-        <Banner />
+        <Banner showGoBackButton={true}/>
       </div>
       {(reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) // add more things that need to load before shown to user
         ? (null)

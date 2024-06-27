@@ -1,56 +1,44 @@
-/* Common About Banner */
-.about-page-banner {
-  
-  .banner-box__about-button {
-    visibility: hidden;
-  }
-  
-  .banner-box__go-back-button {
-    visibility: visible;
-  }
-  .banner-box {
-    box-shadow: none;
-  }
-}
-
 body {
   color: #7c7c7c;
 }
 
-.about-banner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  height: 44vh;
-  width: 100vw; 
-  transform: translate(-50%, 0);
-  top: 119px;
-  z-index: -1;
-  background-color: #BFE0FF;
-
-  .about-title {
+.about-box {
+  &__large-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    height: 44vh;
+    width: 100vw; 
+    transform: translateX(-50%);
+    top: 119px;
+    z-index: -1;
+    background-color: #BFE0FF;
+    
+  }
+  &__title {
     font-size: 100px;
     font-weight: bold;
   }
-  .about-description {
+  &__description {
     font-size: 17px;
     font-weight: bolder;
     width: fit-content;
     text-align: justify;
   }
-}
 
-/* Leo and Ray about us cards */
-.cards-container {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  width: 90vw;
-  transform: translate(-50%, -15vh);
-  justify-content: center;
-  
-  .developer-cards {
+  //------------------------ DEVELOPER ABOUT US SECTION ------------------------------- 
+
+  &__card-box {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: 90vw;
+    transform: translate(-50%, -15vh);
+    justify-content: center;
+  }
+
+  &__developer-cards {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,7 +51,7 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
-  .personal-banner {
+  &__developer-banner {
     display: flex;
     padding: 10px;
     flex-direction: row;
@@ -71,32 +59,35 @@ body {
     align-items: center;
     width: 95%;
     height: 40%;
+  }
+  &__pfp {
+    border-radius: 100px;
+    height: 90%;
+    min-width: 90px;
+  }
+ 
+  &__social-media-directory{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  &__icon {
+    margin: 4px;
+    border-radius: 100px;
+    height: 20%;
+    cursor: pointer;
+  }
 
-    .pfp {
-      border-radius: 100px;
-      height: 90%;
-      min-width: 90px;
-    }
-
-    .social-media-links {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 100%;
-
-      .icon {
-        margin: 4px;
-        border-radius: 100px;
-        height: 20%;
-        cursor: pointer;
-      }
-
-      .icon:hover {
-        filter: brightness(0.7);
-      }
-    }
+  &__icon:hover {
+    filter: brightness(0.7);
   }
 }
+
+
+
+/* Leo and Ray about us cards */
 
 .user-name {
   font-weight: bold;
@@ -111,14 +102,14 @@ body {
   margin-top: 20px;
   font-size: 17px;
 }
-@media (min-width: 1080px) {
 
-  .about-banner {
-    .about-title {
+@media (min-width: 1080px) {
+  .about-box {
+    &__title {
       font-size: 125px;
       font-weight: bold;
     }
-    .about-description {
+    &__description {
       font-size: 20px;
     }
   }

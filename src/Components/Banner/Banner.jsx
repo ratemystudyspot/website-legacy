@@ -9,7 +9,8 @@ import useAuth from "../../hooks/useAuth";
 import StudySpots from '../../Data/StudySpots';
 import { logout } from '../../Services/auth';
 
-const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = false }) => {
+// TODO: Turn show different buttons to an object instead!!!
+const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = false, showGoBackButton = false, showAboutUsButton = false, additionalStyle}) => {
   const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
   const [isOpen, setIsOpen] = useState(false); // State to track whether the auth navbar is open or closed
   const navigate = useNavigate();
@@ -68,13 +69,11 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
 
   return (
     <header>
-      <div className="banner-box">
+      <div className="banner-box" style={additionalStyle}>
         <div className="banner-box__left-box">
           <LogoComponent />
-          <button className="banner-box__button banner-box__about-button" onClick={() => navigate("/about")}>About Us</button>
-          <button className="banner-box__button banner-box__go-back-button" onClick={() => navigate("/")}>Go Back</button>
-          {/* <Link to="/about"> */}
-          {/* </Link> */}
+          {showAboutUsButton ? <button className="banner-box__button banner-box__about-button" onClick={() => navigate("/about")}>About Us</button> : null}
+          {showGoBackButton ?  <button className="banner-box__button banner-box__go-back-button" onClick={() => navigate("/")}>Go Back</button> : null}
         </div>
 
         <div className="banner-box__middle-box">

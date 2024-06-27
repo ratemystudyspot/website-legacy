@@ -7,15 +7,7 @@
 }
 
 .settings-banner {
-  .banner-box__go-back-button {
-    visibility: visible;
-  }
-
-  .banner-box__about-button  {
-    visibility: hidden;
-  }
-
-  .banner-box_suggest-button {
+  .banner-box__suggest-button {
     visibility: hidden;
   }
 

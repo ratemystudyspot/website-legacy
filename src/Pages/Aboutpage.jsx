@@ -1,5 +1,5 @@
 import React from 'react'
-import './Aboutpage.css'
+import './Aboutpage.scss'
 import { SocialIcon } from 'react-social-icons/component'
 import 'react-social-icons/linkedin'
 import LogoComponent from '../Components/LogoComponent'
@@ -9,23 +9,21 @@ import { Button } from 'react-bootstrap'
 
 const Aboutpage = () => {
   return (
-    <div className="container">
-      <div className='about-page-banner'>
-        <Banner/>
-      </div>
-      <div className='about-banner'>
-        <h1 className='about-title'>
+    <div className="about-box">
+      <Banner showGoBackButton={true} additionalStyle={{boxShadow:"none"}}/>
+      <div className='about-box__large-banner'>
+        <h1 className='about-box__title'>
           About Us
         </h1>
-        <h3 className='about-description'>
+        <h3 className='about-box__description'>
           Welcome to Rate My Study Spot, built by students for students
         </h3>
       </div>
-      <div className='cards-container'>
-        <div className='developer-cards ray-card'>
-          <div className='personal-banner'>
+      <div className='about-box__card-box'>
+        <div className='about-box__developer-cards'>
+          <div className='about-box__developer-banner'>
             
-            <img className='pfp' src={require("../Components/Assets/ray.jpg")} alt="Ray"/>
+            <img className='about-box__pfp' src={require("../Components/Assets/ray.jpg")} alt="Ray"/>
 
             <div className='text'>
                 <h3 className='user-name'>
@@ -36,10 +34,10 @@ const Aboutpage = () => {
                 </h5>
             </div>
 
-            <div className='social-media-links'>
-              <img className='icon' onClick={() => {window.open("https://www.linkedin.com/in/ray-zhou4/")}} src={require("../Components/Assets/linkedInIcon.webp")} alt="LinkedIn"/>
-              <img className='icon' onClick={() => {window.open("https://github.com/rayzhou4")}} src={require("../Components/Assets/GitHubIcon.webp")} alt="GitHub"/>
-              <img className='icon' onClick={() => {window.open("https://www.instagram.com/ray.zhouuu/")}} src={require("../Components/Assets/InstagramIcon.webp")} alt="Instagram"/>
+            <div className='about-box__social-media-directory'>
+              <img className='about-box__icon' onClick={() => {window.open("https://www.linkedin.com/in/ray-zhou4/")}} src={require("../Components/Assets/linkedInIcon.webp")} alt="LinkedIn"/>
+              <img className='about-box__icon' onClick={() => {window.open("https://github.com/rayzhou4")}} src={require("../Components/Assets/GitHubIcon.webp")} alt="GitHub"/>
+              <img className='about-box__icon' onClick={() => {window.open("https://www.instagram.com/ray.zhouuu/")}} src={require("../Components/Assets/InstagramIcon.webp")} alt="Instagram"/>
             </div>
           </div>
             <p className='developer-description'>
@@ -48,9 +46,9 @@ const Aboutpage = () => {
               Feel free to reach out on LinkedIn!
             </p>
         </div>
-        <div className='developer-cards leo-card'>
-          <div className='personal-banner'>
-              <img className='pfp' src={require("../Components/Assets/leo.jpg")} alt="Leo"/>
+        <div className='about-box__developer-cards'>
+          <div className='about-box__developer-banner'>
+              <img className='about-box__pfp' src={require("../Components/Assets/leo.jpg")} alt="Leo"/>
               
               <div className='text'>
                   <h3 className='user-name'>
@@ -60,10 +58,10 @@ const Aboutpage = () => {
                     Co-founder
                   </h5>
               </div>
-            <div className='social-media-links'>
-              <img className='icon' onClick={() => {window.open("https://www.linkedin.com/in/leo-shang-604911267/")}} src={require("../Components/Assets/linkedInIcon.webp")} alt="LinkedIn"/>
-              <img className='icon' onClick={() => {window.open("https://github.com/LeoShangTang")}} src={require("../Components/Assets/GitHubIcon.webp")} alt="GitHub"/>
-              <img className='icon' onClick={() => {window.open("https://www.instagram.com/le.o.shang/")}} src={require("../Components/Assets/InstagramIcon.webp")} alt="Instagram"/>
+            <div className='about-box__social-media-directory'>
+              <img className='about-box__icon' onClick={() => {window.open("https://www.linkedin.com/in/leo-shang-604911267/")}} src={require("../Components/Assets/linkedInIcon.webp")} alt="LinkedIn"/>
+              <img className='about-box__icon' onClick={() => {window.open("https://github.com/LeoShangTang")}} src={require("../Components/Assets/GitHubIcon.webp")} alt="GitHub"/>
+              <img className='about-box__icon' onClick={() => {window.open("https://www.instagram.com/le.o.shang/")}} src={require("../Components/Assets/InstagramIcon.webp")} alt="Instagram"/>
             </div>
           </div>
             <p className='developer-description'>

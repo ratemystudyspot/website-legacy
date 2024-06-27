@@ -37,7 +37,7 @@ const Homepage = () => {
 
   return (
     <div className="container">
-      <Banner filterSelected={filterOptions} onFilterSelect={setFilterOptions} cards={cards} setCards={setCards} showSearch={true} />
+      <Banner filterSelected={filterOptions} onFilterSelect={setFilterOptions} cards={cards} setCards={setCards} showSearch={true} showAboutUsButton={true}/>
 
       <div className='study-spot-filter'>
         <SpotCardsFilter filterSelected={filterOptions} onFilterSelect={setFilterOptions} />
