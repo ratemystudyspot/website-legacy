@@ -7,19 +7,19 @@
 }
 
 .settings-banner {
-  .goBack-button {
+  .banner-box__go-back-button {
     visibility: visible;
   }
 
-  .about-button {
+  .banner-box__about-button  {
     visibility: hidden;
   }
 
-  .suggest-button {
+  .banner-box_suggest-button {
     visibility: hidden;
   }
 
-  .banner-container {
+  .banner-box {
     background-color: #F5F5F5;
     box-shadow: none;
   }

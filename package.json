@@ -41,6 +41,7 @@
     "react-router-dom": "^6.23.0",
     "react-scripts": "5.0.1",
     "react-social-icons": "^6.16.0",
+    "sass": "^1.77.6",
     "sequelize": "^6.37.3",
     "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4",

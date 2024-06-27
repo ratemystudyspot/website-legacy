@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react'
-import './Banner.css'
+import './Banner.scss'
 import { FaCircleUser } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -51,14 +51,14 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
   const handleAuth = (auth) => {
     if (auth?.user_info?.role.toString() === process.env.REACT_APP_USER_ROLE) {
       return (
-        <div className="dropdown-content">
+        <div className="banner-box__dropdown-content">
           <Link to="/user/settings">Account Settings</Link>
           <a onClick={handleSignOut}>Sign out</a>
         </div>
       )
     } else {
       return (
-        <div className="dropdown-content">
+        <div className="banner-box__dropdown-content">
           <Link to="/signup">Sign up</Link>
           <Link to="/login">Log in</Link>
         </div>
@@ -68,43 +68,43 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
 
   return (
     <header>
-      <div className="banner-container">
-        <div className="logo-container">
+      <div className="banner-box">
+        <div className="banner-box__left-box">
           <LogoComponent />
-          <button className="about-button" onClick={() => navigate("/about")}>About Us</button>
-          <button className="goBack-button" onClick={() => navigate("/")}>Go Back</button>
+          <button className="banner-box__button banner-box__about-button" onClick={() => navigate("/about")}>About Us</button>
+          <button className="banner-box__button banner-box__go-back-button" onClick={() => navigate("/")}>Go Back</button>
           {/* <Link to="/about"> */}
           {/* </Link> */}
         </div>
 
-        <div className="middle-container">
+        <div className="banner-box__middle-box">
           {(showSearch)
             ? (
-              <form className="search-box" onSubmit={handleSearch}>
+              <form className="banner-box__search-box" onSubmit={handleSearch}>
                 <input
-                  className="input-search"
+                  className="banner-box__input-search"
                   type="text"
                   value={searchTerm}
                   onChange={handleChange}
                   // onKeyDown={handleKeyDown}
                   placeholder="Search study spots"
                 />
-                <button type="submit" className='search-button'><FaSearch className="icon" /></button>
+                <button type="submit" className='banner-box__search-button'><FaSearch className="banner-box__icon" /></button>
               </form>
             )
             : (null)
           }
         </div>
 
-        <div className="right-container">
+        <div className="banner-box__right-box">
           {/* Adding study spot btn */}
 
-          <button className="suggest-button" onClick={() => navigate("spots")}>Suggest Spot</button>
-          <div className={isOpen ? "user-nav open" : "user-nav"}>
+          <button className="banner-box__button banner-box__suggest-button" onClick={() => navigate("spots")}>Suggest Spot</button>
+          <div className={isOpen ? "banner-box__user-nav open" : "banner-box__user-nav"}>
             {/* User Navbar button */}
-            <button className="dropdown-btn" onClick={toggleNavbar}>
-              <GiHamburgerMenu className="icon" />
-              <FaCircleUser className="icon" />
+            <button className="banner-box__dropdown-button" onClick={toggleNavbar}>
+              <GiHamburgerMenu className="banner-box__icon" />
+              <FaCircleUser className="banner-box__icon" />
             </button>
 
             {/* User Navbar contents */}

@@ -1,0 +1,290 @@
+
+.banner-box {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    transform: translateX(-50%);
+    z-index: 2;
+    max-height: 119px;
+    min-height: 70px;
+    height: 15vh;
+    width: 100vw;
+    background-color: #BFE0FF;
+    box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.75);
+    justify-content: space-between;
+
+    &__icon {
+        color: #7c7c7c;
+    }
+    
+    // ------------------------- BUTTONS -------------------------------
+    &__button {
+        font-size: 13px;
+        font-weight: 600;
+        margin: 10px;
+        height: 34px;
+        min-width: fit-content;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 0 10px 0 10px;
+        color: #7c7c7c;
+        border: none;
+        background-color: white;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    &__button:hover {
+        color: #363636;
+        background-color: #dcdcdc;
+        transition: 0.2s;
+        padding: 0 10px 0 10px;
+    }
+
+    &__go-back-button {
+        visibility: hidden;
+        transform: translate(-130%, 0);
+    }
+
+    // ------------------------- LEFT BOX -------------------------------
+    &__left-box {
+        display: flex;
+        width: 15vw;
+        justify-content: start;
+        align-items: center;
+        padding-left: 1vw;
+
+        .logo {
+            margin-right: 20px;
+            width: 43px;
+            height: 40px;
+        }
+    }
+    // ------------------------- MIDDLE BOX -------------------------------
+    &__middle-box {
+        min-width: fit-content;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        /* transform: translate(5%, 0px); */
+    }
+    &__search-box {
+        width: fit-content;
+        height: fit-content;
+        position: relative;
+    }
+
+    &__input-search {
+        height: 50px;
+        width: 40vw;
+        /* max-width: 500px; */
+        padding: 10px;
+        border: none;
+        font-size: 16px;
+        color: #474747;
+        border-radius: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: 0.2s;
+        padding-left: 20px;
+
+        &::placeholder {
+            color: #dcdcdc;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        &:focus {
+            box-shadow: 0 3px 8px 8px rgba(3, 73, 90, 0.1);
+        }
+    }
+
+    &__search-button {
+        position: absolute;
+        top: 7.5px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        border-style: none;
+        font-size: 10px;
+        font-weight: bold;
+        outline: none;
+        cursor: pointer;
+        border-radius: 50%;
+        background-color: #BFE0FF;
+
+        .icon {
+            position: relative;
+            bottom: 1px;
+        }
+
+        &:hover {
+            background-color: #a1d0fc;
+
+            .icon {
+                color: #363636;
+            }
+        }
+    }
+
+    // ------------------------- RIGHT BOX -------------------------------
+    &__right-box {
+        display: flex;
+        width: 15vw;
+        height: 100%;
+        align-items: center;
+        justify-content: end;
+        flex-direction: row;
+        /* min padding add later? */
+        margin: 0;
+        padding-right: 1vw;
+    }
+
+    &__user-nav {
+        outline: #dcdcdc;
+        outline-style: solid;
+        outline-width: 1px;
+        transition: 0.3s;
+        width: 70px;
+        min-width: 70px;
+        height: 36px;
+        border-radius: 20px;
+        margin: 5px;
+        overflow: visible;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    &__user-nav.open,
+    &__user-nav:hover {
+        background-color: #dcdcdc;
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+
+        .icon {
+            color: #363636;
+        }
+    }
+
+    &__dropdown-button {
+        border: white;
+        border-radius: 20px;
+        outline: none;
+        color: white;
+        background-color: inherit;
+        font-family: inherit;
+        /* Important for vertical align on mobile phones */
+        margin: 0;
+        /* Important for vertical align on mobile phones */
+        padding: 10px;
+        width: 100%;
+        min-width: 10px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    &__dropdown-content {
+        background-color: white;
+        display: block;
+        position: relative;
+        transform: translate(-60%, 0);
+        top: 5px;
+        padding: 12px 0 12px;
+        min-width: 180px;
+        box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 10px;
+    }
+
+    &__dropdown-content a {
+        background-color: white;
+        float: none;
+        color: black;
+        padding: 10px 24px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        z-index: 1;
+        border: none;
+    }
+
+    &__dropdown-content a:hover {
+        background-color: #f3f3f3;
+        color: black;
+        cursor: pointer;
+    }
+}
+  
+
+ 
+  
+  
+  /* @media (max-width: 1080px) {
+    .banner-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      width: max-content;
+      margin-bottom: 100px;
+      margin: 0 auto;
+    }
+  
+    .banner-box__left-box {
+      grid-column: 1;
+      grid-row: 1;
+      position: relative;
+      right: 7%;
+    }
+  
+    .banner-box__middle-box {
+      grid-column: 1 / span 2;
+      grid-row: 2;
+    }
+  
+    .right-container {
+      grid-column: 2;
+      Second column
+      grid-row: 1;
+      First row
+      position: relative;
+      left: 15%;
+      bottom: 3px;
+    }
+  } 
+  */
+  
+  /* !!! make mobile-looking design */
+  /* @media (max-width: 800px) {
+  
+    .banner-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      margin: 0 auto;
+    }
+  
+    .banner-box__left-box {
+      grid-column: 1;
+      grid-row: 1;
+      position: relative;
+      right: 0%;
+    }
+  
+    .banner-box__middle-box {
+      margin: 0 auto;
+  
+      .form {
+        width: 70vw;
+      }
+    }
+  
+    .right-container {
+      grid-column: 2;
+      grid-row: 1;
+      position: relative;
+      left: -5%;
+    }
+  } */
+  

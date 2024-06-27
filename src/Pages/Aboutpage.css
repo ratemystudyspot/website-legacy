@@ -1,16 +1,14 @@
 /* Common About Banner */
 .about-page-banner {
-  .search-box {
-    visibility: hidden;
-  }
-  .about-button {
+  
+  .banner-box__about-button {
     visibility: hidden;
   }
   
-  .goBack-button {
+  .banner-box__go-back-button {
     visibility: visible;
   }
-  .banner-container {
+  .banner-box {
     box-shadow: none;
   }
 }
