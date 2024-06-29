@@ -51,7 +51,7 @@ function App() {
       } catch (error) { // 2 scenarios: 1) user hasn't receive RT, about to login 2) expired RT
         console.error(error) 
         // TODO: need to also alert the user that they need to sign in again
-        alert("signed out -> refresh token expired") //delete this after todo implemention
+        // alert("signed out -> refresh token expired") //delete this after todo implemention
       }
     }
     fetchRefreshToken();
