@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import Banner from '../Components/Banner/Banner';
-import './UserSettingspage.css';
+import './UserSettingspage.scss';
 import useAuth from '../hooks/useAuth';
 import useRecovery from '../hooks/useRecovery';
 import { getUserByID, updateUser } from '../Services/user';
@@ -89,105 +89,109 @@ const UserSettingsPage = () => {
   }, [])
 
   return (
-    <div className="container">
-      <div className='settings-banner'>
+    <div className="user-settings-box">
+      <div className="user-settings-box__banner">
         <Banner />
       </div>
-      <div className="form-container">
-        <div className="header">
-          <span>Account &gt; Settings</span>
-          <h1>Account Settings</h1>
+      <div className="user-settings-box__form-container">
+        <div className="user-settings-box__header">
+          <span className="user-settings-box__header-directory">Account &gt; Settings</span>
+          <h1 className="user-settings-box__header-title">Account Settings</h1>
         </div>
-        <div className="form">
+        <div className="user-settings-box__form">
           {(showEditFullName)
             ? (
-              <form className="form-group" onSubmit={savingFullName}>
-                <div className='label-info'>
-                  <label>Full name</label>
-                  <p>Make sure this matches the name on your government-issued ID.</p>
-                  <div className="name-fields">
-                    <div className='input-field'>
-                      <label className="input-placeholder">First Name</label>
+              <form className="user-settings-box__form-group" onSubmit={savingFullName}>
+                <div className='user-settings-box__label-info'>
+                  <label className="user-settings-box__label-info-title">Full name</label>
+                  <p className="user-settings-box__label-info-text">Make sure this matches the name on your government-issued ID.</p>
+                  <div className="user-settings-box__name-fields">
+                    <div className='user-settings-box__input-field'>
+                      <label className="user-settings-box__input-placeholder">First Name</label>
                       <input
                         type="text"
+                        className="user-settings-box__name-fields-input"
                         name="firstName"
                         defaultValue={name.split(" ")[0]}
                         required
                       />
                     </div>
-                    <div className='input-field'>
-                      <label className="input-placeholder">Last Name</label>
+                    <div className='user-settings-box__input-field'>
+                      <label className="user-settings-box__input-placeholder">Last Name</label>
                       <input
                         type="text"
+                        className="user-settings-box__name-fields-input"
                         name="lastName"
                         defaultValue={name.split(" ")[1]}
                         required
                       />
                     </div>
                   </div>
-                  <button className="save-button">Save</button>
+                  <button className="user-settings-box__save-button">Save</button>
                 </div>
 
-                <button type="submit" className="cancel-button" onClick={() => setShowEditFullName(false)}>Cancel</button>
+                <button className="user-settings-box__cancel-button" onClick={() => setShowEditFullName(false)}>Cancel</button>
               </form>
             ) : (
-              <div className={(showEditEmail || showEditPassword) ? "form-group blocked" : "form-group"}>
-                <div className='label-info'>
-                  <label>Full name</label>
-                  <p>{userInfo?.name}</p>
+              <div className={(showEditEmail || showEditPassword) ? "user-settings-box__form-group--blocked" : "user-settings-box__form-group"}>
+                <div className='user-settings-box__label-info'>
+                  <label className="user-settings-box__label-info-title">Full name</label>
+                  <p className="user-settings-box__label-info-text">{userInfo?.name}</p>
                 </div>
 
-                <button className={(showEditEmail || showEditPassword) ? "show-button blocked" : "show-button"} onClick={() => setShowEditFullName(true)}>Edit</button>
+                <button className={(showEditEmail || showEditPassword) ? "user-settings-box__show-button--blocked" : "user-settings-box__show-button"} onClick={() => setShowEditFullName(true)}>Edit</button>
               </div>
             )}
           {(showEditEmail)
             ? (
-              <form className="form-group" onSubmit={savingEmail}>
-                <div className='label-info'>
-                  <label>Email address</label>
-                  <p>Use an email address you'll always have access to.</p>
-                  <div className="email-fields">
-                    <div className='input-field'>
-                      <label className="input-placeholder">Email Address</label>
+              <form className="user-settings-box__form-group" onSubmit={savingEmail}>
+                <div className='user-settings-box__label-info'>
+                  <label className="user-settings-box__label-info-title">Email address</label>
+                  <p className="user-settings-box__label-info-text">Use an email address you'll always have access to.</p>
+                  <div className="user-settings-box__email-fields">
+                    <div className='user-settings-box__input-field'>
+                      <label className="user-settings-box__input-placeholder">Email Address</label>
                       <input
                         type="text"
+                        className="user-settings-box__email-fields-input"
                         name="email"
                         defaultValue={email}
                         required
                       />
                     </div>
                   </div>
-                  <button className="save-button">Save</button>
+                  <button className="user-settings-box__save-button">Save</button>
                 </div>
 
-                <button className="cancel-button" onClick={() => setShowEditEmail(false)}>Cancel</button>
+                <button className="user-settings-box__cancel-button" onClick={() => setShowEditEmail(false)}>Cancel</button>
               </form>
             ) : (
-              <div className={(showEditFullName || showEditPassword) ? "form-group blocked" : "form-group"} onSubmit={savingPassword}>
-                <div className='label-info'>
-                  <label>Email address</label>
-                  <p>{userInfo?.email}</p>
+              <div className={(showEditFullName || showEditPassword) ? "user-settings-box__form-group--blocked" : "user-settings-box__form-group"} onSubmit={savingPassword}>
+                <div className='user-settings-box__label-info'>
+                  <label className="user-settings-box__label-info-title">Email address</label>
+                  <p className="user-settings-box__label-info-text">{userInfo?.email}</p>
                 </div>
 
-                <button className={(showEditFullName || showEditPassword) ? "show-button blocked" : "show-button"} onClick={() => setShowEditEmail(true)}>Edit</button>
+                <button className={(showEditFullName || showEditPassword) ? "user-settings-box__show-button--blocked" : "user-settings-box__show-button"} onClick={() => setShowEditEmail(true)}>Edit</button>
               </div>
             )}
           {(showEditPassword)
             ? (
-              <form className="form-group" onSubmit={savingPassword}>
-                <div className='label-info'>
-                  <label>Password</label>
-                  <p>This is the password you will use to login with.</p>
-                  <div className="password-fields">
-                    <div className='input-field'>
-                      <label className="input-placeholder">Current Password</label>
+              <form className="user-settings-box__form-group" onSubmit={savingPassword}>
+                <div className='user-settings-box__label-info'>
+                  <label className="user-settings-box__label-info-title">Password</label>
+                  <p className="user-settings-box__label-info-text">This is the password you will use to login with.</p>
+                  <div className="user-settings-box__password-fields">
+                    <div className='user-settings-box__input-field'>
+                      <label className="user-settings-box__input-placeholder">Current Password</label>
                       <input
                         type="password"
+                        className="user-settings-box__password-fields-input"
                         name="oldPassword"
                         required
                       />
                       <button
-                        className='forget-password-button'
+                        className="user-settings-box__forget-password-button"
                         onClick={() => {
                           setRecoveryState({ page: "recover", email: email });
                           navigate('/login', { state: { from_not_login: true } });
@@ -195,37 +199,39 @@ const UserSettingsPage = () => {
                         Forgot Password?
                       </button>
                     </div>
-                    <div className='input-field'>
-                      <label className="input-placeholder">New Password</label>
+                    <div className='user-settings-box__input-field'>
+                      <label className="user-settings-box__input-placeholder">New Password</label>
                       <input
                         type="password"
+                        className="user-settings-box__password-fields-input"
                         name="newPassword"
                         required
                       />
                     </div>
-                    <div className='input-field'>
-                      <label className="input-placeholder">Confirm Password</label>
+                    <div className='user-settings-box__input-field'>
+                      <label className="user-settings-box__input-placeholder">Confirm Password</label>
                       <input
                         type="password"
+                        className="user-settings-box__password-fields-input"
                         name="confirmPassword"
                         required
                       />
                     </div>
                   </div>
-                  <button className="save-button">Save</button>
+                  <button className="user-settings-box__save-button">Save</button>
                   {
                     (invalidPassword && justSubmittedForm)
-                      ? <p className='request-label'>Request failed, please try again.</p> // if user has submitted but api returns error
+                      ? <p className='user-settings-box__request-label'>Request failed, please try again.</p> // if user has submitted but api returns error
                       : (justSubmittedForm)
-                        ? <p className='request-label'>Loading...</p> // if user has submitted, but waiting for api
+                        ? <p className='user-settings-box__request-label'>Loading...</p> // if user has submitted, but waiting for api
                         : (savedPassword)
-                          ? <p className='request-label'>Saved!</p> // if user has subitted, and successfully saves
+                          ? <p className='user-settings-box__request-label'>Saved!</p> // if user has subitted, and successfully saves
                           : (null) // if user has not done anything yet
                   }
                 </div>
 
                 <button
-                  className="cancel-button"
+                  className="user-settings-box__cancel-button"
                   onClick={() => { // close form and reset request label states 
                     setShowEditPassword(false);
                     setInvalidPassword(true);
@@ -236,13 +242,13 @@ const UserSettingsPage = () => {
                 </button>
               </form>
             ) : (
-              <div className={(showEditFullName || showEditEmail) ? "form-group blocked" : "form-group"}>
-                <div className='label-info'>
-                  <label>Password</label>
-                  <p>Hidden</p>
+              <div className={(showEditFullName || showEditEmail) ? "user-settings-box__form-group--blocked" : "user-settings-box__form-group"}>
+                <div className='user-settings-box__label-info'>
+                  <label className="user-settings-box__label-info-title">Password</label>
+                  <p className="user-settings-box__label-info-text">Hidden</p>
                 </div>
 
-                <button className={(showEditFullName || showEditEmail) ? "show-button blocked" : "show-button"} onClick={() => setShowEditPassword(true)}>Edit</button>
+                <button className={(showEditFullName || showEditEmail) ? "user-settings-box__show-button--blocked" : "user-settings-box__show-button"} onClick={() => setShowEditPassword(true)}>Edit</button>
               </div>
             )}
         </div>
@@ -308,7 +314,7 @@ const UserSettingsPage = () => {
 //                 value={fullName}
 //                 onChange={(e) => setFullName(e.target.value)}
 //               />
-//               <button className="save-button" onClick={handleSaveFullName}>
+//               <button className="user-settings-box__save-button" onClick={handleSaveFullName}>
 //                 Save
 //               </button>
 //             </>
@@ -331,7 +337,7 @@ const UserSettingsPage = () => {
 //                 value={email}
 //                 onChange={(e) => setEmail(e.target.value)}
 //               />
-//               <button className="save-button" onClick={handleSaveEmail}>
+//               <button className="user-settings-box__save-button" onClick={handleSaveEmail}>
 //                 Save
 //               </button>
 //             </>
@@ -357,7 +363,7 @@ const UserSettingsPage = () => {
 //                 value={password}
 //                 onChange={(e) => setPassword(e.target.value)}
 //               />
-//               <button className="save-button" onClick={handleSavePassword}>
+//               <button className="user-settings-box__save-button" onClick={handleSavePassword}>
 //                 Save
 //               </button>
 //             </>
