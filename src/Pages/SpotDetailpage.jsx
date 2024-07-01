@@ -8,7 +8,7 @@ import { TbSofa, TbBatteryCharging2, TbLockOpen, TbMicrowave } from "react-icons
 import { MdOutlineFastfood, MdOutlineDoorFront, } from "react-icons/md";
 import { GoRepoLocked } from "react-icons/go";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
-import './SpotDetailpage.css'
+import './SpotDetailpage.scss'
 import ReviewCard from '../Components/Review/ReviewCard';
 import { Rating } from "@mui/material";
 import AllReviewsCard from '../Components/Review/AllReviewsCard';
@@ -129,56 +129,44 @@ const SpotDetailpage = () => {
 
   let key = 0; // added to get rid of unqiue key prop warnings in the map function
   return (
-    <div>
+    <div className="detailed-spot-box">
       <div style={{ display: showAddReviewCard ? 'block' : 'none' }}>
         <AddReviewCard toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
       </div>
 
-      <div className='banner'>
+      <div className='detailed-spot-box__banner'>
         <Banner showGoBackButton={true}/>
       </div>
-      {(reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) // add more things that need to load before shown to user
+      {(reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) // things that need to load before shown to user
         ? (null)
-        : (<div style={{
-          position: 'absolute',
-          width: '100vw',
-          height: '100vh',
-          background: 'white',
-          top: '0',
-          left: '0',
-          zIndex: 1,
-        }}>
-          <div style={{
-            position: 'absolute',
-            top: '50vh',
-            left: '50%',
-          }}>
+        : (<div className="detailed-spot-box__white-screen">
+          <div className="detailed-spot-box__white-screen-loader">
             <CircularProgress color="blue" />
           </div>
         </div>)}
 
-      <div className="listing-detail">
+      <div className="detailed-spot-box__listing-detail">
         {/* Left Container */}
-        <div className='study-info-container'>
+        <div className="detailed-spot-box__study-info-container">
 
-          <section className="gallery">
-            <div className='slider-container'>
-              <button className='slider-button prev' onClick={prevSlide}><IoIosArrowDropleftCircle /></button>
-              <button className='slider-button next' onClick={nextSlide}><IoIosArrowDroprightCircle /></button>
+          <section className="detailed-spot-box__gallery">
+            <div className="detailed-spot-box__slider-container">
+              <button className="detailed-spot-box__slider-button--prev" onClick={prevSlide}><IoIosArrowDropleftCircle /></button>
+              <button className='detailed-spot-box__slider-button--next' onClick={nextSlide}><IoIosArrowDroprightCircle /></button>
             </div>
             {galleryImages[imageIndex]}
           </section>
 
-          <div className="listing-header">
-            <h1><b>{state?.studySpot?.name}</b></h1>
-            <p className="distance">{getDistance()} away</p>
+          <div className="detailed-spot-box__listing-header-box">
+            <h1 className="detailed-spot-box__listing-header"><b>{state?.studySpot?.name}</b></h1>
+            <p className="detailed-spot-box__distance-away">{getDistance()} away</p>
           </div>
 
-          <section className="ubc-map">
+          <section className="detailed-spot-box__ubc-map">
             <UBCMap />
           </section>
 
-          <section className="amenities">
+          <section className="detailed-spot-box__amenities">
             <ul>
               {filterOptions.map((filter) => { 
                 if (state?.studySpot?.features.includes(filter.value)) return (<li key={key++}>{filter.icon} {filter.label}</li>)

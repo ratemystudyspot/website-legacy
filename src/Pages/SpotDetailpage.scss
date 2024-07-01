@@ -1,0 +1,201 @@
+.detailed-spot-box {
+  //------------------------ BANNER ------------------------------- 
+  &__banner {
+    .banner-box__about-button {
+      visibility: hidden;
+    }
+  }
+
+  //-------------------------------- LOADING SCREEN ---------------------------------------
+  &__white-screen {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  &__white-screen-loader {
+    position: absolute;
+    top: 50vh;
+    left: 50%;
+  }
+
+  //------------------------ LISTING DETAILS ------------------------------- 
+  &__listing-detail {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: #fff;
+    width: 100vw;
+    height: 80vh;
+    transform: translate(-50%, -50%);
+    margin-top: 60px;
+  }
+
+  &__listing-header {
+    margin-top: 20px;
+    font-size: 2.5rem;
+    color: #333;
+  }
+
+  &__distance-away {
+    margin: 5px 0 15px 5px;
+    color: #666;
+  }
+
+  &__study-info-container {
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    height: 100%;
+    margin-right: 50px;
+  }
+
+  //------------------------ GALLERY ------------------------------- 
+  &__gallery {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 70%;
+    flex-wrap: wrap;
+    position: relative;
+    border-radius: 20px;
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
+
+    &:hover {
+      .detailed-spot-box__slider-button {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    img {
+      /* width: calc(33.333% - 10px); */
+      overflow: hidden;
+      width: 100%;
+      border-radius: 20px;
+      transition: 0.3s;
+
+      &:hover {
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+
+  //------------------------ SLIDER BUTTONS ------------------------------- 
+  &__slider-button {
+    visibility: hidden;
+    position: absolute;
+    border-radius: 20px;
+    height: min-content;
+    top: 47%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1; /* Ensure buttons are on top of the image */
+    opacity: 0;
+    transition:
+      opacity 0.5s ease,
+      visibility 0.5s ease;
+    color: rgb(255, 255, 255);
+
+    svg {
+      width: 40px;
+      height: 40px;
+      padding: none;
+      border-radius: 50%; /* Make the icon container circular */
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Shadow under the icon */
+    }
+
+    &--prev {
+      @extend .detailed-spot-box__slider-button;
+      left: 10px;
+    }
+
+    &--next {
+      @extend .detailed-spot-box__slider-button;
+      right: 10px; /* Adjust as needed to position the button */
+    }
+  }
+
+  //------------------------ UBC MAP SECTION ------------------------------- 
+  &__ubc-map {
+    position: relative;
+    height: 150px;
+    width: 100%;
+    /* .maplibregl-ctrl button .maplibregl-ctrl-icon {
+      background-position: 50%;
+      background-repeat: no-repeat;
+      display: block;
+      height: 100%;
+      width: 100%;
+    } */
+    .maplibregl-ctrl-attrib.maplibregl-compact {
+      visibility: hidden;
+    }
+    .maplibregl-ctrl {
+      visibility: hidden;
+    }
+  }
+
+  //------------------------ AMENITIES SECTION ------------------------------- 
+  &__amenities {
+    h2 {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    ul {
+      color: #555;
+      line-height: 1.6;
+      list-style-type: none;
+      /* list-style: none; */
+      padding: 0;
+      margin-top: 20px;
+    }
+    li {
+      display: inline-block;
+      background: #bfe0ff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-right: 14px;
+      align-items: center;
+      box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.15);
+      svg {
+        margin: 2px;
+      }
+    }
+  }
+}
+
+// ------------------------- MOBILE COMPATIBILITY -------------------------------
+@media (max-width: 900px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .detailed-spot-box {
+    &__listing-detail {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      transform: translate(-46.5%, -50%);
+    }
+
+    &__study-info-container {
+      width: 90vw;
+      margin-right: none;
+    }
+  }
+}
+
+// .reviews-container {
+//   display: flex;
+//   width: 45%;
+//   height: 70%;
+//   flex-direction: column;
+// }
