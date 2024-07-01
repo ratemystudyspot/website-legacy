@@ -3,7 +3,7 @@ import StudySpots from "../SampleData/StudySpots";
 import ListOfStudySpotCards from '../Components/StudyCard/ListOfStudySpotCards'
 import SpotCardsFilter from '../Components/StudyCard/SpotCardsFilter'
 import AlertComponenet from '../Components/AlertComponenet';
-import './Homepage.css'
+import './Homepage.scss'
 import Banner from '../Components/Banner/Banner'
 import { getLocation } from '../Services/Utils/location';
 import { CircularProgress } from '@mui/material';
@@ -36,14 +36,14 @@ const Homepage = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="home-box">
       <Banner filterSelected={filterOptions} onFilterSelect={setFilterOptions} cards={cards} setCards={setCards} showSearch={true} showAboutUsButton={true}/>
 
-      <div className='study-spot-filter'>
+      <div className="home-box__study-spot-filter">
         <SpotCardsFilter filterSelected={filterOptions} onFilterSelect={setFilterOptions} />
       </div>
 
-      <div className="study-spot-list">
+      <div className="home-box__study-spot-list">
         {(currentLocation)
           ? (<ListOfStudySpotCards filterSelected={filterOptions} currentLocation={currentLocation} cards={cards} setCards={setCards} />)
           : (<div style={{
@@ -55,7 +55,7 @@ const Homepage = () => {
           </div>)}
       </div>
 
-      <div className="alert">
+      <div className="home-box__alert">
         <AlertComponenet
           collapse={locationAlert}
           setCollapse={setLocationAlert}
