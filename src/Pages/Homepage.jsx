@@ -6,6 +6,7 @@ import AlertComponenet from '../Components/AlertComponenet';
 import './Homepage.scss'
 import Banner from '../Components/Banner/Banner'
 import { getLocation } from '../Services/Utils/location';
+import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
 import { CircularProgress } from '@mui/material';
 
 
@@ -37,23 +38,19 @@ const Homepage = () => {
 
   return (
     <div className="home-box">
-      <Banner filterSelected={filterOptions} onFilterSelect={setFilterOptions} cards={cards} setCards={setCards} showSearch={true} showAboutUsButton={true}/>
+      <Banner filterSelected={filterOptions} onFilterSelect={setFilterOptions} cards={cards} setCards={setCards} showSearch={true} showAboutUsButton={true} />
 
       <div className="home-box__study-spot-filter">
         <SpotCardsFilter filterSelected={filterOptions} onFilterSelect={setFilterOptions} />
       </div>
 
-      <div className="home-box__study-spot-list">
-        {(currentLocation)
-          ? (<ListOfStudySpotCards filterSelected={filterOptions} currentLocation={currentLocation} cards={cards} setCards={setCards} />)
-          : (<div style={{
-            position: 'absolute',
-            top: '30vh',
-            left: '50%',
-          }}>
-            <CircularProgress color="blue" />
-          </div>)}
-      </div>
+      {(currentLocation) ? (
+        <div className="home-box__study-spot-list">
+          <ListOfStudySpotCards filterSelected={filterOptions} currentLocation={currentLocation} cards={cards} setCards={setCards} />
+        </div>
+      ) : (
+        <LoaderScreen variant="white" />
+      )}
 
       <div className="home-box__alert">
         <AlertComponenet
@@ -65,7 +62,7 @@ const Homepage = () => {
       </div>
 
 
-    </div>
+    </div >
   )
 }
 
