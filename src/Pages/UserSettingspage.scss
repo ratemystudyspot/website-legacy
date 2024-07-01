@@ -5,6 +5,7 @@
   padding: 20px;
   overflow: hidden;
 
+  //------------------------ BANNER ------------------------------- 
   &__banner {
     .banner-box__suggest-button {
       visibility: hidden;
@@ -16,6 +17,7 @@
     }
   }
 
+  //------------------------ HEADER ------------------------------- 
   &__header {
     margin-bottom: 20px;
   }
@@ -32,6 +34,7 @@
     margin: 10px 0;
   }
 
+  //------------------------ SETTINGS FORM ------------------------------- 
   &__form-container {
     position: absolute;
     top: 25vh;
@@ -57,7 +60,8 @@
     }
   }
 
-  &__label-info-text {
+  //------------------------ SETTINGS BOX ------------------------------- 
+  &__settings-box {
     margin-bottom: 0;
   }
 
@@ -66,6 +70,41 @@
     font-weight: bold;
   }
 
+  //------------------------ INPUT FIELDS ------------------------------- 
+  &__input-field {
+    display: flex;
+    justify-content: flex-start; /* Aligns all flex items to the left */
+    flex-direction: column; /* If you want them in a column */
+  }
+
+  &__name-fields,
+  &__email-fields {
+    display: flex;
+    gap: 30px;
+    margin: 30px 0;
+  }
+
+  &__password-fields {
+    display: grid;
+    gap: 20px;
+    margin: 30px 0;
+  }
+
+  &__name-fields-input,
+  &__email-fields-input,
+  &__password-fields-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  &__input-placeholder {
+    font-size: 12px;
+    margin-left: 2px;
+  }
+
+  //------------------------ BUTTONS ------------------------------- 
   &__save-button {
     background-color: #292929;
     border: none;
@@ -97,25 +136,6 @@
     }
   }
 
-  &__input-field {
-    display: flex;
-    justify-content: flex-start; /* Aligns all flex items to the left */
-    flex-direction: column; /* If you want them in a column */
-  }
-
-  &__name-fields,
-  &__email-fields {
-    display: flex;
-    gap: 30px;
-    margin: 30px 0;
-  }
-
-  &__password-fields {
-    display: grid;
-    gap: 20px;
-    margin: 30px 0;
-  }
-
   &__forget-password-button {
     display: block;
     margin-left: 2px;
@@ -127,20 +147,7 @@
     width: fit-content;
   }
 
-  &__name-fields-input,
-  &__email-fields-input,
-  &__password-fields-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  &__input-placeholder {
-    font-size: 12px;
-    margin-left: 2px;
-  }
-
+  //------------------------ REQUEST LABEL ------------------------------- 
   &__request-label {
     font-size: 14px;
     margin-top: 17px;

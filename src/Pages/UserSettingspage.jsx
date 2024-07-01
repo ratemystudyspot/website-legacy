@@ -102,7 +102,7 @@ const UserSettingsPage = () => {
           {(showEditFullName)
             ? (
               <form className="user-settings-box__form-group" onSubmit={savingFullName}>
-                <div className='user-settings-box__label-info'>
+                <div className='user-settings-box__settings-box'>
                   <label className="user-settings-box__label-info-title">Full name</label>
                   <p className="user-settings-box__label-info-text">Make sure this matches the name on your government-issued ID.</p>
                   <div className="user-settings-box__name-fields">
@@ -134,7 +134,7 @@ const UserSettingsPage = () => {
               </form>
             ) : (
               <div className={(showEditEmail || showEditPassword) ? "user-settings-box__form-group--blocked" : "user-settings-box__form-group"}>
-                <div className='user-settings-box__label-info'>
+                <div className='user-settings-box__settings-box'>
                   <label className="user-settings-box__label-info-title">Full name</label>
                   <p className="user-settings-box__label-info-text">{userInfo?.name}</p>
                 </div>
@@ -145,7 +145,7 @@ const UserSettingsPage = () => {
           {(showEditEmail)
             ? (
               <form className="user-settings-box__form-group" onSubmit={savingEmail}>
-                <div className='user-settings-box__label-info'>
+                <div className='user-settings-box__settings-box'>
                   <label className="user-settings-box__label-info-title">Email address</label>
                   <p className="user-settings-box__label-info-text">Use an email address you'll always have access to.</p>
                   <div className="user-settings-box__email-fields">
@@ -167,7 +167,7 @@ const UserSettingsPage = () => {
               </form>
             ) : (
               <div className={(showEditFullName || showEditPassword) ? "user-settings-box__form-group--blocked" : "user-settings-box__form-group"} onSubmit={savingPassword}>
-                <div className='user-settings-box__label-info'>
+                <div className='user-settings-box__settings-box'>
                   <label className="user-settings-box__label-info-title">Email address</label>
                   <p className="user-settings-box__label-info-text">{userInfo?.email}</p>
                 </div>
@@ -178,7 +178,7 @@ const UserSettingsPage = () => {
           {(showEditPassword)
             ? (
               <form className="user-settings-box__form-group" onSubmit={savingPassword}>
-                <div className='user-settings-box__label-info'>
+                <div className='user-settings-box__settings-box'>
                   <label className="user-settings-box__label-info-title">Password</label>
                   <p className="user-settings-box__label-info-text">This is the password you will use to login with.</p>
                   <div className="user-settings-box__password-fields">
@@ -243,7 +243,7 @@ const UserSettingsPage = () => {
               </form>
             ) : (
               <div className={(showEditFullName || showEditEmail) ? "user-settings-box__form-group--blocked" : "user-settings-box__form-group"}>
-                <div className='user-settings-box__label-info'>
+                <div className='user-settings-box__settings-box'>
                   <label className="user-settings-box__label-info-title">Password</label>
                   <p className="user-settings-box__label-info-text">Hidden</p>
                 </div>
