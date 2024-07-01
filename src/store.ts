@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./Slices/users";
-import reviewsReducer from "./Slices/reviews";
+import reviewsReducer from "./Slices/reviews.ts";
 
 const rootReducer = combineReducers({
   users: userReducer,

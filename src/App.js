@@ -1,13 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import './App.css';
-import LoginForm from './Pages/AuthForm/LoginForm';
 import RegisterForm from './Pages/AuthForm/RegisterForm';
-import StudySpotCard from './Components/StudyCard/StudySpotCard';
-import ButtonComponent from './Components/ButtonComponent';
-import StudySpots from './SampleData/StudySpots';
-import ListOfStudySpotCards from './Components/StudyCard/ListOfStudySpotCards';
 import Homepage from './Pages/Homepage';
-import UBCMap from './Components/UBCMap/UBCMap';
 import ErrorPage from './Pages/Structure/Errorpage';
 import Aboutpage from './Pages/Aboutpage';
 import RecommendSpotspage from './Pages/RecommendSpotspage';

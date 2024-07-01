@@ -6,23 +6,6 @@
     }
   }
 
-  //-------------------------------- LOADING SCREEN ---------------------------------------
-  &__white-screen {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    background: white;
-    top: 0;
-    left: 0;
-    z-index: 1;
-  }
-
-  &__white-screen-loader {
-    position: absolute;
-    top: 50vh;
-    left: 50%;
-  }
-
   //------------------------ LISTING DETAILS -------------------------------
   &__listing-detail {
     position: absolute;
