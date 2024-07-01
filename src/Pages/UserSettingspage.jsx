@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import Banner from '../Components/Banner/Banner';
 import './UserSettingspage.scss';
 import useAuth from '../hooks/useAuth';
-import { getUserByID, updateUser } from '../Services/user';
+import { getUserByID } from '../Services/user';
 import NameForm from '../Components/Form/UserSettings/NameForm';
 import EmailForm from '../Components/Form/UserSettings/EmailForm';
 import PasswordForm from '../Components/Form/UserSettings/PasswordForm';
