@@ -17,6 +17,7 @@ import UBCMap from '../Components/UBCMap/UBCMap';
 import { CircularProgress } from '@mui/material';
 import { GiConsoleController } from 'react-icons/gi';
 import AddReviewCard from '../Components/Review/AddReviewCard';
+import Gallery from '../Components/Gallery/Gallery';
 
 const images = require.context('../Components/Assets', true);
 
@@ -87,24 +88,9 @@ const SpotDetailpage = () => {
   }
 
   const [galleryImages, setGalleryImages] = useState([]);
-  const [imageIndex, setImageIndex] = useState(0);
-
-  const nextSlide = () => {
-    setImageIndex((prevIndex) => {
-      if (prevIndex + 1 < galleryImages.length) return prevIndex + 1; // return next image
-      else return 0; // return first image
-    });
-  }
-
-  const prevSlide = () => {
-    setImageIndex((prevIndex) => {
-      if (prevIndex - 1 >= 0) return prevIndex - 1; // return prev image
-      else return galleryImages.length - 1; // return last image
-    });
-  }
 
   useEffect(() => {
-    // fetch all study spot images and then store in state array
+    // fetch study spot images and then store in state array
     state?.studySpot?.image_links.map((image_link) => {
       setGalleryImages((prevGalleryImages) => {
         return prevGalleryImages.concat(
@@ -135,7 +121,7 @@ const SpotDetailpage = () => {
       </div>
 
       <div className='detailed-spot-box__banner'>
-        <Banner showGoBackButton={true}/>
+        <Banner showGoBackButton={true} />
       </div>
       {(reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) // things that need to load before shown to user
         ? (null)
@@ -150,11 +136,7 @@ const SpotDetailpage = () => {
         <div className="detailed-spot-box__study-info-container">
 
           <section className="detailed-spot-box__gallery">
-            <div className="detailed-spot-box__slider-container">
-              <button className="detailed-spot-box__slider-button--prev" onClick={prevSlide}><IoIosArrowDropleftCircle /></button>
-              <button className='detailed-spot-box__slider-button--next' onClick={nextSlide}><IoIosArrowDroprightCircle /></button>
-            </div>
-            {galleryImages[imageIndex]}
+            <Gallery galleryImages={galleryImages} />
           </section>
 
           <div className="detailed-spot-box__listing-header-box">
@@ -168,7 +150,7 @@ const SpotDetailpage = () => {
 
           <section className="detailed-spot-box__amenities">
             <ul>
-              {filterOptions.map((filter) => { 
+              {filterOptions.map((filter) => {
                 if (state?.studySpot?.features.includes(filter.value)) return (<li key={key++}>{filter.icon} {filter.label}</li>)
               })}
             </ul>

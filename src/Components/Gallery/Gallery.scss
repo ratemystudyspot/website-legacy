@@ -1,0 +1,58 @@
+.gallery-box {
+  &:hover {
+    .gallery-box__slider-button {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  img {
+    /* width: calc(33.333% - 10px); */
+    overflow: hidden;
+    width: 100%;
+    border-radius: 20px;
+    transition: 0.3s;
+
+    &:hover {
+      box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__slider-button {
+    visibility: hidden;
+    position: absolute;
+    border-radius: 20px;
+    height: min-content;
+    top: 47%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1; /* Ensure buttons are on top of the image */
+    opacity: 0;
+    transition:
+      opacity 0.5s ease,
+      visibility 0.5s ease;
+    color: rgb(255, 255, 255);
+
+    svg {
+      width: 40px;
+      height: 40px;
+      padding: none;
+      border-radius: 50%; /* Make the icon container circular */
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Shadow under the icon */
+    }
+
+    &--prev {
+      @extend .gallery-box__slider-button;
+      left: 10px;
+    }
+
+    &--next {
+      @extend .gallery-box__slider-button;
+      right: 10px; /* Adjust as needed to position the button */
+    }
+  }
+}
+
+
+//------------------------ SLIDER BUTTONS -------------------------------
