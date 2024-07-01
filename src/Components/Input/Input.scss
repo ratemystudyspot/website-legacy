@@ -1,0 +1,19 @@
+.input-field {
+  display: flex;
+  justify-content: flex-start; /* Aligns all flex items to the left */
+  flex-direction: column; /* If you want them in a column */
+
+  &__placeholder {
+    font-size: 12px;
+    margin-left: 2px;
+  }
+
+  &__input-box {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+}
+
+
