@@ -2,6 +2,9 @@ body {
   color: #7c7c7c;
 }
 
+  //------------------------ GENERAL ABOUT US BANNER ------------------------------- 
+
+
 .about-box {
   &__large-banner {
     display: flex;
@@ -60,6 +63,7 @@ body {
     width: 95%;
     height: 40%;
   }
+
   &__pfp {
     border-radius: 100px;
     height: 90%;
@@ -83,25 +87,22 @@ body {
   &__icon:hover {
     filter: brightness(0.7);
   }
+
+  &__developer-username {
+    font-weight: bold;
+    font-size: 200%;
+  }
+
+  &__developer-description {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    height: 45%;
+    margin-top: 20px;
+    font-size: 17px;
+  }
 }
 
-
-
-/* Leo and Ray about us cards */
-
-.user-name {
-  font-weight: bold;
-  font-size: 200%;
-}
-
-.developer-description {
-  display: flex;
-  justify-content: center;
-  width: 80%;
-  height: 45%;
-  margin-top: 20px;
-  font-size: 17px;
-}
 
 @media (min-width: 1080px) {
   .about-box {
@@ -112,21 +113,20 @@ body {
     &__description {
       font-size: 20px;
     }
+    &__developer-username {
+      font-weight: bold;
+      font-size: 275%;
+    }
+    &__developer-description {
+      margin-top: 20px;
+      font-size: 19px;
+    }
+    &__developer-role {
+      font-size: 150%;
+    }
   }
 
-  .developer-description {
-    margin-top: 20px;
-    font-size: 19px;
-  }
 
-  .user-name {
-    font-weight: bold;
-    font-size: 275%;
-  }
-
-  .user-title {
-    font-size: 150%;
-  }
 
 }
 

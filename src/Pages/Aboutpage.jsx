@@ -1,70 +1,70 @@
-import React from 'react'
-import './Aboutpage.scss'
-import { SocialIcon } from 'react-social-icons/component'
-import 'react-social-icons/linkedin'
-import LogoComponent from '../Components/LogoComponent'
-import Banner from '../Components/Banner/Banner'
-import { Navigate } from 'react-router-dom'
-import { Button } from 'react-bootstrap'
+import React from "react"
+import "./Aboutpage.scss"
+import { SocialIcon } from "react-social-icons/component"
+import "react-social-icons/linkedin"
+import LogoComponent from "../Components/LogoComponent"
+import Banner from "../Components/Banner/Banner"
+import { Navigate } from "react-router-dom"
+import { Button } from "react-bootstrap"
 
 const Aboutpage = () => {
   return (
     <div className="about-box">
       <Banner showGoBackButton={true} additionalStyle={{boxShadow:"none"}}/>
-      <div className='about-box__large-banner'>
-        <h1 className='about-box__title'>
+      <div className="about-box__large-banner">
+        <h1 className="about-box__title">
           About Us
         </h1>
-        <h3 className='about-box__description'>
+        <h3 className="about-box__description">
           Welcome to Rate My Study Spot, built by students for students
         </h3>
       </div>
-      <div className='about-box__card-box'>
-        <div className='about-box__developer-cards'>
-          <div className='about-box__developer-banner'>
+      <div className="about-box__card-box">
+        <div className="about-box__developer-cards">
+          <div className="about-box__developer-banner">
             
-            <img className='about-box__pfp' src={require("../Components/Assets/ray.jpg")} alt="Ray"/>
+            <img className="about-box__pfp" src={require("../Components/Assets/ray.jpg")} alt="Ray"/>
 
-            <div className='text'>
-                <h3 className='user-name'>
+            <div className="text">
+                <h3 className="about-box__developer-username">
                   Ray Zhou
                 </h3>
-                <h5 className='name'>
+                <h5 className="about-box__developer-role">
                   Co-founder
                 </h5>
             </div>
 
-            <div className='about-box__social-media-directory'>
-              <img className='about-box__icon' onClick={() => {window.open("https://www.linkedin.com/in/ray-zhou4/")}} src={require("../Components/Assets/linkedInIcon.webp")} alt="LinkedIn"/>
-              <img className='about-box__icon' onClick={() => {window.open("https://github.com/rayzhou4")}} src={require("../Components/Assets/GitHubIcon.webp")} alt="GitHub"/>
-              <img className='about-box__icon' onClick={() => {window.open("https://www.instagram.com/ray.zhouuu/")}} src={require("../Components/Assets/InstagramIcon.webp")} alt="Instagram"/>
+            <div className="about-box__social-media-directory">
+              <img className="about-box__icon" onClick={() => {window.open("https://www.linkedin.com/in/ray-zhou4/")}} src={require("../Components/Assets/linkedInIcon.webp")} alt="LinkedIn"/>
+              <img className="about-box__icon" onClick={() => {window.open("https://github.com/rayzhou4")}} src={require("../Components/Assets/GitHubIcon.webp")} alt="GitHub"/>
+              <img className="about-box__icon" onClick={() => {window.open("https://www.instagram.com/ray.zhouuu/")}} src={require("../Components/Assets/InstagramIcon.webp")} alt="Instagram"/>
             </div>
           </div>
-            <p className='developer-description'>
+            <p className="about-box__developer-description">
               Hey! I'm Ray, a student at University of British Columbia. 
               I love playing basketball and programming, and so for this project I mainly worked on the back-end servers and front-end features development! 
               Feel free to reach out on LinkedIn!
             </p>
         </div>
-        <div className='about-box__developer-cards'>
-          <div className='about-box__developer-banner'>
-              <img className='about-box__pfp' src={require("../Components/Assets/leo.jpg")} alt="Leo"/>
+        <div className="about-box__developer-cards">
+          <div className="about-box__developer-banner">
+              <img className="about-box__pfp" src={require("../Components/Assets/leo.jpg")} alt="Leo"/>
               
-              <div className='text'>
-                  <h3 className='user-name'>
+              <div className="text">
+                  <h3 className="about-box__developer-username">
                     Leo Shang
                   </h3>
-                  <h5 className='user-title'>
+                  <h5 className="about-box__developer-role">
                     Co-founder
                   </h5>
               </div>
-            <div className='about-box__social-media-directory'>
-              <img className='about-box__icon' onClick={() => {window.open("https://www.linkedin.com/in/leo-shang-604911267/")}} src={require("../Components/Assets/linkedInIcon.webp")} alt="LinkedIn"/>
-              <img className='about-box__icon' onClick={() => {window.open("https://github.com/LeoShangTang")}} src={require("../Components/Assets/GitHubIcon.webp")} alt="GitHub"/>
-              <img className='about-box__icon' onClick={() => {window.open("https://www.instagram.com/le.o.shang/")}} src={require("../Components/Assets/InstagramIcon.webp")} alt="Instagram"/>
+            <div className="about-box__social-media-directory">
+              <img className="about-box__icon" onClick={() => {window.open("https://www.linkedin.com/in/leo-shang-604911267/")}} src={require("../Components/Assets/linkedInIcon.webp")} alt="LinkedIn"/>
+              <img className="about-box__icon" onClick={() => {window.open("https://github.com/LeoShangTang")}} src={require("../Components/Assets/GitHubIcon.webp")} alt="GitHub"/>
+              <img className="about-box__icon" onClick={() => {window.open("https://www.instagram.com/le.o.shang/")}} src={require("../Components/Assets/InstagramIcon.webp")} alt="Instagram"/>
             </div>
           </div>
-            <p className='developer-description'>
+            <p className="about-box__developer-description">
               Hi! I'm Leo, a student at the University of British Columbia. I love playing badminton and graphic design. 
               For this personal project, I mainly worked on the front-end development and the UI design! 
               Feel free to reach out to me on LinkedIn if you have any questions or suggestions!
