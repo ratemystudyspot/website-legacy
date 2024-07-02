@@ -27,7 +27,7 @@ const StudySpotCard = ({ studySpot, currentLocation }) => {
   return (
     <div
       className="studySpotCard"
-      onClick={() => navigate(`/spots/${studySpot.id}`, { state: { studySpot, currentLocation } })}>
+      onClick={() => navigate(`/spots/${studySpot.id}`)}>
       <img className="image" src={getImage(studySpot.image_link)} />
       <div className="card-details">
         <h4><b> {studySpot.name} </b></h4>

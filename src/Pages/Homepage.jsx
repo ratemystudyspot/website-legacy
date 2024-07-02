@@ -5,9 +5,9 @@ import SpotCardsFilter from '../Components/StudyCard/SpotCardsFilter'
 import AlertComponenet from '../Components/AlertComponenet';
 import './Homepage.scss'
 import Banner from '../Components/Banner/Banner'
-import { getLocation } from '../Services/Utils/location';
 import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
 import { CircularProgress } from '@mui/material';
+import getCurrentUserLocation from '../Helpers/GetUserLocation';
 
 
 const Homepage = () => {
@@ -16,23 +16,13 @@ const Homepage = () => {
   const [cards, setCards] = useState([]);
   const [locationAlert, setLocationAlert] = useState(false);
 
-  const getCurrentLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      async (position) => { // success case
-        let user_lon = position.coords.longitude;
-        let user_lat = position.coords.latitude;
-        // setCurrentLocation([user_lon, user_lat]);
-        await setCurrentLocation([user_lon, user_lat]);
-      },
-      async () => { // error case
-        await setLocationAlert(true);
-        // Alert("Location services reduced because blocked location sharing. Please share location for the best experience.", "info");
-        const { location: { longitude, latitude } } = await getLocation();
-        await setCurrentLocation([longitude, latitude]);
-      });
-  }
-
   useEffect(() => {
+    const getCurrentLocation = async () => {
+      const result = await getCurrentUserLocation();
+      setCurrentLocation(result.coords);
+      setLocationAlert(result.locationAlert);
+    }
+    
     getCurrentLocation();
   }, []);
 

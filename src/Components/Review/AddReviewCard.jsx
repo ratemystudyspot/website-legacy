@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import useAuth from '../../hooks/useAuth';
+import LoginForm from '../../Pages/AuthForm/LoginForm';
 import { createReview } from '../../Services/review';
 import "./AddReviewCard.css";
 import { Rating } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
-const AddReviewCard = ( {toggleAddReviewCardVisibility}) => {
+const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
   const { auth } = useAuth();
+  const location = useLocation();
+
   const [overallRating, setOverallRating] = useState(0);
   const [comfortRating, setComfortRating] = useState(0);
   const [spaceRating, setSpaceRating] = useState(0);
@@ -35,49 +39,63 @@ const AddReviewCard = ( {toggleAddReviewCardVisibility}) => {
 
   return (
     <>
-    {/* TODO: Remove add-review-card, merge with add-review-form */}
-      <div className='add-review-card'> 
-        <form className='add-review-form' onSubmit={handleSubmit}>
-          <div>
-            <Rating value={overallRating} onChange={(event, newOverallRating) => { setOverallRating(newOverallRating) }} size='large' required />
-          </div>
-          <div className='star-container comfort-rating'>
-            Comfortness
-            <Rating value={comfortRating} onChange={(event, newComfortRating) => { setComfortRating(newComfortRating) }} size='large'/>
-          </div>
-          <div className='star-container quiet-rating'>
-            Quietness
-            <Rating value={quietRating} onChange={(event, newQuietRating) => {setQuietRating(newQuietRating)}} size='large' />
-          </div>
-          <div className='star-container space-rating'>
-            Space Availability
-            <Rating value={spaceRating} onChange={(event, newSpaceRating) => {setSpaceRating(newSpaceRating)}} size='large' />
-          </div>          
-          
-          {/* <input
+      {/* TODO: Remove add-review-card, merge with add-review-form */}
+      {(Object.keys(auth).length !== 0) ? // if user is authenticated
+        (
+          <div className='add-review-card'>
+            <form className='add-review-form' onSubmit={handleSubmit}>
+              <div>
+                <Rating value={overallRating} onChange={(event, newOverallRating) => { setOverallRating(newOverallRating) }} size='large' required />
+              </div>
+              <div className='star-container comfort-rating'>
+                Comfortness
+                <Rating value={comfortRating} onChange={(event, newComfortRating) => { setComfortRating(newComfortRating) }} size='large' />
+              </div>
+              <div className='star-container quiet-rating'>
+                Quietness
+                <Rating value={quietRating} onChange={(event, newQuietRating) => { setQuietRating(newQuietRating) }} size='large' />
+              </div>
+              <div className='star-container space-rating'>
+                Space Availability
+                <Rating value={spaceRating} onChange={(event, newSpaceRating) => { setSpaceRating(newSpaceRating) }} size='large' />
+              </div>
+
+              {/* <input
             type="text"
             placeholder="Add a Rating... (1-5)"
             value={rating}
             onChange={(e) => setRating(e.target.value)}
             required
           /> */}
-          <textarea 
-            className='add-review-description'
-            type="text"
-            placeholder="Add a Review..."
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            required
-          />
-          <div className='add-review-button-container'>
-            <button className='add-review-cancel-button' type="button" onClick={toggleAddReviewCardVisibility}>Cancel</button>
-            <button className='add-review-submit-button' type="submit">Submit</button>
+              <textarea
+                className='add-review-description'
+                type="text"
+                placeholder="Add a Review..."
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                required
+              />
+              <div className='add-review-button-container'>
+                <button className='add-review-cancel-button' type="button" onClick={toggleAddReviewCardVisibility}>Cancel</button>
+                <button className='add-review-submit-button' type="submit">Submit</button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div >
+        ) : (
+          //TODO: NEEDS STYLING
+          <div className="add-review-card">
+            <div className="login-form">
+              <h3>Please login first.</h3>
+              <LoginForm destination={location?.pathname} /> {/* location?.pathname returns current path */}
+              <div className='add-review-button-container'>
+                <button className='add-review-cancel-button' type="button" onClick={toggleAddReviewCardVisibility}>Cancel</button>
+              </div>
+            </div>
+          </div>
+        )}
       <div className='overlay-background' />
     </>
-    
+
   );
 };
 

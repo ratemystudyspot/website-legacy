@@ -46,8 +46,8 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
   const { setAuth, auth } = useAuth();
   const handleSignOut = async () => {
     await logout();
-    await setAuth({ access_token: null, user_info: null });
-    alert("Sign out successful.") // TODO: make a custom alert + redirect user to loading screen (looks better that way)
+    await setAuth({});
+    window.location.reload();
   }
   const handleAuth = (auth) => {
     if (auth?.user_info?.role.toString() === process.env.REACT_APP_USER_ROLE) {

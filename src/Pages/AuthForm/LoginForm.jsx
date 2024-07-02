@@ -10,13 +10,14 @@ import useRecovery from '../../hooks/useRecovery.js';
 import { Password } from '@mui/icons-material';
 
 
-const LoginForm = () => {
+function LoginForm({ destination }) {
   const { setAuth } = useAuth();
   const { recoveryState, setRecoveryState } = useRecovery();
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
+  if (!destination) destination = from;
 
   const [email, setEmail] = useState(recoveryState?.email);
   const [pwd, setPwd] = useState('');
@@ -36,7 +37,7 @@ const LoginForm = () => {
       setInvalidPwd(false);
 
       setAuth({ access_token: accessToken, user_info: accessTokenDecoded?.UserInfo });
-      navigate(from, { replace: true });
+      navigate(destination, { replace: true });
 
       // delete all info related to access token
       response = null;
