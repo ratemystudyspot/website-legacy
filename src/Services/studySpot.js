@@ -29,8 +29,18 @@ async function getSpotsByTime(day_of_week, time) {
   }
 }
 
+async function countSpots() {
+  try {
+    const response = await axios.get(`${API_URL}/count`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
 export {
   getSpots,
   getSpotsByFeatures,
   getSpotsByTime,
+  countSpots,
 }

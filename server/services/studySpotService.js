@@ -26,8 +26,18 @@ async function getSpotsByTime(filters) {
   }
 }
 
+async function countSpots() {
+  try {
+    return await studySpotModel.countAll();
+  } catch (error) {
+    console.error("Error counting spots:", error);
+    throw error;
+  }
+}
+
 module.exports = {
-  getSpots,
+  getSpots,  
   getSpotsByFeatures,
   getSpotsByTime,
+  countSpots,
 }

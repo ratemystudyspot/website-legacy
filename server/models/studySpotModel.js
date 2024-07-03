@@ -100,10 +100,21 @@ async function findAllByTime(filters) {
 	}
 }
 
+// count total number of rows 
+async function countAll() {
+	try {
+		return await StudySpot.count();
+	} catch (error) {
+		console.error("Error counting spots:", error);
+		throw new Error(error.message);
+	}
+}
+
 module.exports = {
 	StudySpot,
 	test,
 	findAll,
 	findAllByFeatures,
 	findAllByTime,
+	countAll,
 };

@@ -27,8 +27,18 @@ async function getSpotsByTime(req, res) {
   }
 }
 
+async function countSpots(req, res) {
+  try {
+    const count = await studySpotService.countSpots();
+    res.status(200).send({ count });
+  } catch (error) {
+    res.status(404).send(error);
+  }
+}
+
 module.exports = {
   getSpots,
   getSpotsByFeatures,
   getSpotsByTime,
+  countSpots,
 };
