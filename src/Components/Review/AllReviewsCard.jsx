@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import "./AllReviewsCard.scss"
 import useAuth from "../../hooks/useAuth";
-import "./AllReviewsCard.css"
 import ReviewCard from "./ReviewCard";
 import { getReactionsByFilter } from "../../Services/reaction";
 import ReviewSummaryCard from "./ReviewSummaryCard";

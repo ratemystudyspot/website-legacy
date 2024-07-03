@@ -1,6 +1,6 @@
 import { Rating } from "@mui/material";
+import "./ReviewCard.scss";
 import { IconButton, Button } from '@mui/material';
-import "./ReviewCard.css"
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import EditIcon from '@mui/icons-material/Edit';
@@ -51,26 +51,26 @@ const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 
     const access_token = auth?.access_token;
 
     return (
-        <div className="review-card">
-            <div className="review-header">
+        <div className="review-box">
+            <div className="review-box__header">
                 <Rating
                     value={ratingValue}
                     precision={1}
                     size="large"
                     readOnly
                 />
-                <div className="review-recency">
+                <div className="review-box__date">
                     {createdAt}
                 </div>
             </div>
 
-            <div className="review-description">
+            <div className="review-box__description">
                 {description}
             </div>
 
-            <div style={{ justifyContent: isOwner ? "space-between" : "flex-end" }} className="review-buttons">
+            <div style={{ justifyContent: isOwner ? "space-between" : "flex-end" }} className="review-box__buttons">
                 <Button
-                    className="edit-button"
+                    className="review-box__edit-button"
                     style={{ display: isOwner ? 'block' : 'none' }}
                     onClick={() => handleEditReview( // TODO: currently will edit the review as soon as you click button --> but idealy we should be editting in a popup
                         review_id,
@@ -82,14 +82,14 @@ const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 
                     <EditIcon style={{ marginRight: "5px", marginBottom: "3px", width: "20px" }} />
                     Edit
                 </Button>
-                <div className="thumbs-container">
+                <div className="review-box__thumbs-container">
                     <div
-                        className="thumbs-up-container"
+                        className="review-box__thumbs-up-container"
                         onClick={() => handleReaction(setReactionUpdate, userLiked, userDisliked, review_id, user_id, true, access_token)}
                     >
                         <IconButton
                             sx={{ top: "7px" }}
-                            className={userLiked ? "thumbs-button liked" : "thumbs-button"}
+                            className={userLiked ? "review-box__thumbs-button--liked" : "review-box__thumbs-button"}
                         >
                             <ThumbUpIcon />
                         </IconButton>
@@ -97,12 +97,12 @@ const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 
                     </div>
 
                     <div
-                        className="thumbs-down-container"
+                        className="review-box__thumbs-down-container"
                         onClick={() => handleReaction(setReactionUpdate, userLiked, userDisliked, review_id, user_id, false, access_token)}
                     >
                         <IconButton
                             sx={{ top: "7px" }}
-                            className={userDisliked ? "thumbs-button disliked" : "thumbs-button"}
+                            className={userDisliked ? "review-box__thumbs-button--disliked" : "review-box__thumbs-button"}
                         >
                             <ThumbDownIcon />
                         </IconButton>
