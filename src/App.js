@@ -62,7 +62,7 @@ function App() {
         {/* public routes */}
         <Route index element={<Homepage />} />
         <Route path="about" element={<Aboutpage />} />
-        {/* <Route path="spots" element={<RecommendSpotspage />} /> */}
+        <Route path="spots/seek-a-spot" element={<Seekpage />} />
         <Route path="login" element={<AuthForm />} />
         <Route path="signup" element={<RegisterForm />} /> { /* MAYBE DELETE */}
         {/* <Route path="verify/:userId" element={<Verify />} /> !!!future todo*/}
@@ -71,7 +71,7 @@ function App() {
 
         {/* protected routes */}
         <Route element={<RequireAuth authLoaded={authLoaded} allowedRoles={[ROLES.User]} />}>
-          <Route path="spots/seek-a-spot" element={<Seekpage />} />
+          <Route path="spots/suggest-a-spot" element={<RecommendSpotspage />} />
           <Route path="user/settings" element={<UserSettings />} />
         </Route>
 
