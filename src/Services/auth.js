@@ -35,7 +35,6 @@ async function register(name, email, password) {
 async function handleRefreshToken() {
   try {
     const response = await axios.get(`${API_URL}/refresh-token`, { withCredentials: true });
-    console.log(response);
     return response.data;
   } catch (error) {
     throw error.response.data;
