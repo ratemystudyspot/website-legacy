@@ -3,17 +3,19 @@ import './Banner.scss'
 import { FaCircleUser } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import LogoComponent from '../LogoComponent';
 import useAuth from "../../hooks/useAuth";
 import StudySpots from '../../Data/StudySpotsData';
 import { logout } from '../../Services/auth';
 
 // TODO: Turn show different buttons to an object instead!!!
-const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = false, showGoBackButton = false, showAboutUsButton = false, showSeekSpotButton=true, additionalStyle}) => {
+const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = false, showGoBackButton = false, showAboutUsButton = false, showSeekSpotButton = true, additionalStyle }) => {
   const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
   const [isOpen, setIsOpen] = useState(false); // State to track whether the auth navbar is open or closed
+  
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Function to handle the change in the search bar
   const handleChange = (e) => {
@@ -24,16 +26,20 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
   const handleSearch = async (e) => {
     // Perform search operation with searchTerm
     e.preventDefault();
-    if (searchTerm.length === 0) {
-      await onFilterSelect([]);
-      await setCards(StudySpots);
-    }
-    if (searchTerm.length > 0) {
-      const queriedStudySpots = StudySpots.filter((studySpot) => {
-        return studySpot.name.toLowerCase().match(searchTerm);
-      })
-      await onFilterSelect([]);
-      await setCards(queriedStudySpots);
+    try {
+      if (searchTerm.length === 0) {
+        await onFilterSelect([]);
+        await setCards(StudySpots);
+      }
+      if (searchTerm.length > 0) {
+        const queriedStudySpots = StudySpots.filter((studySpot) => {
+          return studySpot.name.toLowerCase().match(searchTerm);
+        })
+        await onFilterSelect([]);
+        await setCards(queriedStudySpots);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -61,7 +67,7 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
       return (
         <div className="banner-box__dropdown-content">
           <Link className="banner-box__dropdown-items" to="/signup">Sign up</Link>
-          <Link className="banner-box__dropdown-items" to="/login">Log in</Link>
+          <Link className="banner-box__dropdown-items" to="/login" state={{ destination: location?.pathname }}>Log in</Link>
         </div>
       )
     }
@@ -73,7 +79,7 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
         <div className="banner-box__left-box">
           <LogoComponent />
           {showAboutUsButton ? <button className="banner-box__button banner-box__about-button" onClick={() => navigate("/about")}>About Us</button> : null}
-          {showGoBackButton ?  <button className="banner-box__button banner-box__go-back-button" onClick={() => navigate("/")}>Go Back</button> : null}
+          {showGoBackButton ? <button className="banner-box__button banner-box__go-back-button" onClick={() => navigate("/")}>Go Back</button> : null}
         </div>
 
         <div className="banner-box__middle-box">
