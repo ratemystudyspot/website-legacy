@@ -45,6 +45,8 @@ const fetchAndStoreStudySpots = async () => {
   }
 };
 
+// TODO: implement data cleanup / refresh when new study spots are added
+
 // study spots
 const StudySpots = await fetchAndStoreStudySpots();
 
