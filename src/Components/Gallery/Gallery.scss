@@ -1,4 +1,7 @@
 .gallery-box {
+  width: 100%;
+  height: 100%;
+
   &:hover {
     .gallery-box__slider-button {
       opacity: 1;
@@ -10,6 +13,7 @@
     /* width: calc(33.333% - 10px); */
     overflow: hidden;
     width: 100%;
+    height: 100%;
     border-radius: 20px;
     transition: 0.3s;
 
