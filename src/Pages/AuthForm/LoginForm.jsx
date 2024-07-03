@@ -7,8 +7,6 @@ import { jwtDecode } from "jwt-decode";
 import { login } from '../../Services/auth.js';
 import useAuth from '../../hooks/useAuth.js';
 import useRecovery from '../../hooks/useRecovery.js';
-import { Password } from '@mui/icons-material';
-
 
 function LoginForm({ destination }) {
   const { setAuth } = useAuth();
@@ -16,7 +14,7 @@ function LoginForm({ destination }) {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || "/";
+  const from = location?.state?.destination || "/";
   if (!destination) destination = from;
 
   const [email, setEmail] = useState(recoveryState?.email);
@@ -24,17 +22,23 @@ function LoginForm({ destination }) {
 
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [invalidPwd, setInvalidPwd] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      setInvalidEmail(false);
+      setInvalidPwd(false);
+      setAuthenticated(false);
+      setLoading(true);
       let response = await login(email, pwd);
       let accessToken = response.access_token;
       let accessTokenDecoded = jwtDecode(accessToken); // decode access token
 
-      setInvalidEmail(false);
-      setInvalidPwd(false);
+      setLoading(false); // indicate to user, we are processing login request
+      setAuthenticated(true);
 
       setAuth({ access_token: accessToken, user_info: accessTokenDecoded?.UserInfo });
       navigate(destination, { replace: true });
@@ -61,11 +65,17 @@ function LoginForm({ destination }) {
     <div className="auth-box">
       <form className='"auth-box__auth-form' onSubmit={handleSubmit}>
         <h1 className="auth-box__title">Login</h1>
-        {invalidEmail ? (
-          <p className="auth-box__auth-error-msg auth-box__auth-error-msg--top">No associated account with that email, sign up <Link className={"auth-box__login-link"} to="/signup">here</Link>.</p>
-        ) : (invalidPwd ? (
-          <p className="auth-box__auth-error-msg auth-box__auth-error-msg--top">That email and password combination is incorrect.</p>
-        ) : (null))}
+        {
+          (invalidEmail) // if user gives an invalid email
+            ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">No associated account with that email, sign up <Link className={"auth-box__login-link"} to="/signup">here</Link>.</p>
+            : (invalidPwd) // if user gives wrong password, but correct email
+              ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">That email and password combination is incorrect.</p>
+              : (loading) // processing request
+                ? <p className="auth-box__auth-msg auth-box__auth-msg--loading auth-box__auth-msg--top">Loading...</p>
+                : (authenticated)
+                ? <p className="auth-box__auth-msg auth-box__auth-msg--success auth-box__auth-msg--top">Authenticated.</p>
+                : (null)
+        }
         <div className="auth-box__input-box">
           <input
             className={(invalidEmail || invalidPwd) ? "auth-box__auth-input auth-box__auth-input--error" : "auth-box__auth-input"}
