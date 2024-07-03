@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./ReviewSummaryCard.css";
+import "./ReviewSummaryCard.scss";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { Height } from "@mui/icons-material";
 import { styled } from '@mui/material/styles';
@@ -134,37 +134,37 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardV
     }, [counter])
 
     return (
-        <div className="review-summary-card">
-            <div className="review-summary-left-container">
-                <div className="labels-container">
-                    <div className="bar-labels"> 5 </div>
-                    <div className="bar-labels"> 4 </div>
-                    <div className="bar-labels" style={{ marginTop: "17px" }}> 3 </div>
-                    <div className="bar-labels" style={{ marginTop: "17px" }}> 2 </div>
-                    <div className="bar-labels"> 1 </div>
+        <div className="review-summary-box">
+            <div className="review-summary-box__left-container">
+                <div className="review-summary-box__labels-container">
+                    <div className="review-summary-box__bar-labels"> 5 </div>
+                    <div className="review-summary-box__bar-labels"> 4 </div>
+                    <div className="review-summary-box__bar-labels" style={{ marginTop: "17px" }}> 3 </div>
+                    <div className="review-summary-box__bar-labels" style={{ marginTop: "17px" }}> 2 </div>
+                    <div className="review-summary-box__bar-labels"> 1 </div>
                 </div>
-                <div className="progress-bar-container">
-                    <div className="progress-bar five-star-bar">
+                <div className="review-summary-box__progress-bar-container">
+                    <div className="review-summary-box__progress-bar--five-star-bar">
                         <CustomLinearProgress variant="determinate" value={progressBarsState.fiveStarProgressBarValue} />
                     </div>
-                    <div className="progress-bar four-star-bar">
+                    <div className="review-summary-box__progress-bar--four-star-bar">
                         <CustomLinearProgress variant="determinate" value={progressBarsState.fourStarProgressBarValue} />
                     </div>
-                    <div className="progress-bar three-star-bar">
+                    <div className="review-summary-box__progress-bar--three-star-bar">
                         <CustomLinearProgress variant="determinate" value={progressBarsState.threeStarProgressBarValue} />
                     </div>
-                    <div className="progress-bar two-star-bar">
+                    <div className="review-summary-box__progress-bar--two-star-bar">
                         <CustomLinearProgress variant="determinate" value={progressBarsState.twoStarProgressBarValue} />
                     </div>
-                    <div className="progress-bar one-star-bar">
+                    <div className="review-summary-box__progress-bar--one-star-bar">
                         <CustomLinearProgress variant="determinate" value={progressBarsState.oneStarProgressBarValue} />
                     </div>
                 </div>
             </div>
 
             {/* TODO: use button component for add review */}
-            <div className="review-summary-right-container">
-                <div className="average-rating-text">
+            <div className="review-summary-box__right-container">
+                <div className="review-summary-box__average-rating-text">
                     {averageRating}
                 </div>
                 <Rating
@@ -173,11 +173,11 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardV
                     size="small"
                     readOnly
                 />
-                <div className="num-reviews-text">
+                <div className="review-summary-box__num-reviews-text">
                     {totalNumReviewsState} Reviews
                 </div>
                 <div>
-                    <button className="add-review-button" onClick={toggleAddReviewCardVisibility}>Add Review</button>
+                    <button className="review-summary-box__add-review-button" onClick={toggleAddReviewCardVisibility}>Add Review</button>
                 </div>
             </div>
         </div>
