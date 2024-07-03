@@ -53,15 +53,15 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
     if (auth?.user_info?.role.toString() === process.env.REACT_APP_USER_ROLE) {
       return (
         <div className="banner-box__dropdown-content">
-          <Link to="/user/settings">Account Settings</Link>
-          <a onClick={handleSignOut}>Sign out</a>
+          <Link className="banner-box__dropdown-items" to="/user/settings">Account Settings</Link>
+          <a className="banner-box__dropdown-items" onClick={handleSignOut}>Sign out</a>
         </div>
       )
     } else {
       return (
         <div className="banner-box__dropdown-content">
-          <Link to="/signup">Sign up</Link>
-          <Link to="/login">Log in</Link>
+          <Link className="banner-box__dropdown-items" to="/signup">Sign up</Link>
+          <Link className="banner-box__dropdown-items" to="/login">Log in</Link>
         </div>
       )
     }
