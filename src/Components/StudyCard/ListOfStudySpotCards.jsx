@@ -1,6 +1,6 @@
 import AllStudySpots from "../../Data/StudySpots";
+import "./ListOfStudySpotCards.scss";
 import StudySpotCard from "./StudySpotCard";
-import "./ListOfStudySpotCards.css";
 import { getSpots, getSpotsByFeatures, getSpotsByTime } from "../../Services/studySpot";
 import { useEffect, useState } from "react";
 
