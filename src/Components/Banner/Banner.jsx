@@ -10,7 +10,7 @@ import StudySpots from '../../Data/StudySpots';
 import { logout } from '../../Services/auth';
 
 // TODO: Turn show different buttons to an object instead!!!
-const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = false, showGoBackButton = false, showAboutUsButton = false, additionalStyle}) => {
+const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = false, showGoBackButton = false, showAboutUsButton = false, showSeekSpotButton=true, additionalStyle}) => {
   const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
   const [isOpen, setIsOpen] = useState(false); // State to track whether the auth navbar is open or closed
   const navigate = useNavigate();
@@ -53,15 +53,15 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
     if (auth?.user_info?.role.toString() === process.env.REACT_APP_USER_ROLE) {
       return (
         <div className="banner-box__dropdown-content">
-          <Link to="/user/settings">Account Settings</Link>
-          <a onClick={handleSignOut}>Sign out</a>
+          <Link className="banner-box__dropdown-items" to="/user/settings">Account Settings</Link>
+          <a className="banner-box__dropdown-items" onClick={handleSignOut}>Sign out</a>
         </div>
       )
     } else {
       return (
         <div className="banner-box__dropdown-content">
-          <Link to="/signup">Sign up</Link>
-          <Link to="/login">Log in</Link>
+          <Link className="banner-box__dropdown-items" to="/signup">Sign up</Link>
+          <Link className="banner-box__dropdown-items" to="/login">Log in</Link>
         </div>
       )
     }
@@ -98,7 +98,7 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
         <div className="banner-box__right-box">
           {/* Adding study spot btn */}
 
-          <button className="banner-box__button banner-box__suggest-button" onClick={() => navigate("spots")}>Suggest Spot</button>
+          {showSeekSpotButton ? <button className="banner-box__button banner-box__suggest-button" onClick={() => navigate("/spots/seek-a-spot")}>Suggest Spot</button> : null}
           <div className={isOpen ? "banner-box__user-nav open" : "banner-box__user-nav"}>
             {/* User Navbar button */}
             <button className="banner-box__dropdown-button" onClick={toggleNavbar}>

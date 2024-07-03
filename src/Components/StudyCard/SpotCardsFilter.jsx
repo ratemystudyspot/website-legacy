@@ -1,6 +1,5 @@
-import StudySpots from "../../SampleData/StudySpots";
-import StudySpotCard from "./StudySpotCard";
-import "./SpotCardsFilter.css";
+import React from 'react';
+import "./SpotCardsFilter.scss";
 import filterOptions from "../../Data/FilterOptions";
 
 const SpotCardsFilter = ({ filterSelected, onFilterSelect }) => {
@@ -16,15 +15,15 @@ const SpotCardsFilter = ({ filterSelected, onFilterSelect }) => {
   };
 
   return (
-    <div className="filter-container">
+    <div className="spot-filter-box">
       {filterOptions.map((option) => (
         <div
           key={option.label}
-          className={selected(option.value) ? "filter-item selected" : "filter-item"}
+          className={selected(option.value) ? "spot-filter-box__item--selected" : "spot-filter-box__item"}
           onClick={() => handleFilterSelect(option)}
         >
           {option.icon}
-          <span>{option.label}</span>
+          <span className="spot-filter-box__label">{option.label}</span>
         </div>
       ))}
     </div>

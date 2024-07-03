@@ -1,5 +1,5 @@
 import React from 'react';
-import './StudySpotCard.css';
+import './StudySpotCard.scss';
 import getDistanceFromLatLonInKm from '../../Helpers/GetDistanceLatLon';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,12 +26,12 @@ const StudySpotCard = ({ studySpot, currentLocation }) => {
 
   return (
     <div
-      className="studySpotCard"
+      className="studyspot-card"
       onClick={() => navigate(`/spots/${studySpot.id}`)}>
-      <img className="image" src={getImage(studySpot.image_link)} />
-      <div className="card-details">
-        <h4><b> {studySpot.name} </b></h4>
-        <p>{getDistance()}</p>
+      <img className="studyspot-card__image" src={getImage(studySpot.image_link)} />
+      <div className="studyspot-card__card-details">
+        <h4 className="studyspot-card__label"><b> {studySpot.name} </b></h4>
+        <p className="studyspot-card__distance">{getDistance()}</p>
       </div>
     </div>
   );
