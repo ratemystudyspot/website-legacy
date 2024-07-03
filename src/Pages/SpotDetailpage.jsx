@@ -105,7 +105,7 @@ function SpotDetailpage() {
           </div>
 
           <section className="detailed-spot-box__ubc-map">
-            <UBCMap markerCoordinates={currentStudySpot.location.coordinates} mapCenter={currentStudySpot.location.coordinates} />
+            <UBCMap markers={[{coordinates: currentStudySpot.location.coordinates}]} mapCenter={currentStudySpot.location.coordinates} />
           </section>
 
           <section className="detailed-spot-box__amenities">

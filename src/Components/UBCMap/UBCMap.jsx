@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-const UBCMap = ({ markerCoordinates = [-123.2460, 49.2606], mapWidth = '500px', mapHeight = '500px', mapCenter = [-123.2460, 49.2626], mapZoom = 13 }) => {
+const UBCMap = ({ markers, mapWidth = '500px', mapHeight = '500px', mapCenter = [-123.2460, 49.2626], mapZoom = 13 }) => {
     const mapContainer = useRef(null);
     const [viewState, setViewState] = useState({
         center: mapCenter,
@@ -17,7 +17,13 @@ const UBCMap = ({ markerCoordinates = [-123.2460, 49.2606], mapWidth = '500px', 
         })
         map.addControl(new maplibregl.NavigationControl())
 
-        if (markerCoordinates) new maplibregl.Marker().setLngLat(markerCoordinates).addTo(map)
+        if (markers) {
+            markers.forEach((marker) => { // loop through all markers and place onto map (with popup if needed)
+                const popup = (marker?.label) ? new maplibregl.Popup().setText(marker.label) : null;
+                new maplibregl.Marker().setLngLat(marker.coordinates).addTo(map).setPopup(popup);
+            })
+        }
+
     }, []);
 
 

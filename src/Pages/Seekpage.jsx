@@ -2,6 +2,18 @@ import React from 'react';
 import "./Seekpage.scss";
 import Banner from '../Components/Banner/Banner';
 import UBCMap from '../Components/UBCMap/UBCMap';
+import StudySpotsData from '../Data/StudySpotsData';
+
+const getAllLocations = () => {
+  const allLocations = [];
+  StudySpotsData.map((studySpot) => {
+    allLocations.push({
+      label: studySpot.name,
+      coordinates: studySpot.location.coordinates
+    });
+  })
+  return allLocations;
+}
 
 function Seekpage() {
   return (
@@ -21,7 +33,7 @@ function Seekpage() {
           <button className="seekspot-box__add-spots-button">SPOT</button>
         </div>
         <div className="seekspot-box__map">
-          <UBCMap markerCoordinates={null} />
+          <UBCMap markers={getAllLocations()} />
         </div>
       </div>
     </div>
