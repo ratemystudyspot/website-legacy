@@ -52,6 +52,7 @@ const ListOfStudySpotCards = ({ filterSelected, currentLocation, cards, setCards
     }
   }
 
+  // ----------------------- FILTERED CARDS ----------------------------
   useEffect(() => {
     const getFilteredCards = async () => {
       try {

@@ -22,7 +22,6 @@ const Homepage = () => {
       setCurrentLocation(result.coords);
       setLocationAlert(result.locationAlert);
     }
-    
     getCurrentLocation();
   }, []);
 

@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from '../store';
+import { getReviewsByStudySpot } from "../Services/review";
 
 // ------------------ REVIEWS'S SCHEMA ---------------------------------
 export interface Review {
@@ -23,11 +24,23 @@ let initialState: ReviewsState = {
   value: [],
 };
 
+export const fetchReviewsByStudySpot = createAsyncThunk<Review[], number> (
+  'review/fetchReviewsByStudySpot',
+  async (study_spot_id, thunkAPI) => {
+    try {
+      const reviews = await getReviewsByStudySpot(study_spot_id);
+      return reviews;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+
+)
+
 export const reviewsSlice = createSlice({
   name: 'reviews',
   initialState,
   reducers: {
-    // TODO: add reviews reducers
     addReview: (state, action: PayloadAction<{review: Review}>) => {
       const { review } = action.payload;
       state.value = [review , ... state.value];
@@ -43,6 +56,12 @@ export const reviewsSlice = createSlice({
         state.value[reviewIndex] = {...state.value[reviewIndex], ...updatedData};
       }
     }
+  },
+  extraReducers: (builder) => {              // FETCH REVIEWS               
+    builder.addCase(fetchReviewsByStudySpot.fulfilled, (state, action) => {
+      state.value = action.payload
+    })  // THREEE STATES: Fulfilled (async function returned), LOADING: async func is loading, ERROR: Returned error
+ 
   }
 })
 
