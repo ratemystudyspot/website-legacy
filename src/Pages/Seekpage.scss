@@ -1,0 +1,138 @@
+.seekspot-box {
+  display: flex;
+
+  // ------------------------- LEFT CONTAINER -------------------------------
+  &__left-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 50vw;
+  }
+
+  &__left-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: absolute;
+    transform: translateX(-50%);
+    top: 40vh;
+    text-align: left;
+  }
+
+  &__text {
+    animation: color-animation 6s ease-in-out infinite;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 4vw;
+    text-align: left;
+
+    &--1 {
+      @extend .seekspot-box__text;
+      --color-1: #87ceeb; /* Sky Blue */
+      --color-2: #6495ed; /* Cornflower Blue */
+      --color-3: #5f9ea0; /* Cadet Blue */
+    }
+
+    &--2 {
+      @extend .seekspot-box__text;
+      --color-1: #00bfff; /* Deep Sky Blue */
+      --color-2: #b0e0e6; /* Powder Blue */
+      --color-3: #1e90ff; /* Dodger Blue */
+    }
+
+    &--3 {
+      @extend .seekspot-box__text;
+      --color-1: #add8e6; /* Light Blue */
+
+      --color-2: #20b2aa; /* Light Sea Green */
+      --color-3: #87cefa; /* Light Sky Blue */
+    }
+
+    &--4 {
+      @extend .seekspot-box__text;
+      --color-1: #00ced1; /* Dark Turquoise */
+      --color-2: #4682b4; /* Steel Blue */
+      --color-3: #48d1cc; /* Medium Turquoise */
+    }
+  }
+
+  // ------------------------- RIGHT CONTAINER -------------------------------
+  &__right-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 50vw;
+  }
+
+  &__right-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    top: 19vh;
+  }
+
+  &__right-title {
+    color: #add8e6;
+    font-weight: 700;
+  }
+
+  &__add-spots-button {
+    position: relative;
+    bottom: 4px;
+    font-size: 23px;
+    font-weight: 600;
+    margin: -7px 2vw;
+    min-width: fit-content;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 5px 20px;
+    color: #fff;
+    border: none;
+    white-space: nowrap;
+    cursor: pointer;
+    background: linear-gradient(265.27deg, #0000 20.55%, #ADD8E6 94.17%);
+    background-color: #ADD8E6;
+    transition: all 400ms ease-in;
+    
+    &:hover {
+      background-color: #69eadb;
+    }
+  }
+
+  &__map {
+    position: relative;
+    top: 27vh;
+    right: 3vw;
+    height: 70vh;
+    width: 100%;
+    .maplibregl-ctrl {
+      visibility: hidden;
+    }
+  }
+}
+
+@keyframes color-animation {
+  0% {
+    color: var(--color-1);
+  }
+  25% {
+    color: var(--color-2);
+  }
+  50% {
+    color: var(--color-3);
+  }
+  75% {
+    color: var(--color-2);
+  }
+  100% {
+    color: var(--color-1);
+  }
+}
