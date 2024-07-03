@@ -1,7 +1,10 @@
-import { getSpots as getSpotsFromServer } from "../Services/studySpot";
+import {
+  getSpots as getSpotsFromServer,
+  countSpots as countSpotsFromServer
+} from "../Services/studySpot";
 import { openDB } from 'idb';
 
-// init indexedDB
+// init/open indexedDB
 const DB_NAME = 'studySpotsDB';
 const STORE_NAME = 'studySpots';
 const initDB = async () => {
@@ -28,9 +31,35 @@ const addStudySpotsToIndexedDB = async (studySpots) => {
   }
   await tx.done;
 };
+const countStudySpotsFromIndexedDB = async () => {
+  const db = await initDB();
+  const tx = db.transaction(STORE_NAME, 'readonly');
+  const store = tx.store;
+  const count = await store.count();
+  return count;
+};
+const clearOldStudySpots = async () => {
+  const db = await initDB();
+  const tx = db.transaction(STORE_NAME, 'readwrite');
+  const store = tx.store;
+  if (await shouldDelete()) {
+    await store.clear();
+  }
+  await tx.done;
+};
+const shouldDelete = async () => {
+  try {
+    const { count: countFromServer } = await countSpotsFromServer();
+    const countFromIndexedDB = await countStudySpotsFromIndexedDB();
+    return countFromServer !== countFromIndexedDB;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // main function to retrieve and store data in indexedDB
 const fetchAndStoreStudySpots = async () => {
+  await clearOldStudySpots();
   const storedStudySpots = await getStudySpotsFromIndexedDB();
   if (storedStudySpots.length > 0) { // if exists in indexedDB, use it
     return storedStudySpots;
@@ -45,9 +74,7 @@ const fetchAndStoreStudySpots = async () => {
   }
 };
 
-// TODO: implement data cleanup / refresh when new study spots are added
-
 // study spots
-const StudySpots = await fetchAndStoreStudySpots();
+const StudySpotsData = await fetchAndStoreStudySpots();
 
-export default StudySpots;
+export default StudySpotsData;

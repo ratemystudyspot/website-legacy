@@ -6,7 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, useNavigate } from 'react-router-dom';
 import LogoComponent from '../LogoComponent';
 import useAuth from "../../hooks/useAuth";
-import StudySpots from '../../Data/StudySpots';
+import StudySpots from '../../Data/StudySpotsData';
 import { logout } from '../../Services/auth';
 
 // TODO: Turn show different buttons to an object instead!!!
