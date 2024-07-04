@@ -16,8 +16,7 @@ const Review = sequelize.define("Review", {
     references: {
       model: 'user',
       key: 'id'
-    },
-    onDelete: 'CASCADE'
+    }
   },
   study_spot_id: {
     type: DataTypes.INTEGER,
@@ -25,8 +24,7 @@ const Review = sequelize.define("Review", {
     references: {
       model: 'study_spot',
       key: 'id'
-    },
-    onDelete: 'CASCADE'
+    }
   },
   overall_rating: {
     type: DataTypes.INTEGER,
@@ -68,6 +66,12 @@ const Review = sequelize.define("Review", {
   },
 },
   {
+    indexes: [
+      {
+        unique: true,
+        fields: ['user_id', 'study_spot_id'],
+      },
+    ],
     timestamps: false,
     tableName: 'review',
   }
