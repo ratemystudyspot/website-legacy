@@ -16,18 +16,19 @@ root.render(
   // <Provider store = {store}>
   //    <App />
   // </Provider >
-  <BrowserRouter>
-    <AuthProvider>
-      <RecoveryProvider>
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route path="/*" element={<App />} />
-          </Routes>
-        </ThemeProvider>
-      </RecoveryProvider>
-    </AuthProvider>
-  </BrowserRouter>
-
+  <Provider store = {store}>
+    <BrowserRouter>
+      <AuthProvider>
+        <RecoveryProvider>
+          <ThemeProvider theme={theme}>
+            <Routes>
+              <Route path="/*" element={<App />} />
+            </Routes>
+          </ThemeProvider>
+        </RecoveryProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

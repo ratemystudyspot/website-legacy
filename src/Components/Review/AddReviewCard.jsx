@@ -5,6 +5,8 @@ import LoginForm from "../../Pages/AuthForm/LoginForm";
 import { createReview } from "../../Services/review";
 import { Rating } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { saveReview } from "../../Slices/reviews.ts";
+import { useAppDispatch } from "../../hooks.ts";
 
 const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
   const { auth } = useAuth();
@@ -16,21 +18,24 @@ const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
   const [quietRating, setQuietRating] = useState(0);
   const [comment, setComment] = useState("");
 
+  const dispatch = useAppDispatch();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const user_id = auth.user_info.id;
     const access_token = auth.access_token;
     const study_spot_id = window.location.href.split("/").at(-1);
-
+    // TODO: Refactor to something better
     try {
       const rating_body = {
         quietness_rating: quietRating === 0 ? null : quietRating,
         comfort_rating: comfortRating === 0 ? null : comfortRating,
         space_rating: spaceRating === 0 ? null : spaceRating
       };
-      await createReview(user_id, study_spot_id, overallRating, rating_body, comment, access_token);
-      window.location.reload();
+      // await createReview(user_id, study_spot_id, overallRating, rating_body, comment, access_token);
+      dispatch(saveReview({user_id, study_spot_id, overall_rating: overallRating, rating_body, comment, access_token}))
+      // window.location.reload();
     } catch (error) {
       console.error(error); // TODO: Add proper popup error
     }

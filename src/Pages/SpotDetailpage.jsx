@@ -12,6 +12,8 @@ import Gallery from '../Components/Gallery/Gallery';
 import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
 import getCurrentUserLocation from '../Helpers/GetUserLocation';
 import StudySpots from '../Data/StudySpotsData';
+import { useAppDispatch, useAppSelector } from '../hooks.ts';
+import { fetchReviewsByStudySpot } from '../Slices/reviews.ts';
 
 const images = require.context('../Components/Assets', true);
 
@@ -26,7 +28,7 @@ function SpotDetailpage() {
 
   const [distance, setDistance] = useState("N/A");
   const [summaryCardLoaded, setSummaryCardLoaded] = useState(false);
-  const [reviews, setReviews] = useState([]);
+  // const [reviews, setReviews] = useState([]);
   const [reviewsLoaded, setReviewsLoaded] = useState(false);
   const [showAddReviewCard, setShowAddReviewCard] = useState(false);
   const [galleryImages, setGalleryImages] = useState([]);
@@ -35,8 +37,11 @@ function SpotDetailpage() {
     setShowAddReviewCard((prevState) => !prevState)
   }
 
+  const dispatch = useAppDispatch();
+  const reviews = useAppSelector((state) => state.reviews.value);
+
+  // fetch distance
   useEffect(() => {
-    // fetch distance
     const fetchDistance = async () => {
       try {
         const result = await getCurrentUserLocation();
@@ -53,7 +58,9 @@ function SpotDetailpage() {
     fetchDistance();
   }, [currentStudySpot]);
 
+  
   useEffect(() => {
+
     // fetch images
     currentStudySpot?.image_links.map((image_link) => {
       setGalleryImages((prevGalleryImages) => {
@@ -64,17 +71,8 @@ function SpotDetailpage() {
     })
 
     // fetch reviews
-    const getReviews = async () => {
-      try {
-        const foundReviews = await getReviewsByStudySpot(currentStudySpot?.id);
-        await setReviews(foundReviews);
-        await setReviewsLoaded(true);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    getReviews();
+    dispatch (fetchReviewsByStudySpot(currentStudySpot?.id));
+    setReviewsLoaded(true);
   }, [])
 
   let key = 0; // added to get rid of unqiue key prop warnings in the map function
