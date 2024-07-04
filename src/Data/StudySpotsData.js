@@ -51,7 +51,7 @@ const shouldDelete = async () => {
   try {
     const { count: countFromServer } = await countSpotsFromServer();
     const countFromIndexedDB = await countStudySpotsFromIndexedDB();
-    return countFromServer !== countFromIndexedDB;
+    return (countFromServer !== countFromIndexedDB) && (countFromIndexedDB > 0);
   } catch (error) {
     console.error(error);
   }
