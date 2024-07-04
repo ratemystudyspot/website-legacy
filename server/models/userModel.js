@@ -1,5 +1,6 @@
 const { DataTypes, Op } = require('sequelize');
 const { sequelize } = require("../config/db");
+const validator = require('validator');
 
 // User model
 const User = sequelize.define("User",
@@ -46,21 +47,26 @@ const test = () => {
 }
 
 // get all users with the given filters
-async function findAll(filters) {
-	try {
-		return await User.findAll({ where: filters });
-	} catch (error) {
-		console.error("Error fetching users:", error);
-		throw new Error(error.message);
-	}
-}
+// async function findAll(filters) {
+// 	try {
+// 		return await User.findAll({ where: filters });
+// 	} catch (error) {
+// 		console.error("Error fetching users:", error);
+// 		throw new Error(error.message);
+// 	}
+// }
 
 // get all users with the given filters (excluding certain info)
 async function findAllSafe(filters) {
 	try {
+		for (const key in filters) { // security defense
+			filters[key] = validator.escape(filters[key]);
+			filters[key] = validator.trim(filters[key]);
+		}
+
 		return await User.findAll({
 			where: filters,
-			attributes: { exclude: ['refresh_token', 'password_recovery_token'] },
+			attributes: { exclude: ['refresh_token', 'password_recovery_token', 'password'] },
 		});
 	} catch (error) {
 		console.error("Error fetching users:", error);
@@ -101,7 +107,12 @@ async function createUser(body) {
 // update a user record
 async function updateUser(id, updated_attributes) {
 	try {
-		return await User.update(updated_attributes, { where: { id } });
+		for (const key in updated_attributes) { // security defense
+			updated_attributes[key] = validator.escape(filters[key]);
+			updated_attributes[key] = validator.trim(filters[key]);
+		}
+
+		return await User.update(updated_attributes, { where: { id: validator.toInt(id) } });
 	} catch (error) {
 		console.error("Error updating user:", error);
 		throw new Error(error.message);
@@ -121,7 +132,7 @@ async function deleteUser(id) {
 module.exports = {
 	User,
 	test,
-	findAll,
+	// findAll,
 	findAllSafe,
 	findOne,
 	createUser,

@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { createUser, findOne, findAll } = require('../models/userModel');
 const tokenUtil = require('../utils/token');
 const emailUtil = require('../utils/email');
+const validator = require('validator');
 
 const WEB_APP_URL = process.env.WEB_APP_URL || "http://localhost:3000";
 
@@ -11,8 +12,8 @@ const WEB_APP_URL = process.env.WEB_APP_URL || "http://localhost:3000";
 // param 2: pass in the user's password
 // return: void or error
 async function authenticateUser(cookies, credentials) {
-  const email = credentials.email.toLowerCase();
-  const password = credentials.password;
+  const email = validator.isEmail(credentials.email.toLowerCase());
+  const password = validator.escape(credentials.password);
   console.log(`cookies available at login: ${JSON.stringify(cookies)}`);
   try {
     const user = await findOne({ email });
@@ -91,7 +92,12 @@ async function registerUser(credentials) {
   const capitalize = (str) => { return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() };
   const [rawFirstName, rawLastName] = credentials.name.trim().split(/\s+/);
 
-  if (!rawFirstName || !rawLastName) throw new Error("Name error");
+  if (
+    !rawFirstName || 
+    !rawLastName || 
+    validator.blacklist(rawFirstName) !== rawFirstName ||
+    validator.blacklist(rawLastName) !== rawLastName
+  ) throw new Error("Name error");
 
   const name = `${capitalize(rawFirstName)} ${capitalize(rawLastName)}`
   const email = credentials.email.toLowerCase();
@@ -101,8 +107,8 @@ async function registerUser(credentials) {
     const EMAIL_REGEX =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     const PWD_REGEX = /.{8,}/;
-    if (!EMAIL_REGEX.test(email)) throw new Error('Email error');
-    if (!PWD_REGEX.test(password)) throw new Error('Password error');
+    if (!EMAIL_REGEX.test(email) || validator.isEmail(email)) throw new Error('Email error');
+    if (!PWD_REGEX.test(password) || validator.blacklist(password) !== password) throw new Error('Password error');
   } catch (error) {
     console.error("Error passing credential requirements:", error);
     throw error;
@@ -197,7 +203,7 @@ async function handleRefreshToken(cookies) {
 }
 
 async function sendRecoveryEmail(body) {
-  const { email } = body;
+  const email = validator.isEmail(body.email);
   const user = await findAll({ email });
   const user_data = user[0]?.dataValues;
   const email_info = { email, password_recovery_token: '' };

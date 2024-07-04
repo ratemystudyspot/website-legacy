@@ -35,7 +35,7 @@ const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
       };
       // await createReview(user_id, study_spot_id, overallRating, rating_body, comment, access_token);
       dispatch(saveReview({user_id, study_spot_id, overall_rating: overallRating, rating_body, comment, access_token}))
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       console.error(error); // TODO: Add proper popup error
     }
