@@ -108,11 +108,11 @@ async function createUser(body) {
 async function updateUser(id, updated_attributes) {
 	try {
 		for (const key in updated_attributes) { // security defense
-			updated_attributes[key] = validator.escape(filters[key]);
-			updated_attributes[key] = validator.trim(filters[key]);
+			updated_attributes[key] = validator.escape(updated_attributes[key]);
+			updated_attributes[key] = validator.trim(updated_attributes[key]);
 		}
 
-		return await User.update(updated_attributes, { where: { id: validator.toInt(id) } });
+		return await User.update(updated_attributes, { where: { id: parseInt(id) } });
 	} catch (error) {
 		console.error("Error updating user:", error);
 		throw new Error(error.message);

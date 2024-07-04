@@ -1,6 +1,5 @@
 const { Op, DataTypes } = require('sequelize');
 const { sequelize } = require("../config/db");
-const validator = require('validator');
 
 const OpeningHour = sequelize.define('OpeningHour', {
 	id: {
@@ -38,7 +37,7 @@ const OpeningHour = sequelize.define('OpeningHour', {
 
 async function findAllOpeningHour(query) {
 	try {
-		const study_spot_id = validator.toInt(query.study_spot_id);
+		const study_spot_id = parseInt(query.study_spot_id);
 		
 		const openingHours = await OpeningHour.findAll({
 			where: {
