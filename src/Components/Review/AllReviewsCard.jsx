@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import "./AllReviewsCard.scss"
 import useAuth from "../../hooks/useAuth";
+import { useParams } from "react-router-dom";
 import ReviewCard from "./ReviewCard";
 import { getReactionsByFilter } from "../../Services/reaction";
 import ReviewSummaryCard from "./ReviewSummaryCard";
 
 const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisibility }) => {
     const { auth } = useAuth();
+    const { id } = useParams();
     const [reactions, setReactions] = useState([]);
     const [reactionsLoaded, setReactionsLoaded] = useState(false);
     const [reactionUpdate, setReactionUpdate] = useState(false);
@@ -30,13 +32,13 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
                 console.error(error);
             }
         }
-
-        if (reviews.length > 0 && (reactions.length === 0 || reactionUpdate)) settingReactions(); // update reactions only at the very beginning OR when user likes/dislikes a review for optimization // TODO: can further optimize by only update the specific review's reactions
-    }, [reviews, reactionUpdate]);
+        
+        if (reviews.length > 0 && reviews[0].study_spot_id === id && (reactions.length === 0 || reactionUpdate)) settingReactions(); // update reactions only at the very beginning OR when user likes/dislikes a review for optimization // TODO: can further optimize by only update the specific review's reactions
+    }, [reactionUpdate]);
 
     useEffect(() => {
         setReactionsLoaded(true);
-    }, [reactions])
+    }, [reviews, reactions])
 
     let key = 0; // added to get rid of unqiue key prop warning in the ReviewCard component for the map function
     return (
@@ -45,8 +47,10 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
             {(reactionsLoaded && reviews.length > 0) // TODO: optimize this (if you uncomment th eocnsole log at line 69 you see how bad it is)
                 ? reviews.map((review) => {
                     // for the likes + dislikes
-                    var likes, dislikes = []
-                    var liked, disliked = false;
+                    var likes = [];
+                    var dislikes = [];
+                    var liked = false;
+                    var disliked = false;
                     if (reactions.length > 0) {
                         likes = reactions[key].filter(reaction => reaction.reaction === true);
                         dislikes = reactions[key].filter(reaction => reaction.reaction === false);
@@ -66,7 +70,7 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
                         hour12: true // This will format the time in 12-hour format (with AM/PM)
                     };
                     const formattedDate = dateLocal.toLocaleString('en-us', options);
-                    // console.log(review, likes)
+                    
                     return (
                         <ReviewCard
                             key={key++}
@@ -75,7 +79,7 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
                             description={review.comment}
                             createdAt={formattedDate}
                             isOwner={review.user_id === auth?.user_info?.id}
-                            likes={likes?.length} // TODO: add a system to like and dislike
+                            likes={likes?.length}
                             dislikes={dislikes?.length}
                             userLiked={liked}
                             userDisliked={disliked}
