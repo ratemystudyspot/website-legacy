@@ -15,7 +15,7 @@ async function createUser(body) {
 
   // checking for uniqueness of email
   try {
-    const users = await User.findAll({ email: email.lowercase() });
+    const users = await User.findAllSafe({ email: email.lowercase() });
     if (users.length != 0) { // if email exists, then not unique, then stop creating new user
       console.error("Error: Email not unique");
       throw new Error("Email not unique");

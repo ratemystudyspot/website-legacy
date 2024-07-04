@@ -46,16 +46,6 @@ const test = () => {
 	console.log(User === sequelize.models.User);
 }
 
-// get all users with the given filters
-// async function findAll(filters) {
-// 	try {
-// 		return await User.findAll({ where: filters });
-// 	} catch (error) {
-// 		console.error("Error fetching users:", error);
-// 		throw new Error(error.message);
-// 	}
-// }
-
 // get all users with the given filters (excluding certain info)
 async function findAllSafe(filters) {
 	try {
@@ -65,8 +55,8 @@ async function findAllSafe(filters) {
 		}
 
 		return await User.findAll({
-			where: filters,
 			attributes: { exclude: ['refresh_token', 'password_recovery_token', 'password'] },
+			where: filters,
 		});
 	} catch (error) {
 		console.error("Error fetching users:", error);
@@ -74,20 +64,20 @@ async function findAllSafe(filters) {
 	}
 }
 
-async function findOne(query) {
+async function findOne(filters) {
 	try {
-		const filters = {}
-
-		// add filters
-		for (const key in query) {
+		for (const key in filters) { // security defense
+			filters[key] = validator.escape(filters[key]);
+			filters[key] = validator.trim(filters[key]);
+			
 			if (key === 'refresh_token') {
-				filters[key] = { [Op.contains]: [query.refresh_token] };
-			} else {
-				filters[key] = query[key];
+				filters[key] = { [Op.contains]: [filters.refresh_token] };
 			}
 		}
 
-		return await User.findOne({ where: filters });
+		return await User.findOne({
+			where: filters,
+		});
 	} catch (error) {
 		console.error("Error fetching users:", error);
 		throw new Error(error.message);
@@ -97,6 +87,11 @@ async function findOne(query) {
 // create a new user record in the databsse
 async function createUser(body) {
 	try {
+		for (const key in body) {
+			body[key] = validator.escape(body[key]);
+			body[key] = validator.trim(body[key]);
+		}
+
 		return await User.create(body);
 	} catch (error) {
 		console.error("Error creating user:", error);
@@ -132,7 +127,6 @@ async function deleteUser(id) {
 module.exports = {
 	User,
 	test,
-	// findAll,
 	findAllSafe,
 	findOne,
 	createUser,

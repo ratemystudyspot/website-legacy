@@ -27,6 +27,7 @@ function LoginForm({ destination }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading || authenticated) return; // prevent user from spamming login
 
     try {
       setInvalidEmail(false);
@@ -107,7 +108,7 @@ function LoginForm({ destination }) {
           </button>
         </div>
 
-        <button className="auth-box__auth-button" type="submit">Login</button>
+        <button className="auth-box__auth-button" type="submit" disabled={loading || authenticated}>Login</button>
       </form>
       <div className="auth-box__register-link-container">
         <p>Don't have an account?&nbsp;

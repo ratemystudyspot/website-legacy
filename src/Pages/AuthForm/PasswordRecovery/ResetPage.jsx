@@ -45,9 +45,9 @@ const ResetPage = () => {
       <form className="auth-box__auth-form" onSubmit={handleSubmit}>
         <h1 className="auth-box__title">Choose a new password</h1>
         {!match ? (
-          <p className="auth-box__auth-error-msg auth-box__auth-error-msg--top">These passwords don't match. Try again?</p>
+          <p className="auth-box__auth-msg auth-box__auth-msg--erorr auth-box__auth-msg--top">These passwords don't match. Try again?</p>
         ) : (invalidPwd ? (
-          <p className="auth-box__auth-error-msg auth-box__auth-error-msg--top">Please set a password longer than seven characters.</p>
+          <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Please set a password longer than seven characters.</p>
         ) : (null))}
         <div className="auth-box__input-box">
           <input

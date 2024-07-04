@@ -8,55 +8,59 @@ import { Link, useNavigate } from 'react-router-dom';
 const RegisterForm = () => {
   const [name, setName] = useState('');
   const [invalidName, setInvalidName] = useState(false);
-
   const [email, setEmail] = useState('');
   const [invalidEmail, setInvalidEmail] = useState(false);
-
   const [pwd, setPwd] = useState('');
   const [invalidPwd, setInvalidPwd] = useState(false);
-
   const [duplicate, setDuplicate] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const HandleSubmit = async (e) => {
     e.preventDefault(); // if password doesn't meet the requirements, dont refresh page (prevents states resetting)
+    if (loading) return; // prevent user from spam creating accounts
+
     try {
+      setInvalidEmail(false);
+      setInvalidPwd(false);
+      setDuplicate(false);
+      setLoading(true);
       await register(name, email, pwd);
       // if no error thrown get rid of errors and goto email verification page
       setInvalidEmail(false);
       setInvalidPwd(false);
       setDuplicate(false);
+      setLoading(false);
 
       navigate("/login");
       // TODO: navigate to a verify page (for future !!!)
       // navigate("/verify/" + email);
     } catch (e) {
+      setLoading(false);
+      setPwd('');
+
       if (e.message === "Name error") { // if user sends an invalid name 
         setInvalidName(true);
         setInvalidEmail(false);
         setInvalidPwd(false);
         setDuplicate(false);
-        setPwd('');
       }
       if (e.message === "Email error") { // if register throws an email error
         setInvalidName(false);
         setInvalidEmail(true);
         setInvalidPwd(false);
         setDuplicate(false);
-        setPwd('');
       } else if (e.message === 'Email duplicate Error') { // if register throws a duplicate email error
         setInvalidName(false);
         setInvalidEmail(false);
         setInvalidPwd(false);
         setDuplicate(true);
-        setPwd('');
       } else if (e.message === 'Password error') { // if register throws a password error
         setInvalidName(false);
         setInvalidPwd(true);
         setInvalidEmail(false);
         setDuplicate(false);
-        setPwd('');
       } else { // if register throws an unexpected error
         console.error("An error occurred:", e);
       }
@@ -67,8 +71,18 @@ const RegisterForm = () => {
     <div className="auth-box">
       <form className="auth-box__auth-form" onSubmit={HandleSubmit}>
         <h1 className="auth-box__title">Register</h1>
-        {duplicate && (<p className="auth-box__auth-error-msg auth-box__auth-error-msg--top">Email address already in use, please log in.</p>)}
-
+        {(invalidName) // if user gives weird name input
+          ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Hmm, that name looks wrong, please enter your full name.</p>
+          : (duplicate) // if user gives duplicate email
+            ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Email address already in use, please log in.</p>
+            : (invalidEmail) // if user gives invalid email
+              ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Hmm, that email address doesn't look right.</p>
+              : (invalidPwd) // if user doesn't pass the basic password criteria
+                ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Please set a password longer than eight characters.</p>
+                : (loading) // processing request
+                  ? <p className="auth-box__auth-msg auth-box__auth-msg--loading auth-box__auth-msg--top">Loading...</p>
+                  : (null)
+        }
         <div className="auth-box__input-box">
           <input
             className={invalidName ? "auth-box__auth-input auth-box__auth-input--error" : "auth-box__auth-input"}
@@ -79,7 +93,6 @@ const RegisterForm = () => {
             required
           />
           <FaUser className="auth-box__icon" />
-          {invalidName && (<p className="auth-box__auth-error-msg bottom">Hmm, that name looks wrong, please enter your full name.</p>)}
         </div>
 
         <div className="auth-box__input-box">
@@ -92,8 +105,6 @@ const RegisterForm = () => {
             required
           />
           <IoMdMail className="auth-box__icon" />
-          {invalidEmail && (<p className="auth-box__auth-error-msg bottom">Hmm, that email address doesn't look right.</p>)}
-
         </div>
 
         <div className="auth-box__input-box">
@@ -107,10 +118,9 @@ const RegisterForm = () => {
             required
           />
           <FaLock className="auth-box__icon" />
-          {invalidPwd && (<p className="auth-box__auth-error-msg">Please set a password longer than eight characters.</p>)}
         </div>
 
-        <button className="auth-box__auth-button" type="submit" >
+        <button className="auth-box__auth-button" type="submit" disabled={loading}>
           Create Account
         </button>
 
@@ -122,7 +132,7 @@ const RegisterForm = () => {
           </Link>
         </p>
       </div>
-    </div>
+    </div >
   )
 }
 

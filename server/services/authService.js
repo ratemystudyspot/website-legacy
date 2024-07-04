@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { createUser, findOne, findAll } = require('../models/userModel');
+const { createUser, findOne, findAllSafe } = require('../models/userModel');
 const tokenUtil = require('../utils/token');
 const emailUtil = require('../utils/email');
 const validator = require('validator');
@@ -12,10 +12,11 @@ const WEB_APP_URL = process.env.WEB_APP_URL || "http://localhost:3000";
 // param 2: pass in the user's password
 // return: void or error
 async function authenticateUser(cookies, credentials) {
-  const email = validator.isEmail(credentials.email.toLowerCase());
+  const email = validator.normalizeEmail(credentials.email);
   const password = validator.escape(credentials.password);
   console.log(`cookies available at login: ${JSON.stringify(cookies)}`);
   try {
+    
     const user = await findOne({ email });
 
     if (!user) throw new Error("Email not found"); // if user not in db, throw error
@@ -91,12 +92,12 @@ async function logoutUser(cookies) {
 async function registerUser(credentials) {
   const capitalize = (str) => { return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() };
   const [rawFirstName, rawLastName] = credentials.name.trim().split(/\s+/);
-
+  
   if (
-    !rawFirstName || 
-    !rawLastName || 
-    validator.blacklist(rawFirstName) !== rawFirstName ||
-    validator.blacklist(rawLastName) !== rawLastName
+    !rawFirstName ||
+    !rawLastName ||
+    !validator.isAlpha(rawFirstName) ||
+    !validator.isAlpha(rawLastName)
   ) throw new Error("Name error");
 
   const name = `${capitalize(rawFirstName)} ${capitalize(rawLastName)}`
@@ -107,8 +108,10 @@ async function registerUser(credentials) {
     const EMAIL_REGEX =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     const PWD_REGEX = /.{8,}/;
-    if (!EMAIL_REGEX.test(email) || validator.isEmail(email)) throw new Error('Email error');
-    if (!PWD_REGEX.test(password) || validator.blacklist(password) !== password) throw new Error('Password error');
+    if (!EMAIL_REGEX.test(email) || !validator.isEmail(email))
+      throw new Error('Email error');
+    if (!PWD_REGEX.test(password) || validator.escape(password) !== password)
+      throw new Error('Password error');
   } catch (error) {
     console.error("Error passing credential requirements:", error);
     throw error;
@@ -116,7 +119,7 @@ async function registerUser(credentials) {
 
   // checking for uniqueness of email
   try {
-    const users = await findAll({ email });
+    const users = await findAllSafe({ email });
     if (users.length !== 0) { // if email exists, then not unique, then stop creating new user
       console.error("Error: Email duplicate Error");
       throw new Error("Email duplicate Error");
@@ -125,7 +128,7 @@ async function registerUser(credentials) {
     console.error("Error:", error);
     throw error;
   }
-
+  
   // creating a new user
   try {
     return await createUser({
@@ -204,7 +207,7 @@ async function handleRefreshToken(cookies) {
 
 async function sendRecoveryEmail(body) {
   const email = validator.isEmail(body.email);
-  const user = await findAll({ email });
+  const user = await findAllSafe({ email });
   const user_data = user[0]?.dataValues;
   const email_info = { email, password_recovery_token: '' };
 
@@ -230,7 +233,7 @@ async function sendRecoveryEmail(body) {
 async function resetPassword(body) {
   const { url, password } = body;
   const password_recovery_token = url.split('/').pop();
-  const user = await findAll({ password_recovery_token }); // retrieve user info
+  const user = await findAllSafe({ password_recovery_token }); // retrieve user info
   const user_data = user[0]?.dataValues;
   try {
     const salt = bcrypt.genSaltSync(10);
