@@ -6,9 +6,7 @@ import AlertComponenet from '../Components/AlertComponenet';
 import './Homepage.scss'
 import Banner from '../Components/Banner/Banner'
 import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
-import { CircularProgress } from '@mui/material';
 import getCurrentUserLocation from '../Helpers/GetUserLocation';
-
 
 const Homepage = () => {
   const [currentLocation, setCurrentLocation] = useState();
