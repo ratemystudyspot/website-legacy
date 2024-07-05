@@ -93,7 +93,7 @@ function PasswordForm({ userInfo, showForm, setShowForm, blockForm }) {
           <div className={(blockForm) ? "settings-form__form-group--blocked" : "settings-form__form-group"}>
             <div className='settings-form__settings-box'>
               <label className="settings-form__label-info-title">Password</label>
-              <p className="settings-form__label-info-text">Hidden</p>
+              <p className="settings-form__label-info-text">********</p>
             </div>
 
             <button className={(blockForm) ? "settings-form__show-button--blocked" : "settings-form__show-button"} onClick={() => setShowForm(true)}>Edit</button>
