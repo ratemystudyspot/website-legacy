@@ -1,0 +1,66 @@
+.recommendspot-box {
+  overflow: hidden;
+
+  // ------------------------- BANNER -------------------------------
+  &__banner {
+    .banner-box__suggest-button {
+      visibility: hidden;
+    }
+
+    .banner-box {
+      background-color: #f5f5f5;
+      box-shadow: none;
+    }
+
+    .banner-box__user-nav {
+      visibility: hidden;
+    }
+  }
+
+  // ------------------------- FOOTER -------------------------------
+  &__footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__progress-bar {
+    position: absolute;
+    bottom: 85px;
+    width: 100%;
+  }
+
+  &__back-button {
+    text-decoration: underline;
+    border: none;
+    background-color: transparent;
+    height: min-content;
+    border-radius: 8px;
+    padding: 9px;
+    margin: 10px 0 0 50px;
+    font-weight: 600;
+
+    &:hover {
+      background-color: #DCDCDC;
+    }
+  }
+
+  &__next-button {
+    border: none;
+    background-color: #525252;
+    color: #fff;
+    padding: 11px 30px;
+    border-radius: 10px;
+    margin: 10px 50px 0 0;
+    font-weight: 600;
+
+    &:hover {
+      background-color: #000;
+    }
+  }
+}

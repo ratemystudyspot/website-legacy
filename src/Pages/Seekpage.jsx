@@ -3,6 +3,7 @@ import "./Seekpage.scss";
 import Banner from '../Components/Banner/Banner';
 import UBCMap from '../Components/UBCMap/UBCMap';
 import StudySpotsData from '../Data/StudySpotsData';
+import { useNavigate } from 'react-router-dom';
 
 const getAllLocations = () => {
   const allLocations = [];
@@ -16,6 +17,7 @@ const getAllLocations = () => {
 }
 
 function Seekpage() {
+  const navigate = useNavigate();
   return (
     <div className="seekspot-box">
       <Banner showGoBackButton={true} showSeekSpotButton={false} />
@@ -30,7 +32,12 @@ function Seekpage() {
       <div className="seekspot-box__right-container">
         <div className="seekspot-box__right-header">
           <h3 className="seekspot-box__right-title">help us out, add a</h3>
-          <button className="seekspot-box__add-spots-button">SPOT</button>
+          <button
+            className="seekspot-box__add-spots-button"
+            onClick={() => navigate("/spots/suggest-a-spot")}
+          >
+            SPOT
+          </button>
         </div>
         <div className="seekspot-box__map">
           <UBCMap markers={getAllLocations()} />
