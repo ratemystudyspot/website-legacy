@@ -40,7 +40,7 @@ function Seekpage() {
           </button>
         </div>
         <div className="seekspot-box__map">
-          <UBCMap markers={getAllLocations()} />
+          <UBCMap markers={getAllLocations()} mapWidth="100%" mapHeight="100%" />
         </div>
       </div>
     </div>

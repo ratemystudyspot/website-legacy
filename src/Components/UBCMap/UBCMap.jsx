@@ -42,7 +42,7 @@ const UBCMap = ({ markers, mapWidth = '500px', mapHeight = '500px', mapCenter = 
         <div
             className='ubc-map'
             ref={mapContainer}
-            style={{ width: "100%", height: "100%", borderRadius: "20px", position: 'absolute' }}
+            style={{ width: mapWidth, height: mapHeight, borderRadius: "20px" }}
         />
     )
 

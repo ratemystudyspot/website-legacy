@@ -58,7 +58,7 @@ function SpotDetailpage() {
     fetchDistance();
   }, [currentStudySpot]);
 
-  
+
   useEffect(() => {
 
     // fetch images
@@ -71,7 +71,7 @@ function SpotDetailpage() {
     })
 
     // fetch reviews
-    dispatch (fetchReviewsByStudySpot(currentStudySpot?.id));
+    dispatch(fetchReviewsByStudySpot(currentStudySpot?.id));
     setReviewsLoaded(true);
   }, [])
 
@@ -103,7 +103,12 @@ function SpotDetailpage() {
           </div>
 
           <section className="detailed-spot-box__ubc-map">
-            <UBCMap markers={[{coordinates: currentStudySpot.location.coordinates}]} mapCenter={currentStudySpot.location.coordinates} />
+            <UBCMap
+              markers={[{ coordinates: currentStudySpot.location.coordinates }]}
+              mapCenter={currentStudySpot.location.coordinates}
+              mapWidth="100%"
+              mapHeight="100%"
+            />
           </section>
 
           <section className="detailed-spot-box__amenities">
