@@ -1,51 +1,58 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './UBCMap.scss';
 
-const UBCMap = ({ markers, mapWidth = '500px', mapHeight = '500px', mapCenter = [-123.2460, 49.2626], mapZoom = 13 }) => {
+// TODO: map doesn't re-render all of its tiles while user scrolling down (reference: LocationForm.jsx)
+const UBCMap = ({ markers, mapWidth = '500px', mapHeight = '500px', mapCenter = [-123.2460, 49.2626], mapZoom = 13, enableNavigationControl = false, disableScrollZoom = false, enableCenterMarker = false }) => {
     const mapContainer = useRef(null);
-    const [viewState, setViewState] = useState({
-        center: mapCenter,
-        zoom: mapZoom
-    })
+    const mapRef = useRef(null);
+    const centerMarkerRef = useRef(null);
 
     useEffect(() => {
-        const map = new maplibregl.Map({
+        // map init
+        mapRef.current = new maplibregl.Map({
             container: mapContainer.current,
             style: 'https://tiles.basemaps.cartocdn.com/gl/positron-gl-style/style.json', // DARK THEME: https://tiles.basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json 
-            ...viewState,
-        })
-        map.addControl(new maplibregl.NavigationControl())
+            center: mapCenter,
+            zoom: mapZoom,
+        });
 
+        // map's navigation controls and markers
+        // navigation control
+        if (enableNavigationControl) mapRef.current.addControl(new maplibregl.NavigationControl());
+        // disable scroll zoom
+        if (disableScrollZoom) mapRef.current.scrollZoom.disable();
+        // enable marker always at the center
+        if (enableCenterMarker) {
+            centerMarkerRef.current = new maplibregl.Marker({ className: "ubc-map__center-marker" })
+                .setLngLat(mapRef.current.getCenter())
+                .addTo(mapRef.current);
+
+            mapRef.current.on('move', () => {
+                centerMarkerRef.current.setLngLat(mapRef.current.getCenter());
+            });
+        }
+        // place marker(s) onto the map (with a popup if necessary)
         if (markers) {
-            markers.forEach((marker) => { // loop through all markers and place onto map (with popup if needed)
-                const popup = (marker?.label)
-                    ? new maplibregl.Popup({
-                        className: "ubc-map__popup",
-                        closeButton: false,
-                    })
-                        .setText(marker.label)
-                    : null;
+            markers.forEach(marker => {
+                const popup = marker.label ? new maplibregl.Popup({ className: "ubc-map__popup", closeButton: false }).setText(marker.label) : null;
 
                 new maplibregl.Marker({ className: "ubc-map__marker" })
                     .setLngLat(marker.coordinates)
                     .setPopup(popup)
-                    .addTo(map);
-            })
+                    .addTo(mapRef.current);
+            });
         }
-
-    }, []);
-
+    }, [markers, mapCenter, mapZoom]);
 
     return (
         <div
             className='ubc-map'
             ref={mapContainer}
-            style={{ width: mapWidth, height: mapHeight, borderRadius: "20px" }}
+            style={{ width: mapWidth, height: mapHeight, borderRadius: "20px", position: 'relative' }}
         />
-    )
-
-}
+    );
+};
 
 export default UBCMap;
