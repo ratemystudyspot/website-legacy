@@ -54,7 +54,7 @@ function PasswordForm({ userInfo, showForm, setShowForm, blockForm }) {
               <label className="settings-form__label-info-title">Password</label>
               <p className="settings-form__label-info-text">This is the password you will use to login with.</p>
               <div className="settings-form__password-fields">
-                <Input label="Current Password" type="password" targetName="oldPassword" />
+                <Input label="Current Password" type="password" targetName="oldPassword" requiredInput={true} />
                 <button
                   className="settings-form__forget-password-button"
                   onClick={() => {
@@ -63,8 +63,8 @@ function PasswordForm({ userInfo, showForm, setShowForm, blockForm }) {
                   }}>
                   Forgot Password?
                 </button>
-                <Input label="New Password" type="password" targetName="newPassword" />
-                <Input label="Confirm Password" type="password" targetName="confirmPassword" />
+                <Input label="New Password" type="password" targetName="newPassword" requiredInput={true} />
+                <Input label="Confirm Password" type="password" targetName="confirmPassword" requiredInput={true} />
               </div>
               <button className="settings-form__save-button">Save</button>
               {

@@ -33,7 +33,7 @@ function EmailForm({ userInfo, showForm, setShowForm, blockForm }) {
               <label className="settings-form__label-info-title">Email address</label>
               <p className="settings-form__label-info-text">Use an email address you'll always have access to.</p>
               <div className="settings-form__email-fields">
-                <Input label="Email Address" type="email" targetName="email" defaultValue={email} />
+                <Input label="Email Address" type="email" targetName="email" defaultValue={email} requiredInput={true} />
               </div>
               <button className="settings-form__save-button">Save</button>
             </div>

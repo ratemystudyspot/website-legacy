@@ -34,8 +34,8 @@ function NameForm({ userInfo, showForm, setShowForm, blockForm }) {
               <label className="settings-form__label-info-title">Full name</label>
               <p className="settings-form__label-info-text">Make sure this matches the name on your government-issued ID.</p>
               <div className="settings-form__name-fields">
-                <Input label="First Name" type="text" targetName="firstName" defaultValue={name.split(" ")[0]} />
-                <Input label="Last Name" type="text" targetName="lastName" defaultValue={name.split(" ")[1]} />
+                <Input label="First Name" type="text" targetName="firstName" defaultValue={name.split(" ")[0]} requiredInput={true} />
+                <Input label="Last Name" type="text" targetName="lastName" defaultValue={name.split(" ")[1]} requiredInput={true} />
               </div>
               <button className="settings-form__save-button">Save</button>
             </div>
