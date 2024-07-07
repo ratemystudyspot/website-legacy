@@ -4,7 +4,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import './UBCMap.scss';
 
 // TODO: map doesn't re-render all of its tiles while user scrolling down (reference: LocationForm.jsx)
-const UBCMap = ({ markers, mapWidth = '500px', mapHeight = '500px', mapCenter = [-123.2460, 49.2626], mapZoom = 13, enableNavigationControl = false, disableScrollZoom = false, enableCenterMarker = false }) => {
+const UBCMap = React.memo(({ markers, mapWidth = '500px', mapHeight = '500px', mapCenter = [-123.2460, 49.2626], mapZoom = 13, enableNavigationControl = false, disableScrollZoom = false, enableCenterMarker = false, info, onUpdateInfo }) => {
     const mapContainer = useRef(null);
     const mapRef = useRef(null);
     const centerMarkerRef = useRef(null);
@@ -44,6 +44,11 @@ const UBCMap = ({ markers, mapWidth = '500px', mapHeight = '500px', mapCenter = 
                     .addTo(mapRef.current);
             });
         }
+
+        // mapRef.current.on('move', () => {
+        //     info.current = mapRef.current;
+        //     onUpdateInfo(mapRef)
+        // });
     }, [markers, mapCenter, mapZoom]);
 
     return (
@@ -53,6 +58,6 @@ const UBCMap = ({ markers, mapWidth = '500px', mapHeight = '500px', mapCenter = 
             style={{ width: mapWidth, height: mapHeight, borderRadius: "20px", position: 'relative' }}
         />
     );
-};
+});
 
 export default UBCMap;

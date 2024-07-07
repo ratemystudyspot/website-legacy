@@ -1,0 +1,43 @@
+.recommendspots-form {
+  margin-top: 140px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 600px;
+  overflow: hidden;
+
+  &__title {
+    font-weight: 600;
+    color: #252525;
+  }
+
+  &__suggestions-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__suggestions-item {
+    border-bottom: 1px solid #F5F5F5;
+    color: #525252;
+    width: 100%;
+    padding: 7px 0;
+    transition: 0.3s;
+    padding-left: 6px;
+
+    &:hover {
+      cursor: pointer;
+      border-radius: 0;
+      background-color: #F5F5F5;
+    }
+  }
+
+  &__ubc-map {
+    overflow: hidden;
+    border-radius: 20px;
+    // position: relative;
+    margin: 20px 0 90px 0; /* align bottom margin with height of footer in RecmmendSpotspage.scss */
+    width: 100%;
+    aspect-ratio: 1 / 0.85;
+  }
+}

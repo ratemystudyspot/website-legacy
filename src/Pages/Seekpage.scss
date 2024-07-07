@@ -98,12 +98,12 @@
     border: none;
     white-space: nowrap;
     cursor: pointer;
-    background: linear-gradient(265.27deg, #0000 20.55%, #ADD8E6 94.17%);
-    background-color: #ADD8E6;
+    background: linear-gradient(267deg, transparent 20.55%, #ADD8E6 90.17%);
+    background-color: #a8f2e9;
     transition: all 400ms ease-in;
-    
+
     &:hover {
-      background-color: #69eadb;
+      background-color: #71f8e8;
     }
   }
 

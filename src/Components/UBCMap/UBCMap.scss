@@ -1,7 +1,22 @@
 .ubc-map {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 20px;
+
   &__marker {
     g {
-      fill: #64ADC6; // change the colour fills of the markers
+      fill: #64adc6; // change the colour fills of the markers
+    }
+  }
+
+  &__center-marker {
+    svg {
+      height: 41 * 1.6px; // 41 and 27 are the default height and widths
+      width: 27 * 1.6px;
+    }
+    g {
+      fill: #64adc6; // change the colour fills of the markers
     }
   }
 }

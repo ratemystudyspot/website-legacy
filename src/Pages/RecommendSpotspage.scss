@@ -1,5 +1,5 @@
 .recommendspot-box {
-  overflow: hidden;
+  overflow-x: hidden;
 
   // ------------------------- BANNER -------------------------------
   &__banner {
@@ -19,7 +19,7 @@
 
   // ------------------------- FOOTER -------------------------------
   &__footer {
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 0;
     width: 100vw;
@@ -27,11 +27,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #fff;
+    z-index: 2;
   }
 
   &__progress-bar {
     position: absolute;
-    bottom: 85px;
+    bottom: 85px; /* align with footer height */
     width: 100%;
   }
 
@@ -46,7 +48,11 @@
     font-weight: 600;
 
     &:hover {
-      background-color: #DCDCDC;
+      background-color: #dcdcdc;
+    }
+
+    &--landing-page {
+      visibility: hidden;
     }
   }
 
@@ -61,6 +67,23 @@
 
     &:hover {
       background-color: #000;
+    }
+
+    &--landing-page {
+      @extend .recommendspot-box__next-button;
+      background: linear-gradient(267deg, transparent 20.55%, #add8e6 90.17%);
+      background-color: #a8f2e9;
+      transition: all 400ms ease-in-out;
+
+      &:hover {
+        background-color: #71f8e8;
+      }
+    }
+
+    &--loading {
+      @extend .recommendspot-box__next-button;
+      pointer-events: none;
+      background-color: #dcdcdc;
     }
   }
 }

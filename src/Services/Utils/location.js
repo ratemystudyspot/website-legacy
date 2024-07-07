@@ -12,6 +12,16 @@ async function getLocation() {
   }
 }
 
+async function getLocationsFromAddress(location, limit) {
+  try {
+    const response = axios.get(`https://nominatim.openstreetmap.org/search?q=${location}&format=geojson&addressdetails=1&countrycodes=ca&limit=${limit}`);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export {
   getLocation,
+  getLocationsFromAddress,
 };

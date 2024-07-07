@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./RecommendSpotspage.scss";
 import Banner from "../Components/Banner/Banner";
 import LandingPage from '../Components/Form/RecommendSpots/LandingPage';
@@ -8,26 +8,77 @@ import { LinearProgress } from '@mui/material';
 
 function Spotspage() {
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false); // TODO: add loading functionality 
+  const [count, setCount] = useState(0);
+  var x = 0;
   const [landingPage, setLandingPage] = useState(true);
   const [locationForm, setLocationForm] = useState(false);
   const [amenitiesForm, setAmenitiesForm] = useState(false);
   const [openingHoursForm, setOpeningHoursForm] = useState(false);
   const [basicInfoForm, setBasicInfoForm] = useState(false);
   const [picturesForm, setPicturesForm] = useState(false);
+  const [formInformation, setFormInformation] = useState({
+    location: [-123.2460, 49.2626],
+    amenities: [],
+    openingHours: {
+      monday: null,
+      tuesday: null,
+      wednesday: null,
+      thursday: null,
+      friday: null,
+      saturday: null,
+      sunday: null,
+    },
+    pictures: [],
+    basicInfo: {
+      title: null,
+      description: null,
+    },
+  })
+
+  // const formInformation = React.useRef({
+  //   location: [-123.2460, 49.2626],
+  //   amenities: [],
+  //   openingHours: {
+  //     monday: null,
+  //     tuesday: null,
+  //     wednesday: null,
+  //     thursday: null,
+  //     friday: null,
+  //     saturday: null,
+  //     sunday: null,
+  //   },
+  //   pictures: [],
+  //   basicInfo: {
+  //     title: null,
+  //     description: null,
+  //   },
+  // })
 
   const NavigateForms = () => {
-    if (landingPage)
+    if (landingPage) {
+      setProgress(0);
       return <LandingPage />
-    if (locationForm)
-      return <LocationForm />;
+    }
+
+    if (locationForm) {
+      setProgress(100.0 / 6.0)
+      return <LocationForm
+        saveFormInformation={loading}
+        changeSaveFormInformation={setLoading}
+        currentFormInformation={formInformation}
+        changeFormInformation={setFormInformation}
+      />;
+    }
+    console.log(formInformation);
     // if (amenitiesForm) TODO: ADD THE FORMS FOR THESE
-    //   return <AmenitiesForm />;
+    //   return <AmenitiesForm changeFormInformation={setFormInformation} />;
     // if (openingHoursForm)
-    //   return <OpeningHoursForm />;
+    //   return <OpeningHoursForm changeFormInformation={setFormInformation} />;
     // if (basicInfoForm)
-    //   return <BasicInfoForm />;
+    //   return <BasicInfoForm changeFormInformation={setFormInformation} />;
     // if (picturesForm)
-    //   return <PicturesForm />;
+    //   return <PicturesForm changeFormInformation={setFormInformation} />;
     return <ErrorPage />; // catch all
   }
 
@@ -40,6 +91,22 @@ function Spotspage() {
     if (picturesForm) return setPicturesForm(false), setBasicInfoForm(true);
   }
 
+  const goNext = () => {
+    if (landingPage) return setLandingPage(false), setLocationForm(true);
+    setLoading(true);
+  }
+
+  useEffect(() => {
+    console.log("both true == go next page", !loading, locationForm)
+    if (!loading) {
+      if (locationForm) return setLocationForm(false), setAmenitiesForm(true);
+      if (amenitiesForm) return setAmenitiesForm(false), setOpeningHoursForm(true);
+      if (openingHoursForm) return setOpeningHoursForm(false), setBasicInfoForm(true);
+      if (basicInfoForm) return setBasicInfoForm(false), setPicturesForm(true);
+      if (picturesForm) return;
+    }
+  }, [loading])
+
   return (
     <div className="recommendspot-box">
       <div className="recommendspot-box__banner">
@@ -51,14 +118,25 @@ function Spotspage() {
         <div className="recommendspot-box__progress-bar">
           <LinearProgress color="black" variant="determinate" value={progress} />
         </div>
-        <button className="recommendspot-box__back-button" onClick={goBack}>
+        <button
+          className={landingPage ? "recommendspot-box__back-button--landing-page" : "recommendspot-box__back-button"}
+          onClick={goBack}
+        >
           Back
         </button>
-        <button className="recommendspot-box__next-button">
-          Next
+        <button
+          className={
+            (loading)
+              ? "recommendspot-box__next-button--loading"
+              : (landingPage)
+                ? "recommendspot-box__next-button--landing-page"
+                : "recommendspot-box__next-button"}
+          onClick={goNext}
+        >
+          {landingPage ? "Get started" : "Next"}
         </button>
       </div>
-    </div>
+    </div >
   )
 }
 
