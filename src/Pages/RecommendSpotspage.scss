@@ -23,7 +23,7 @@
     left: 0;
     bottom: 0;
     width: 100vw;
-    height: 90px;
+    height: 90px; /* many css values depend on this value (found in RecommendSpotsForms.scss) */
     display: flex;
     justify-content: space-between;
     align-items: center;
