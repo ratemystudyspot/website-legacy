@@ -86,6 +86,13 @@ function LocationForm({ saveFormInformation, changeSaveFormInformation, currentF
   //   }
   // }, [saveFormInformation, mapRef])
 
+  useEffect(() => {
+    if (!saveFormInformation) return;
+    if (saveFormInformation) {
+      changeSaveFormInformation(false); //TEMP... should also save the form info
+    }
+  }, [saveFormInformation])
+
   return (
     <div className="recommendspots-form">
       <div className="recommendspots-form__header">

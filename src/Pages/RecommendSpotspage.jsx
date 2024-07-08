@@ -3,6 +3,7 @@ import "./RecommendSpotspage.scss";
 import Banner from "../Components/Banner/Banner";
 import LandingPage from '../Components/Form/RecommendSpots/LandingPage';
 import LocationForm from '../Components/Form/RecommendSpots/LocationForm';
+import AmenitiesForm from '../Components/Form/RecommendSpots/AmenitiesForm';
 import ErrorPage from './Structure/Errorpage';
 import { LinearProgress } from '@mui/material';
 
@@ -70,9 +71,18 @@ function Spotspage() {
         changeFormInformation={setFormInformation}
       />;
     }
-    console.log(formInformation);
-    // if (amenitiesForm) TODO: ADD THE FORMS FOR THESE
-    //   return <AmenitiesForm changeFormInformation={setFormInformation} />;
+    
+    if (amenitiesForm) {
+      setProgress(100.0 / 6.0 * 2)
+      return <AmenitiesForm
+        saveFormInformation={loading}
+        changeSaveFormInformation={setLoading}
+        currentFormInformation={formInformation}
+        changeFormInformation={setFormInformation}
+      />;
+    }
+    
+    //TODO: ADD THE FORMS FOR THESE
     // if (openingHoursForm)
     //   return <OpeningHoursForm changeFormInformation={setFormInformation} />;
     // if (basicInfoForm)
