@@ -1,21 +1,22 @@
 import React from 'react';
 import "./SpotCardsFilter.scss";
-import filterOptions from "../../Data/FilterOptions";
+import filterOptions from "../../Data/FilterOptions"; // DONT CHANGE
 
-const SpotCardsFilter = ({ filterOptions, setFilterOptions }) => {
+const SpotCardsFilter = ({ filterSelected, setFilterSelected }) => {
   const selected = (value) => {
-    return filterOptions.includes(value); // returns true if the filter is included in the selected filter list, otherwise false
+    return filterSelected.includes(value); // returns true if the filter is included in the selected filter list, otherwise false
   }
 
   const handleFilterSelect = (option) => {
-    setFilterOptions((prevFilters) =>
+    setFilterSelected((prevFilters) =>
       selected(option.value)
         ? prevFilters.filter((filter) => filter !== option.value) // if filter is selected, remove from selected filters
         : prevFilters.concat([option.value])); // if filter is not selected, add to selected filters
   };
 
   return (
-    <div className="spot-filter-box">
+    // DONT CHANGE
+    <div className="spot-filter-box"> 
       {filterOptions.map((option) => (
         <div
           key={option.label}

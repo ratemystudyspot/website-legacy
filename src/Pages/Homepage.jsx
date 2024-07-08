@@ -7,12 +7,15 @@ import './Homepage.scss'
 import Banner from '../Components/Banner/Banner'
 import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
 import getCurrentUserLocation from '../Helpers/GetUserLocation';
+import { fetchStudySpots } from '../Slices/studySpots.ts';
+import { useAppDispatch } from '../hooks.ts';
 
 const Homepage = () => {
   const [currentLocation, setCurrentLocation] = useState();
-  const [filterOptions, setFilterOptions] = useState([]);
+  const [filterSelected, setFilterSelected] = useState([]);
   const [cards, setCards] = useState([]);
   const [locationAlert, setLocationAlert] = useState(false);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -23,17 +26,22 @@ const Homepage = () => {
     getCurrentLocation();
   }, []);
 
+  useEffect(() => {
+    console.log("HELLO?")
+    dispatch(fetchStudySpots());
+  }, [])
+
   return (
     <div className="home-box">
-      <Banner filterOptions={filterOptions} setFilterOptions={setFilterOptions} cards={cards} setCards={setCards} showSearch={true} showAboutUsButton={true} />
+      <Banner filterSelected={filterSelected} setFilterSelected={setFilterSelected} cards={cards} setCards={setCards} showSearch={true} showAboutUsButton={true} />
 
       <div className="home-box__study-spot-filter">
-        <SpotCardsFilter filterOptions={filterOptions} setFilterOptions={setFilterOptions} />
+        <SpotCardsFilter filterSelected={filterSelected} setFilterSelected={setFilterSelected} />
       </div>
 
       {(currentLocation) ? (
         <div className="home-box__study-spot-list">
-          <ListOfStudySpotCards filterOptions={filterOptions} currentLocation={currentLocation} cards={cards} setCards={setCards} />
+          <ListOfStudySpotCards filterSelected={filterSelected} currentLocation={currentLocation} cards={cards} setCards={setCards} />
         </div>
       ) : (
         <LoaderScreen variant="white" />
