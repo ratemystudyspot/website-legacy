@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Amenities from '../../../Data/FilterOptions';
 
 // TODO: save form info
-function AmenitiesForm({ saveFormInformation, changeSaveFormInformation, currentFormInformation, changeFormInformation }) {
+function AmenitiesForm({ loading, setLoading, formInformation, setFormInformation }) {
   const [selectAmenities, setSelectAmenities] = useState([]);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [loading])
 
   return (
     <div className="recommendspots-form">

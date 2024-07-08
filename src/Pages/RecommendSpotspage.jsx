@@ -4,6 +4,7 @@ import Banner from "../Components/Banner/Banner";
 import LandingPage from '../Components/Form/RecommendSpots/LandingPage';
 import LocationForm from '../Components/Form/RecommendSpots/LocationForm';
 import AmenitiesForm from '../Components/Form/RecommendSpots/AmenitiesForm';
+import OpeningHoursForm from '../Components/Form/RecommendSpots/OpeningHoursForm';
 import ErrorPage from './Structure/Errorpage';
 import { LinearProgress } from '@mui/material';
 
@@ -12,10 +13,10 @@ function Spotspage() {
   const [loading, setLoading] = useState(false); // TODO: add loading functionality 
   const [count, setCount] = useState(0);
   var x = 0;
-  const [landingPage, setLandingPage] = useState(true);
+  const [landingPage, setLandingPage] = useState(false); //CHANGE BACKT O TRUE
   const [locationForm, setLocationForm] = useState(false);
-  const [amenitiesForm, setAmenitiesForm] = useState(false);
-  const [openingHoursForm, setOpeningHoursForm] = useState(false);
+  const [amenitiesForm, setAmenitiesForm] = useState(true);
+  const [openingHoursForm, setOpeningHoursForm] = useState(true); //CHANGE BACK TO FALSE
   const [basicInfoForm, setBasicInfoForm] = useState(false);
   const [picturesForm, setPicturesForm] = useState(false);
   const [formInformation, setFormInformation] = useState({
@@ -63,7 +64,7 @@ function Spotspage() {
     }
 
     if (locationForm) {
-      setProgress(100.0 / 6.0)
+      setProgress(100.0 / 6.0);
       return <LocationForm
         saveFormInformation={loading}
         changeSaveFormInformation={setLoading}
@@ -71,20 +72,30 @@ function Spotspage() {
         changeFormInformation={setFormInformation}
       />;
     }
-    
+
     if (amenitiesForm) {
-      setProgress(100.0 / 6.0 * 2)
+      setProgress(100.0 / 6.0 * 2);
       return <AmenitiesForm
-        saveFormInformation={loading}
-        changeSaveFormInformation={setLoading}
-        currentFormInformation={formInformation}
-        changeFormInformation={setFormInformation}
+        loading={loading}
+        setLoading={setLoading}
+        formInformation={formInformation}
+        setFormInformation={setFormInformation}
       />;
     }
-    
+
+    if (openingHoursForm) {
+      setProgress(100.0 / 6.0 * 3);
+      return <OpeningHoursForm
+        loading={loading}
+        setLoading={setLoading}
+        formInformation={formInformation}
+        setFormInformation={setFormInformation}
+      />;
+    }
+
+
     //TODO: ADD THE FORMS FOR THESE
-    // if (openingHoursForm)
-    //   return <OpeningHoursForm changeFormInformation={setFormInformation} />;
+
     // if (basicInfoForm)
     //   return <BasicInfoForm changeFormInformation={setFormInformation} />;
     // if (picturesForm)
