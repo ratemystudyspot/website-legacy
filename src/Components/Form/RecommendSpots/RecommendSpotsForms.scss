@@ -2,6 +2,7 @@
   margin-top: 140px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   height: auto;
   width: 700px;
   overflow: hidden;
@@ -122,5 +123,65 @@
   &__openinghours-checkbox-label {
     font-size: 11.5px;
     margin-left: 2px;
+  }
+
+  // ------------------------- BASIC INFO FORM -------------------------------
+  &__description-box {
+    min-height: 140px;
+    width: 100%;
+    margin: 10px 0 90px 0; /* margin-bottom = height of footer (found in RecommendSpotspage.scss) */
+    border-radius: 5px;
+    border-color: #ccc;
+    padding: 10px;
+  }
+
+  // ------------------------- PICTURES FORM -------------------------------
+  &__pictures-form {
+    margin-bottom: 90px; /* margin-bottom = height of footer (found in RecommendSpotspage.scss) */
+  }
+  &__drag-drop-area {
+    .preview-zone {
+      display: grid;
+      grid-template-columns: 50% 50%;
+    }
+    .image-container-preview {
+      margin: 20px;
+      border-radius: 22px;
+      overflow: hidden;
+      cursor: default;
+
+      &:hover {
+        @extend .image-container-preview;
+        border: none;
+      }
+
+      img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+
+      .overlay-button {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: #000;
+        color: #fff;
+        border-radius: 50%;
+        opacity: 1;
+        width: 25px;
+        height: 25px;
+
+        &:hover {
+          top: 9.5px;
+          right: 9.5px;
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+    .button-clear {
+      display: none;
+    }
   }
 }

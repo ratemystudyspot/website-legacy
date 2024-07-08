@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import './RecommendSpotsForms.scss';
 import Input from '../../Input/Input';
 import validator from 'validator';
 
@@ -69,7 +70,7 @@ function OpeningHoursForm({ loading, setLoading, formInformation, setFormInforma
   return (
     <div className="recommendspots-form">
       <div className="recommendspots-form__header">
-        <h3 className="recommendspots-form__title">Please provide the opening hours.</h3>
+        <h3 className="recommendspots-form__title">Please provide the opening hours</h3>
       </div>
       <form className="recommendspots-form__openinghours-form" onSubmit={handleSubmit}>
         <div className="recommendspots-form__openinghours-list">

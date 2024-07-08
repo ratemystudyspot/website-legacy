@@ -5,6 +5,9 @@ import LandingPage from '../Components/Form/RecommendSpots/LandingPage';
 import LocationForm from '../Components/Form/RecommendSpots/LocationForm';
 import AmenitiesForm from '../Components/Form/RecommendSpots/AmenitiesForm';
 import OpeningHoursForm from '../Components/Form/RecommendSpots/OpeningHoursForm';
+import BasicInfoForm from '../Components/Form/RecommendSpots/BasicInfoForm';
+import PicturesForm from '../Components/Form/RecommendSpots/PicturesForm';
+import FinishedPage from '../Components/Form/RecommendSpots/FinishedPage';
 import ErrorPage from './Structure/Errorpage';
 import { LinearProgress } from '@mui/material';
 
@@ -12,13 +15,13 @@ function Spotspage() {
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false); // TODO: add loading functionality 
   const [count, setCount] = useState(0);
-  var x = 0;
-  const [landingPage, setLandingPage] = useState(false); //CHANGE BACKT O TRUE
+  const [landingPage, setLandingPage] = useState(true); //CHANGE BACK TO TRUE
   const [locationForm, setLocationForm] = useState(false);
-  const [amenitiesForm, setAmenitiesForm] = useState(true);
-  const [openingHoursForm, setOpeningHoursForm] = useState(true); //CHANGE BACK TO FALSE
+  const [amenitiesForm, setAmenitiesForm] = useState(false);
+  const [openingHoursForm, setOpeningHoursForm] = useState(false);
   const [basicInfoForm, setBasicInfoForm] = useState(false);
   const [picturesForm, setPicturesForm] = useState(false);
+  const [finishedPage, setFinishedPage] = useState(false);
   const [formInformation, setFormInformation] = useState({
     location: [-123.2460, 49.2626],
     amenities: [],
@@ -93,13 +96,29 @@ function Spotspage() {
       />;
     }
 
+    if (basicInfoForm) {
+      setProgress(100.0 / 6.0 * 4);
+      return <BasicInfoForm
+        loading={loading}
+        setLoading={setLoading}
+        formInformation={formInformation}
+        setFormInformation={setFormInformation}
+      />;
+    }
+    if (picturesForm) {
+      setProgress(100.0 / 6.0 * 5);
+      return <PicturesForm
+        loading={loading}
+        setLoading={setLoading}
+        formInformation={formInformation}
+        setFormInformation={setFormInformation}
+      />;
+    }
+    if (finishedPage) {
+      setProgress(100);
+      return <FinishedPage />;
+    }
 
-    //TODO: ADD THE FORMS FOR THESE
-
-    // if (basicInfoForm)
-    //   return <BasicInfoForm changeFormInformation={setFormInformation} />;
-    // if (picturesForm)
-    //   return <PicturesForm changeFormInformation={setFormInformation} />;
     return <ErrorPage />; // catch all
   }
 
@@ -110,10 +129,12 @@ function Spotspage() {
     if (openingHoursForm) return setOpeningHoursForm(false), setAmenitiesForm(true);
     if (basicInfoForm) return setBasicInfoForm(false), setOpeningHoursForm(true);
     if (picturesForm) return setPicturesForm(false), setBasicInfoForm(true);
+    if (finishedPage) return setFinishedPage(false), setPicturesForm(true);
   }
 
   const goNext = () => {
     if (landingPage) return setLandingPage(false), setLocationForm(true);
+    if (finishedPage) return; // TODO: add submitting info functionality
     setLoading(true);
   }
 
@@ -124,7 +145,7 @@ function Spotspage() {
       if (amenitiesForm) return setAmenitiesForm(false), setOpeningHoursForm(true);
       if (openingHoursForm) return setOpeningHoursForm(false), setBasicInfoForm(true);
       if (basicInfoForm) return setBasicInfoForm(false), setPicturesForm(true);
-      if (picturesForm) return;
+      if (picturesForm) return setPicturesForm(false), setFinishedPage(true);
     }
   }, [loading])
 
@@ -151,13 +172,19 @@ function Spotspage() {
               ? "recommendspot-box__next-button--loading"
               : (landingPage)
                 ? "recommendspot-box__next-button--landing-page"
-                : "recommendspot-box__next-button"}
+                : (finishedPage)
+                  ? "recommendspot-box__next-button--finished-page"
+                  : "recommendspot-box__next-button"}
           onClick={goNext}
         >
-          {landingPage ? "Get started" : "Next"}
+          {landingPage
+            ? "Get started"
+            : (finishedPage)
+              ? "Suggest It"
+              : "Next"}
         </button>
       </div>
-    </div >
+    </div>
   )
 }
 
