@@ -10,7 +10,7 @@ import StudySpots from '../../Data/StudySpotsData';
 import { logout } from '../../Services/auth';
 
 // TODO: Turn show different buttons to an object instead!!!
-const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = false, showGoBackButton = false, showAboutUsButton = false, showSeekSpotButton = true, additionalStyle }) => {
+const Banner = ({ filterOptions, setFilterOptions, cards, setCards, showSearch = false, showGoBackButton = false, showAboutUsButton = false, showSeekSpotButton = true, additionalStyle }) => {
   const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
   const [isOpen, setIsOpen] = useState(false); // State to track whether the auth navbar is open or closed
   
@@ -28,14 +28,14 @@ const Banner = ({ filterSelected, onFilterSelect, cards, setCards, showSearch = 
     e.preventDefault();
     try {
       if (searchTerm.length === 0) {
-        await onFilterSelect([]);
+        await setFilterOptions([]);
         await setCards(StudySpots);
       }
       if (searchTerm.length > 0) {
         const queriedStudySpots = StudySpots.filter((studySpot) => {
           return studySpot.name.toLowerCase().match(searchTerm);
         })
-        await onFilterSelect([]);
+        await setFilterOptions([]);
         await setCards(queriedStudySpots);
       }
     } catch (error) {

@@ -3,7 +3,13 @@ import { getSpots, getSpotsByFeatures } from "../Services/studySpot";
 import type { RootState } from '../store';
 
 export interface StudySpot {
-    // TODO: Add stuff
+    id: number,
+    name: string,
+    description: string, // TODO: Delete column and interface
+    location: string,
+    features: string[],
+    image_link: string,
+    image_links: string[]
 }
 
 export interface StudySpotsState {
@@ -43,7 +49,11 @@ export const studySpotSlice = createSlice({
     name: 'studySpots',
     initialState,
     reducers: {
+        searchStudySpot: (state, action: PayloadAction<{filterOptions: string[], searchTerm: string}>) => {
+
+        }
         // add reducers maybe?
+        
     },
     extraReducers: (builder) => {    
         builder.addCase(fetchStudySpots.fulfilled, (state, action) => {

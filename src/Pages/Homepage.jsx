@@ -25,15 +25,15 @@ const Homepage = () => {
 
   return (
     <div className="home-box">
-      <Banner filterSelected={filterOptions} onFilterSelect={setFilterOptions} cards={cards} setCards={setCards} showSearch={true} showAboutUsButton={true} />
+      <Banner filterOptions={filterOptions} setFilterOptions={setFilterOptions} cards={cards} setCards={setCards} showSearch={true} showAboutUsButton={true} />
 
       <div className="home-box__study-spot-filter">
-        <SpotCardsFilter filterSelected={filterOptions} onFilterSelect={setFilterOptions} />
+        <SpotCardsFilter filterOptions={filterOptions} setFilterOptions={setFilterOptions} />
       </div>
 
       {(currentLocation) ? (
         <div className="home-box__study-spot-list">
-          <ListOfStudySpotCards filterSelected={filterOptions} currentLocation={currentLocation} cards={cards} setCards={setCards} />
+          <ListOfStudySpotCards filterOptions={filterOptions} currentLocation={currentLocation} cards={cards} setCards={setCards} />
         </div>
       ) : (
         <LoaderScreen variant="white" />

@@ -4,7 +4,7 @@ import StudySpotCard from "./StudySpotCard";
 import { getSpots, getSpotsByFeatures, getSpotsByTime } from "../../Services/studySpot";
 import { useEffect, useState } from "react";
 
-const ListOfStudySpotCards = ({ filterSelected, currentLocation, cards, setCards }) => {
+const ListOfStudySpotCards = ({ filterOptions, currentLocation, cards, setCards }) => {
   const convertTimeTo24h = (time12h) => {
     const [time, modifier] = time12h.split(' ').slice(0, 2);
     let [hours, minutes, seconds] = time.split(':');
@@ -57,11 +57,11 @@ const ListOfStudySpotCards = ({ filterSelected, currentLocation, cards, setCards
     const getFilteredCards = async () => {
       try {
         const featureCards =
-          (filterSelected.length === 0 || (filterSelected.length === 1 && filterSelected.includes('open-now')))
+          (filterOptions.length === 0 || (filterOptions.length === 1 && filterOptions.includes('open-now')))
             ? AllStudySpots
-            : await getSpotsByFeatures(filterSelected.filter(filter => filter !== 'open-now')); // get all spots with all selected filters (excluding open-now filter)
+            : await getSpotsByFeatures(filterOptions.filter(filter => filter !== 'open-now')); // get all spots with all selected filters (excluding open-now filter)
 
-        if (filterSelected.includes('open-now')) { // if open-now selected, find opened spots PLUS with given filters 
+        if (filterOptions.includes('open-now')) { // if open-now selected, find opened spots PLUS with given filters 
           const { currentDayOfWeek, currentTime24h } = getCurrentDate();
           const openCards = await getSpotsByTime(currentDayOfWeek, currentTime24h);
 
@@ -78,8 +78,8 @@ const ListOfStudySpotCards = ({ filterSelected, currentLocation, cards, setCards
       }
     }
 
-    getFilteredCards(filterSelected);
-  }, [filterSelected]);
+    getFilteredCards(filterOptions);
+  }, [filterOptions]);
 
 
   return (
