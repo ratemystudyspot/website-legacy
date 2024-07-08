@@ -8,39 +8,52 @@ import LogoComponent from '../LogoComponent';
 import useAuth from "../../hooks/useAuth";
 import StudySpots from '../../Data/StudySpotsData';
 import { logout } from '../../Services/auth';
+import { useAppDispatch, useAppSelector } from "../../hooks.ts";
+import { searchStudySpot } from '../../Slices/studySpots.ts';
+import { filterSpots } from '../../Slices/studySpots.ts';
 
 // TODO: Turn show different buttons to an object instead!!!
-const Banner = ({ filterOptions, setFilterOptions, cards, setCards, showSearch = false, showGoBackButton = false, showAboutUsButton = false, showSeekSpotButton = true, additionalStyle }) => {
+const Banner = ({ filterSelected, setFilterSelected, cards, setCards, showSearch = false, showGoBackButton = false, showAboutUsButton = false, showSeekSpotButton = true, additionalStyle }) => {
   const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
   const [isOpen, setIsOpen] = useState(false); // State to track whether the auth navbar is open or closed
   
   const navigate = useNavigate();
   const location = useLocation();
 
+  const dispatch = useAppDispatch();
   // Function to handle the change in the search bar
   const handleChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
 
   // Function to handle search from search bar
+  // const handleSearch = async (e) => {
+  //   // Perform search operation with searchTerm
+  //   e.preventDefault();
+  //   try {
+  //     if (searchTerm.length === 0) {
+  //       await setFilterSelected([]);
+  //       await setCards(StudySpots);
+  //     }
+  //     if (searchTerm.length > 0) {
+  //       const queriedStudySpots = StudySpots.filter((studySpot) => {
+  //         return studySpot.name.toLowerCase().match(searchTerm);
+  //       })
+  //       await setFilterSelected([]);
+  //       await setCards(queriedStudySpots);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   const handleSearch = async (e) => {
     // Perform search operation with searchTerm
     e.preventDefault();
-    try {
-      if (searchTerm.length === 0) {
-        await setFilterOptions([]);
-        await setCards(StudySpots);
-      }
-      if (searchTerm.length > 0) {
-        const queriedStudySpots = StudySpots.filter((studySpot) => {
-          return studySpot.name.toLowerCase().match(searchTerm);
-        })
-        await setFilterOptions([]);
-        await setCards(queriedStudySpots);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    
+    setFilterSelected([]);
+    await dispatch(filterSpots([]));
+    await dispatch(searchStudySpot({searchTerm}));
   };
 
   // Function to toggle the auth navbar state
