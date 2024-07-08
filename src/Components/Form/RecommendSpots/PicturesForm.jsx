@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './RecommendSpotsForms.scss';
 import DragDropFile from 'drag-drop-file-tk';
+import SubmitButtons from './SubmitButtons';
 
 // TODO: save info
-function PicturesForm({ loading, setLoading, formInformation, setFormInformation }) {
+function PicturesForm({ setPrevPage, setCurrPage, setNextPage, formInformation, setFormInformation }) {
   const [pictures, setPictures] = useState([])
 
   const handleChange = (files) => {
     setPictures(files);
   }
 
-  useEffect(() => {
-    setLoading(false);
-  }, [loading]);
+  const goBack = () => { return setCurrPage(false), setPrevPage(true) };
+  const goNext = () => { return setCurrPage(false), setNextPage(true) };
 
   return (
     <div className="recommendspots-form">
@@ -27,6 +27,10 @@ function PicturesForm({ loading, setLoading, formInformation, setFormInformation
           <DragDropFile handleChange={handleChange} />
         </div>
       </form>
+      <SubmitButtons
+        goBack={goBack}
+        goNext={goNext}
+      />
     </div>
   )
 }

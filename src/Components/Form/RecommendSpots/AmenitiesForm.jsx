@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './RecommendSpotsForms.scss';
 import Amenities from '../../../Data/FilterOptions';
+import SubmitButtons from './SubmitButtons';
 
 // TODO: save form info
-function AmenitiesForm({ loading, setLoading, formInformation, setFormInformation }) {
+function AmenitiesForm({ setPrevPage, setCurrPage, setNextPage, formInformation, setFormInformation }) {
   const [selectAmenities, setSelectAmenities] = useState([]);
-
-  useEffect(() => {
-    setLoading(false);
-  }, [loading])
-
+  const goBack = () => {return setCurrPage(false), setPrevPage(true)};
+  const goNext = () => {return setCurrPage(false), setNextPage(true)};
   return (
     <div className="recommendspots-form">
       <div className="recommendspots-form__header">
@@ -43,6 +41,10 @@ function AmenitiesForm({ loading, setLoading, formInformation, setFormInformatio
           }
         </div>
       </form>
+      <SubmitButtons
+        goBack={goBack}
+        goNext={goNext}
+      />
     </div>
   )
 }

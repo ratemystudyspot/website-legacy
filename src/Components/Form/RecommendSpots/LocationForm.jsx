@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import "./RecommendSpotsForms.scss";
 import UBCMap from "../../UBCMap/UBCMap";
 import Input from '../../Input/Input';
 import { getLocationsFromAddress } from '../../../Services/Utils/location';
+import SubmitButtons from './SubmitButtons';
 
 const stateAbbreviations = {
   "Alberta": "AB",
@@ -25,14 +26,10 @@ const cityRenaming = {
 }
 
 // TODO: save user input
-function LocationForm({ saveFormInformation, changeSaveFormInformation, currentFormInformation, changeFormInformation }) {
+function LocationForm({ setPrevPage, setCurrPage, setNextPage, formInformation, setFormInformation, saved, setSaved }) {
   const [locationAddress, setLocationAddress] = useState("");
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const mapRef = useRef(null);
-  const handleUpdateMap = (mapInstance) => {
-    mapRef.current = mapInstance;
-    console.log(mapRef.current.getCenter())
-  }
   const [map, setMap] = useState(<UBCMap
     mapZoom={13.5}
     mapHeight="100%"
@@ -40,8 +37,7 @@ function LocationForm({ saveFormInformation, changeSaveFormInformation, currentF
     disableScrollZoom={true}
     enableCenterMarker={true}
     enableNavigationControl={true}
-    info={mapRef}
-    onUpdateInfo={handleUpdateMap}
+    ref={mapRef}
   />);
 
   const handleSubmitQuery = async (e) => {
@@ -68,33 +64,18 @@ function LocationForm({ saveFormInformation, changeSaveFormInformation, currentF
       disableScrollZoom={true}
       enableCenterMarker={true}
       enableNavigationControl={true}
-      info={mapRef}
-      onUpdateInfo={handleUpdateMap}
+      ref={mapRef}
     />)
   }
 
-  // useEffect(() => {
-  //   console.log(mapRef.current)
-  //   if (saveFormInformation && mapRef.current) {
-  //     const coords = mapRef.current.getCenter();
-  //     console.log("FINAL COORDS", coords);
-  //     changeFormInformation((prevState) => ({
-  //       ...prevState,
-  //       location: [coords.lng, coords.lat],
-  //     }));
-  //     changeSaveFormInformation(false);
-  //   }
-  // }, [saveFormInformation, mapRef])
-
-  useEffect(() => {
-    if (!saveFormInformation) return;
-    if (saveFormInformation) {
-      changeSaveFormInformation(false); //TEMP... should also save the form info
-    }
-  }, [saveFormInformation])
+  const goBack = () => { return setCurrPage(false), setPrevPage(true) };
+  const goNext = () => { return setCurrPage(false), setNextPage(true) };
 
   return (
     <div className="recommendspots-form">
+      <button onClick={() => console.log(mapRef.current.getCenter())}>
+        test button
+      </button>
       <div className="recommendspots-form__header">
         <h3 className="recommendspots-form__title">Where is the study spot located?</h3>
         <p className="recommendspots-form__subtitle">
@@ -138,6 +119,10 @@ function LocationForm({ saveFormInformation, changeSaveFormInformation, currentF
       <div className="recommendspots-form__ubc-map">
         {map}
       </div>
+      <SubmitButtons
+        goBack={goBack}
+        goNext={goNext}
+      />
     </div>
   )
 }

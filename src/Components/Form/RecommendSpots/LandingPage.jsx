@@ -1,7 +1,10 @@
 import React from 'react';
 import "./LandingFinishedPage.scss";
+import SubmitButtons from './SubmitButtons';
 
-function LandingPage() {
+function LandingPage({ setPrevPage, setCurrPage, setNextPage }) {
+  const goNext = () => {return setCurrPage(false), setNextPage(true)};
+
   return (
     <div className="landing-page-box">
       <div className="landing-page-box__left-container">
@@ -25,6 +28,9 @@ function LandingPage() {
           />
         </div>
       </div>
+      <SubmitButtons
+        goNext={goNext}
+      />
     </div>
   )
 }

@@ -13,9 +13,7 @@ import { LinearProgress } from '@mui/material';
 
 function Spotspage() {
   const [progress, setProgress] = useState(0);
-  const [loading, setLoading] = useState(false); // TODO: add loading functionality 
-  const [count, setCount] = useState(0);
-  const [landingPage, setLandingPage] = useState(true); //CHANGE BACK TO TRUE
+  const [landingPage, setLandingPage] = useState(true);
   const [locationForm, setLocationForm] = useState(false);
   const [amenitiesForm, setAmenitiesForm] = useState(false);
   const [openingHoursForm, setOpeningHoursForm] = useState(false);
@@ -63,24 +61,30 @@ function Spotspage() {
   const NavigateForms = () => {
     if (landingPage) {
       setProgress(0);
-      return <LandingPage />
+      return <LandingPage
+        setPrevPage={null}
+        setCurrPage={setLandingPage}
+        setNextPage={setLocationForm}
+      />
     }
 
     if (locationForm) {
-      setProgress(100.0 / 6.0);
+      setProgress(100.0 / 6.0 * 1);
       return <LocationForm
-        saveFormInformation={loading}
-        changeSaveFormInformation={setLoading}
-        currentFormInformation={formInformation}
-        changeFormInformation={setFormInformation}
+        setPrevPage={setLandingPage}
+        setCurrPage={setLocationForm}
+        setNextPage={setAmenitiesForm}
+        formInformation={formInformation}
+        setFormInformation={setFormInformation}
       />;
     }
 
     if (amenitiesForm) {
       setProgress(100.0 / 6.0 * 2);
       return <AmenitiesForm
-        loading={loading}
-        setLoading={setLoading}
+        setPrevPage={setLocationForm}
+        setCurrPage={setAmenitiesForm}
+        setNextPage={setOpeningHoursForm}
         formInformation={formInformation}
         setFormInformation={setFormInformation}
       />;
@@ -89,8 +93,9 @@ function Spotspage() {
     if (openingHoursForm) {
       setProgress(100.0 / 6.0 * 3);
       return <OpeningHoursForm
-        loading={loading}
-        setLoading={setLoading}
+        setPrevPage={setAmenitiesForm}
+        setCurrPage={setOpeningHoursForm}
+        setNextPage={setBasicInfoForm}
         formInformation={formInformation}
         setFormInformation={setFormInformation}
       />;
@@ -99,8 +104,9 @@ function Spotspage() {
     if (basicInfoForm) {
       setProgress(100.0 / 6.0 * 4);
       return <BasicInfoForm
-        loading={loading}
-        setLoading={setLoading}
+        setPrevPage={setOpeningHoursForm}
+        setCurrPage={setBasicInfoForm}
+        setNextPage={setPicturesForm}
         formInformation={formInformation}
         setFormInformation={setFormInformation}
       />;
@@ -108,46 +114,24 @@ function Spotspage() {
     if (picturesForm) {
       setProgress(100.0 / 6.0 * 5);
       return <PicturesForm
-        loading={loading}
-        setLoading={setLoading}
+        setPrevPage={setBasicInfoForm}
+        setCurrPage={setPicturesForm}
+        setNextPage={setFinishedPage}
         formInformation={formInformation}
         setFormInformation={setFormInformation}
       />;
     }
     if (finishedPage) {
       setProgress(100);
-      return <FinishedPage />;
+      return <FinishedPage
+        setPrevPage={setPicturesForm}
+        setCurrPage={setFinishedPage}
+        setNextPage={null}
+      />;
     }
 
     return <ErrorPage />; // catch all
   }
-
-  const goBack = () => {
-    if (landingPage) return;
-    if (locationForm) return setLocationForm(false), setLandingPage(true);
-    if (amenitiesForm) return setAmenitiesForm(false), setLocationForm(true);
-    if (openingHoursForm) return setOpeningHoursForm(false), setAmenitiesForm(true);
-    if (basicInfoForm) return setBasicInfoForm(false), setOpeningHoursForm(true);
-    if (picturesForm) return setPicturesForm(false), setBasicInfoForm(true);
-    if (finishedPage) return setFinishedPage(false), setPicturesForm(true);
-  }
-
-  const goNext = () => {
-    if (landingPage) return setLandingPage(false), setLocationForm(true);
-    if (finishedPage) return; // TODO: add submitting info functionality
-    setLoading(true);
-  }
-
-  useEffect(() => {
-    console.log("both true == go next page", !loading, locationForm)
-    if (!loading) {
-      if (locationForm) return setLocationForm(false), setAmenitiesForm(true);
-      if (amenitiesForm) return setAmenitiesForm(false), setOpeningHoursForm(true);
-      if (openingHoursForm) return setOpeningHoursForm(false), setBasicInfoForm(true);
-      if (basicInfoForm) return setBasicInfoForm(false), setPicturesForm(true);
-      if (picturesForm) return setPicturesForm(false), setFinishedPage(true);
-    }
-  }, [loading])
 
   return (
     <div className="recommendspot-box">
@@ -155,34 +139,8 @@ function Spotspage() {
         <Banner />
       </div>
       <NavigateForms />
-      <div className="recommendspot-box__footer">
-
-        <div className="recommendspot-box__progress-bar">
-          <LinearProgress color="black" variant="determinate" value={progress} />
-        </div>
-        <button
-          className={landingPage ? "recommendspot-box__back-button--landing-page" : "recommendspot-box__back-button"}
-          onClick={goBack}
-        >
-          Back
-        </button>
-        <button
-          className={
-            (loading)
-              ? "recommendspot-box__next-button--loading"
-              : (landingPage)
-                ? "recommendspot-box__next-button--landing-page"
-                : (finishedPage)
-                  ? "recommendspot-box__next-button--finished-page"
-                  : "recommendspot-box__next-button"}
-          onClick={goNext}
-        >
-          {landingPage
-            ? "Get started"
-            : (finishedPage)
-              ? "Suggest It"
-              : "Next"}
-        </button>
+      <div className="recommendspot-box__progress-bar">
+        <LinearProgress color="black" variant="determinate" value={progress} />
       </div>
     </div>
   )

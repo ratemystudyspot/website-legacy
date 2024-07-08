@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './RecommendSpotsForms.scss';
 import Input from '../../Input/Input';
 import validator from 'validator';
+import SubmitButtons from './SubmitButtons';
 
 // TODO: save information
-function OpeningHoursForm({ loading, setLoading, formInformation, setFormInformation }) {
+function OpeningHoursForm({ setPrevPage, setCurrPage, setNextPage, formInformation, setFormInformation }) {
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const [openingHours, setOpeningHours] = useState({
     "opening": {
@@ -14,6 +15,9 @@ function OpeningHoursForm({ loading, setLoading, formInformation, setFormInforma
       // more dicts here ...
     },
   });
+
+  const goBack = () => { return setCurrPage(false), setPrevPage(true) };
+  const goNext = () => { return setCurrPage(false), setNextPage(true) };
 
   const handleSubmit = () => {
     for (const openingTimes in openingHours.opening) {
@@ -62,10 +66,6 @@ function OpeningHoursForm({ loading, setLoading, formInformation, setFormInforma
       }
     });
   }
-
-  useEffect(() => {
-    setLoading(false);
-  }, [loading]);
 
   return (
     <div className="recommendspots-form">
@@ -117,6 +117,10 @@ function OpeningHoursForm({ loading, setLoading, formInformation, setFormInforma
           )}
         </div>
       </form>
+      <SubmitButtons
+        goBack={goBack}
+        goNext={goNext}
+      />
     </div>
   )
 }

@@ -17,74 +17,13 @@
     }
   }
 
-  // ------------------------- FOOTER -------------------------------
-  &__footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 90px; /* many css values depend on this value (found in RecommendSpotsForms.scss) */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
-    z-index: 2;
-  }
-
+  // ------------------------- PROGRESS BAR -------------------------------
   &__progress-bar {
+    z-index: 2;
     position: absolute;
+    left: 0;
     bottom: 85px; /* align with footer height */
     width: 100%;
   }
-
-  &__back-button {
-    text-decoration: underline;
-    border: none;
-    background-color: transparent;
-    height: min-content;
-    border-radius: 8px;
-    padding: 9px;
-    margin: 10px 0 0 50px;
-    font-weight: 600;
-
-    &:hover {
-      background-color: #dcdcdc;
-    }
-
-    &--landing-page {
-      visibility: hidden;
-    }
-  }
-
-  &__next-button {
-    border: none;
-    background-color: #525252;
-    color: #fff;
-    padding: 11px 30px;
-    border-radius: 10px;
-    margin: 10px 50px 0 0;
-    font-weight: 600;
-
-    &:hover {
-      background-color: #000;
-    }
-
-    &--landing-page,
-    &--finished-page {
-      @extend .recommendspot-box__next-button;
-      background: linear-gradient(267deg, transparent 20.55%, #add8e6 90.17%);
-      background-color: #a8f2e9;
-      transition: all 400ms ease-in-out;
-
-      &:hover {
-        background-color: #71f8e8;
-      }
-    }
-
-    &--loading {
-      @extend .recommendspot-box__next-button;
-      pointer-events: none;
-      background-color: #dcdcdc;
-    }
-  }
+  
 }

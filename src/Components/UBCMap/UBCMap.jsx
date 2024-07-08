@@ -4,12 +4,24 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import './UBCMap.scss';
 
 // TODO: map doesn't re-render all of its tiles while user scrolling down (reference: LocationForm.jsx)
-const UBCMap = React.memo(({ markers, mapWidth = '500px', mapHeight = '500px', mapCenter = [-123.2460, 49.2626], mapZoom = 13, enableNavigationControl = false, disableScrollZoom = false, enableCenterMarker = false, info, onUpdateInfo }) => {
+const UBCMap = React.forwardRef(({ markers, mapWidth = '500px', mapHeight = '500px', mapCenter = [-123.2460, 49.2626], mapZoom = 13, enableNavigationControl = false, disableScrollZoom = false, enableCenterMarker = false, parentCallback }, ref) => {
     const mapContainer = useRef(null);
     const mapRef = useRef(null);
     const centerMarkerRef = useRef(null);
 
+    React.useImperativeHandle(ref, () => ({
+        getCenter() {
+            return mapRef.current.getCenter();
+        },
+    }))
+
     useEffect(() => {
+        // run parent's useEffect first
+        if (parentCallback) {
+            console.log(mapRef);
+            parentCallback();
+        }
+
         // map init
         mapRef.current = new maplibregl.Map({
             container: mapContainer.current,
@@ -45,11 +57,15 @@ const UBCMap = React.memo(({ markers, mapWidth = '500px', mapHeight = '500px', m
             });
         }
 
-        // mapRef.current.on('move', () => {
-        //     info.current = mapRef.current;
-        //     onUpdateInfo(mapRef)
-        // });
-    }, [markers, mapCenter, mapZoom]);
+        mapRef.current.on('move', () => {
+            // info.current = mapRef.current;
+            // onUpdateInfo(mapRef);
+            console.log(mapRef.current.getCenter())
+        });
+        // info.current = mapRef.current;
+        // onUpdateInfo(mapRef);
+        console.log("re-init:", mapRef.current.getCenter())
+    }, []);
 
     return (
         <div

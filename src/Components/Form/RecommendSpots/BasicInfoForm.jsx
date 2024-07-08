@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './RecommendSpotsForms.scss';
 import Input from '../../Input/Input';
+import SubmitButtons from './SubmitButtons';
 
 // TODO: save information
-function BasicInfoForm({ loading, setLoading, formInformation, setFormInformation }) {
+function BasicInfoForm({ setPrevPage, setCurrPage, setNextPage, formInformation, setFormInformation }) {
   const [basicInfo, setBasicInfo] = useState({ title: null, description: null });
 
   const handleSubmit = () => {
@@ -11,9 +12,8 @@ function BasicInfoForm({ loading, setLoading, formInformation, setFormInformatio
     //TODO: finish function
   }
 
-  useEffect(() => {
-    setLoading(false);
-  }, [loading]);
+  const goBack = () => { return setCurrPage(false), setPrevPage(true) };
+  const goNext = () => { return setCurrPage(false), setNextPage(true) };
 
   return (
     <div className="recommendspots-form">
@@ -48,6 +48,10 @@ function BasicInfoForm({ loading, setLoading, formInformation, setFormInformatio
           />
         </div>
       </form>
+      <SubmitButtons
+        goBack={goBack}
+        goNext={goNext}
+      />
     </div>
   )
 }
