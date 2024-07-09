@@ -31,6 +31,7 @@ function Spotspage() {
         // more dicts here ...
       },
     },
+    picturesURL: [],
     pictures: [],
     basicInfo: {
       title: null,

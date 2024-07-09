@@ -12,7 +12,8 @@ const WEB_APP_URL = process.env.WEB_APP_URL || "http://localhost:3000";
 // param 2: pass in the user's password
 // return: void or error
 async function authenticateUser(cookies, credentials) {
-  const email = validator.normalizeEmail(credentials.email);
+  // const email = validator.normalizeEmail(credentials.email);
+  const email = credentials.email.toLowerCase();
   const password = validator.escape(credentials.password);
   console.log(`cookies available at login: ${JSON.stringify(cookies)}`);
   try {

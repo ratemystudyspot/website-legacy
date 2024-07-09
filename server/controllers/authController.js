@@ -1,4 +1,3 @@
-const { accessToken } = require('mapbox-gl');
 const authService = require('../services/authService');
 
 async function login(req, res) {

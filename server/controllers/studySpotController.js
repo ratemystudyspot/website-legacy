@@ -1,4 +1,5 @@
 const studySpotService = require('../services/studySpotService');
+const email = require('../utils/email');
 
 async function getSpots(req, res) {
   try {
@@ -36,9 +37,21 @@ async function countSpots(req, res) {
   }
 }
 
+async function sendSuggestionEmail(req, res) {
+  try {
+    await email.sendSuggestion(req.body, req.files);
+    await email.sendSuggestionConfirmation(req.body.userInfo);
+    res.sendStatus(204);
+  } catch (error) {
+    console.log(error)
+    res.status(404).send(error);
+  }
+}
+
 module.exports = {
   getSpots,
   getSpotsByFeatures,
   getSpotsByTime,
   countSpots,
+  sendSuggestionEmail,
 };

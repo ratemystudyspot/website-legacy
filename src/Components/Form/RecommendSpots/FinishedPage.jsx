@@ -1,14 +1,37 @@
 import React from 'react';
 import "./LandingFinishedPage.scss";
 import SubmitButtons from './SubmitButtons';
-import { sendEmail } from '../../../Services/Utils/email';
 import useAuth from '../../../hooks/useAuth';
+import { sendSuggestionEmail } from '../../../Services/studySpot';
+import { getUserByID } from '../../../Services/user';
 
 // TODO: send info to us somehow
 function FinishedPage({ setPrevPage, setCurrPage, setNextPage, formInformation }) {
   const { auth } = useAuth();
   const goBack = () => { return setCurrPage(false), setPrevPage(true) };
-  const submitForm = () => { console.log(formInformation) };
+  const submitForm = async () => {
+    try {
+      const user = await getUserByID(auth?.user_info?.id, auth?.access_token);
+
+      // converting data to FormData to upload pictures
+      const formData = new FormData();
+      for (const [key, value] of Object.entries({ ...formInformation, userInfo: user.data[0] })) {
+        if (key === 'pictures') {
+          // formData.append(key, value);
+          const pictureFiles = value;
+          pictureFiles.forEach((file, index) => {
+            formData.append('pictures', file);
+          });
+        }
+        formData.append(key, JSON.stringify(value));
+      };
+
+      // sendSuggestionEmail(user.data[0], { ...formInformation, userInfo: user.data[0] })
+      sendSuggestionEmail(formData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div className="finished-page-box">
       <div className="finished-page-box__left-container">

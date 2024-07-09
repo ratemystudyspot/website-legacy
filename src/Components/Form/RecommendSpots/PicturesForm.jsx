@@ -5,7 +5,8 @@ import SubmitButtons from './SubmitButtons';
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 function PicturesForm({ setPrevPage, setCurrPage, setNextPage, formInformation, setFormInformation }) {
-  const [pictures, setPictures] = useState(formInformation.pictures);
+  const [picturesURL, setPicturesURL] = useState(formInformation.picturesURL);
+  const [pictures, setPictures] = useState(formInformation.pictures)
   const [error, setError] = useState(false);
 
   const handleSubmitForm = (callback, errorCallback) => {
@@ -13,6 +14,7 @@ function PicturesForm({ setPrevPage, setCurrPage, setNextPage, formInformation, 
       if (pictures.length < 2) throw new Error("Not enough pictures");
       setFormInformation(prev => ({
         ...prev,
+        picturesURL: picturesURL,
         pictures: pictures,
       }));
       callback();
@@ -24,7 +26,8 @@ function PicturesForm({ setPrevPage, setCurrPage, setNextPage, formInformation, 
 
   const handlePicturesChange = (files) => {
     const newPictures = Array.from(files).map(file => URL.createObjectURL(file)); // init new array of pictures in URL form
-    setPictures(newPictures);
+    setPicturesURL(newPictures);
+    setPictures(files);
   }
 
   const goBack = () => { return setCurrPage(false), setPrevPage(true) };

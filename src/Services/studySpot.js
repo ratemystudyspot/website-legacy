@@ -38,9 +38,22 @@ async function countSpots() {
   }
 }
 
+async function sendSuggestionEmail(data) {
+  try {
+    return await axios.post(`${API_URL}/send-suggestion-email`, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    });
+  } catch (error) {
+    console.error('Error sending email: ', error);
+  }
+}
+
 export {
   getSpots,
   getSpotsByFeatures,
   getSpotsByTime,
   countSpots,
+  sendSuggestionEmail,
 }
