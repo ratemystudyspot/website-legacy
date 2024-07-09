@@ -25,20 +25,11 @@ const cityRenaming = {
   "Electoral Area A": "Vancouver"
 }
 
-// TODO: save user input
-function LocationForm({ setPrevPage, setCurrPage, setNextPage, formInformation, setFormInformation, saved, setSaved }) {
+function LocationForm({ setPrevPage, setCurrPage, setNextPage, formInformation, setFormInformation }) {
   const [locationAddress, setLocationAddress] = useState("");
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const mapRef = useRef(null);
-  const [map, setMap] = useState(<UBCMap
-    mapZoom={13.5}
-    mapHeight="100%"
-    mapWidth="100%"
-    disableScrollZoom={true}
-    enableCenterMarker={true}
-    enableNavigationControl={true}
-    ref={mapRef}
-  />);
+  const [mapCenter, setMapCenter] = useState(formInformation.location);
 
   const handleSubmitQuery = async (e) => {
     e.preventDefault();
@@ -55,27 +46,23 @@ function LocationForm({ setPrevPage, setCurrPage, setNextPage, formInformation, 
     setLocationAddress(e.target.value);
   }
 
-  const recenterMarker = (coordinates) => {
-    setMap(<UBCMap
-      mapZoom={13.5}
-      mapCenter={coordinates}
-      mapHeight="100%"
-      mapWidth="100%"
-      disableScrollZoom={true}
-      enableCenterMarker={true}
-      enableNavigationControl={true}
-      ref={mapRef}
-    />)
+  const handleSubmitForm = () => {
+    try {
+      const coords = mapRef.current.getCenter();
+      setFormInformation(prev => ({
+        ...prev,
+        location: [coords.lng, coords.lat],
+      }));
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const goBack = () => { return setCurrPage(false), setPrevPage(true) };
-  const goNext = () => { return setCurrPage(false), setNextPage(true) };
+  const goNext = () => { return handleSubmitForm(), setCurrPage(false), setNextPage(true) };
 
   return (
     <div className="recommendspots-form">
-      <button onClick={() => console.log(mapRef.current.getCenter())}>
-        test button
-      </button>
       <div className="recommendspots-form__header">
         <h3 className="recommendspots-form__title">Where is the study spot located?</h3>
         <p className="recommendspots-form__subtitle">
@@ -93,7 +80,10 @@ function LocationForm({ setPrevPage, setCurrPage, setNextPage, formInformation, 
         <ul className="recommendspots-form__suggestions-list">
           {locationSuggestions
             && locationSuggestions.map(suggestion =>
-              <li className="recommendspots-form__suggestions-item" onClick={() => recenterMarker(suggestion.geometry.coordinates)}>
+              <li
+                className="recommendspots-form__suggestions-item"
+                onClick={() => mapRef.current.setCenter(suggestion.geometry.coordinates)}
+              >
                 {suggestion.properties.address?.house_number || suggestion.properties.name}
                 {suggestion.properties.address?.house_number
                   ? " "
@@ -117,12 +107,18 @@ function LocationForm({ setPrevPage, setCurrPage, setNextPage, formInformation, 
         </ul>
       </form>
       <div className="recommendspots-form__ubc-map">
-        {map}
+        <UBCMap
+          mapZoom={13.5}
+          mapHeight="100%"
+          mapWidth="100%"
+          mapCenter={mapCenter}
+          disableScrollZoom={true}
+          enableCenterMarker={true}
+          enableNavigationControl={true}
+          ref={mapRef}
+        />
       </div>
-      <SubmitButtons
-        goBack={goBack}
-        goNext={goNext}
-      />
+      <SubmitButtons goBack={goBack} goNext={goNext} />
     </div>
   )
 }

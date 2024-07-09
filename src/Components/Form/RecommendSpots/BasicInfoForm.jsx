@@ -3,17 +3,34 @@ import './RecommendSpotsForms.scss';
 import Input from '../../Input/Input';
 import SubmitButtons from './SubmitButtons';
 
-// TODO: save information
 function BasicInfoForm({ setPrevPage, setCurrPage, setNextPage, formInformation, setFormInformation }) {
-  const [basicInfo, setBasicInfo] = useState({ title: null, description: null });
+  const [basicInfo, setBasicInfo] = useState(formInformation.basicInfo);
+  const [error, setError] = useState(false);
 
-  const handleSubmit = () => {
-    // console.log(basicInfo)
-    //TODO: finish function
+  const handleSubmitForm = (callback, errorCallback) => {
+    try {
+      // if user does provide any title or description, throw error
+      if (!basicInfo.title || !basicInfo.description) throw new Error("No information provided");
+
+      setFormInformation(prev => ({
+        ...prev,
+        basicInfo: basicInfo,
+      }))
+
+      callback();
+    } catch (error) {
+      console.error(error);
+      errorCallback();
+    }
   }
 
   const goBack = () => { return setCurrPage(false), setPrevPage(true) };
-  const goNext = () => { return setCurrPage(false), setNextPage(true) };
+  const goNext = () => {
+    handleSubmitForm(
+      () => { return setCurrPage(false), setNextPage(true) }, // regular callback case
+      () => { return setError(true) } // error callback casee
+    );
+  };
 
   return (
     <div className="recommendspots-form">
@@ -22,11 +39,15 @@ function BasicInfoForm({ setPrevPage, setCurrPage, setNextPage, formInformation,
         <p className="recommendspots-form__subtitle">
           Give as much detail as possible, it will help our and your peers' understanding of the study spot a lot more. Please be appropriate.
         </p>
+        {error && (
+          <p className="recommendspots-form__basic-info-error-msg">
+            Please provide a title and description.
+          </p>
+        )}
       </div>
-      <form className="recommendspots-form__basic-info-form" onSubmit={handleSubmit}>
+      <div className="recommendspots-form__basic-info-form">
         <div className="recommendspots-form__basic-info-name">
           <Input
-            label="Title"
             placeholder="Give it a name..."
             inputValue={basicInfo.title}
             changeAction={(e) => setBasicInfo(prev => {
@@ -47,11 +68,8 @@ function BasicInfoForm({ setPrevPage, setCurrPage, setNextPage, formInformation,
             required
           />
         </div>
-      </form>
-      <SubmitButtons
-        goBack={goBack}
-        goNext={goNext}
-      />
+      </div>
+      <SubmitButtons goBack={goBack} goNext={goNext} />
     </div>
   )
 }

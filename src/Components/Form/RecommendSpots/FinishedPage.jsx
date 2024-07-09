@@ -1,10 +1,14 @@
 import React from 'react';
 import "./LandingFinishedPage.scss";
 import SubmitButtons from './SubmitButtons';
+import { sendEmail } from '../../../Services/Utils/email';
+import useAuth from '../../../hooks/useAuth';
 
 // TODO: send info to us somehow
-function FinishedPage({ setPrevPage, setCurrPage, setNextPage }) {
+function FinishedPage({ setPrevPage, setCurrPage, setNextPage, formInformation }) {
+  const { auth } = useAuth();
   const goBack = () => { return setCurrPage(false), setPrevPage(true) };
+  const submitForm = () => { console.log(formInformation) };
   return (
     <div className="finished-page-box">
       <div className="finished-page-box__left-container">
@@ -26,9 +30,7 @@ function FinishedPage({ setPrevPage, setCurrPage, setNextPage }) {
           />
         </div>
       </div>
-      <SubmitButtons
-        goBack={goBack}
-      />
+      <SubmitButtons goBack={goBack} submitForm={submitForm} />
     </div>
   )
 }

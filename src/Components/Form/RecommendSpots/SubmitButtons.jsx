@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './RecommendSpotsForms.scss';
 
-function SubmitButtons({ goBack = null, goNext = null }) {
+function SubmitButtons({ goBack = null, goNext = null, submitForm = null }) {
   return (
     <div className="recommendspots-form__footer">
       <button
@@ -17,14 +17,14 @@ function SubmitButtons({ goBack = null, goNext = null }) {
           //   : 
           (!goBack) // if cant go back = landing page
             ? "recommendspots-form__next-button--landing-page"
-            : (!goNext) // if cant go back = finished page
+            : (submitForm) // submitform = finished page
               ? "recommendspots-form__next-button--finished-page"
               : "recommendspots-form__next-button"}
-        onClick={goNext}
+        onClick={goNext || submitForm}
       >
         {(!goBack) // if cant go back = landing page
           ? "Get started"
-          : (!goNext) // if cant go next = finished page
+          : (submitForm) // submitform = finished page
             ? "Suggest It"
             : "Next"}
       </button>

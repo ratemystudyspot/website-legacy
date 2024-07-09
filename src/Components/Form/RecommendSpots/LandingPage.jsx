@@ -3,7 +3,7 @@ import "./LandingFinishedPage.scss";
 import SubmitButtons from './SubmitButtons';
 
 function LandingPage({ setPrevPage, setCurrPage, setNextPage }) {
-  const goNext = () => {return setCurrPage(false), setNextPage(true)};
+  const goNext = () => { return setCurrPage(false), setNextPage(true) };
 
   return (
     <div className="landing-page-box">
@@ -28,9 +28,7 @@ function LandingPage({ setPrevPage, setCurrPage, setNextPage }) {
           />
         </div>
       </div>
-      <SubmitButtons
-        goNext={goNext}
-      />
+      <SubmitButtons goNext={goNext} />
     </div>
   )
 }

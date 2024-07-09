@@ -20,7 +20,7 @@
   // ------------------------- PROGRESS BAR -------------------------------
   &__progress-bar {
     z-index: 2;
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 85px; /* align with footer height */
     width: 100%;

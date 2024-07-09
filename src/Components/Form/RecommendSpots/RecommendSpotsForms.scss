@@ -104,14 +104,14 @@
     overflow: hidden;
     border-radius: 20px;
     // position: relative;
-    margin: 20px 0 90px 0; /* align bottom margin with height of footer in RecmmendSpotspage.scss */
+    margin: 20px 0 95px 0; /* align bottom margin with height of footer in RecmmendSpotspage.scss */
     width: 100%;
     aspect-ratio: 1 / 0.85;
   }
 
   // ------------------------- AMENITIES FORM -------------------------------
   &__amenities-form {
-    margin-bottom: 90px; /* align with height of footer in RecmmendSpotspage.scss */
+    margin-bottom: 95px; /* align with height of footer in RecmmendSpotspage.scss */
   }
 
   &__amenities-list {
@@ -158,7 +158,7 @@
   // ------------------------- OPENING HOURS FORM -------------------------------
   &__openinghours-form {
     margin-top: 30px;
-    margin-bottom: 90px; /* align with height of footer in RecmmendSpotspage.scss */
+    margin-bottom: 95px; /* align with height of footer in RecmmendSpotspage.scss */
   }
 
   &__openinghours-item {
@@ -190,21 +190,54 @@
     margin-left: 2px;
   }
 
+  &__openinghours-error-msg {
+    color: #e27e7e;
+    margin-bottom: -24px;
+  }
+
   // ------------------------- BASIC INFO FORM -------------------------------
   &__description-box {
     min-height: 140px;
     width: 100%;
-    margin: 10px 0 90px 0; /* margin-bottom = height of footer (found in RecommendSpotspage.scss) */
+    margin: 10px 0 95px 0; /* margin-bottom = height of footer (found in RecommendSpotspage.scss) */
     border-radius: 5px;
     border-color: #ccc;
     padding: 10px;
   }
 
+  &__basic-info-error-msg {
+    color: #e27e7e;
+  }
+
   // ------------------------- PICTURES FORM -------------------------------
   &__pictures-form {
-    margin-bottom: 90px; /* margin-bottom = height of footer (found in RecommendSpotspage.scss) */
+    margin-bottom: 95px; /* margin-bottom = height of footer (found in RecommendSpotspage.scss) */
   }
+
+  &__pictures-error-msg {
+    color: #e27e7e;
+    margin-bottom: -1px;
+  }
+
   &__drag-drop-area {
+    .container-drag {
+      margin-top: 5px;
+      padding: 0;
+    }
+
+    .dropzone-wrapper {
+      border-radius: 5px;
+
+      &:hover {
+        background: none;
+        border: 2px solid #758a8c;
+      }
+    }
+
+    .dropzone-desc {
+      opacity: 0;
+    }
+
     .preview-zone {
       display: grid;
       grid-template-columns: 50% 50%;
@@ -228,6 +261,8 @@
 
       .overlay-button {
         position: absolute;
+        visibility: visible;
+        display: block;
         top: 12px;
         right: 12px;
         background: #000;
@@ -246,6 +281,25 @@
       }
     }
     .button-clear {
+      display: none;
+    }
+  }
+
+  &__dropzone-desc {
+    position: relative;
+    bottom: 104px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: -1;
+
+    svg {
+      fill: #525252;
+    }
+
+    &--none {
       display: none;
     }
   }

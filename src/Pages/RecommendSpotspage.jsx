@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import "./RecommendSpotspage.scss";
 import Banner from "../Components/Banner/Banner";
 import LandingPage from '../Components/Form/RecommendSpots/LandingPage';
@@ -24,39 +24,19 @@ function Spotspage() {
     location: [-123.2460, 49.2626],
     amenities: [],
     openingHours: {
-      monday: null,
-      tuesday: null,
-      wednesday: null,
-      thursday: null,
-      friday: null,
-      saturday: null,
-      sunday: null,
+      "opening": {
+        // more dicts here ...
+      },
+      "closing": {
+        // more dicts here ...
+      },
     },
     pictures: [],
     basicInfo: {
       title: null,
       description: null,
     },
-  })
-
-  // const formInformation = React.useRef({
-  //   location: [-123.2460, 49.2626],
-  //   amenities: [],
-  //   openingHours: {
-  //     monday: null,
-  //     tuesday: null,
-  //     wednesday: null,
-  //     thursday: null,
-  //     friday: null,
-  //     saturday: null,
-  //     sunday: null,
-  //   },
-  //   pictures: [],
-  //   basicInfo: {
-  //     title: null,
-  //     description: null,
-  //   },
-  // })
+  });
 
   const NavigateForms = () => {
     if (landingPage) {
@@ -127,6 +107,7 @@ function Spotspage() {
         setPrevPage={setPicturesForm}
         setCurrPage={setFinishedPage}
         setNextPage={null}
+        formInformation={formInformation}
       />;
     }
 
