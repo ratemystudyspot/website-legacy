@@ -1,4 +1,4 @@
-import { React, useState, } from 'react';
+import React, { useState } from 'react';
 import './AuthForm.scss'
 import { IoMdMail } from "react-icons/io";
 import { FaLock } from "react-icons/fa";
@@ -50,6 +50,7 @@ function LoginForm({ destination }) {
       accessTokenDecoded = null;
     } catch (e) {
       console.error("An error occurred:", e);
+      setLoading(false);
       if (e.message === "Email not found") { // if given credentials don't match any in the database
         setInvalidEmail(true);
         setPwd('');
