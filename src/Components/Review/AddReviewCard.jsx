@@ -7,18 +7,19 @@ import { Rating } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { saveReview } from "../../Slices/reviews.ts";
 import { useAppDispatch } from "../../hooks.ts";
+import { IoIosClose } from "react-icons/io";
 
 const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
   const { auth } = useAuth();
   const location = useLocation();
-
+  const dispatch = useAppDispatch();
+  
   const [overallRating, setOverallRating] = useState(0);
   const [comfortRating, setComfortRating] = useState(0);
   const [spaceRating, setSpaceRating] = useState(0);
   const [quietRating, setQuietRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,14 +65,6 @@ const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
                 Space Availability
                 <Rating value={spaceRating} onChange={(event, newSpaceRating) => { setSpaceRating(newSpaceRating) }} size="large" />
               </div>
-
-              {/* <input
-            type="text"
-            placeholder="Add a Rating... (1-5)"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-            required
-          /> */}
               <textarea
                 className="add-review-box__description-box"
                 type="text"
@@ -87,14 +80,14 @@ const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
             </form>
           </div>
         ) : (
-          //TODO: NEEDS STYLING
           <div className="add-review-box__card">
+            <button className="add-review-box__exit-button"  type="button" onClick={toggleAddReviewCardVisibility}> 
+              <IoIosClose size={"30px"} color="#404040"/>
+            </button>
             <div className="add-review-box__login-form">
-              <h3>Please login first.</h3>
+              <p style={{marginBottom: "none"}}>Please login first!</p>
+              <div class="add-review-box__line" />
               <LoginForm destination={location?.pathname} /> {/* location?.pathname returns current path */}
-              <div className="add-review-button-container">
-                <button className="add-review-cancel-button" type="button" onClick={toggleAddReviewCardVisibility}>Cancel</button>
-              </div>
             </div>
           </div>
         )}
