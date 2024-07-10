@@ -98,7 +98,7 @@
     border: none;
     white-space: nowrap;
     cursor: pointer;
-    background: linear-gradient(267deg, transparent 20.55%, #ADD8E6 90.17%);
+    background: linear-gradient(267deg, transparent 20.55%, #add8e6 90.17%);
     background-color: #a8f2e9;
     transition: all 400ms ease-in;
 
@@ -134,5 +134,66 @@
   }
   100% {
     color: var(--color-1);
+  }
+}
+
+// ----------------------------------- LOGIN FORM POPUP -----------------------------------
+.seekspot-popup {
+  // ------------------------- BACKGROUND -------------------------------
+  &__overlay-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 4;
+  }
+
+  &__card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    height: fit-content;
+    width: 500px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  &__line {
+    border-top: 1px solid #c2c2c2;
+    width: 118%;
+  }
+
+  &__exit-button {
+    border: none;
+    position: absolute;
+    background-color: white;
+    border-radius: 20px;
+    transform: translate(0, 5px);
+  }
+  // ------------------------- LOGIN FORM -------------------------------
+  &__login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px 10px 20px;
+    width: 100%;
+    min-height: fit-content;
+
+    .auth-box {
+      box-shadow: none;
+      padding: 0;
+      margin: 30px 0 30px 0;
+    }
+
+    .login-first-text {
+      color: #2c2c2c;
+      font-weight: bold;
+    }
   }
 }

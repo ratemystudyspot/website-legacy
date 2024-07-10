@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "./AddReviewCard.scss";
 import useAuth from "../../hooks/useAuth";
 import LoginForm from "../../Pages/AuthForm/LoginForm";
@@ -8,9 +8,10 @@ import { useLocation } from "react-router-dom";
 import { saveReview } from "../../Slices/reviews.ts";
 import { useAppDispatch } from "../../hooks.ts";
 import { IoIosClose } from "react-icons/io";
+import { checkAccessTokenExpiry } from "../../Services/auth.js";
 
 const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const location = useLocation();
   const dispatch = useAppDispatch();
   
@@ -20,6 +21,11 @@ const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
   const [quietRating, setQuietRating] = useState(0);
   const [comment, setComment] = useState("");
 
+  // protected/requires auth component requires checking if user is still authorized
+  useEffect(() => {
+    const expiry = checkAccessTokenExpiry(auth, setAuth);
+    if (expiry) window.location.reload(); // reloading automatically handles RT b/c RT handled in App.js
+  }, [toggleAddReviewCardVisibility]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

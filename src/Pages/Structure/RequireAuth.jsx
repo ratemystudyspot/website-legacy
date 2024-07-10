@@ -3,11 +3,18 @@ import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
 import Loading from "./LoadingPage";
 import Unauthorized from "./Unauthorized";
+import { checkAccessTokenExpiry } from "../../Services/auth";
 
-const RequireAuth = ({ authLoaded, allowedRoles }) => {
-    const { auth } = useAuth();
+const RequireAuth = ({ authLoaded, setAuthLoaded, allowedRoles }) => {
+    const { auth, setAuth } = useAuth();
     const location = useLocation();
     const [seconds, setSeconds] = useState(2); // init countdown to 2 seconds
+
+    // check if access token valid, if it is: nothing happens; otherwise: signal to handleRefreshToken
+    useEffect(() => {
+        const expired = checkAccessTokenExpiry(auth, setAuth);
+        if (expired) window.location.reload(); // reloading automatically handles RT b/c RT handled in App.js
+    }, []);
 
     useEffect(() => {
         if (seconds > 0) {

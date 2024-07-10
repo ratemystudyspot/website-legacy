@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 
 const API_URL = process.env.REACT_APP_API_URL_AUTH || 'http://localhost:3001/api/auth';
 
@@ -57,6 +58,27 @@ async function updatePassword(url, password) {
   }
 }
 
+// ----------------------------- NON-BACKEND AUTH-RELATED FUNCTIONS -----------------------------
+function checkAccessTokenExpiry(auth, setAuth) {
+  const isTokenExpired = (token) => {
+    const decodedToken = jwtDecode(token);
+    const currentTime = Math.floor(Date.now() / 1000);
+    return decodedToken.exp < currentTime;
+  };
+
+  const checkTokenExpired = () => {
+    try {
+      const token = auth?.access_token;
+      if (token && isTokenExpired(token)) return setAuth({}), true;
+      else return false;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return checkTokenExpired();
+}
+
 export {
   login,
   logout,
@@ -64,5 +86,5 @@ export {
   handleRefreshToken,
   sendRecoveryEmail,
   updatePassword,
-  // reset,
+  checkAccessTokenExpiry,
 }

@@ -37,22 +37,20 @@ function App() {
         let accessTokenDecoded = jwtDecode(accessToken); // decode access token
 
         setAuth({ access_token: accessToken, user_info: accessTokenDecoded?.UserInfo }); // authorize user
-        
+
         // delete all info related to access token
         response = null;
         accessToken = null;
         accessTokenDecoded = null;
       } catch (error) { // 2 scenarios: 1) user hasn't receive RT, about to login 2) expired RT
-        console.error(error) 
-        // TODO: need to also alert the user that they need to sign in again
-        // alert("signed out -> refresh token expired") //delete this after todo implemention
+        console.error(error);
       }
     }
     fetchRefreshToken();
   }, []);
 
   // use to check if auth has been recieved and can be readily used in app
-  useEffect(() => {
+  useEffect(() => {  
     if (!authLoaded && Object.keys(auth).length !== 0) setAuthLoaded(true); // only use when authLoaded is false to prevent redundant reloads and when auth has information to ensure user has been authenticated
   }, [auth])
 
@@ -70,7 +68,7 @@ function App() {
         <Route path="spots/:id" element={<SpotDetail />} />
 
         {/* protected routes */}
-        <Route element={<RequireAuth authLoaded={authLoaded} allowedRoles={[ROLES.User]} />}>
+        <Route element={<RequireAuth authLoaded={authLoaded} setAuthLoaded={setAuthLoaded} allowedRoles={[ROLES.User]} />}>
           <Route path="spots/suggest-a-spot" element={<RecommendSpotspage />} />
           <Route path="user/settings" element={<UserSettings />} />
         </Route>
