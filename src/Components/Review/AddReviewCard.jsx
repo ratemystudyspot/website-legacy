@@ -85,7 +85,7 @@ const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
               <IoIosClose size={"30px"} color="#404040"/>
             </button>
             <div className="add-review-box__login-form">
-              <p style={{marginBottom: "none"}}>Please login first!</p>
+              <p className="login-first-text">Please login first</p>
               <div class="add-review-box__line" />
               <LoginForm destination={location?.pathname} /> {/* location?.pathname returns current path */}
             </div>
