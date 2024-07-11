@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthProvider';
 import { RecoveryProvider } from './context/RecoveryProvider';
 import { ThemeProvider } from '@mui/material/styles';
+import { Analytics } from '@vercel/analytics/react';
 import theme from './theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,7 +17,7 @@ root.render(
   // <Provider store = {store}>
   //    <App />
   // </Provider >
-  <Provider store = {store}>
+  <Provider store={store}>
     <BrowserRouter>
       <AuthProvider>
         <RecoveryProvider>
@@ -24,6 +25,7 @@ root.render(
             <Routes>
               <Route path="/*" element={<App />} />
             </Routes>
+            <Analytics />
           </ThemeProvider>
         </RecoveryProvider>
       </AuthProvider>
