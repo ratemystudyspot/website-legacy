@@ -10,6 +10,7 @@ import { AuthProvider } from './context/AuthProvider';
 import { RecoveryProvider } from './context/RecoveryProvider';
 import { ThemeProvider } from '@mui/material/styles';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import theme from './theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -26,6 +27,7 @@ root.render(
               <Route path="/*" element={<App />} />
             </Routes>
             <Analytics />
+            <SpeedInsights />
           </ThemeProvider>
         </RecoveryProvider>
       </AuthProvider>
