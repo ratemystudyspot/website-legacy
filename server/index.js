@@ -11,6 +11,7 @@ const reaction = require('./routes/reactionRoutes');
 const { testDbConnection } = require('./config/db');
 const { PORT, CORS_ORIGINS } = require('./config/config');
 const verifyJWT = require('./middleware/verifyJWT');
+const restrictAccess = require('./middleware/restrictAccess');
 
 const app = express();
 
@@ -24,7 +25,6 @@ app.use(helmet({
   noSniff: true,
 }));
 
-
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ limit: "25mb" }));
 
@@ -34,6 +34,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Access-Control-Allow-Headers', 'Authorization'],
   credentials: true,
 }));
+app.use(restrictAccess);
 
 //middleware for cookies
 app.use(cookieParser());
