@@ -29,12 +29,12 @@ app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ limit: "25mb" }));
 
 app.use(cors({
-  origin: [CORS_ORIGINS],
+  origin: CORS_ORIGINS.split(","),
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Access-Control-Allow-Headers', 'Authorization'],
   credentials: true,
 }));
-app.use(restrictAccess)
+app.use(restrictAccess);
 
 //middleware for cookies
 app.use(cookieParser());
