@@ -8,7 +8,6 @@ function restrictAccess(req, res, next) {
   const isRefererIncluded = referer.includes(allowedOriginList[0]) || referer.includes(allowedOriginList[1]);
   const isOriginIncluded = origin.includes(allowedOriginList[0]) || origin.includes(allowedOriginList[1]);
   
-
   if ((referer && isRefererIncluded) || (origin && isOriginIncluded)) {
     return next();
   } else {
