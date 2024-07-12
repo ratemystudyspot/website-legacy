@@ -1,4 +1,4 @@
-import { ALLOWED_ORIGINS } from "../config/config";
+const { ALLOWED_ORIGINS } = require("../config/config");
 
 function restrictAccess(req, res, next) {
   const allowedOriginList = ALLOWED_ORIGINS.split(",");
