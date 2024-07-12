@@ -2,7 +2,7 @@
 
 ### *Announcments*
 In Beta Production. \
-Notice any bugs or have a suggestion for our site, please fill out this [form](https://zxsjydb7pl0.typeform.com/to/k851wR8w)!
+Notice any bugs or have a suggestion for our site, please fill out this <a href="https://zxsjydb7pl0.typeform.com/to/k851wR8w" target="_blank">form</a>!
 
 ## About
 **TLDR: RateMyProfs for Study Spots.**
