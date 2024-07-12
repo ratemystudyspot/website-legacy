@@ -13,7 +13,7 @@ import { searchStudySpot } from '../../Slices/studySpots.ts';
 import { filterSpots } from '../../Slices/studySpots.ts';
 
 // TODO: Turn show different buttons to an object instead!!!
-const Banner = ({ filterSelected, setFilterSelected, cards, setCards, showSearch = false, showGoBackButton = false, showAboutUsButton = false, showSeekSpotButton = true, additionalStyle }) => {
+const Banner = ({ filterSelected, setFilterSelected, showSearch = false, showGoBackButton = false, showAboutUsButton = false, showSeekSpotButton = true, additionalStyle }) => {
   const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
   const [isOpen, setIsOpen] = useState(false); // State to track whether the auth navbar is open or closed
   

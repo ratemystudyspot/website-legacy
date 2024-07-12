@@ -30,7 +30,7 @@ const convertTimeTo24h = (time12h) => {
   return `${hours}:${minutes}:${seconds}`;
 }
 
-const ListOfStudySpotCards = ({ filterSelected, currentLocation, cards, setCards }) => {
+const ListOfStudySpotCards = ({ filterSelected, currentLocation}) => {
   const dispatch = useAppDispatch();
   const studySpots = useAppSelector((state) => state.studySpots.value);
 
