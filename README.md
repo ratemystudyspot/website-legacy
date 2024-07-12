@@ -1,4 +1,4 @@
-# Seeker
+# <img src="src/Components/Assets/Seeker%20Logo%20Blue%20Background%20Rounded.png" alt="Seeker Logo" width="27" height="27"> RateMyStudySpot 
 
 ### *Announcments*
 In Beta Production. \
