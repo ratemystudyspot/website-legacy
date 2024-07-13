@@ -2,43 +2,45 @@ body {
   color: #7c7c7c;
 }
 
-  //------------------------ GENERAL ABOUT US BANNER ------------------------------- 
-
-
+ //------------------------ GENERAL ------------------------------- 
 .about-box {
+  // GENERAL ABOUT US BANNER
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  height: 100svh;
+
   &__large-banner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
-    height: 44vh;
+    height: 40vh;
     width: 100vw; 
-    transform: translateX(-50%);
-    top: 119px;
-    z-index: -1;
+    transform: translateY(100px);
+    position: relative;
     background-color: #BFE0FF;
-    
   }
+
   &__title {
-    font-size: 100px;
     font-weight: bold;
   }
+
   &__description {
-    font-size: 17px;
     font-weight: bolder;
     width: fit-content;
     text-align: justify;
   }
 
-  //------------------------ DEVELOPER ABOUT US SECTION ------------------------------- 
-
+  // DEVELOPER ABOUT US SECTION  
   &__card-box {
     display: flex;
     flex-direction: row;
-    position: absolute;
-    width: 90vw;
-    transform: translate(-50%, -15vh);
+    width: 100%;
+    height: fit-content;
     justify-content: center;
+    align-items: center;
+    position: relative;
   }
 
   &__developer-cards {
@@ -69,7 +71,15 @@ body {
     height: 90%;
     min-width: 90px;
   }
- 
+
+  &__developer-details {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__social-media-directory{
     display: flex;
     flex-direction: column;
@@ -90,7 +100,6 @@ body {
 
   &__developer-username {
     font-weight: bold;
-    font-size: 200%;
   }
 
   &__developer-description {
@@ -98,145 +107,259 @@ body {
     justify-content: center;
     width: 80%;
     height: 45%;
-    margin-top: 20px;
-    font-size: 17px;
   }
 }
 
-
-@media (min-width: 1080px) {
+//------------------------ MIN WIDTH 1024 PX ------------------------------- 
+@media (min-width: 1200px) {
   .about-box {
+    // GENERAL ABOUT US BANNER
+    &__large-banner {
+      height: 210px;
+    }
+
     &__title {
-      font-size: 125px;
-      font-weight: bold;
-    }
-    &__description {
-      font-size: 20px;
-    }
-    &__developer-username {
-      font-weight: bold;
-      font-size: 275%;
-    }
-    &__developer-description {
-      margin-top: 20px;
-      font-size: 19px;
-    }
-    &__developer-role {
-      font-size: 150%;
-    }
-  }
-
-
-
-}
-
-
-/* .container {
-  display: flex;
-  flex-direction: column;
-  overflow: clip;
-} */
-
-/* .logo {
-  width: 70px;
-  height: 70px;
-} */
-/* 
-
-.a-logo {
-  margin-right: 60px; 
-  width: 45px;
-  height: 45px; 
-  margin-right: 20px;
-  position: absolute;
-  left: 29px;
-  top: 17.5px;
-}
-
-
-.logo-container button {
-  color: #525252;
-  border: none;
-  background-color: white;
-  font-size: 13px;
-  font-weight: 600;
-  position: relative;
-  top: 5%;
-  right: 10px;
-  padding: 8px;
-  height: 34px;
-  border-radius: 4px;
-}
-
-.logo-container button:hover {
-  background-color: #dcdcdc;
-}
-
-.about-section {
-  padding: 50px;
-  margin: 40px;
-  text-align: center;
-  background-color: #F5F5F5;
-  transition: 0.3s;
-  border-radius: 14px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-
-  .title{
-    color: #64adc6;
-  }
-  .subtitle {
-    color: #ADD8E6;
-  }
-
-}
-
-.about-section:hover {
-  box-shadow: 0 14px 18px 0 rgba(0, 0, 0, 0.2);
-}
-
-.title {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.contact {
-  display: flex;
-  justify-content: space-around;
-
-  .column {
-    float: left;
-    width: 33.3%;
-    margin-bottom: 16px;
-    padding: 0 8px;
-
-    .card {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      transition: 0.3s;
-      margin: 8px;
-      
-      img {
-        border-radius: 4px;
-      }
-
-      .container {
-        padding: 16px;
-        .title {
-          text-align: left;
-          color: #7c7c7c;
-          margin-bottom: 0;
-        }
-      }
-    }
-    .card:hover {
-      box-shadow: 0 18px 28px 0 rgba(0, 0, 0, 0.2);
+      font-size: 110px;
     }
     
-  }
+    &__description {
+      font-size: 22px;
+    }
+
+    // DEVELOPER ABOUT US SECTION  
+    &__card-box {
+      transform: translateY(100px);
+    }
   
+    &__developer-cards {
+      width: 95%;
+      height: 50vh;
+    }
+    
+    &__developer-username {
+      font-size: 39px;
+    }
+
+    &__developer-role {
+      font-size: 23px;
+    }
+
+    &__developer-description {
+      margin-top: 15px;
+      font-size: 20px;
+    }
+  }
 }
 
-.container::after, .row::after {
-  content: "";
-  clear: both;
-  display: table;
-} */
+//------------------------ WIDTH 1024 PX TO 1200 PX ------------------------------- 
+@media (min-width: 1024px) and (max-width: 1200px) {
+  .about-box {
+    // GENERAL ABOUT US BANNER
+    &__large-banner {
+      height: 210px;
+    }
+
+    &__title {
+      font-size: 110px;
+    }
+    
+    &__description {
+      font-size: 22px;
+    }
+
+    // DEVELOPER ABOUT US SECTION  
+    &__card-box {
+      transform: translateY(100px);
+    }
+  
+    &__developer-cards {
+      width: 95%;
+      height: 50vh;
+    }
+    
+    &__developer-username {
+      font-size: 39px;
+    }
+
+    &__developer-role {
+      font-size: 23px;
+    }
+
+    &__developer-description {
+      margin-top: 15px;
+      font-size: 20px;
+    }
+  }
+}
+
+//------------------------ WIDTH 1024 PX ------------------------------- 
+@media (max-width: 1024px) {
+  .about-box {
+    // GENERAL ABOUT US BANNER
+    &__large-banner {
+      height: 200px;
+    }
+
+    &__title {
+      font-size: 100px;
+    }
+    
+    &__description {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    // DEVELOPER ABOUT US SECTION  
+    &__card-box {
+      flex-direction: column;
+      align-items: center;
+      transform: translateY(100px);
+    }
+
+    &__developer-cards {
+      width: 95%;
+      height: 40vh;
+    }
+    
+    &__developer-username {
+      font-size: 37px;
+    }
+
+    &__developer-role {
+      font-size: 21px;
+    }
+
+    &__developer-description {
+      margin-top: 15px;
+      font-size: 19px;
+    }
+  }
+}
+
+//------------------------ WIDTH 768 PX ------------------------------- 
+@media (max-width: 768px) {
+  .about-box {
+    // GENERAL ABOUT US BANNER
+    &__large-banner {
+      height: 210px;
+      transform: translateY(100px);
+    }
+
+    &__title {
+      font-size: 90px;
+    }
+    
+    &__description {
+      font-size: 18px;
+    }
+
+    // DEVELOPER ABOUT US SECTION  
+
+    &__card-box {
+      transform: translateY(100px);
+    }
+
+    &__developer-cards {
+      width: 95%;
+      height: 40vh;
+    }
+    
+    &__developer-username {
+      font-size: 35px;
+    }
+
+    &__developer-role {
+      font-size: 19px;
+    }
+
+    &__developer-description {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+  }
+}
+
+//------------------------ WIDTH 600 PX ------------------------------- 
+@media (max-width: 600px) {
+  .about-box {
+    // GENERAL ABOUT US BANNER
+    &__large-banner {
+      height: 200px;
+      transform: translate(0, 79px);
+    }
+
+    &__title {
+      font-size: 80px;
+    }
+    
+    &__description {
+      font-size: 16px;
+    }
+
+    // DEVELOPER ABOUT US SECTION  
+    &__card-box {
+      transform: translateY(120px);
+    }
+
+    &__developer-username {
+      font-size: 30px;
+    }
+
+    &__developer-role {
+      font-size: 17px;
+    }
+
+    &__developer-description {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+  }
+}
+
+//------------------------ WIDTH 480 PX ------------------------------- 
+@media (max-width: 480px) {
+
+  .about-box {
+
+    // GENERAL ABOUT US BANNER
+    &__large-banner {
+      height: 180px;
+      transform: translateY(100px);
+    }
+
+    &__pfp {
+      height: 80%;
+    }
+
+    &__title {
+      font-size: 70px;
+    }
+
+    &__description {
+      font-size: 14px;
+      margin: 0 20px 0 20px;
+    }
+
+    // DEVELOPER ABOUT US SECTION  
+    &__card-box {
+      transform: translateY(120px);
+    }
+
+    &__developer-cards {
+      width: 90%;
+      height: 40vh;
+    }
+
+    &__developer-username {
+      font-size: 25px;
+    }
+
+    &__developer-role {
+      font-size: 15px;
+    }
+
+    &__developer-description {
+      font-size: 14px;
+    }
+  }
+}

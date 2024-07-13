@@ -10,14 +10,14 @@ import { Button } from "react-bootstrap"
 const Aboutpage = () => {
   return (
     <div className="about-box">
-      <Banner showGoBackButton={true} additionalStyle={{boxShadow:"none"}}/>
+    <Banner showGoBackButton={true} additionalStyle={{boxShadow:"none"}}/>
       <div className="about-box__large-banner">
-        <h1 className="about-box__title">
+        <div className="about-box__title">
           About Us
-        </h1>
-        <h3 className="about-box__description">
+        </div>
+        <div className="about-box__description">
           Welcome to Rate My Study Spot, built by students for students
-        </h3>
+        </div>
       </div>
       <div className="about-box__card-box">
         <div className="about-box__developer-cards">
@@ -25,13 +25,13 @@ const Aboutpage = () => {
             
             <img className="about-box__pfp" src={require("../Components/Assets/ray.jpg")} alt="Ray"/>
 
-            <div className="text">
-                <h3 className="about-box__developer-username">
+            <div className="about-box__developer-details">
+                <div className="about-box__developer-username">
                   Ray Zhou
-                </h3>
-                <h5 className="about-box__developer-role">
+                </div>
+                <div className="about-box__developer-role">
                   Co-founder
-                </h5>
+                </div>
             </div>
 
             <div className="about-box__social-media-directory">
@@ -50,13 +50,13 @@ const Aboutpage = () => {
           <div className="about-box__developer-banner">
               <img className="about-box__pfp" src={require("../Components/Assets/leo.jpg")} alt="Leo"/>
               
-              <div className="text">
-                  <h3 className="about-box__developer-username">
+              <div className="about-box__developer-details">
+                  <div className="about-box__developer-username" >
                     Leo Shang
-                  </h3>
-                  <h5 className="about-box__developer-role">
+                  </div>
+                  <div className="about-box__developer-role">
                     Co-founder
-                  </h5>
+                  </div>
               </div>
             <div className="about-box__social-media-directory">
               <img className="about-box__icon" onClick={() => {window.open("https://www.linkedin.com/in/leo-shang-604911267/")}} src={require("../Components/Assets/linkedInIcon.webp")} alt="LinkedIn"/>
