@@ -1,6 +1,7 @@
+//------------------------ GENERAL -------------------------------
 .seekspot-box {
   display: flex;
-
+  overflow: hidden;
   // ------------------------- LEFT CONTAINER -------------------------------
   &__left-container {
     position: absolute;
@@ -18,7 +19,8 @@
     justify-content: flex-start;
     position: absolute;
     transform: translateX(-50%);
-    top: 40vh;
+    top: 45vh;
+    height: 300px;
     text-align: left;
   }
 
@@ -26,7 +28,7 @@
     animation: color-animation 6s ease-in-out infinite;
     text-transform: uppercase;
     font-weight: 800;
-    font-size: 4vw;
+    font-size: 52px;
     text-align: left;
 
     &--1 {
@@ -46,7 +48,6 @@
     &--3 {
       @extend .seekspot-box__text;
       --color-1: #add8e6; /* Light Blue */
-
       --color-2: #20b2aa; /* Light Sea Green */
       --color-3: #87cefa; /* Light Sky Blue */
     }
@@ -56,6 +57,25 @@
       --color-1: #00ced1; /* Dark Turquoise */
       --color-2: #4682b4; /* Steel Blue */
       --color-3: #48d1cc; /* Medium Turquoise */
+    }
+
+    // ----------------------------------- COLOUR ANIMATIONS -----------------------------------
+    @keyframes color-animation {
+      0% {
+        color: var(--color-1);
+      }
+      25% {
+        color: var(--color-2);
+      }
+      50% {
+        color: var(--color-3);
+      }
+      75% {
+        color: var(--color-2);
+      }
+      100% {
+        color: var(--color-1);
+      }
     }
   }
 
@@ -76,24 +96,25 @@
     justify-content: center;
     position: absolute;
     width: 100%;
-    top: 19vh;
+    top: 160px;
   }
 
   &__right-title {
     color: #add8e6;
     font-weight: 700;
+    font-size: 40px;
   }
 
   &__add-spots-button {
     position: relative;
     bottom: 4px;
-    font-size: 23px;
+    font-size: 30px;
     font-weight: 600;
     margin: -7px 15px;
     min-width: fit-content;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 5px 20px;
+    padding: 10px 30px;
     color: #fff;
     border: none;
     white-space: nowrap;
@@ -109,31 +130,14 @@
 
   &__map {
     position: relative;
-    top: 27vh;
+    top: 240px;
     right: 3vw;
-    height: 70vh;
-    width: 100%;
+    height: 80vh;
+    width: 50vw;
+    padding-bottom: 30px;
     .maplibregl-ctrl {
       visibility: hidden;
     }
-  }
-}
-
-@keyframes color-animation {
-  0% {
-    color: var(--color-1);
-  }
-  25% {
-    color: var(--color-2);
-  }
-  50% {
-    color: var(--color-3);
-  }
-  75% {
-    color: var(--color-2);
-  }
-  100% {
-    color: var(--color-1);
   }
 }
 
@@ -194,6 +198,467 @@
     .login-first-text {
       color: #2c2c2c;
       font-weight: bold;
+    }
+  }
+}
+
+//------------------------ WIDTH 1024 PX -------------------------------
+@media (max-width: 1024px) {
+  .seekspot-box {
+    overflow-y: scroll;
+    //------------------------ "LEFT" (actually TOP) CONTAINER -------------------------------
+    &__left-container {
+      display: flex;
+      height: auto;
+      width: 100vw;
+    }
+
+    &__left-title {
+      display: block;
+      top: 180px;
+      width: 100vw;
+      text-align: center;
+      left: 50%;
+    }
+
+    &__text {
+      font-size: 50px;
+    }
+
+    // ------------------------- "RIGHT" (actually BOTTOM) CONTAINER -------------------------------
+    &__right-container {
+      display: flex;
+      flex-direction: column-reverse;
+      height: 1400px;
+      width: 100vw;
+    }
+
+    &__right-header {
+      position: sticky;
+      left: 0;
+      bottom: 0;
+      margin-top: auto;
+      margin-bottom: 0;
+      width: 100vw;
+      height: 90px;
+      align-items: center;
+      background-color: #fff;
+      box-shadow: 0px -2px 2px 0px rgba(0, 0, 0, 0.15);
+      z-index: 2;
+    }
+
+    &__right-title {
+      color: #add8e6;
+      font-size: 6vw;
+      font-weight: 700;
+    }
+
+    &__add-spots-button {
+      font-size: 30px;
+      padding: 12px 35px;
+    }
+
+    &__map {
+      position: static;
+      margin: 300px auto 0 auto;
+      height: 1000px;
+      width: 90vw;
+      .maplibregl-ctrl {
+        visibility: hidden;
+      }
+    }
+  }
+
+  //------------------------ LOGIN POPUP -------------------------------
+  .seekspot-popup {
+    &__card {
+      height: 100vh;
+      width: 100vw;
+      border-radius: 0;
+    }
+
+    &__line {
+      border-top: 1px solid #c2c2c2;
+      width: 100vw;
+    }
+
+    // ------------------------- LOGIN FORM -------------------------------
+    &__login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      min-height: fit-content;
+
+      .auth-box {
+        box-shadow: none;
+        padding: 0;
+        margin: 17vh 0;
+        width: 100%;
+      }
+    }
+  }
+}
+
+//------------------------ WIDTH 768 PX -------------------------------
+@media (max-width: 768px) {
+  .seekspot-box {
+    //------------------------ "LEFT" (actually TOP) CONTAINER -------------------------------
+    &__left-container {
+      display: flex;
+      height: auto;
+      width: 100vw;
+    }
+
+    &__left-title {
+      display: block;
+      top: 140px;
+      width: 100vw;
+      text-align: center;
+      left: 50%;
+    }
+
+    &__text {
+      font-size: 30px;
+    }
+
+    // ------------------------- "RIGHT" (actually BOTTOM) CONTAINER -------------------------------
+    &__right-container {
+      display: flex;
+      flex-direction: column-reverse;
+      height: 1024px;
+      width: 100vw;
+    }
+
+    &__right-header {
+      position: sticky;
+      left: 0;
+      bottom: 0;
+      margin-top: auto;
+      margin-bottom: 0;
+      width: 100vw;
+      height: 90px;
+      align-items: center;
+      background-color: #fff;
+      box-shadow: 0px -2px 2px 0px rgba(0, 0, 0, 0.15);
+      z-index: 2;
+    }
+
+    &__right-title {
+      color: #add8e6;
+      font-size: 6vw;
+      font-weight: 700;
+    }
+
+    &__add-spots-button {
+      font-size: 30px;
+      padding: 12px 35px;
+    }
+
+    &__map {
+      position: static;
+      margin: 200px auto 0 auto;
+      height: 750px;
+      width: 90vw;
+      .maplibregl-ctrl {
+        visibility: hidden;
+      }
+    }
+  }
+
+  //------------------------ LOGIN POPUP -------------------------------
+  .seekspot-popup {
+    &__card {
+      height: 100vh;
+      width: 100vw;
+      border-radius: 0;
+    }
+
+    &__line {
+      border-top: 1px solid #c2c2c2;
+      width: 100vw;
+    }
+
+    // ------------------------- LOGIN FORM -------------------------------
+    &__login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      min-height: fit-content;
+
+      .auth-box {
+        box-shadow: none;
+        padding: 0;
+        margin: 17vh 0;
+        width: 100%;
+      }
+    }
+  }
+}
+
+//------------------------ WIDTH 480 PX -------------------------------
+@media (max-width: 480px) {
+  //------------------------ MAIN CONTENT -------------------------------
+  .seekspot-box {
+    //------------------------ "LEFT" (actually TOP) CONTAINER -------------------------------
+    &__left-container {
+      display: flex;
+      height: auto;
+      width: 100vw;
+    }
+
+    &__left-title {
+      display: block;
+      top: 150px;
+      width: 100vw;
+      text-align: center;
+      left: 50%;
+    }
+
+    &__text {
+      font-size: 31px;
+    }
+
+    // ------------------------- "RIGHT" (actually BOTTOM) CONTAINER -------------------------------
+    &__right-container {
+      display: grid;
+      margin-top: 110px;
+      grid-template-rows: 1fr auto; /* Auto for footer, 1fr for the rest */
+      grid-template-columns: 1fr;
+      height: calc(100vh - 90px);
+      width: 100vw;
+    }
+
+    &__right-header {
+      grid-row: 2; /* Place in the second row */
+      position: sticky; /* Sticky positioning can help if there's scrolling */
+      left: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 90px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      box-shadow: 0px -2px 2px 0px rgba(0, 0, 0, 0.15);
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+    }
+
+    &__right-title {
+      color: #add8e6;
+      font-size: 6vw;
+      font-weight: 700;
+    }
+
+    &__add-spots-button {
+      position: relative;
+      bottom: 4px;
+      font-size: 23px;
+      font-weight: 600;
+      margin: -7px 15px;
+      min-width: fit-content;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 5px 20px;
+      color: #fff;
+      border: none;
+      white-space: nowrap;
+      cursor: pointer;
+      background: linear-gradient(267deg, transparent 20.55%, #add8e6 90.17%);
+      background-color: #a8f2e9;
+      transition: all 400ms ease-in;
+
+      &:hover {
+        background-color: #71f8e8;
+      }
+    }
+
+    &__map {
+      grid-row: 1;
+      position: absolute;
+      margin: -100px auto 0 auto;
+      left: 0;
+      right: 0;
+      height: 64vh;
+      width: 90vw;
+      .maplibregl-ctrl {
+        visibility: hidden;
+      }
+    }
+  }
+
+  //------------------------ LOGIN POPUP -------------------------------
+  .seekspot-popup {
+    &__card {
+      height: 100vh;
+      width: 100vw;
+      border-radius: 0;
+    }
+
+    &__line {
+      border-top: 1px solid #c2c2c2;
+      width: 100vw;
+    }
+
+    // ------------------------- LOGIN FORM -------------------------------
+    &__login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      min-height: fit-content;
+
+      .auth-box {
+        box-shadow: none;
+        padding: 0;
+        margin: 17vh 0;
+        width: 100%;
+      }
+    }
+  }
+}
+
+//------------------------ WIDTH 375 PX -------------------------------
+@media (max-width: 375px) {
+  //------------------------ MAIN CONTENT -------------------------------
+  .seekspot-box {
+    // ------------------------- "LEFT" (actually TOP) CONTAINER -------------------------------
+    &__left-title {
+      top: 150px;
+    }
+
+    // ------------------------- "RIGHT" (actually BOTTOM) CONTAINER -------------------------------
+    &__right-container {
+      display: grid;
+      margin-top: 120px;
+      height: calc(100vh - 40px);
+      grid-template-rows: 1fr auto; /* Auto for footer, 1fr for the rest */
+      grid-template-columns: 1fr;
+    }
+
+    &__right-header {
+      grid-row: 2; /* Place in the second row */
+      position: sticky; /* Sticky positioning can help if there's scrolling */
+      left: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 90px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      box-shadow: 0px -2px 2px 0px rgba(0, 0, 0, 0.15);
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+    }
+
+    &__right-title {
+      color: #add8e6;
+      font-size: 6vw;
+      font-weight: 700;
+    }
+
+    &__add-spots-button {
+      position: relative;
+      bottom: 4px;
+      font-size: 23px;
+      font-weight: 600;
+      margin: -7px 15px;
+      min-width: fit-content;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 5px 20px;
+      color: #fff;
+      border: none;
+      white-space: nowrap;
+      cursor: pointer;
+      background: linear-gradient(267deg, transparent 20.55%, #add8e6 90.17%);
+      background-color: #a8f2e9;
+      transition: all 400ms ease-in;
+
+      &:hover {
+        background-color: #71f8e8;
+      }
+    }
+
+    &__map {
+      grid-row: 1;
+      position: absolute;
+      margin: -100px auto 0 auto;
+      left: 0;
+      right: 0;
+      height: 60vh;
+      width: 90vw;
+      .maplibregl-ctrl {
+        visibility: hidden;
+      }
+    }
+  }
+
+  //------------------------ LOGIN POPUP -------------------------------
+  .seekspot-popup {
+    &__card {
+      height: 100vh;
+      width: 100vw;
+      border-radius: 0;
+    }
+
+    &__line {
+      border-top: 1px solid #c2c2c2;
+      width: 100vw;
+    }
+
+    // ------------------------- LOGIN FORM -------------------------------
+    &__login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      min-height: fit-content;
+
+      .auth-box {
+        box-shadow: none;
+        padding: 0;
+        margin: 17vh 0;
+        width: 100%;
+      }
+    }
+  }
+}
+
+//------------------------ WIDTH 320 PX -------------------------------
+@media (max-width: 320px) {
+  //------------------------ MAIN CONTENT -------------------------------
+  .seekspot-box {
+    &__text {
+      font-size: 3vh;
+    }
+
+    &__add-spots-button {
+      position: relative;
+      bottom: 4px;
+      font-size: 23px;
+      font-weight: 600;
+      margin: -7px 15px;
+      min-width: fit-content;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 5px 20px;
+      color: #fff;
+      border: none;
+      white-space: nowrap;
+      cursor: pointer;
+      background: linear-gradient(267deg, transparent 20.55%, #add8e6 90.17%);
+      background-color: #a8f2e9;
+      transition: all 400ms ease-in;
+
+      &:hover {
+        background-color: #71f8e8;
+      }
     }
   }
 }
