@@ -17,12 +17,12 @@ async function authenticateUser(cookies, credentials) {
   const password = validator.escape(credentials.password);
   console.log(`cookies available at login: ${JSON.stringify(cookies)}`);
   try {
-    
+
     const user = await findOne({ email });
 
     if (!user) throw new Error("Email not found"); // if user not in db, throw error
 
-    if (!await bcrypt.compare(password, user.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
+    if (bcrypt.compareSync(password, user.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
 
     const accessToken = jwt.sign(
       {
@@ -93,7 +93,7 @@ async function logoutUser(cookies) {
 async function registerUser(credentials) {
   const capitalize = (str) => { return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() };
   const [rawFirstName, rawLastName] = credentials.name.trim().split(/\s+/);
-  
+
   if (
     !rawFirstName ||
     !rawLastName ||
@@ -129,13 +129,16 @@ async function registerUser(credentials) {
     console.error("Error:", error);
     throw error;
   }
-  
+
+
   // creating a new user
   try {
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
     return await createUser({
       name,
       email,
-      password: await bcrypt.hash(password, 15), // auto-gen salt and hash
+      password: hashedPassword, // auto-gen salt and hash
       role: process.env.REACT_APP_USER_ROLE
     });
   } catch (error) {
