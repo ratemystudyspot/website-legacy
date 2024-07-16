@@ -272,7 +272,7 @@
     &__card {
       border-radius: 0;
       height: 600px;
-      margin-top: calc(100vh - 80px);
+      margin-top: calc(100vh - 180px);
       width: 100vw;
     }
 
@@ -645,13 +645,15 @@
 //------------------------ FOR IOS DEVICES -------------------------------
 @supports (-webkit-touch-callout: none) {
   //------------------------ WIDTH 1024 PX -------------------------------
-  @media (max-width: 1024px) {
+  @media screen and (max-width: 1024px) {
     //------------------------ LOGIN POPUP -------------------------------
     .seekspot-popup {
+      position: absolute;
+      
       &__card {
         border-radius: 0;
-        height: 900px;
-        margin-top: calc(100vh - 180px);
+        height: max(100lvh, 700px);
+        margin-top: 140px;
         width: 100vw;
       }
 
@@ -679,7 +681,7 @@
   }
 
   //------------------------ WIDTH 768 PX -------------------------------
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     .seekspot-box {
       //------------------------ "LEFT" (actually TOP) CONTAINER -------------------------------
       &__left-container {
@@ -728,36 +730,6 @@
         margin-top: 130px;
         height: 950px;
         width: 90vw;
-      }
-    }
-
-    //------------------------ LOGIN POPUP -------------------------------
-    .seekspot-popup {
-      &__card {
-        height: 100vh;
-        width: 100vw;
-        border-radius: 0;
-      }
-
-      &__line {
-        border-top: 1px solid #c2c2c2;
-        width: 100vw;
-      }
-
-      // ------------------------- LOGIN FORM -------------------------------
-      &__login-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        min-height: fit-content;
-
-        .auth-box {
-          box-shadow: none;
-          padding: 0;
-          margin: 17vh 0;
-          width: 100%;
-        }
       }
     }
   }
@@ -851,6 +823,8 @@
 
     //------------------------ LOGIN POPUP -------------------------------
     .seekspot-popup {
+      position: static;
+      top: auto;
       &__card {
         height: 1000px;
         margin-top: 156px;
