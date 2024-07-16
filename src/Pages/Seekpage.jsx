@@ -9,16 +9,16 @@ import useAuth from '../hooks/useAuth';
 import LoginForm from "./AuthForm/LoginForm";
 import { IoIosClose } from "react-icons/io";
 
-// const getAllLocations = () => {
-//   const allLocations = [];
-//   StudySpotsData.map((studySpot) => {
-//     allLocations.push({
-//       label: studySpot.name,
-//       coordinates: studySpot.location.coordinates
-//     });
-//   })
-//   return allLocations;
-// }
+const getAllLocations = () => {
+  const allLocations = [];
+  StudySpotsData.map((studySpot) => {
+    allLocations.push({
+      label: studySpot.name,
+      coordinates: studySpot.location.coordinates
+    });
+  })
+  return allLocations;
+}
 
 function Seekpage() {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -58,8 +58,7 @@ function Seekpage() {
             </button>
           </div>
           <div className="seekspot-box__map">
-            {/* <UBCMap markers={getAllLocations()} mapWidth="100%" mapHeight="100%" /> */}
-            <UBCMap mapWidth="100%" mapHeight="100%" />
+            <UBCMap markers={getAllLocations()} mapWidth="100%" mapHeight="100%" />
           </div>
         </div>
       </div>
