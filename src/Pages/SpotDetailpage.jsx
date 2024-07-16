@@ -64,9 +64,11 @@ function SpotDetailpage() {
     // fetch images
     currentStudySpot?.image_links.map((image_link) => {
       setGalleryImages((prevGalleryImages) => {
-        return prevGalleryImages.concat(
-          [<img src={getImage(image_link)} alt="Gallery Image" />]
-        )
+        try {
+          return prevGalleryImages.concat([<img src={getImage(image_link)} alt="Gallery Image" />])  
+        } catch (error) {
+          return prevGalleryImages.concat([<img src={getImage("404-image-not-found.png")} alt="Gallery Image" />])  
+        }
       })
     })
 
