@@ -635,30 +635,11 @@
   //------------------------ MAIN CONTENT -------------------------------
   .seekspot-box {
     &__text {
-      font-size: 3vh;
+      font-size: 25px;
     }
 
-    &__add-spots-button {
-      position: relative;
-      bottom: 4px;
-      font-size: 23px;
-      font-weight: 600;
-      margin: -7px 15px;
-      min-width: fit-content;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 5px 20px;
-      color: #fff;
-      border: none;
-      white-space: nowrap;
-      cursor: pointer;
-      background: linear-gradient(267deg, transparent 20.55%, #add8e6 90.17%);
-      background-color: #a8f2e9;
-      transition: all 400ms ease-in;
-
-      &:hover {
-        background-color: #71f8e8;
-      }
+    &__map {
+      margin: -110px auto 0 auto;
     }
   }
 }
