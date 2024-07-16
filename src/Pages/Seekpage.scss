@@ -270,9 +270,10 @@
   //------------------------ LOGIN POPUP -------------------------------
   .seekspot-popup {
     &__card {
-      height: 100vh;
-      width: 100vw;
       border-radius: 0;
+      height: 600px;
+      margin-top: calc(100vh - 80px);
+      width: 100vw;
     }
 
     &__line {
@@ -645,7 +646,36 @@
 @supports (-webkit-touch-callout: none) {
   //------------------------ WIDTH 1024 PX -------------------------------
   @media (max-width: 1024px) {
-    
+    //------------------------ LOGIN POPUP -------------------------------
+    .seekspot-popup {
+      &__card {
+        border-radius: 0;
+        height: 900px;
+        margin-top: calc(100vh - 180px);
+        width: 100vw;
+      }
+
+      &__line {
+        border-top: 1px solid #c2c2c2;
+        width: 100vw;
+      }
+
+      // ------------------------- LOGIN FORM -------------------------------
+      &__login-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        min-height: fit-content;
+
+        .auth-box {
+          box-shadow: none;
+          padding: 0;
+          margin: 17vh 0;
+          width: 100%;
+        }
+      }
+    }
   }
 
   //------------------------ WIDTH 768 PX -------------------------------
