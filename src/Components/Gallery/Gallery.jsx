@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import './Gallery.scss';
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 
-function Gallery({ galleryImages = [] }) {
-  const [imageIndex, setImageIndex] = useState(0);
+function Gallery({ galleryFiles = [] }) {
+  const [fileIndex, setfileIndex] = useState(0);
 
   const nextSlide = () => {
-    setImageIndex((prevIndex) => {
-      if (prevIndex + 1 < galleryImages.length) return prevIndex + 1; // return next image
-      else return 0; // return first image
+    setfileIndex((prevIndex) => {
+      if (prevIndex + 1 < galleryFiles.length) return prevIndex + 1; // return next file
+      else return 0; // return first file
     });
   }
 
   const prevSlide = () => {
-    setImageIndex((prevIndex) => {
-      if (prevIndex - 1 >= 0) return prevIndex - 1; // return prev image
-      else return galleryImages.length - 1; // return last image
+    setfileIndex((prevIndex) => {
+      if (prevIndex - 1 >= 0) return prevIndex - 1; // return prev file
+      else return galleryFiles.length - 1; // return last file
     });
   }
 
@@ -25,7 +25,7 @@ function Gallery({ galleryImages = [] }) {
         <button className="gallery-box__slider-button--prev" onClick={prevSlide}><IoIosArrowDropleftCircle /></button>
         <button className='gallery-box__slider-button--next' onClick={nextSlide}><IoIosArrowDroprightCircle /></button>
       </div>
-      {galleryImages[imageIndex]}
+      {galleryFiles[fileIndex]}
     </div>
   )
 }
