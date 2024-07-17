@@ -2,6 +2,7 @@ import React from 'react';
 import './StudySpotCard.scss';
 import getDistanceFromLatLonInKm from '../../Helpers/GetDistanceLatLon';
 import { useNavigate } from 'react-router-dom';
+import Hashids from 'hashids';
 
 
 const images = require.context('../Assets', true);
@@ -13,6 +14,7 @@ function getImage(imageLink) {
 
 const StudySpotCard = ({ studySpot, currentLocation }) => {
   const navigate = useNavigate();
+  const hashids = new Hashids();
   
   const getDistance = () => {
     const user_lon = currentLocation[0];
@@ -27,7 +29,7 @@ const StudySpotCard = ({ studySpot, currentLocation }) => {
   return (
     <div
       className="studyspot-card"
-      onClick={() => navigate(`/spots/${studySpot.id}`)}>
+      onClick={() => navigate(`/spots/${hashids.encode(studySpot.id)}`)}>
       <img className="studyspot-card__image" src={getImage(studySpot.image_link)} />
       <div className="studyspot-card__card-details">
         <h4 className="studyspot-card__label"><b> {studySpot.name} </b></h4>

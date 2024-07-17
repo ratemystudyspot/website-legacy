@@ -14,6 +14,7 @@ import getCurrentUserLocation from '../Helpers/GetUserLocation';
 import StudySpots from '../Data/StudySpotsData';
 import { useAppDispatch, useAppSelector } from '../hooks.ts';
 import { fetchReviewsByStudySpot } from '../Slices/reviews.ts';
+import Hashids from 'hashids';
 
 const images = require.context('../Components/Assets', true);
 
@@ -24,7 +25,8 @@ function getImage(imageLink) {
 
 function SpotDetailpage() {
   const { id } = useParams();
-  const currentStudySpot = StudySpots.filter(studySpot => studySpot.id === parseInt(id))[0];
+  const hashids = new Hashids();
+  const currentStudySpot = StudySpots.filter(studySpot => studySpot.id === parseInt(hashids.decode(id)))[0];
 
   const [distance, setDistance] = useState("N/A");
   const [summaryCardLoaded, setSummaryCardLoaded] = useState(false);

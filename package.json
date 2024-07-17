@@ -25,6 +25,7 @@
     "dotenv": "^16.4.5",
     "drag-drop-file-tk": "^1.0.8",
     "express": "^4.18.2",
+    "hashids": "^2.3.0",
     "helmet": "^7.1.0",
     "idb": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
@@ -49,6 +50,7 @@
     "react-social-icons": "^6.16.0",
     "sass": "^1.77.6",
     "sequelize": "^6.37.3",
+    "sitemap": "^8.0.0",
     "toastify-js": "^1.12.0",
     "ts-node": "^10.9.2",
     "uuidv4": "^6.2.13",
@@ -63,7 +65,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start:be:dev": "nodemon --env-file .env server/index.js",
-    "start:be:prod": "set NODE_ENV=production && nodemon --env-file .env.production server/index.js"
+    "start:be:prod": "set NODE_ENV=production && nodemon --env-file .env.production server/index.js",
+    "generate-sitemap": "node scripts/generate-sitemap.js"
   },
   "eslintConfig": {
     "extends": [
