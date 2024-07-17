@@ -12,7 +12,16 @@ const theme = createTheme({
       dark: "#000",
       contrastText: '#fff',
     }
-  },
+  }, 
+  breakpoints: {
+    values: {
+        px480: 480, 
+        px600: 600, 
+        px768: 768, 
+        px1024: 1024, 
+        px1200: 1200, 
+    },
+},
 });
 
 export default theme;

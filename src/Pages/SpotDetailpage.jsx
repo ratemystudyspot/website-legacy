@@ -84,13 +84,8 @@ function SpotDetailpage() {
         <AddReviewCard toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
       </div>
 
-      <div className='detailed-spot-box__banner'>
-        <Banner showGoBackButton={true} />
-      </div>
-      {(reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) // things that need to load before shown to user
-        ? (null)
-        : (<LoaderScreen variant="white" />)}
-
+      <div className='detailed-spot-box__banner'> <Banner showGoBackButton={true} /> </div>
+      {(reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) ? (null) : (<LoaderScreen variant="white" />)}
       <div className="detailed-spot-box__listing-detail">
         {/* Left Container */}
         <div className="detailed-spot-box__study-info-container">

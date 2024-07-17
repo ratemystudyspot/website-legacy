@@ -4,11 +4,10 @@ import { IconButton, Button } from '@mui/material';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import EditIcon from '@mui/icons-material/Edit';
-import { Padding } from "maplibre-gl";
-import { editReview } from "../../Services/review";
-import useAuth from "../../hooks/useAuth";
-import { createReaction, getReactionsByFilter, updateReaction, deleteReaction } from "../../Services/reaction";
-import { RestaurantMenu } from "@mui/icons-material";
+import { editReview } from "../../../Services/review";
+import useAuth from "../../../hooks/useAuth";
+import { createReaction, getReactionsByFilter, updateReaction, deleteReaction } from "../../../Services/reaction";
+import CustomRating from "../CustomRating";
 
 // Add state management!!!
 const handleEditReview = async (review_id, user_id, rating, comment, access_token) => {
@@ -53,10 +52,10 @@ const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 
     return (
         <div className="review-box">
             <div className="review-box__header">
-                <Rating
+                <CustomRating
                     value={ratingValue}
                     precision={1}
-                    size="large"
+                    size="small"
                     readOnly
                 />
                 <div className="review-box__date">

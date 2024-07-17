@@ -1,0 +1,213 @@
+/* TODO: CSS Container names SUCK!!! Please fix  LEOOO*/
+.review-summary-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: fit-content;
+    width: 100%;
+    min-width: fit-content;
+    background-color: white;
+    border-radius: 20px;
+    margin: 5px;
+    padding: 20px 25px 15px 25px;
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
+
+    // ------------------------- LEFT CONTAINER -------------------------------
+    &__left-container {
+        margin: 0 5px 0 20px;
+        display: flex;
+        flex-direction: row;
+        width: 50%;
+    }
+
+    &__labels-container {
+        margin-right: 20px;
+    }
+
+    &__progress-bar-container {
+        width: 100%;
+    }
+
+    &__bar-labels {
+        margin: 24px 0 24px 0;
+        height: 15px;
+    }
+
+    &__progress-bar {
+        display: flex;
+        width: 100%;
+        margin: 25px 0 25px 0;
+
+        &--five-star-bar {
+            @extend .review-summary-box__progress-bar;
+        }
+
+        &--four-star-bar {
+            @extend .review-summary-box__progress-bar;
+        }
+
+        &--three-star-bar {
+            @extend .review-summary-box__progress-bar;
+        }
+
+        &--two-star-bar {
+            @extend .review-summary-box__progress-bar;
+        }
+
+        &--one-star-bar {
+            @extend .review-summary-box__progress-bar;
+        }
+    }
+
+    // ------------------------- RIGHT CONTAINER -------------------------------
+    // TODO: create new button component for the different buttons!
+    &__right-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: translate(0, -15px);
+        margin: 0 30px 0 5px;
+    }
+
+    &__average-rating-text {
+        transform: translate(0, 20%);
+        font-weight: bolder;
+        font-size: 75px;
+        margin-bottom: 5px;
+    }
+
+    &__num-reviews-text {
+        margin: 5px 0 20px 0;
+    }
+
+    &__add-review-button {
+        border-radius: 20px;
+        height: 30px;
+        width: 115px;
+        background-color: #bfe0ff;
+        border: none;
+        color: #7c7c7c;
+
+        &:hover {
+            color: #636363;
+            background-color: #a9c6e2;
+        }
+    }
+}
+@media (min-width: 1200px) {}
+
+@media (min-width: 1024px) and (max-width: 1200px) {}
+
+@media (max-width: 1024px) {}
+
+@media (max-width: 768px) {
+    .review-summary-box {
+
+        // ------------------------- RIGHT CONTAINER -------------------------------
+        &__right-container {
+            margin: 0 5px 0 5px;
+            transform: translate(0, -20px);
+        }
+
+        &__average-rating-text {
+            font-size: 65px;
+        }
+
+        &__add-review-button {
+            height: 32px;
+            width: 110px;
+            font-size: 15px;
+        }
+
+        &__num-reviews-text {
+            font-size: 14px;
+            margin: 5px 0 10px 0;
+        }
+
+        // ------------------------- LEFT CONTAINER -------------------------------
+        &__left-container {
+            margin: 8px 10px 0 5px;
+        }
+
+        &__bar-labels {
+            font-size: 16px;
+            margin: 14px 0 14px 0;
+        }
+
+        &__progress-bar {
+            margin: 17px 0 17px 0;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .review-summary-box {
+        // ------------------------- RIGHT CONTAINER -------------------------------
+        &__right-container {
+            margin: 0 20px 0 5px;
+            transform: translate(0, -20px);
+        }
+
+        &__average-rating-text {
+            font-size: 60px;
+        }
+
+        &__add-review-button {
+            height: 27px;
+            width: 105px;
+            font-size: 14px;
+        }
+
+        &__num-reviews-text {
+            font-size: 14px;
+            margin: 5px 0 10px 0;
+        }
+
+        // ------------------------- LEFT CONTAINER -------------------------------
+        &__left-container {
+            margin: 8px 10px 0 15px;
+        }
+
+        &__bar-labels {
+            font-size: 16px;
+            margin: 14px 0 14px 0;
+        }
+
+        &__progress-bar {
+            margin: 17px 0 17px 0;
+        }
+    }}
+
+@media (max-width: 480px) {
+    .review-summary-box {
+        // ------------------------- RIGHT CONTAINER -------------------------------
+        &__average-rating-text {
+            font-size: 55px;
+        }
+
+        &__add-review-button {
+            height: 25px;
+            width: 100px;
+            font-size: 13px;
+        }
+
+        &__num-reviews-text {
+            font-size: 12px;
+            margin: 5px 0 10px 0;
+        }
+
+        // ------------------------- LEFT CONTAINER -------------------------------
+        &__left-container {
+            margin: 8px 10px 0 5px;
+        }
+
+        &__bar-labels {
+            margin: 10px 0 10px 0;
+            font-size: 14px;
+        }
+
+        &__progress-bar {
+            margin: 15px 0 15px 0;
+        }
+    }
+}
