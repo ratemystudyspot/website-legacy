@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const { v4: uuidv4 } = require('uuid');
 
 async function getUsers(filters) {
   try {
@@ -35,7 +36,12 @@ async function createUser(body) {
 
   // creating a new user
   try {
-    return await User.createUser({ email, password: hash_password, role });
+    return await User.createUser({ 
+      hashed_id: uuidv4(),
+      email, 
+      password: hash_password, 
+      role
+    });
   } catch (error) {
     console.error("Error creating user:", error);
     throw error;

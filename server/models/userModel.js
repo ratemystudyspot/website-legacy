@@ -3,42 +3,44 @@ const { sequelize } = require("../config/db");
 const validator = require('validator');
 
 // User model
-const User = sequelize.define("User",
-	{
-		id: {
-			type: DataTypes.INTEGER,
-			primaryKey: true,
-			autoIncrement: true,
-		},
-		name: {
-			type: DataTypes.TEXT,
-			allowNull: false,
-		},
-		email: {
-			type: DataTypes.TEXT,
-			allowNull: false,
-		},
-		password: {
-			type: DataTypes.TEXT,
-			allowNull: false,
-		},
-		role: {
-			type: DataTypes.INTEGER,
-			defaultValue: 2001,
-		},
-		password_recovery_token: {
-			type: DataTypes.TEXT,
-		},
-		refresh_token: {
-			type: DataTypes.ARRAY(DataTypes.TEXT),
-			defaultValue: []
-		},
+const User = sequelize.define("User", {
+	id: {
+		type: DataTypes.INTEGER,
+		primaryKey: true,
+		autoIncrement: true,
 	},
-	{
-		timestamps: false,
-		createdAt: false,
-		tableName: "user"
-	}
+	hashed_id: {
+		type: DataTypes.TEXT,
+		allowNull: false,
+	},
+	name: {
+		type: DataTypes.TEXT,
+		allowNull: false,
+	},
+	email: {
+		type: DataTypes.TEXT,
+		allowNull: false,
+	},
+	password: {
+		type: DataTypes.TEXT,
+		allowNull: false,
+	},
+	role: {
+		type: DataTypes.INTEGER,
+		defaultValue: 2001,
+	},
+	password_recovery_token: {
+		type: DataTypes.TEXT,
+	},
+	refresh_token: {
+		type: DataTypes.ARRAY(DataTypes.TEXT),
+		defaultValue: []
+	},
+}, {
+	timestamps: false,
+	createdAt: false,
+	tableName: "user"
+}
 );
 
 // delete later
@@ -55,7 +57,7 @@ async function findAllSafe(filters) {
 		}
 
 		return await User.findAll({
-			attributes: { exclude: ['refresh_token', 'password_recovery_token', 'password'] },
+			attributes: { exclude: ['refresh_token', 'password_recovery_token', 'password', 'id'] },
 			where: filters,
 		});
 	} catch (error) {
@@ -69,7 +71,7 @@ async function findOne(filters) {
 		for (const key in filters) { // security defense
 			filters[key] = validator.escape(filters[key]);
 			filters[key] = validator.trim(filters[key]);
-			
+
 			if (key === 'refresh_token') {
 				filters[key] = { [Op.contains]: [filters.refresh_token] };
 			}

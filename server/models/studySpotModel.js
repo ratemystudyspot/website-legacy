@@ -9,6 +9,10 @@ const StudySpot = sequelize.define("StudySpot", {
 		primaryKey: true,
 		autoIncrement: true,
 	},
+	hashed_id: {
+		type: DataTypes.TEXT,
+		allowNull: false,
+	},
 	name: {
 		type: DataTypes.TEXT,
 		allowNull: false,
@@ -36,12 +40,11 @@ const StudySpot = sequelize.define("StudySpot", {
 		type: DataTypes.ARRAY(DataTypes.TEXT), // Array of text for features
 		defaultValue: []
 	},
-},
-	{
-		timestamps: false,
-		createdAt: false,
-		tableName: "study_spot"
-	}
+}, {
+	timestamps: false,
+	createdAt: false,
+	tableName: "study_spot"
+}
 );
 
 StudySpot.hasMany(OpeningHour, { foreignKey: 'study_spot_id', onDelete: 'CASCADE' });
