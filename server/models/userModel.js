@@ -9,10 +9,6 @@ const User = sequelize.define("User", {
 		primaryKey: true,
 		autoIncrement: true,
 	},
-	hashed_id: {
-		type: DataTypes.TEXT,
-		allowNull: false,
-	},
 	name: {
 		type: DataTypes.TEXT,
 		allowNull: false,
@@ -57,7 +53,7 @@ async function findAllSafe(filters) {
 		}
 
 		return await User.findAll({
-			attributes: { exclude: ['refresh_token', 'password_recovery_token', 'password', 'id'] },
+			attributes: { exclude: ['refresh_token', 'password_recovery_token', 'password'] },
 			where: filters,
 		});
 	} catch (error) {

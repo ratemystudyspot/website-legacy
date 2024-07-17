@@ -9,10 +9,6 @@ const StudySpot = sequelize.define("StudySpot", {
 		primaryKey: true,
 		autoIncrement: true,
 	},
-	hashed_id: {
-		type: DataTypes.TEXT,
-		allowNull: false,
-	},
 	name: {
 		type: DataTypes.TEXT,
 		allowNull: false,
