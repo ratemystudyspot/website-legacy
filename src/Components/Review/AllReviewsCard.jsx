@@ -6,7 +6,7 @@ import ReviewCard from "./ReviewCard";
 import { getReactionsByFilter } from "../../Services/reaction";
 import ReviewSummaryCard from "./ReviewSummaryCard";
 
-const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisibility }) => {
+const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisibility, toggleEditReviewCardVisibility }) => {
     const { auth } = useAuth();
     const { id } = useParams();
     const [reactions, setReactions] = useState([]);
@@ -84,6 +84,7 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
                             userLiked={liked}
                             userDisliked={disliked}
                             setReactionUpdate={setReactionUpdate}
+                            toggleEditReviewCardVisibility={toggleEditReviewCardVisibility}
                         />
                     )
                 })

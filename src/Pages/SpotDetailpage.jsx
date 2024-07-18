@@ -15,6 +15,7 @@ import StudySpots from '../Data/StudySpotsData';
 import { useAppDispatch, useAppSelector } from '../hooks.ts';
 import { fetchReviewsByStudySpot } from '../Slices/reviews.ts';
 import Hashids from 'hashids';
+import ChangeReviewCardPopup from '../Components/Review/ChangeReviewCardPopup.jsx';
 
 const files = require.context('../Components/Assets', true);
 
@@ -33,14 +34,15 @@ function SpotDetailpage() {
   // const [reviews, setReviews] = useState([]);
   const [reviewsLoaded, setReviewsLoaded] = useState(false);
   const [showAddReviewCard, setShowAddReviewCard] = useState(false);
+  const [showEditReviewCard, setShowEditReviewCard] = useState(false);
   const [galleryFiles, setGalleryFiles] = useState([]);
 
-  const toggleAddReviewCardVisibility = () => {
-    setShowAddReviewCard((prevState) => !prevState)
-  }
+  const toggleAddReviewCardVisibility = () => setShowAddReviewCard((prevState) => !prevState);
+  const toggleEditReviewCardVisibility = () => setShowEditReviewCard((prevState) => !prevState);
 
   const dispatch = useAppDispatch();
   const reviews = useAppSelector((state) => state.reviews.value);
+  console.log(reviews);
 
   // fetch distance
   useEffect(() => {
@@ -68,11 +70,11 @@ function SpotDetailpage() {
         try {
           const isImage = fileLink.endsWith(".png") || fileLink.endsWith(".jpg") || fileLink.endsWith(".jpeg");
           if (isImage) return prevGalleryFiles.concat([<img src={getFile(fileLink)} alt="Gallery Image" />]);
-          
+
           const isVideo = fileLink.endsWith(".mp4") || fileLink.endsWith(".mov");
           if (isVideo) return prevGalleryFiles.concat([<video controls src={getFile(fileLink)} alt="Gallery Video" />]);
         } catch (error) {
-          return prevGalleryFiles.concat([<img src={getFile("404-image-not-found.png")} alt="Gallery Image" />])  
+          return prevGalleryFiles.concat([<img src={getFile("404-image-not-found.png")} alt="Gallery Image" />])
         }
       })
     })
@@ -85,9 +87,14 @@ function SpotDetailpage() {
   let key = 0; // added to get rid of unqiue key prop warnings in the map function
   return (
     <div className="detailed-spot-box">
-      <div style={{ display: showAddReviewCard ? 'block' : 'none' }}>
-        <AddReviewCard toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
-      </div>
+      {
+        (showAddReviewCard || showEditReviewCard) &&
+        <ChangeReviewCardPopup
+          toggleReviewCardPopupVisibility={showAddReviewCard ? toggleAddReviewCardVisibility : showEditReviewCard ? toggleEditReviewCardVisibility : null}
+          change={showAddReviewCard ? "add" : showEditReviewCard ? "edit" : null}
+        />
+      }
+
 
       <div className='detailed-spot-box__banner'>
         <Banner showGoBackButton={true} />
@@ -129,7 +136,7 @@ function SpotDetailpage() {
         </div>  {/* Replace with loop!
           {/* Right Container */}
 
-        <AllReviewsCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
+        <AllReviewsCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} toggleEditReviewCardVisibility={toggleEditReviewCardVisibility} />
       </div>
     </div>
   )

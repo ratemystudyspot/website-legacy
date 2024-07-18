@@ -119,7 +119,8 @@ async function updateReview(query, body) {
     const updated_attributes = body;
     if (body.user_id) delete updated_attributes[body.user_id];
 
-    return await Review.update(updated_attributes, { where: { id } });
+    await Review.update(updated_attributes, { where: { id } });
+    return await Review.findByPk(id);
   } catch (error) {
     console.error("Error updating reviews:", error);
     throw new Error(error.message);

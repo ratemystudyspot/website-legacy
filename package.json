@@ -60,13 +60,14 @@
     "webpack-dev-server": "^5.0.4"
   },
   "scripts": {
-    "pretest": "eslint --ignore-path .gitignore .",
     "start": "set PORT=3000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start:be:dev": "nodemon --env-file .env server/index.js",
     "start:be:prod": "set NODE_ENV=production && nodemon --env-file .env.production server/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "generate-sitemap": "node scripts/generate-sitemap.js"
   },
   "eslintConfig": {

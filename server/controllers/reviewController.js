@@ -20,8 +20,8 @@ async function createReview(req, res) {
 
 async function updateReview(req, res) {
   try {
-    await reviewService.updateReview(req.query, req.body);
-    res.sendStatus(204);
+    const result = await reviewService.updateReview(req.query, req.body);
+    res.status(200).send(result);
   } catch (error) {
     if (error.message === "Forbidden") {
       return res.status.send(error);
