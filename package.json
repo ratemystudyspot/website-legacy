@@ -60,6 +60,7 @@
     "webpack-dev-server": "^5.0.4"
   },
   "scripts": {
+    "pretest": "eslint --ignore-path .gitignore .",
     "start": "set PORT=3000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -87,6 +88,8 @@
     ]
   },
   "devDependencies": {
-    "dotenv-webpack": "^8.1.0"
+    "dotenv-webpack": "^8.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-strongloop": "^2.1.0"
   }
 }
