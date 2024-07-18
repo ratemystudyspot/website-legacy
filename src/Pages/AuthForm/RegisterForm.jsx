@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './AuthForm.scss'
 import { IoMdMail } from "react-icons/io";
 import { FaUser, FaLock } from "react-icons/fa";
@@ -13,31 +13,30 @@ const RegisterForm = () => {
   const [pwd, setPwd] = useState('');
   const [invalidPwd, setInvalidPwd] = useState(false);
   const [duplicate, setDuplicate] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const loading = useRef(false);
 
   const navigate = useNavigate();
 
   const HandleSubmit = async (e) => {
     e.preventDefault(); // if password doesn't meet the requirements, dont refresh page (prevents states resetting)
-    if (loading) return; // prevent user from spam creating accounts
-
+    if (loading.current) return; // prevent user from spam creating accounts
+    loading.current = true;
+    
     try {
       setInvalidEmail(false);
       setInvalidPwd(false);
       setDuplicate(false);
-      setLoading(true);
       await register(name, email, pwd);
       // if no error thrown get rid of errors and goto email verification page
       setInvalidEmail(false);
       setInvalidPwd(false);
       setDuplicate(false);
-      setLoading(false);
 
       navigate("/login");
       // TODO: navigate to a verify page (for future !!!)
       // navigate("/verify/" + email);
     } catch (e) {
-      setLoading(false);
+      loading.current = false;
       setPwd('');
 
       if (e.message === "Name error") { // if user sends an invalid name 
@@ -79,7 +78,7 @@ const RegisterForm = () => {
               ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Hmm, that email address doesn't look right.</p>
               : (invalidPwd) // if user doesn't pass the basic password criteria
                 ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Please set a password longer than eight characters.</p>
-                : (loading) // processing request
+                : (loading.current) // processing request
                   ? <p className="auth-box__auth-msg auth-box__auth-msg--loading auth-box__auth-msg--top">Loading...</p>
                   : (null)
         }
@@ -120,7 +119,7 @@ const RegisterForm = () => {
           <FaLock className="auth-box__icon" />
         </div>
 
-        <button className="auth-box__auth-button" type="submit" disabled={loading}>
+        <button className="auth-box__auth-button" type="submit" disabled={loading.current}>
           Create Account
         </button>
 
