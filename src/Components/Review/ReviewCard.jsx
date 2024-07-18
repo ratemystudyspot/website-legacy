@@ -45,10 +45,8 @@ const handleReaction = async (updated_reaction, user_liked, user_disliked, revie
 
 const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 0, isOwner = false, likes, dislikes, userLiked = false, userDisliked = false, setReactionUpdate, toggleEditReviewCardVisibility }) => {
     const { auth } = useAuth();
-    const user_id = auth?.user_info?.id;
-    const newRating = 4; // TODO: change this
-    const newComment = "new comment" //TODO: change this
-    const access_token = auth?.access_token;
+    const user_id = auth.user_info.id;
+    const access_token = auth.user_info.id;
 
     return (
         <div className="review-box">
@@ -73,17 +71,6 @@ const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 
                     className="review-box__edit-button"
                     style={{ display: isOwner ? 'block' : 'none' }}
                     onClick={toggleEditReviewCardVisibility}
-                        
-                        
-                        
-                    //     handleEditReview( // TODO: currently will edit the review as soon as you click button --> but idealy we should be editting in a popup
-                    //     review_id,
-                    //     user_id,
-                    //     newRating,
-                    //     {}, // DEFINITELY CHANGE!
-                    //     newComment,
-                    //     access_token
-                    // )}
                 >
                     <EditIcon style={{ marginRight: "5px", marginBottom: "3px", width: "20px" }} />
                     Edit
