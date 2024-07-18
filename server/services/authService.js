@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { createUser, findOne, findAllSafe } = require('../models/userModel');
+const { createUser, findOne, findAllSafe, updateUser } = require('../models/userModel');
 const tokenUtil = require('../utils/token');
 const emailUtil = require('../utils/email');
 const validator = require('validator');
@@ -22,7 +22,7 @@ async function authenticateUser(cookies, credentials) {
 
     if (!user) throw new Error("Email not found"); // if user not in db, throw error
 
-    if (bcrypt.compareSync(password, user.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
+    if (!bcrypt.compareSync(password, user.password)) throw new Error('Incorrect Password'); // if hashed password and given password don't match, throw error
 
     const accessToken = jwt.sign(
       {
@@ -135,6 +135,7 @@ async function registerUser(credentials) {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
+    console.log(password, hashedPassword);
     return await createUser({
       name,
       email,
