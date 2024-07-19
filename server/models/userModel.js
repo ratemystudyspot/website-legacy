@@ -88,8 +88,10 @@ async function findOne(filters) {
 async function createUser(body) {
 	try {
 		for (const key in body) {
-			body[key] = validator.escape(body[key]);
-			body[key] = validator.trim(body[key]);
+			if (key !== "password") { // TODO: eventually get rid of this and tell users some characters are off limit.
+				body[key] = validator.escape(body[key]);
+				body[key] = validator.trim(body[key]);
+			}
 		}
 
 		return await User.create(body);
