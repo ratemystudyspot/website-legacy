@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import "./AllReviewsCard.scss"
 import useAuth from "../../hooks/useAuth";
 import { useParams } from "react-router-dom";
-import ReviewCard from "./ReviewCard";
+import ReviewCard from "./ReviewCard/ReviewCard";
 import { getReactionsByFilter } from "../../Services/reaction";
-import ReviewSummaryCard from "./ReviewSummaryCard";
+import ReviewSummaryCard from "./ReviewSummaryCard/ReviewSummaryCard";
 
 const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisibility }) => {
     const { auth } = useAuth();
@@ -65,9 +65,9 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true // This will format the time in 12-hour format (with AM/PM)
+                        // hour: 'numeric',
+                        // minute: 'numeric',
+                        // hour12: true 
                     };
                     const formattedDate = dateLocal.toLocaleString('en-us', options);
                     

@@ -1,0 +1,191 @@
+.review-box {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+    background-color: white;
+    border-radius: 20px;
+    margin: 5px;
+    padding: 20px 25px 15px 25px;
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
+
+    // ------------------------- HEADER AND INFO -------------------------------
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    &__date {
+        font-weight: bold;
+    }
+
+    &__description {
+        padding-left: 5px;
+        min-height: 50px;
+    }
+
+    // ------------------------- BUTTONS -------------------------------
+    &__buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__edit-button {
+        color: #7c7c7c !important;
+        background-color: #bfe0ff !important;
+        width: 90px !important;
+        border-radius: 20px !important;
+        &:hover {
+            color: #636363 !important;
+            background-color: #a9c6e2 !important;
+        }
+    }
+
+    &__thumbs-container {
+        display: flex;
+        justify-content: row;
+    }
+
+    &__thumbs-up-container,
+    &__thumbs-down-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__thumbs-button,
+    &__thumbs-button {
+        &--liked,
+        &--disliked {
+            color: #64adc6 !important;
+        }
+    }
+}
+
+
+
+@media (min-width: 1200px) {
+    .review-box {
+        // ------------------------- HEADER AND INFO -------------------------------
+        &__date {
+            font-size: 21px;
+        }
+    
+        &__description {
+            min-height: 60px;
+            font-size: 20px;
+        }
+    
+        // ------------------------- BUTTONS -------------------------------
+        &__thumbs-up-container,
+        &__thumbs-down-container {
+            font-size: 19px;
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .review-box {
+        // ------------------------- HEADER AND INFO -------------------------------
+        &__date {
+            font-size: 20px;
+        }
+    
+        &__description {
+            min-height: 50px;
+            font-size: 19px;
+        }
+    
+        // ------------------------- BUTTONS -------------------------------
+        &__thumbs-up-container,
+        &__thumbs-down-container {
+            font-size: 18px;
+        }
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .review-box {
+        // ------------------------- HEADER AND INFO -------------------------------
+        &__date {
+            font-size: 17px;
+        }
+    
+        &__description {
+            min-height: 40px;
+            font-size: 16px;
+        }
+    
+        // ------------------------- BUTTONS -------------------------------
+        &__thumbs-up-container,
+        &__thumbs-down-container {
+            font-size: 15px;
+        }
+    }
+}
+
+
+@media (max-width: 768px) {
+    .review-box {
+        // ------------------------- HEADER AND INFO -------------------------------
+        &__date {
+            font-size: 18px;
+        }
+    
+        &__description {
+            min-height: 40px;
+            font-size: 17px;
+        }
+    
+        // ------------------------- BUTTONS -------------------------------
+        &__thumbs-up-container,
+        &__thumbs-down-container {
+            font-size: 16px;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .review-box {
+        // ------------------------- HEADER AND INFO -------------------------------
+        &__date {
+            font-size: 16px;
+        }
+    
+        &__description {
+            min-height: 35px;
+            font-size: 14px;
+        }
+    
+        // ------------------------- BUTTONS -------------------------------
+        &__thumbs-up-container,
+        &__thumbs-down-container {
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .review-box {
+        // ------------------------- HEADER AND INFO -------------------------------
+        &__date {
+            font-size: 14px;
+        }
+    
+        &__description {
+            min-height: 30px;
+            font-size: 13px;
+        }
+    
+        // ------------------------- BUTTONS -------------------------------
+        &__thumbs-up-container,
+        &__thumbs-down-container {
+            font-size: 12px;
+        }
+    }
+}

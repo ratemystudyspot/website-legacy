@@ -1,10 +1,7 @@
 .all-reviews-card {
-    /* position: absolute; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 80vh;
-    width: 30vw;
     min-width: fit-content;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -12,7 +9,6 @@
     padding: 5px 10px 10px 10px;
     border-radius: 10px;
     box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
-    /* background-color: black; */
 
     &:hover::-webkit-scrollbar-thumb {
         visibility: visible;
@@ -27,10 +23,22 @@
     }
 }
 
-@media (max-width: 950px) {
+@media (min-width: 1200px) {
+    .all-reviews-card {
+        width: 40vw;
+        height: 80svh;
+    }
+}
+
+@media (max-width: 1200px) {
+    .all-reviews-card {
+        width: 45vw;
+        height: 80svh;
+    }
+}
+
+@media (max-width: 768px) {
     .all-reviews-card {
         width: 90vw;
-        transform: translate(-4%, 0);
-        margin-top: 30px;
     }
 }

@@ -77,6 +77,19 @@ function SpotDetailpage() {
     setReviewsLoaded(true);
   }, [])
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   let key = 0; // added to get rid of unqiue key prop warnings in the map function
   return (
     <div className="detailed-spot-box">
@@ -84,13 +97,8 @@ function SpotDetailpage() {
         <AddReviewCard toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
       </div>
 
-      <div className='detailed-spot-box__banner'>
-        <Banner showGoBackButton={true} />
-      </div>
-      {(reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) // things that need to load before shown to user
-        ? (null)
-        : (<LoaderScreen variant="white" />)}
-
+      <div className='detailed-spot-box__banner'> <Banner showGoBackButton={true} /> </div>
+      {(reviewsLoaded && galleryImages.length !== 0 && summaryCardLoaded) ? (null) : (<LoaderScreen variant="white" />)}
       <div className="detailed-spot-box__listing-detail">
         {/* Left Container */}
         <div className="detailed-spot-box__study-info-container">

@@ -8,15 +8,13 @@
 
   //------------------------ LISTING DETAILS -------------------------------
   &__listing-detail {
-    position: absolute;
+    // position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: center;
     background: #fff;
-    width: 100vw;
-    height: 80vh;
-    transform: translate(-50%, -50%);
-    margin-top: 60px;
+    width: 100svw;
+    height: 100svh;
+    // margin-top: 60px;
   }
 
   &__listing-header {
@@ -35,7 +33,6 @@
     flex-direction: column;
     width: 40vw;
     height: 100%;
-    margin-right: 50px;
   }
 
   //------------------------ GALLERY -------------------------------
@@ -52,16 +49,9 @@
 
   //------------------------ UBC MAP SECTION -------------------------------
   &__ubc-map {
-    position: relative;
     height: 150px;
     width: 100%;
-    /* .maplibregl-ctrl button .maplibregl-ctrl-icon {
-      background-position: 50%;
-      background-repeat: no-repeat;
-      display: block;
-      height: 100%;
-      width: 100%;
-    } */
+
     .maplibregl-ctrl-attrib.maplibregl-compact {
       visibility: hidden;
     }
@@ -100,10 +90,112 @@
   }
 }
 
-// ------------------------- MOBILE COMPATIBILITY -------------------------------
-@media (max-width: 900px) {
+@media (min-width: 1200px) {
+
+  .detailed-spot-box {
+    margin-top: 140px;
+
+    &__listing-detail {
+      justify-content: center;
+    }
+
+    &__study-info-container {
+      height: 80vh;
+      width: 40vw;      
+      margin-right: 3vw;
+    }
+
+    &__listing-header {
+      margin-top: 12px;
+      margin-bottom: 0px;
+      font-size: 3.0rem;
+    }
+
+    &__distance-away {
+      margin: 0px 0 15px 5px;
+      font-size: 18px;
+    }
+
+    &__gallery {
+      height: 300px;
+    }
+
+    &__ubc-map {
+      height: 120px;
+    }
+
+    &__amenities {
+      ul {
+        margin-bottom: 0px;
+      }
+
+      li {
+          font-size: 16px;
+          margin-bottom: 10px;
+          svg {
+            margin-bottom: 5px;
+          }
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  // body {
+  //   overflow-y: hidden;
+  // }
+  .detailed-spot-box {
+    margin-top: 140px;
+
+    &__listing-detail {
+      justify-content: space-around;
+    }
+
+    &__study-info-container {
+      height: 80vh;
+      width: 45vw;      
+    }
+
+    &__listing-header {
+      margin-top: 12px;
+      margin-bottom: 0px;
+      font-size: 2.6rem;
+    }
+
+    &__distance-away {
+      margin: 0px 0 15px 5px;
+      font-size: 16px;
+    }
+
+    &__gallery {
+      height: 300px;
+    }
+
+    &__ubc-map {
+      height: 120px;
+    }
+
+    &__amenities {
+      ul {
+        margin-bottom: 0px;
+      }
+
+      li {
+          font-size: 14px;
+          margin-bottom: 10px;
+          svg {
+            margin-bottom: 5px;
+          }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+
   body {
     overflow-x: hidden;
+    overflow-y: visible;
   }
 
   .detailed-spot-box {
@@ -111,19 +203,109 @@
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      transform: translate(-46.5%, -50%);
+      width: 90vw;
+      margin-top: 140px;
     }
 
     &__study-info-container {
       width: 90vw;
-      margin-right: none;
+      margin-right: 0px;
+    }
+
+    &__listing-header {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-size: 2.2rem;
+    }
+
+    &__distance-away {
+      margin: 0px 0 15px 5px;
+      font-size: 15px;
+    }
+
+    &__gallery {
+      height: 300px;
+    }
+
+    &__ubc-map {
+      height: 120px;
+    }
+
+    &__amenities {
+      li {
+          font-size: 15px;
+          svg {
+            margin-bottom: 5px;
+          }
+      }
     }
   }
 }
 
-// .reviews-container {
-//   display: flex;
-//   width: 45%;
-//   height: 70%;
-//   flex-direction: column;
-// }
+@media (max-width: 600px) {
+  .detailed-spot-box {
+
+    &__listing-detail {
+      margin-top: 140px;
+    }
+
+    &__listing-header {
+      margin-top: 10px;
+      margin-bottom: 3px;
+      font-size: 2.1rem;
+    }
+
+    &__distance-away {
+      margin: 0px 0 15px 5px;
+      font-size: 14px;
+    }
+
+    &__gallery {
+      height: 230px;
+    }
+
+    &__ubc-map {
+      height: 110px;
+    }
+
+    &__amenities {
+      li {
+          font-size: 14px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .detailed-spot-box {
+
+    &__listing-detail {
+      margin-top: 140px;
+    }
+
+    &__listing-header {
+      margin-top: 10px;
+      margin-bottom: 0px;
+      font-size: 2.0rem;
+    }
+  
+    &__distance-away {
+      margin: 0px 0 15px 5px;
+      font-size: 13px;
+    }
+
+    &__gallery {
+      height: 200px;
+    }
+
+    &__ubc-map {
+      height: 100px;
+    }
+
+    &__amenities {
+      li {
+          font-size: 13px;
+      }
+    }
+  }
+}
