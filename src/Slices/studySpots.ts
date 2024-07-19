@@ -27,16 +27,12 @@ const initialState: StudySpotsState  = {
 export const fetchStudySpots = createAsyncThunk<StudySpot[], void, { rejectValue: Error }> (
     'studyspot/fetchStudySpots',
     async (_, thunkAPI) => {
-        
-        console.log("WORKING")
+        // console.log("WORKING")
         try{
-            const studySpots = await getSpots() //TODO: Replace here
-            // const studySpots = await  fetchAndStoreStudySpots()
-       
+            const studySpots = await fetchAndStoreStudySpots();
             return studySpots;
         } catch (error) {
-            
-            console.log("NOT WORKING?")
+            // console.log("NOT WORKING?")
             return thunkAPI.rejectWithValue(error);
         }   
         

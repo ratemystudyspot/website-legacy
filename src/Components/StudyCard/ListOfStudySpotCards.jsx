@@ -1,4 +1,3 @@
-import AllStudySpots from "../../Data/StudySpotsData";
 import "./ListOfStudySpotCards.scss";
 import StudySpotCard from "./StudySpotCard";
 import { getSpots, getSpotsByFeatures, getSpotsByTime } from "../../Services/studySpot";
