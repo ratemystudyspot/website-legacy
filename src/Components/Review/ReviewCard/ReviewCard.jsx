@@ -10,9 +10,9 @@ import { createReaction, getReactionsByFilter, updateReaction, deleteReaction } 
 import CustomRating from "../CustomRating";
 
 // Add state management!!!
-const handleEditReview = async (review_id, user_id, rating, comment, access_token) => {
+const handleEditReview = async (reviewId, userId, rating, ratingBody, comment, accessToken) => {
     try {
-        await editReview(review_id, user_id, rating, comment, access_token);
+        await editReview(reviewId, userId, rating, ratingBody, comment, accessToken);
     } catch (error) {
         console.error(error);
     }
@@ -42,12 +42,10 @@ const handleReaction = async (updated_reaction, user_liked, user_disliked, revie
     }
 }
 
-const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 0, isOwner = false, likes, dislikes, userLiked = false, userDisliked = false, setReactionUpdate }) => {
+const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 0, isOwner = false, likes, dislikes, userLiked = false, userDisliked = false, setReactionUpdate, toggleEditReviewCardVisibility }) => {
     const { auth } = useAuth();
-    const user_id = auth?.user_info?.id;
-    const newRating = 4; // TODO: change this
-    const newComment = "new comment" //TODO: change this
-    const access_token = auth?.access_token;
+    const user_id = auth.user_info.id;
+    const access_token = auth.user_info.id;
 
     return (
         <div className="review-box">
@@ -71,12 +69,7 @@ const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 
                 <Button
                     className="review-box__edit-button"
                     style={{ display: isOwner ? 'block' : 'none' }}
-                    onClick={() => handleEditReview( // TODO: currently will edit the review as soon as you click button --> but idealy we should be editting in a popup
-                        review_id,
-                        user_id,
-                        newRating,
-                        newComment,
-                        access_token)}
+                    onClick={toggleEditReviewCardVisibility}
                 >
                     <EditIcon style={{ marginRight: "5px", marginBottom: "3px", width: "20px" }} />
                     Edit

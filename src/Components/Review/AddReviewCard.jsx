@@ -9,11 +9,13 @@ import { saveReview } from "../../Slices/reviews.ts";
 import { useAppDispatch } from "../../hooks.ts";
 import { IoIosClose } from "react-icons/io";
 import { checkAccessTokenExpiry } from "../../Services/auth.js";
+import Hashids from "hashids";
 
 const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
   const { auth, setAuth } = useAuth();
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const hashids = new Hashids();
   
   const [overallRating, setOverallRating] = useState(0);
   const [comfortRating, setComfortRating] = useState(0);
@@ -32,7 +34,8 @@ const AddReviewCard = ({ toggleAddReviewCardVisibility }) => {
 
     const user_id = auth.user_info.id;
     const access_token = auth.access_token;
-    const study_spot_id = window.location.href.split("/").at(-1);
+    const study_spot_id = hashids.decode(window.location.href.split("/").at(-1))[0];
+
     // TODO: Refactor to something better
     try {
       const rating_body = {

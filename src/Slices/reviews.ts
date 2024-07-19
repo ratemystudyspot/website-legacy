@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from '../store';
-import { getReviewsByStudySpot, createReview } from "../Services/review";
+import { getReviewsByStudySpot, createReview, editReview } from "../Services/review";
 
 // ------------------ REVIEWS'S SCHEMA ---------------------------------
 export interface Review {
@@ -49,6 +49,18 @@ export const saveReview = createAsyncThunk<Review, {user_id, study_spot_id, over
   }
 );
 
+export const updateReview = createAsyncThunk<Review, {id, user_id, overall_rating, rating_body, comment, access_token}> (
+  'review/updateReview',
+  async ({id, user_id, overall_rating, rating_body, comment, access_token}, thunkAPI) => {
+    try {
+      const updatedReview = await editReview(id, user_id, overall_rating, rating_body, comment, access_token);
+      return updatedReview;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const reviewsSlice = createSlice({
   name: 'reviews',
   initialState,
@@ -61,7 +73,7 @@ export const reviewsSlice = createSlice({
       const { review_id } = action.payload;
       state.value = state.value.filter((review) => review.id !== review_id);
     },
-    editReview: (state, action: PayloadAction<{updatedData: Review}>) => {
+    changeReview: (state, action: PayloadAction<{updatedData: Review}>) => {
       const { updatedData } = action.payload
       const reviewIndex = state.value.findIndex((review) => review.id === updatedData.id);
       if (reviewIndex !== -1) {
@@ -74,8 +86,12 @@ export const reviewsSlice = createSlice({
       state.value = action.payload
     });  // THREEE STATES: Fulfilled (async function returned), LOADING: async func is loading, ERROR: Returned error
     builder.addCase(saveReview.fulfilled, (state, action) => {
-      state.value = [action.payload, ... state.value];
+      state.value = [action.payload, ...state.value];
     }) 
+    builder.addCase(updateReview.fulfilled, (state, action) => {
+      state.value = state.value.filter(item => item.id !== action.payload.id); // gets rid of old review
+      state.value = [action.payload, ...state.value]; // adds updated review
+    })
   }
 })
 
@@ -85,6 +101,6 @@ export const reviewsSlice = createSlice({
 // export const selectCount = (state: RootState) => state.reviews.values;
 
 
-export const {addReview, removeReview, editReview} = reviewsSlice.actions;
+export const {addReview, removeReview, changeReview} = reviewsSlice.actions;
 
 export default reviewsSlice.reducer;

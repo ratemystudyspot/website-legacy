@@ -9,7 +9,9 @@
     }
   }
 
-  img {
+  img,
+  video,
+  iframe {
     /* width: calc(33.333% - 10px); */
     overflow: hidden;
     width: 100%;
@@ -21,6 +23,14 @@
     &:hover {
       box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.15);
     }
+  }
+
+  video,
+  iframe {
+    object-fit: contain;
+    background: rgba(128, 128, 128, 0.5); /* Gray color with 50% opacity */
+    backdrop-filter: blur(10px); /* Applies blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
   }
 
   &__slider-button {
@@ -58,6 +68,5 @@
     }
   }
 }
-
 
 //------------------------ SLIDER BUTTONS -------------------------------
