@@ -94,11 +94,91 @@
         }
     }
 }
-@media (min-width: 1200px) {}
+@media (min-width: 1200px) {.review-summary-box {
+    // ------------------------- RIGHT CONTAINER -------------------------------
+    &__right-container {
+        margin: 0 15px 0 5px;
+        transform: translate(0, -30px);
+    }
+    
+    &__average-rating-text {
+        font-size: 70px;
+    }
 
-@media (min-width: 1024px) and (max-width: 1200px) {}
+    &__add-review-button {
+        height: 35px;
+        width: 120px;
+        font-size: 15px;
+    }
 
-@media (max-width: 1024px) {}
+    &__num-reviews-text {
+        font-size: 15px;
+        margin: 5px 0 10px 0;
+    }
+
+    // ------------------------- LEFT CONTAINER -------------------------------
+    &__left-container {
+        margin: 8px 10px 0 15px;
+    }
+
+    
+    &__labels-container {
+        margin-right: 10px;
+    }
+
+    &__bar-labels {
+        margin: 15px 0 15px 0;
+        font-size: 18px;
+    }
+
+    &__progress-bar {
+        margin: 18px 0 18px 0;
+    }
+}}
+
+@media (max-width: 1200px) {
+    .review-summary-box {
+        // ------------------------- RIGHT CONTAINER -------------------------------
+        &__right-container {
+            margin: 0 5px 0 5px;
+            transform: translate(0, -20px);
+        }
+        
+        &__average-rating-text {
+            font-size: 55px;
+        }
+
+        &__add-review-button {
+            height: 25px;
+            width: 100px;
+            font-size: 13px;
+        }
+
+        &__num-reviews-text {
+            font-size: 12px;
+            margin: 5px 0 10px 0;
+        }
+
+        // ------------------------- LEFT CONTAINER -------------------------------
+        &__left-container {
+            margin: 8px 10px 0 5px;
+        }
+
+        
+        &__labels-container {
+            margin-right: 10px;
+        }
+
+        &__bar-labels {
+            margin: 10px 0 10px 0;
+            font-size: 14px;
+        }
+
+        &__progress-bar {
+            margin: 15px 0 15px 0;
+        }
+    }
+}
 
 @media (max-width: 768px) {
     .review-summary-box {
@@ -127,6 +207,10 @@
         // ------------------------- LEFT CONTAINER -------------------------------
         &__left-container {
             margin: 8px 10px 0 5px;
+        }
+
+        &__labels-container {
+            margin-right: 20px;
         }
 
         &__bar-labels {
@@ -168,6 +252,10 @@
             margin: 8px 10px 0 15px;
         }
 
+        &__labels-container {
+            margin-right: 15px;
+        }
+
         &__bar-labels {
             font-size: 16px;
             margin: 14px 0 14px 0;
@@ -199,6 +287,10 @@
         // ------------------------- LEFT CONTAINER -------------------------------
         &__left-container {
             margin: 8px 10px 0 5px;
+        }
+            
+        &__labels-container {
+            margin-right: 10px;
         }
 
         &__bar-labels {

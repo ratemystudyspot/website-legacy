@@ -13,7 +13,7 @@
     flex-direction: row;
     background: #fff;
     width: 100svw;
-    height: 100vh;
+    height: 100svh;
     // margin-top: 60px;
   }
 
@@ -91,27 +91,59 @@
 }
 
 @media (min-width: 1200px) {
+
   .detailed-spot-box {
     margin-top: 140px;
 
     &__listing-detail {
-      justify-content: space-around;
+      justify-content: center;
     }
 
     &__study-info-container {
-      width: 45vw;
+      height: 80vh;
+      width: 40vw;      
+      margin-right: 3vw;
+    }
+
+    &__listing-header {
+      margin-top: 12px;
+      margin-bottom: 0px;
+      font-size: 3.0rem;
+    }
+
+    &__distance-away {
+      margin: 0px 0 15px 5px;
+      font-size: 18px;
+    }
+
+    &__gallery {
+      height: 300px;
+    }
+
+    &__ubc-map {
+      height: 120px;
+    }
+
+    &__amenities {
+      ul {
+        margin-bottom: 0px;
+      }
+
+      li {
+          font-size: 16px;
+          margin-bottom: 10px;
+          svg {
+            margin-bottom: 5px;
+          }
+      }
     }
   }
 }
 
-@media (min-width: 1024px) and (max-width: 1200px) {
-
-}
-
-@media (max-width: 1024px) {
-  body {
-    overflow-y: hidden;
-  }
+@media (max-width: 1200px) {
+  // body {
+  //   overflow-y: hidden;
+  // }
   .detailed-spot-box {
     margin-top: 140px;
 
@@ -121,7 +153,7 @@
 
     &__study-info-container {
       height: 80vh;
-      width: 45vw;
+      width: 45vw;      
     }
 
     &__listing-header {
@@ -141,6 +173,20 @@
 
     &__ubc-map {
       height: 120px;
+    }
+
+    &__amenities {
+      ul {
+        margin-bottom: 0px;
+      }
+
+      li {
+          font-size: 14px;
+          margin-bottom: 10px;
+          svg {
+            margin-bottom: 5px;
+          }
+      }
     }
   }
 }
@@ -184,6 +230,15 @@
     &__ubc-map {
       height: 120px;
     }
+
+    &__amenities {
+      li {
+          font-size: 15px;
+          svg {
+            margin-bottom: 5px;
+          }
+      }
+    }
   }
 }
 
@@ -212,6 +267,12 @@
     &__ubc-map {
       height: 110px;
     }
+
+    &__amenities {
+      li {
+          font-size: 14px;
+      }
+    }
   }
 }
 
@@ -239,6 +300,12 @@
 
     &__ubc-map {
       height: 100px;
+    }
+
+    &__amenities {
+      li {
+          font-size: 13px;
+      }
     }
   }
 }

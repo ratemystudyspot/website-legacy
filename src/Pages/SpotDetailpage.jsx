@@ -77,6 +77,19 @@ function SpotDetailpage() {
     setReviewsLoaded(true);
   }, [])
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   let key = 0; // added to get rid of unqiue key prop warnings in the map function
   return (
     <div className="detailed-spot-box">
