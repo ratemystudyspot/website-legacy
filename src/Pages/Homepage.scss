@@ -1,9 +1,8 @@
 .home-box {
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: visible;
   overflow-x: hidden;
-
   &__study-spot-filter {
     position: absolute;
     top: 120px;
