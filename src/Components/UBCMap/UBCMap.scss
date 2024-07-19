@@ -32,7 +32,8 @@
   }
 }
 
-@media (max-width: 1024px) {
+
+@media  (max-width: 1200px) {
   .ubc-map {
     &__marker {
       svg {
@@ -43,16 +44,17 @@
   }
 }
 
-@media (min-width: 1024px) and (max-width: 1200px) {
-  // .ubc-map {
-  //   &__marker {
-  //     svg {
-  //       height: 41 * 1.1px; // 41 and 27 are the default height and widths
-  //       width: 27 * 1.1px;
-  //     }
-  //   }
-  // }
+@media (max-width: 1024px) {
+  .ubc-map {
+    &__marker {
+      svg {
+        height: 41 * 0.8px; // 41 and 27 are the default height and widths
+        width: 27 * 0.8px;
+      }
+    }
+  }
 }
+
 
 @media (max-width: 768px) {
   .ubc-map {

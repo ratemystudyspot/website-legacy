@@ -22,22 +22,17 @@ const CustomRating = styled(Rating)(({ theme, size }) => {
             color: '#FAAF00',               // Example: changes the color of stars on hover
         },
         fontSize: baseFontSize,
-        [theme.breakpoints.up('px1200')]: {
-            
+        [`@media (min-width: 1200px)`]: {
+            fontSize: baseFontSize * 1.3
         },
-        [theme.breakpoints.down('px1200')]: {
-            // fontSize: "20px"
-        },
-        [theme.breakpoints.down('px1024')]: {
-            // height: 10,
-            // borderRadius: 5,
-            // minWidth: '80px',
-        },
-        [theme.breakpoints.down('px768')]: {
+        [`@media (max-width: 1200px)`]: {
             fontSize: baseFontSize * 1.2
-        }, [theme.breakpoints.down('px600')]: {
+        },
+        [`@media (max-width: 768px)`]: {
+            fontSize: baseFontSize * 1.2
+        }, [`@media (max-width: 600px)`]: {
             fontSize: baseFontSize * 1.1
-        }, [theme.breakpoints.down('px480')]: {
+        }, [`@media (max-width: 480px)`]: {
             fontSize: baseFontSize
         },
     }
