@@ -44,8 +44,8 @@ const handleReaction = async (updated_reaction, user_liked, user_disliked, revie
 
 const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 0, isOwner = false, likes, dislikes, userLiked = false, userDisliked = false, setReactionUpdate, toggleEditReviewCardVisibility }) => {
     const { auth } = useAuth();
-    const user_id = auth.user_info.id;
-    const access_token = auth.user_info.id;
+    const user_id = auth?.user_info?.id;
+    const access_token = auth?.user_info?.id;
 
     return (
         <div className="review-box">
