@@ -7,7 +7,6 @@ import filterOptions from '../Data/FilterOptions';
 import AllReviewsCard from '../Components/Review/AllReviewsCard';
 import { getReviewsByStudySpot } from '../Services/review';
 import UBCMap from '../Components/UBCMap/UBCMap';
-import AddReviewCard from '../Components/Review/AddReviewCard';
 import Gallery from '../Components/Gallery/Gallery';
 import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
 import getCurrentUserLocation from '../Helpers/GetUserLocation';

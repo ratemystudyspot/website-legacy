@@ -1,3 +1,4 @@
+// DEPRECIATED
 import React, { useEffect, useState } from "react"
 import "./AddReviewCard.scss";
 import useAuth from "../../hooks/useAuth";

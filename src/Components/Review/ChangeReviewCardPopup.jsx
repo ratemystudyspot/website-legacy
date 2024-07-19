@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
-import "./AddReviewCard.scss";
+import "./ChangeReviewCardPopup.scss";
 import useAuth from "../../hooks/useAuth.js";
 import LoginForm from "../../Pages/AuthForm/LoginForm.jsx";
-import { createReview } from "../../Services/review.js";
 import { Rating } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { saveReview, updateReview } from "../../Slices/reviews.ts";
