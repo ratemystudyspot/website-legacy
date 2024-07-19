@@ -22,8 +22,13 @@
         background: none;
     }
 }
+@media (min-width: 1400px) {
+    .all-reviews-card {
+        width: 35vw;
+    }
+}
 
-@media (min-width: 1200px) {
+@media (max-width: 1400px) {
     .all-reviews-card {
         width: 40vw;
         height: 80svh;

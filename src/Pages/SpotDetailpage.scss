@@ -90,7 +90,58 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
+
+  .detailed-spot-box {
+
+    margin-top: 140px;
+
+    &__listing-detail {
+      justify-content: center;
+    }
+
+    &__study-info-container {
+      height: 80vh;
+      width: 35vw;      
+      margin-right: 3vw;
+    }
+
+    &__listing-header {
+      margin-top: 12px;
+      margin-bottom: 0px;
+      font-size: 3.0rem;
+    }
+
+    &__distance-away {
+      margin: 0px 0 15px 5px;
+      font-size: 18px;
+    }
+
+    &__gallery {
+      height: 300px;
+    }
+
+    &__ubc-map {
+      height: 120px;
+    }
+
+    &__amenities {
+      ul {
+        margin-bottom: 0px;
+      }
+
+      li {
+          font-size: 16px;
+          margin-bottom: 10px;
+          svg {
+            margin-bottom: 5px;
+          }
+      }
+    }
+  }
+}
+
+@media (max-width: 1400px) {
 
   .detailed-spot-box {
     margin-top: 140px;
