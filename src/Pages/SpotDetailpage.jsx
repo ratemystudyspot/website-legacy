@@ -103,7 +103,7 @@ function SpotDetailpage() {
       }
     }
 
-    if (reviewsLoaded && reviews.length > 0 && !reviews[0]?.reactions) fetchReactions();
+    if (reviewsLoaded && !reviews[0]?.reactions) fetchReactions();
   }, [reviewsLoaded, reviews, dispatch])
 
   useEffect(() => {
