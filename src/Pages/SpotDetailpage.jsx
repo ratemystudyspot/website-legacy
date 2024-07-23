@@ -11,7 +11,7 @@ import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
 import getCurrentUserLocation from '../Helpers/GetUserLocation';
 import StudySpots from '../Data/StudySpotsData';
 import { useAppDispatch, useAppSelector } from '../hooks.ts';
-import { addReaction, fetchReviewsByStudySpot, clearReviews } from '../Slices/reviews.ts';
+import { addReactions, fetchReviewsByStudySpot, clearReviews } from '../Slices/reviews.ts';
 import Hashids from 'hashids';
 import ChangeReviewCardPopup from '../Components/Review/ChangeReviewCardPopup.jsx';
 import { getReactionsByFilter } from '../Services/reaction.js';
@@ -94,7 +94,7 @@ function SpotDetailpage() {
 
         // add fetched reactions to review's redux state
         for (let i = 0; i < foundReactions.length; i++) {
-          dispatch(addReaction({ reactions: foundReactions[i] }))
+          dispatch(addReactions({ reactions: foundReactions[i] }))
         }
 
         setReactionsLoaded(true);

@@ -87,7 +87,8 @@ async function updateReaction(body) {
     const updated_attributes = body;
     delete updated_attributes[id];
 
-    return await Reaction.update(updated_attributes, { where: { id } });
+    await Reaction.update(updated_attributes, { where: { id } });
+    return await Reaction.findByPk(id);
   } catch (error) {
     console.error("Error updating reactions:", error);
     throw new Error(error.message);

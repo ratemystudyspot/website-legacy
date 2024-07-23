@@ -87,20 +87,45 @@ export const reviewsSlice = createSlice({
     clearReviews: (state) => {
       state.value = []
     },
-    addReaction: (state, action: PayloadAction<{reactions: Array<Reaction>}>) => {
+    addOneReaction: (state, action: PayloadAction<{reaction: Reaction}>) => {
+      const { reaction } = action.payload;
+      const reviewIndex = state.value.findIndex((review) => review.id === reaction?.review_id);
+      if (reviewIndex !== -1) {
+        state.value[reviewIndex] = {
+          ...state.value[reviewIndex], 
+          reactions: [reaction, ...state.value[reviewIndex].reactions]};
+      }
+    },
+    addReactions: (state, action: PayloadAction<{reactions: Array<Reaction>}>) => {
       const { reactions } = action.payload;
       const reviewIndex = state.value.findIndex((review) => review.id === reactions[0]?.review_id);
       if (reviewIndex !== -1) {
         state.value[reviewIndex] = {...state.value[reviewIndex], reactions};
       }
     },
-    updateReaction: (state, action: PayloadAction<{reaction: Reaction}>) => {
+    removeReaction: (state, action: PayloadAction<{reaction: Partial<Reaction>}>) => {
       const { reaction } = action.payload;
       const reviewIndex = state.value.findIndex((review) => review.id === reaction?.review_id);
       if (reviewIndex !== -1) {
+        const updatedReactions = state.value[reviewIndex].reactions.filter(item => item.id !== reaction.id)
+        
         state.value[reviewIndex] = {
           ...state.value[reviewIndex], 
-          reactions: [...state.value[reviewIndex].reactions, reaction]
+          reactions: updatedReactions
+        };
+      }
+    },
+    changeReaction: (state, action: PayloadAction<{reaction: Reaction}>) => {
+      const { reaction } = action.payload;
+      const reviewIndex = state.value.findIndex((review) => review.id === reaction?.review_id);
+      if (reviewIndex !== -1) {
+        const updatedReactions = state.value[reviewIndex].reactions.map(item => 
+          item.id === reaction.id ? reaction : item
+        )
+
+        state.value[reviewIndex] = {
+          ...state.value[reviewIndex], 
+          reactions: updatedReactions
         };
       }
     },
@@ -120,6 +145,7 @@ export const reviewsSlice = createSlice({
       state.status = 'fulfilled';
     })
   }
+
 })
 
 // export const { ... } = reviewsSlice.actions TEMPLATE, REPLACE WITH REDUCERS
@@ -133,8 +159,10 @@ export const {
   removeReview, 
   changeReview,
   clearReviews,
-  addReaction, 
-  updateReaction
+  addOneReaction,
+  addReactions, 
+  removeReaction,
+  changeReaction,
 } = reviewsSlice.actions;
 
 export default reviewsSlice.reducer;
