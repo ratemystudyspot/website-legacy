@@ -26,8 +26,7 @@ const calculateAverage = (reviews) => {
         averageRating = averageRating + review.overall_rating;
     })
     averageRating = (Math.round((averageRating / totalNumReviews) * 10) / 10).toFixed(1); // round to the nearest tenth
-    console.log(averageRating);
-    console.log(totalNumReviews);
+    
     return averageRating;
 }
 
@@ -98,21 +97,6 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardV
         setProgressBarsState(progressBarValues);
         setSummaryCardLoaded(true);
     }, [reviews]);
-
-    // useEffect for counter to give ample to for components to load up
-    // useEffect(() => {
-    //     if (counter >= 2) return;
-
-    //     const intervalId = setInterval(() => {
-    //         setCounter((prevCounter) => prevCounter + 1);
-    //     }, 1000);
-
-    //     if ((counter === 1) && ((reviews.length > 0 && averageRating !== "N/A") || (reviews.length === 0 && averageRating === "N/A"))) {
-    //         setSummaryCardLoaded(true); // tells the loaders in the parent page that everything's been loaded
-    //     }
-
-    //     return () => clearInterval(intervalId);
-    // }, [counter])
 
     return (
         <div className="review-summary-box">

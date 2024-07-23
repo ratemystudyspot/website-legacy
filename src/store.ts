@@ -4,7 +4,7 @@ import reviewsReducer from "./Slices/reviews.ts";
 import studySpotsReducer from "./Slices/studySpots.ts";
 
 const rootReducer = combineReducers({
-  users: userReducer,
+  // users: userReducer,
   reviews: reviewsReducer,
   studySpots: studySpotsReducer
 })

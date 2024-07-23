@@ -20,10 +20,12 @@ export interface Review {
 // defining type for slice state
 export interface ReviewsState {
   value: Array<Review>;
+  status: 'idle' | 'loading' | 'fulfilled' | 'failed';
 }
 
 let initialState: ReviewsState = {
   value: [],
+  status: 'idle',
 };
 
 export const fetchReviewsByStudySpot = createAsyncThunk<Review[], number> (
@@ -82,6 +84,9 @@ export const reviewsSlice = createSlice({
         state.value[reviewIndex] = {...state.value[reviewIndex], ...updatedData};
       }
     },
+    clearReviews: (state) => {
+      state.value = []
+    },
     addReaction: (state, action: PayloadAction<{reactions: Array<Reaction>}>) => {
       const { reactions } = action.payload;
       const reviewIndex = state.value.findIndex((review) => review.id === reactions[0]?.review_id);
@@ -102,14 +107,17 @@ export const reviewsSlice = createSlice({
   },
   extraReducers: (builder) => {              // FETCH REVIEWS               
     builder.addCase(fetchReviewsByStudySpot.fulfilled, (state, action) => {
-      state.value = action.payload
+      state.value = action.payload;
+      state.status = 'fulfilled';
     });  // THREEE STATES: Fulfilled (async function returned), LOADING: async func is loading, ERROR: Returned error
     builder.addCase(saveReview.fulfilled, (state, action) => {
       state.value = [action.payload, ...state.value];
+      state.status = 'fulfilled';
     }) 
     builder.addCase(updateReview.fulfilled, (state, action) => {
       state.value = state.value.filter(item => item.id !== action.payload.id); // gets rid of old review
       state.value = [action.payload, ...state.value]; // adds updated review
+      state.status = 'fulfilled';
     })
   }
 })
@@ -123,7 +131,8 @@ export const reviewsSlice = createSlice({
 export const {
   addReview, 
   removeReview, 
-  changeReview, 
+  changeReview,
+  clearReviews,
   addReaction, 
   updateReaction
 } = reviewsSlice.actions;

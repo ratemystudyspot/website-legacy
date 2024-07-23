@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, useRef } from 'react'
+import React, { useState, useEffect, lazy } from 'react'
 import getDistanceFromLatLonInKm from '../Helpers/GetDistanceLatLon';
 import Banner from '../Components/Banner/Banner';
 import { useParams } from 'react-router-dom';
@@ -11,7 +11,7 @@ import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
 import getCurrentUserLocation from '../Helpers/GetUserLocation';
 import StudySpots from '../Data/StudySpotsData';
 import { useAppDispatch, useAppSelector } from '../hooks.ts';
-import { addReaction, fetchReviewsByStudySpot } from '../Slices/reviews.ts';
+import { addReaction, fetchReviewsByStudySpot, clearReviews } from '../Slices/reviews.ts';
 import Hashids from 'hashids';
 import ChangeReviewCardPopup from '../Components/Review/ChangeReviewCardPopup.jsx';
 import { getReactionsByFilter } from '../Services/reaction.js';
@@ -36,7 +36,8 @@ function SpotDetailpage() {
   const [showAddReviewCard, setShowAddReviewCard] = useState(false);
   const [showEditReviewCard, setShowEditReviewCard] = useState(false);
   const [galleryFiles, setGalleryFiles] = useState([]);
-  const reactionsLoaded = useRef(false);
+  const [reviewsLoaded, setReviewsLoaded] = useState(false);
+  const [reactionsLoaded, setReactionsLoaded] = useState(false);
 
   const toggleAddReviewCardVisibility = () => setShowAddReviewCard((prevState) => !prevState);
   const toggleEditReviewCardVisibility = () => setShowEditReviewCard((prevState) => !prevState);
@@ -79,7 +80,10 @@ function SpotDetailpage() {
     })
 
     // fetch reviews
-    dispatch(fetchReviewsByStudySpot(currentStudySpot?.id));
+    dispatch(fetchReviewsByStudySpot(currentStudySpot?.id))
+      .then((state) => {
+        if (state.meta.requestStatus === "fulfilled") setReviewsLoaded(true);
+      });
   }, [])
 
   // fetch reactions
@@ -93,15 +97,14 @@ function SpotDetailpage() {
           dispatch(addReaction({ reactions: foundReactions[i] }))
         }
 
-        // update that reactions have been loaded state
-        reactionsLoaded.current = true;
+        setReactionsLoaded(true);
       } catch (error) {
         console.error(error);
       }
     }
 
-    if (reviews.length > 0 && !reviews[0]?.reactions) fetchReactions();
-  }, [reviews])
+    if (reviewsLoaded && reviews.length > 0 && !reviews[0]?.reactions) fetchReactions();
+  }, [reviewsLoaded, reviews, dispatch])
 
   useEffect(() => {
     const handleResize = () => {
@@ -118,61 +121,58 @@ function SpotDetailpage() {
 
   let key = 0; // added to get rid of unqiue key prop warnings in the map function
   return (
-    <>
-      {(reviews.length > 0 && reactionsLoaded.current && galleryFiles.length > 0) // things that need to load before shown to user
-        ? (
-          <div className="detailed-spot-box">
-            {
-              (showAddReviewCard || showEditReviewCard) &&
-              <ChangeReviewCardPopup
-                toggleReviewCardPopupVisibility={showAddReviewCard ? toggleAddReviewCardVisibility : showEditReviewCard ? toggleEditReviewCardVisibility : null}
-                change={showAddReviewCard ? "add" : showEditReviewCard ? "edit" : null}
+    <div style={{ visibility: (reviewsLoaded && reactionsLoaded && galleryFiles.length > 0 && summaryCardLoaded) ? 'visible' : 'hidden' }}>
+      {/* {// things that need to load before shown to user
+        () && (<LoaderScreen />)
+      } */}
+      <div className="detailed-spot-box">
+        {
+          (showAddReviewCard || showEditReviewCard) &&
+          <ChangeReviewCardPopup
+            toggleReviewCardPopupVisibility={showAddReviewCard ? toggleAddReviewCardVisibility : showEditReviewCard ? toggleEditReviewCardVisibility : null}
+            change={showAddReviewCard ? "add" : showEditReviewCard ? "edit" : null}
+          />
+        }
+
+        <div className='detailed-spot-box__banner'>
+          <Banner showGoBackButton={true} />
+        </div>
+        <div className="detailed-spot-box__listing-detail">
+          {/* Left Container */}
+          <div className="detailed-spot-box__study-info-container">
+
+            <section className="detailed-spot-box__gallery">
+              <Gallery galleryFiles={galleryFiles} />
+            </section>
+
+            <div className="detailed-spot-box__listing-header-box">
+              <h1 className="detailed-spot-box__listing-header"><b>{currentStudySpot?.name}</b></h1>
+              <p className="detailed-spot-box__distance-away">{distance} away</p>
+            </div>
+
+            <section className="detailed-spot-box__ubc-map">
+              <UBCMap
+                markers={[{ coordinates: currentStudySpot.location.coordinates }]}
+                mapCenter={currentStudySpot.location.coordinates}
+                mapWidth="100%"
+                mapHeight="100%"
               />
-            }
+            </section>
 
-            <div className='detailed-spot-box__banner'>
-              <Banner showGoBackButton={true} />
-            </div>
-            <div className="detailed-spot-box__listing-detail">
-              {/* Left Container */}
-              <div className="detailed-spot-box__study-info-container">
+            <section className="detailed-spot-box__amenities">
+              <ul>
+                {filterOptions.map((filter) => {
+                  if (currentStudySpot?.features.includes(filter.value)) return (<li key={key++}>{filter.icon} {filter.label}</li>)
+                })}
+              </ul>
+            </section>
 
-                <section className="detailed-spot-box__gallery">
-                  <Gallery galleryFiles={galleryFiles} />
-                </section>
-
-                <div className="detailed-spot-box__listing-header-box">
-                  <h1 className="detailed-spot-box__listing-header"><b>{currentStudySpot?.name}</b></h1>
-                  <p className="detailed-spot-box__distance-away">{distance} away</p>
-                </div>
-
-                <section className="detailed-spot-box__ubc-map">
-                  <UBCMap
-                    markers={[{ coordinates: currentStudySpot.location.coordinates }]}
-                    mapCenter={currentStudySpot.location.coordinates}
-                    mapWidth="100%"
-                    mapHeight="100%"
-                  />
-                </section>
-
-                <section className="detailed-spot-box__amenities">
-                  <ul>
-                    {filterOptions.map((filter) => {
-                      if (currentStudySpot?.features.includes(filter.value)) return (<li key={key++}>{filter.icon} {filter.label}</li>)
-                    })}
-                  </ul>
-                </section>
-
-              </div>  {/* Replace with loop!
+          </div>  {/* Replace with loop!
               {/* Right Container */}
-              <AllReviewsCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} toggleEditReviewCardVisibility={toggleEditReviewCardVisibility} />
-            </div>
-          </div >
-        ) : (
-          <LoaderScreen variant="white" />
-        )
-      }
-    </>
+          <AllReviewsCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} toggleEditReviewCardVisibility={toggleEditReviewCardVisibility} />
+        </div>
+      </div >
+    </div>
   )
 }
 

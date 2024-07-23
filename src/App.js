@@ -1,11 +1,12 @@
-import React, { lazy, Suspense, useState, useEffect, useCallback } from 'react';
+import React, { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Layout from './Pages/Structure/Layout';
 import useAuth from "./hooks/useAuth";
 import { handleRefreshToken } from './Services/auth';
 import { jwtDecode } from "jwt-decode";
-import LoaderScreen from './Components/LoaderScreen/LoaderScreen';
+import { useAppDispatch } from './hooks.ts';
+import { clearReviews } from './Slices/reviews.ts';
 // Lazy load components
 const RequireAuth = lazy(() => import('./Pages/Structure/RequireAuth'));
 const RegisterForm = lazy(() => import('./Pages/AuthForm/RegisterForm'));
@@ -30,6 +31,8 @@ function App() {
   const { auth, setAuth } = useAuth();
   const [authLoaded, setAuthLoaded] = useState(false);
   const [appLoaded, setAppLoaded] = useState(false);
+  
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchRefreshToken = async () => {
@@ -60,6 +63,23 @@ function App() {
       return;
     }
   }, [auth]);
+
+  // clear redux state after exiting study spot detailed page
+  let location = useLocation();
+  let prevLocation = useRef(location);
+  useEffect(() => {
+    // Function to check if a path matches a wildcard pattern
+    const matchesWildcard = (path, pattern) => {
+      const regex = new RegExp(`^${pattern.replace('*', '.*')}$`);
+      return regex.test(path);
+    };
+    
+    if (matchesWildcard(prevLocation.current.pathname, '/spots/*')) {
+      dispatch(clearReviews());
+    } 
+    
+    prevLocation.current = location;
+  }, [location]);
 
   return (
     <Suspense fallback={<></>}>
