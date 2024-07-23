@@ -96,22 +96,23 @@ const ReviewSummaryCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardV
         setTotalNumReviewsState(reviews.length); // TODO: include totalNumReviewsState into calculations!
         setAverageRating(averageRating);
         setProgressBarsState(progressBarValues);
+        setSummaryCardLoaded(true);
     }, [reviews]);
 
     // useEffect for counter to give ample to for components to load up
-    useEffect(() => {
-        if (counter >= 2) return;
+    // useEffect(() => {
+    //     if (counter >= 2) return;
 
-        const intervalId = setInterval(() => {
-            setCounter((prevCounter) => prevCounter + 1);
-        }, 1000);
+    //     const intervalId = setInterval(() => {
+    //         setCounter((prevCounter) => prevCounter + 1);
+    //     }, 1000);
 
-        if ((counter === 1) && ((reviews.length > 0 && averageRating !== "N/A") || (reviews.length === 0 && averageRating === "N/A"))) {
-            setSummaryCardLoaded(true); // tells the loaders in the parent page that everything's been loaded
-        }
+    //     if ((counter === 1) && ((reviews.length > 0 && averageRating !== "N/A") || (reviews.length === 0 && averageRating === "N/A"))) {
+    //         setSummaryCardLoaded(true); // tells the loaders in the parent page that everything's been loaded
+    //     }
 
-        return () => clearInterval(intervalId);
-    }, [counter])
+    //     return () => clearInterval(intervalId);
+    // }, [counter])
 
     return (
         <div className="review-summary-box">

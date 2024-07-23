@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from '../store';
 import { getReviewsByStudySpot, createReview, editReview } from "../Services/review";
+import { Reaction } from "./reaction";
 
 // ------------------ REVIEWS'S SCHEMA ---------------------------------
 export interface Review {
@@ -13,6 +14,7 @@ export interface Review {
   quietness_rating: number;
   comfort_rating: number;
   space_rating: number;
+  reactions: Array<Reaction>;
 }
 
 // defining type for slice state
@@ -79,7 +81,24 @@ export const reviewsSlice = createSlice({
       if (reviewIndex !== -1) {
         state.value[reviewIndex] = {...state.value[reviewIndex], ...updatedData};
       }
-    }
+    },
+    addReaction: (state, action: PayloadAction<{reactions: Array<Reaction>}>) => {
+      const { reactions } = action.payload;
+      const reviewIndex = state.value.findIndex((review) => review.id === reactions[0]?.review_id);
+      if (reviewIndex !== -1) {
+        state.value[reviewIndex] = {...state.value[reviewIndex], reactions};
+      }
+    },
+    updateReaction: (state, action: PayloadAction<{reaction: Reaction}>) => {
+      const { reaction } = action.payload;
+      const reviewIndex = state.value.findIndex((review) => review.id === reaction?.review_id);
+      if (reviewIndex !== -1) {
+        state.value[reviewIndex] = {
+          ...state.value[reviewIndex], 
+          reactions: [...state.value[reviewIndex].reactions, reaction]
+        };
+      }
+    },
   },
   extraReducers: (builder) => {              // FETCH REVIEWS               
     builder.addCase(fetchReviewsByStudySpot.fulfilled, (state, action) => {
@@ -101,6 +120,12 @@ export const reviewsSlice = createSlice({
 // export const selectCount = (state: RootState) => state.reviews.values;
 
 
-export const {addReview, removeReview, changeReview} = reviewsSlice.actions;
+export const {
+  addReview, 
+  removeReview, 
+  changeReview, 
+  addReaction, 
+  updateReaction
+} = reviewsSlice.actions;
 
 export default reviewsSlice.reducer;

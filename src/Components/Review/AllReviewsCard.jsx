@@ -1,59 +1,27 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import "./AllReviewsCard.scss"
 import useAuth from "../../hooks/useAuth";
 import { useParams } from "react-router-dom";
 import ReviewCard from "./ReviewCard/ReviewCard";
-import { getReactionsByFilter } from "../../Services/reaction";
 import ReviewSummaryCard from "./ReviewSummaryCard/ReviewSummaryCard";
 
 const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisibility, toggleEditReviewCardVisibility }) => {
     const { auth } = useAuth();
-    const { id } = useParams();
-    const [reactions, setReactions] = useState([]);
-    const [reactionsLoaded, setReactionsLoaded] = useState(false);
-    const [reactionUpdate, setReactionUpdate] = useState(false);
-
-    // load all reactions in this study spot
-    useEffect(() => {
-        const getReactions = async (review_id) => {
-            try {
-                return await getReactionsByFilter({ review_id });
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        const settingReactions = async () => {
-            try {
-                const foundReactions = await Promise.all(reviews.map((review) => getReactions(review.id)));
-                setReactions(foundReactions);
-                setReactionUpdate(false); // reset reaction update useState
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        
-        if (reviews.length > 0 && reviews[0].study_spot_id === id && (reactions.length === 0 || reactionUpdate)) settingReactions(); // update reactions only at the very beginning OR when user likes/dislikes a review for optimization // TODO: can further optimize by only update the specific review's reactions
-    }, [reactionUpdate]);
-
-    useEffect(() => {
-        setReactionsLoaded(true);
-    }, [reviews, reactions])
-
+    
     let key = 0; // added to get rid of unqiue key prop warning in the ReviewCard component for the map function
     return (
         <div className="all-reviews-card">
             <ReviewSummaryCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
-            {(reactionsLoaded && reviews.length > 0) // TODO: optimize this (if you uncomment th eocnsole log at line 69 you see how bad it is)
+            {(reviews.length > 0) // TODO: optimize this (if you uncomment th eocnsole log at line 69 you see how bad it is)
                 ? reviews.map((review) => {
                     // for the likes + dislikes
                     var likes = [];
                     var dislikes = [];
                     var liked = false;
                     var disliked = false;
-                    if (reactions.length > 0) {
-                        likes = reactions[key].filter(reaction => reaction.reaction === true);
-                        dislikes = reactions[key].filter(reaction => reaction.reaction === false);
+                    if (review.reactions?.length > 0) {
+                        likes = review.reactions.filter(reaction => reaction.reaction === true);
+                        dislikes = review.reactions.filter(reaction => reaction.reaction === false);
 
                         liked = likes.filter(reaction => reaction.user_id === auth?.user_info?.id).length === 1;
                         disliked = dislikes.filter(reaction => reaction.user_id === auth?.user_info?.id).length === 1;
@@ -70,7 +38,7 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
                         // hour12: true 
                     };
                     const formattedDate = dateLocal.toLocaleString('en-us', options);
-                    
+
                     return (
                         <ReviewCard
                             key={key++}
@@ -83,7 +51,6 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
                             dislikes={dislikes?.length}
                             userLiked={liked}
                             userDisliked={disliked}
-                            setReactionUpdate={setReactionUpdate}
                             toggleEditReviewCardVisibility={toggleEditReviewCardVisibility}
                         />
                     )
@@ -94,4 +61,4 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
     )
 }
 
-export default AllReviewsCard;
+export default React.memo(AllReviewsCard);

@@ -9,40 +9,31 @@ import useAuth from "../../../hooks/useAuth";
 import { createReaction, getReactionsByFilter, updateReaction, deleteReaction } from "../../../Services/reaction";
 import CustomRating from "../CustomRating";
 
-// Add state management!!!
-const handleEditReview = async (reviewId, userId, rating, ratingBody, comment, accessToken) => {
-    try {
-        await editReview(reviewId, userId, rating, ratingBody, comment, accessToken);
-    } catch (error) {
-        console.error(error);
-    }
-}
-
 // TODO: optimiation - should probably only save to backend once user exits page (results in less calls to backend)
-const handleReaction = async (updated_reaction, user_liked, user_disliked, review_id, user_id, reaction, access_token) => { // reaction: true = like, false = dislike    
+const handleReaction = async (user_liked, user_disliked, review_id, user_id, reaction, access_token) => { // reaction: true = like, false = dislike    
     try {
         if ((user_liked && !reaction) || (user_disliked && reaction)) { // two truth cases: user previously liked and wants to dislike OR user previously disliked and wants to like
             const foundReaction = (await getReactionsByFilter({ review_id, user_id }))[0]; // find the specific reaction's id to update (indexed at 0 since service function returns array)
             await updateReaction({ id: foundReaction.id, reaction }, access_token); // update that specific reaction to the opposite react
-            updated_reaction(true); // tell app to refresh reactions
+            // updated_reaction(true); // tell app to refresh reactions
             return;
         }
 
         if ((user_liked && reaction) || (user_disliked && !reaction)) { // undo the liking and disling of a post
             const foundReaction = (await getReactionsByFilter({ review_id, user_id }))[0]; // find the specific reaction's id to update (indexed at 0 since service function returns array)
             await deleteReaction(foundReaction.id, access_token); // delete that specific reaction
-            updated_reaction(true); // tell app to refresh reactions
+            // updated_reaction(true); // tell app to refresh reactions
             return;
         }
 
         await createReaction(review_id, user_id, reaction, access_token); // if user hasn't liked or dislike a given review, create a reaction
-        updated_reaction(true); // tell app to refresh reactions
+        // updated_reaction(true); // tell app to refresh reactions
     } catch (error) {
         console.error(error);
     }
 }
 
-const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 0, isOwner = false, likes, dislikes, userLiked = false, userDisliked = false, setReactionUpdate, toggleEditReviewCardVisibility }) => {
+const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 0, isOwner = false, likes, dislikes, userLiked = false, userDisliked = false, toggleEditReviewCardVisibility }) => {
     const { auth } = useAuth();
     const user_id = auth?.user_info?.id;
     const access_token = auth?.user_info?.id;
@@ -77,7 +68,7 @@ const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 
                 <div className="review-box__thumbs-container">
                     <div
                         className="review-box__thumbs-up-container"
-                        onClick={() => handleReaction(setReactionUpdate, userLiked, userDisliked, review_id, user_id, true, access_token)}
+                        onClick={() => handleReaction(userLiked, userDisliked, review_id, user_id, true, access_token)}
                     >
                         <IconButton
                             sx={{ top: "7px" }}
@@ -90,7 +81,7 @@ const ReviewCard = ({ review_id = -1, ratingValue = 0, description, createdAt = 
 
                     <div
                         className="review-box__thumbs-down-container"
-                        onClick={() => handleReaction(setReactionUpdate, userLiked, userDisliked, review_id, user_id, false, access_token)}
+                        onClick={() => handleReaction(userLiked, userDisliked, review_id, user_id, false, access_token)}
                     >
                         <IconButton
                             sx={{ top: "7px" }}

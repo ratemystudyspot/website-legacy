@@ -15,17 +15,15 @@ import theme from './theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <Provider store = {store}>
-  //    <App />
-  // </Provider >
   <Provider store={store}>
     <BrowserRouter>
       <AuthProvider>
         <RecoveryProvider>
           <ThemeProvider theme={theme}>
-            <Routes>
+            {/* <Routes>
               <Route path="/*" element={<App />} />
-            </Routes>
+            </Routes> */}
+            <App />
             <Analytics />
             <SpeedInsights />
           </ThemeProvider>
