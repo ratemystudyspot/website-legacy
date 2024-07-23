@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import ReviewCard from "./ReviewCard/ReviewCard";
 import { getReactionsByFilter } from "../../Services/reaction";
 import ReviewSummaryCard from "./ReviewSummaryCard/ReviewSummaryCard";
+import ReviewControlPanel from "./ReviewControlPanel";
 
 const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisibility, toggleEditReviewCardVisibility }) => {
     const { auth } = useAuth();
@@ -44,6 +45,7 @@ const AllReviewsCard = ({ reviews, setSummaryCardLoaded, toggleAddReviewCardVisi
     return (
         <div className="all-reviews-card">
             <ReviewSummaryCard reviews={reviews} setSummaryCardLoaded={setSummaryCardLoaded} toggleAddReviewCardVisibility={toggleAddReviewCardVisibility} />
+            <ReviewControlPanel />
             {(reactionsLoaded && reviews.length > 0) // TODO: optimize this (if you uncomment th eocnsole log at line 69 you see how bad it is)
                 ? reviews.map((review) => {
                     // for the likes + dislikes

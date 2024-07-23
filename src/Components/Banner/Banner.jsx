@@ -104,7 +104,6 @@ const Banner = ({ filterSelected, setFilterSelected, showSearch = false, showGoB
                   type="text"
                   value={searchTerm}
                   onChange={handleChange}
-                  // onKeyDown={handleKeyDown}
                   placeholder="Search study spots"
                 />
                 <button type="submit" className='banner-box__search-button'><FaSearch className="banner-box__icon" /></button>
