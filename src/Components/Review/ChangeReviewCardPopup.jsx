@@ -61,7 +61,6 @@ const ChangeReviewCardPopup = ({ toggleReviewCardPopupVisibility, change }) => {
     try {
       if (change === "add") {
         const { id, ...newReviewCardInfo } = reviewCardInfo; // exclude id
-        console.log(newReviewCardInfo)
         dispatch(saveReview(newReviewCardInfo));
       }
       if (change === "edit") {
