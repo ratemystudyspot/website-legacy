@@ -1,1 +1,9 @@
-/src
+/src/Components
+/src/context
+/src/Data
+/src/Helpers
+/src/hooks
+/src/Pages
+/src/SampleData
+/src/Services
+/src/Slices
