@@ -7,6 +7,8 @@ import { handleRefreshToken } from './Services/auth';
 import { jwtDecode } from "jwt-decode";
 import { useAppDispatch } from './hooks.ts';
 import { clearReviews } from './Slices/reviews.ts';
+import { saveStudySpots } from './Slices/studySpots.ts';
+import StudySpotsData from './Data/StudySpotsData.js';
 // Lazy load components
 const RequireAuth = lazy(() => import('./Pages/Structure/RequireAuth'));
 const RegisterForm = lazy(() => import('./Pages/AuthForm/RegisterForm'));
@@ -80,6 +82,11 @@ function App() {
     
     prevLocation.current = location;
   }, [location]);
+
+  // save studyspots to redux state
+  useEffect(() => {
+    dispatch(saveStudySpots(StudySpotsData));
+  }, []);
 
   return (
     <Suspense fallback={<></>}>

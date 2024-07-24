@@ -35,7 +35,7 @@ const ListOfStudySpotCards = ({ filterSelected, currentLocation}) => {
 
 
   const displayCards = () => {
-    if (studySpots.length === 0) {
+    if (studySpots?.length === 0) {
       return (
         <div style={{ // TODO: improve UI by making sure this doesn't show when then app is still loading the list of study spots
           position: 'absolute',
@@ -46,7 +46,7 @@ const ListOfStudySpotCards = ({ filterSelected, currentLocation}) => {
       )
     }
 
-    if (studySpots.length > 0) {
+    if (studySpots?.length > 0) {
       let key = 0; // added to get rid of unqiue key prop warnings in the map function
       return (
         studySpots.map((studySpot) => (
