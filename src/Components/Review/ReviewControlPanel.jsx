@@ -18,7 +18,7 @@ const ReviewControlPanel = () => {
 
       <form className="review-control-panel-box__search-box" onSubmit={handleSearch}>
         <button type="submit" className='review-control-panel-box__search-button'><FaSearch className="review-control-panel-box__icon" /></button>
-        <input className="review-control-panel-box__input-search" type="text" value={searchTerm} onChange={handleChange} />
+        <input className="review-control-panel-box__input-search"  type="text" value={searchTerm} onChange={handleChange} placeholder='Search Reviews'/>
       </form>
 
       <div className='review-control-panel-box__filter'>
