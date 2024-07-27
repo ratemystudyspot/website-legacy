@@ -9,7 +9,8 @@ const ReviewControlPanel = () => {
     setSearchTerm(e.target.value.toLowerCase());
   };
 
-  const handleSearch = () => {
+  const handleSearch = (event) => {
+    event.preventDefault();
     console.log("TO BE DONE!");
   }
 
@@ -17,7 +18,7 @@ const ReviewControlPanel = () => {
     <div className='review-control-panel-box'>
 
       <form className="review-control-panel-box__search-box" onSubmit={handleSearch}>
-        <button type="submit" className='review-control-panel-box__search-button'><FaSearch className="review-control-panel-box__icon" /></button>
+        <FaSearch className="review-control-panel-box__icon" />
         <input className="review-control-panel-box__input-search"  type="text" value={searchTerm} onChange={handleChange} placeholder='Search Reviews'/>
       </form>
 
