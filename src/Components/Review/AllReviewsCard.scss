@@ -24,7 +24,7 @@
 @media (min-width: 1400px) {
     .all-reviews-card {
         width: 35vw;
-        height: 80svh;
+        height: 80vh;
     }
 }
 
@@ -45,5 +45,6 @@
 @media (max-width: 768px) {
     .all-reviews-card {
         width: 90vw;
+        min-height: 80svh;
     }
 }
