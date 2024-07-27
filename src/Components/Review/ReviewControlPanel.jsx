@@ -22,11 +22,11 @@ const ReviewControlPanel = () => {
         <input className="review-control-panel-box__input-search"  type="text" value={searchTerm} onChange={handleChange} placeholder='Search Reviews'/>
       </form>
 
-      <div className='review-control-panel-box__filter'>
-
+      <div className='review-control-panel-box__filter-box'>
+        <button className='review-control-panel-box__filter-button'>Filter</button>
       </div>
-      <div className='review-control-panel-box__sort-by'>
-
+      <div className='review-control-panel-box__sort-by-box'>
+        <button className='review-control-panel-box__sort-by-button'>Sort</button>
       </div>
     </div>
   )
