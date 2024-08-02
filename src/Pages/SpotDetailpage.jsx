@@ -5,9 +5,7 @@ import { useParams } from 'react-router-dom';
 import './SpotDetailpage.scss'
 import filterOptions from '../Data/FilterOptions';
 import AllReviewsCard from '../Components/Review/AllReviewsCard';
-import { getReviewsByStudySpot } from '../Services/review';
 import UBCMap from '../Components/UBCMap/UBCMap';
-import AddReviewCard from '../Components/Review/AddReviewCard';
 import Gallery from '../Components/Gallery/Gallery';
 import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
 import getCurrentUserLocation from '../Helpers/GetUserLocation';
@@ -16,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '../hooks.ts';
 import { fetchReviewsByStudySpot } from '../Slices/reviews.ts';
 import Hashids from 'hashids';
 import ChangeReviewCardPopup from '../Components/Review/ChangeReviewCardPopup.jsx';
+import StudySpotControlPanel from './StudySpotControlPanel/StudySpotControlPanel.jsx';
 
 const files = require.context('../Components/Assets', true);
 
@@ -126,6 +125,7 @@ function SpotDetailpage() {
 
           <div className="detailed-spot-box__listing-header-box">
             <h1 className="detailed-spot-box__listing-header"><b>{currentStudySpot?.name}</b></h1>
+            <StudySpotControlPanel />
             <p className="detailed-spot-box__distance-away">{distance} away</p>
           </div>
 
