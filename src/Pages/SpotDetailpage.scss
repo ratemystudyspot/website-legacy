@@ -60,6 +60,13 @@
     }
   }
 
+ &__listing-header-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: fit-content;
+    align-items: center;
+ }
   //------------------------ AMENITIES SECTION -------------------------------
   &__amenities {
     h2 {
@@ -111,7 +118,7 @@
     &__listing-header {
       margin-top: 12px;
       margin-bottom: 0px;
-      font-size: 3.0rem;
+      font-size: 2.6rem;
     }
 
     &__distance-away {
@@ -161,7 +168,7 @@
     &__listing-header {
       margin-top: 12px;
       margin-bottom: 0px;
-      font-size: 3.0rem;
+      font-size: 2.6rem;
     }
 
     &__distance-away {
@@ -210,7 +217,7 @@
     &__listing-header {
       margin-top: 12px;
       margin-bottom: 0px;
-      font-size: 2.6rem;
+      font-size: 2.4rem;
     }
 
     &__distance-away {
@@ -221,6 +228,13 @@
     &__gallery {
       height: 300px;
     }
+
+    &__listing-header-box {
+      flex-direction: column;
+      height: fit-content;
+      align-items: start;
+      padding-bottom: 15px;
+   }
 
     &__ubc-map {
       height: 120px;
@@ -277,6 +291,14 @@
     &__gallery {
       height: 300px;
     }
+    
+    &__listing-header-box {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      height: fit-content;
+      align-items: center;
+   }
 
     &__ubc-map {
       height: 120px;

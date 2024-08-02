@@ -126,7 +126,6 @@ function SpotDetailpage() {
           <div className="detailed-spot-box__listing-header-box">
             <h1 className="detailed-spot-box__listing-header"><b>{currentStudySpot?.name}</b></h1>
             <StudySpotControlPanel />
-            <p className="detailed-spot-box__distance-away">{distance} away</p>
           </div>
 
           <section className="detailed-spot-box__ubc-map">
@@ -137,7 +136,8 @@ function SpotDetailpage() {
               mapHeight="100%"
             />
           </section>
-
+          <p className="detailed-spot-box__distance-away">{distance} away</p>
+          
           <section className="detailed-spot-box__amenities">
             <ul>
               {filterOptions.map((filter) => {
