@@ -23,7 +23,7 @@
     }
     
     &__search-box:focus-within, &__search-box:hover {
-        width: 75%;
+        width: 80%;
 
         input[type="text"] {
             width: 100%;
@@ -49,6 +49,7 @@
         height: 15px;
     }
 
+    // ----------------------------------- FILTER & SEARCH -------------------------------------------------
     &__filter-button, &__sort-by-button  {
         height: 45px;
         padding: 0 20px 0 20px;
@@ -59,7 +60,107 @@
         box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
         border-radius: 30px;
         margin-left: 10px;
+        font-weight: 600;
         color: #7C7C7C;
     }
 
+}
+
+@media (max-width: 768px), (max-width: 1200px){
+    $button-height: 36px;
+    $button-padding: 0 16px 0 16px;
+    $font-size: 15px;
+    
+    .review-control-panel-box {
+        &__input-search {
+            &::placeholder {
+                font-size: 14px;
+            }
+        }
+
+        &__search-box {
+            height: $button-height;
+            width: $button-height;
+            font-size: $font-size;
+        }
+
+        &__icon {
+            width: 28px;
+            height: 14px;
+        }
+
+        // ----------------------------------- FILTER & SEARCH -------------------------------------------------
+        &__filter-button,
+        &__sort-by-button {
+            height: $button-height;
+            padding: $button-padding;
+            font-size: $font-size;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    $button-height: 34px;
+    $button-padding: 0 14px 0 14px;
+    $font-size: 14px;
+    
+    .review-control-panel-box {
+        &__input-search {
+            &::placeholder {
+                font-size: 13px;
+            }
+        }
+
+        &__search-box {
+            height: $button-height;
+            width: $button-height;
+            font-size: $font-size;
+        }
+
+        &__icon {
+            width: 24px;
+            height: 12px;
+        }
+
+        // ----------------------------------- FILTER & SEARCH -------------------------------------------------
+        &__filter-button,
+        &__sort-by-button {
+            height: $button-height;
+            padding: $button-padding;
+            font-size: $font-size;
+        }
+    }
+}
+
+@media (max-width: 480px ) {
+    $button-height: 30px;
+    $button-padding: 0 12px 0 12px;
+    $font-size: 13px;
+    
+    .review-control-panel-box {
+        &__input-search {
+            &::placeholder {
+                font-size: 12px;
+            }
+        }
+
+        &__search-box {
+            height: $button-height;
+            width: $button-height;
+            font-size: $font-size;
+        }
+
+        &__icon {
+            width: 22px;
+            height: 11px;
+        }
+
+        // ----------------------------------- FILTER & SEARCH -------------------------------------------------
+        &__filter-button,
+        &__sort-by-button {
+            height: $button-height;
+            padding: $button-padding;
+            font-size: $font-size;
+        }
+    }
 }
