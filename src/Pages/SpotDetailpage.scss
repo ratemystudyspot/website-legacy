@@ -207,6 +207,7 @@
 
     &__listing-detail {
       justify-content: space-around;
+      padding: 0 50px 0 50px;
     }
 
     &__study-info-container {
@@ -270,6 +271,7 @@
       align-items: center;
       width: 90vw;
       margin-top: 140px;
+      padding: 0;
     }
 
     &__study-info-container {
@@ -291,14 +293,6 @@
     &__gallery {
       height: 300px;
     }
-    
-    &__listing-header-box {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      height: fit-content;
-      align-items: center;
-   }
 
     &__ubc-map {
       height: 120px;
