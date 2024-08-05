@@ -1,138 +1,185 @@
-import React, { useState, useRef } from 'react';
-import './AuthForm.scss'
+import React, { useState, useRef } from "react";
+import "./AuthForm.scss";
 import { IoMdMail } from "react-icons/io";
 import { FaUser, FaLock } from "react-icons/fa";
-import { register } from '../../Services/auth.js';
-import { Link, useNavigate } from 'react-router-dom';
+import { register } from "../../Services/auth.js";
+import { Link, useNavigate } from "react-router-dom";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+// type RegisterFormInputs = { // when we switch to ts
+//   name: string;
+//   email: string;
+//   password: string;
+// };
 
 const RegisterForm = () => {
-  const [name, setName] = useState('');
-  const [invalidName, setInvalidName] = useState(false);
-  const [email, setEmail] = useState('');
-  const [invalidEmail, setInvalidEmail] = useState(false);
-  const [pwd, setPwd] = useState('');
-  const [invalidPwd, setInvalidPwd] = useState(false);
   const [duplicate, setDuplicate] = useState(false);
   const loading = useRef(false);
 
+  const {
+    formState: { errors },
+    register: formRegister,
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
+
   const navigate = useNavigate();
 
-  const HandleSubmit = async (e) => {
-    e.preventDefault(); // if password doesn't meet the requirements, dont refresh page (prevents states resetting)
+  // : SubmitHandler<RegisterFormInputs> when we switch to ts
+
+  const onSubmit = async (data) => {
+    // react hook form automatically prevents default
+
     if (loading.current) return; // prevent user from spam creating accounts
     loading.current = true;
-    
+
+    const capitalize = (str) => {
+      if (typeof str !== "string" || str.length === 0) {
+        return "";
+      }
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    };
+
+    const [rawFirstName, rawLastName] = data.name.trim().split(/\s+/);
+
+    const name = `${capitalize(rawFirstName)} ${capitalize(rawLastName)}`;
+
     try {
-      setInvalidEmail(false);
-      setInvalidPwd(false);
-      setDuplicate(false);
-      await register(name, email, pwd);
-      // if no error thrown get rid of errors and goto email verification page
-      setInvalidEmail(false);
-      setInvalidPwd(false);
       setDuplicate(false);
 
+      await register(name, data.email, data.password);
+
+      // if no error thrown get rid of errors and goto email verification page
+      setDuplicate(false);
       navigate("/login");
       // TODO: navigate to a verify page (for future !!!)
       // navigate("/verify/" + email);
     } catch (e) {
       loading.current = false;
-      setPwd('');
 
-      if (e.message === "Name error") { // if user sends an invalid name 
-        setInvalidName(true);
-        setInvalidEmail(false);
-        setInvalidPwd(false);
-        setDuplicate(false);
-      }
-      if (e.message === "Email error") { // if register throws an email error
-        setInvalidName(false);
-        setInvalidEmail(true);
-        setInvalidPwd(false);
-        setDuplicate(false);
-      } else if (e.message === 'Email duplicate Error') { // if register throws a duplicate email error
-        setInvalidName(false);
-        setInvalidEmail(false);
-        setInvalidPwd(false);
+      if (e.message === "Email duplicate Error") {
+        // if register throws a duplicate email error
         setDuplicate(true);
-      } else if (e.message === 'Password error') { // if register throws a password error
-        setInvalidName(false);
-        setInvalidPwd(true);
-        setInvalidEmail(false);
-        setDuplicate(false);
-      } else { // if register throws an unexpected error
+      } else {
+        // if register throws an unexpected error
         console.error("An error occurred:", e);
       }
     }
-  }
+  };
 
   return (
     <div className="auth-box">
-      <form className="auth-box__auth-form" onSubmit={HandleSubmit}>
+      <form className="auth-box__auth-form" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="auth-box__title">Register</h1>
-        {(invalidName) // if user gives weird name input
-          ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Hmm, that name looks wrong, please enter your full name.</p>
-          : (duplicate) // if user gives duplicate email
-            ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Email address already in use, please log in.</p>
-            : (invalidEmail) // if user gives invalid email
-              ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Hmm, that email address doesn't look right.</p>
-              : (invalidPwd) // if user doesn't pass the basic password criteria
-                ? <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">Please set a password longer than eight characters.</p>
-                : (loading.current) // processing request
-                  ? <p className="auth-box__auth-msg auth-box__auth-msg--loading auth-box__auth-msg--top">Loading...</p>
-                  : (null)
-        }
+        {loading.current ? ( // processing request
+          <p className="auth-box__auth-msg auth-box__auth-msg--loading auth-box__auth-msg--top">
+            Loading...
+          </p>
+        ) : null}
+
+        {errors.name && (
+          <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">
+            {errors.name.message}
+          </p>
+        )}
         <div className="auth-box__input-box">
           <input
-            className={invalidName ? "auth-box__auth-input auth-box__auth-input--error" : "auth-box__auth-input"}
+            className="auth-box__auth-input"
             type="text"
             placeholder="Full Name"
-            autoComplete='off'
-            onChange={(e) => setName(e.target.value)}
-            required
+            autoComplete="off"
+            {...formRegister("name", {
+              required: true,
+              minLength: {
+                value: 3,
+                message: "Full name must be at least 3 characters long.",
+              },
+              maxLength: {
+                value: 25,
+                message: "Full name must be at most 25 characters long.",
+              },
+              validate: {
+                isFullName: (value) =>
+                  /^[a-zA-Z]+ [a-zA-Z]+$/.test(value) ||
+                  "Please enter your full name.", // will contain only letters and a space
+              },
+            })} // is required, min length 3, max length 25
           />
           <FaUser className="auth-box__icon" />
         </div>
 
+        {errors.email && (
+          <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">
+            {errors.email.message}
+          </p>
+        )}
+        {duplicate && (
+          <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">
+            Email address already in use, please log in.
+          </p>
+        )}
         <div className="auth-box__input-box">
           <input
-            className={(invalidEmail || duplicate) ? "auth-box__auth-input auth-box__auth-input--error" : "auth-box__auth-input"}
+            className="auth-box__auth-input"
             type="email"
             placeholder="Email"
-            autoComplete='off'
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            autoComplete="off"
+            {...formRegister("email", {
+              required: true,
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Please enter a valid email address format.",
+              },
+            })} // is required, email regex pattern
           />
           <IoMdMail className="auth-box__icon" />
         </div>
 
+        {errors.password && (
+          <p className="auth-box__auth-msg auth-box__auth-msg--error auth-box__auth-msg--top">
+            {errors.password.message}
+          </p>
+        )}
         <div className="auth-box__input-box">
           <input
-            className={invalidPwd ? "auth-box__auth-input auth-box__auth-input--error" : "auth-box__auth-input"}
+            className="auth-box__auth-input"
             type="password"
             placeholder="Password"
-            autoComplete='off'
-            value={pwd}
-            onChange={(e) => setPwd(e.target.value)}
-            required
+            autoComplete="off"
+            {...formRegister("password", {
+              required: true,
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters long.",
+              },
+            })} // is required, min length 8
           />
           <FaLock className="auth-box__icon" />
         </div>
 
-        <button className="auth-box__auth-button" type="submit" disabled={loading.current}>
+        <button
+          className="auth-box__auth-button"
+          type="submit"
+          disabled={loading.current}
+        >
           Create Account
         </button>
-
       </form>
       <div className="auth-box__register-link-container">
-        <p>Already have an account?&nbsp;
+        <p>
+          Already have an account?&nbsp;
           <Link to="/login">
             <button className="auth-box__register-link-button">Log in</button>
           </Link>
         </p>
       </div>
-    </div >
-  )
-}
+    </div>
+  );
+};
 
-export default RegisterForm
+export default RegisterForm;
