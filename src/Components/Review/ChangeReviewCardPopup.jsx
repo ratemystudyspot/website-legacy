@@ -44,7 +44,7 @@ const ChangeReviewCardPopup = ({ toggleReviewCardPopupVisibility, change }) => {
     e.preventDefault();
 
     const reviewCardInfo = {
-      id: currentUserReview.id,
+      id: currentUserReview?.id,
       user_id: auth.user_info.id,
       study_spot_id: hashids.decode(window.location.href.split("/").at(-1))[0],
       overall_rating: overallRating,

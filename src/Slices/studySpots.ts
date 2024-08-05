@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getSpots, getSpotsByFeatures, getSpotsByTime } from "../Services/studySpot";
 import type { RootState } from '../store';
 import { getCurrentDate } from "../Components/StudyCard/ListOfStudySpotCards";
-import fetchAndStoreStudySpots from "../Data/StudySpotsData";
+// import fetchAndStoreStudySpots from "../Data/StudySpotsData";
 import StudySpotsData from "../Data/StudySpotsData";
 // import StudySpots from "../SampleData/StudySpots";
 
@@ -24,20 +24,20 @@ const initialState: StudySpotsState  = {
     value: [],
 }
 
-export const fetchStudySpots = createAsyncThunk<StudySpot[], void, { rejectValue: Error }> (
-    'studyspot/fetchStudySpots',
-    async (_, thunkAPI) => {
-        // console.log("WORKING")
-        try{
-            const studySpots = await fetchAndStoreStudySpots();
-            return studySpots;
-        } catch (error) {
-            // console.log("NOT WORKING?")
-            return thunkAPI.rejectWithValue(error);
-        }   
-        
-    } 
-)
+// export const fetchStudySpots = createAsyncThunk<StudySpot[], void, { rejectValue: Error }> (
+//     'studyspot/fetchStudySpots',
+//     async (_, thunkAPI) => {
+//         console.log("WORKING")
+//         try{
+//             const studySpots = await fetchAndStoreStudySpots();
+//             console.log(studySpots)
+//             return studySpots;
+//         } catch (error) {
+//             console.log("NOT WORKING?")
+//             return thunkAPI.rejectWithValue(error);
+//         }   
+//     } 
+// )
 
 export const fetchSpotsByFeatures = createAsyncThunk<StudySpot[], string>(
     'studyspot/fetchSpotsByFeatures',
@@ -121,20 +121,24 @@ export const studySpotSlice = createSlice({
             } catch (error) {
                 console.error(error);
             }
+        },
+        saveStudySpots: (state, action: PayloadAction<{studySpots: Array<StudySpot>}>) => {
+            const { studySpots } = action.payload;
+            state.value = studySpots;
         }
         // add reducers maybe?
         
     },
     extraReducers: (builder) => {    
-        builder.addCase(fetchStudySpots.fulfilled, (state, action) => {
-            state.value = action.payload;
-        })
+        // builder.addCase(fetchStudySpots.fulfilled, (state, action) => {
+        //     state.value = action.payload;
+        // })
         builder.addCase(filterSpots.fulfilled, (state, action) => {
             state.value = action.payload;
         })
     }
 })
 
-export const {searchStudySpot} = studySpotSlice.actions;
+export const {searchStudySpot, saveStudySpots} = studySpotSlice.actions;
 
 export default studySpotSlice.reducer;

@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from 'react'
-import StudySpots from "../SampleData/StudySpots";
 import ListOfStudySpotCards from '../Components/StudyCard/ListOfStudySpotCards'
 import SpotCardsFilter from '../Components/StudyCard/SpotCardsFilter'
 import AlertComponenet from '../Components/AlertComponenet';
@@ -7,14 +6,11 @@ import './Homepage.scss'
 import Banner from '../Components/Banner/Banner'
 import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
 import getCurrentUserLocation from '../Helpers/GetUserLocation';
-import { fetchStudySpots } from '../Slices/studySpots.ts';
-import { useAppDispatch } from '../hooks.ts';
 
 const Homepage = () => {
   const [currentLocation, setCurrentLocation] = useState();
   const [filterSelected, setFilterSelected] = useState([]);
   const [locationAlert, setLocationAlert] = useState(false);
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -24,10 +20,6 @@ const Homepage = () => {
     }
     getCurrentLocation();
   }, []);
-
-  useEffect(() => {
-    dispatch(fetchStudySpots());
-  }, [])
 
   return (
     <div className="home-box">
