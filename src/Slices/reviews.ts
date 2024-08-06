@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from '../store';
 import { getReviewsByStudySpot, createReview, editReview } from "../Services/review";
 import { Reaction } from "./reaction";
 

@@ -1,6 +1,5 @@
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
-import theme from '../../../theme';
 
 const CustomLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 15,

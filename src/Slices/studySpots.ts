@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getSpots, getSpotsByFeatures, getSpotsByTime } from "../Services/studySpot";
-import type { RootState } from '../store';
 import { getCurrentDate } from "../Components/StudyCard/ListOfStudySpotCards";
 // import fetchAndStoreStudySpots from "../Data/StudySpotsData";
 import StudySpotsData from "../Data/StudySpotsData";

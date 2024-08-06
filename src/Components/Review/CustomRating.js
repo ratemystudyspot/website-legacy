@@ -1,5 +1,4 @@
 import { Rating } from '@mui/material';
-import ratingClasses from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const predefinedSizes = {

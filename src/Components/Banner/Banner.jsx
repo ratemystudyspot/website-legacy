@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState,} from 'react'
 import './Banner.scss'
 import { FaCircleUser } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
@@ -6,49 +6,25 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import LogoComponent from '../LogoComponent';
 import useAuth from "../../hooks/useAuth";
-import StudySpots from '../../Data/StudySpotsData';
 import { logout } from '../../Services/auth';
-import { useAppDispatch, useAppSelector } from "../../hooks.ts";
+import { useAppDispatch } from "../../hooks.ts";
 import { searchStudySpot } from '../../Slices/studySpots.ts';
 import { filterSpots } from '../../Slices/studySpots.ts';
 
 // TODO: Turn show different buttons to an object instead!!!
 const Banner = ({ filterSelected, setFilterSelected, showSearch = false, showGoBackButton = false, showAboutUsButton = false, showSeekSpotButton = true, additionalStyle }) => {
   const [searchTerm, setSearchTerm] = useState(''); // State to track whether a search term has been entered into search bar
-  const [isOpen, setIsOpen] = useState(false); // State to track whether the auth navbar is open or closed
+  const [isAuthNavBarOpen, setIsAuthNavBarOpen] = useState(false); // State to track whether the auth navbar is open or closed
   
   const navigate = useNavigate();
   const location = useLocation();
 
   const dispatch = useAppDispatch();
-  // Function to handle the change in the search bar
   const handleChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
 
-  // Function to handle search from search bar
-  // const handleSearch = async (e) => {
-  //   // Perform search operation with searchTerm
-  //   e.preventDefault();
-  //   try {
-  //     if (searchTerm.length === 0) {
-  //       await setFilterSelected([]);
-  //       await setCards(StudySpots);
-  //     }
-  //     if (searchTerm.length > 0) {
-  //       const queriedStudySpots = StudySpots.filter((studySpot) => {
-  //         return studySpot.name.toLowerCase().match(searchTerm);
-  //       })
-  //       await setFilterSelected([]);
-  //       await setCards(queriedStudySpots);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const handleSearch = async (e) => {
-    // Perform search operation with searchTerm
     e.preventDefault();
     
     setFilterSelected([]);
@@ -56,9 +32,8 @@ const Banner = ({ filterSelected, setFilterSelected, showSearch = false, showGoB
     await dispatch(searchStudySpot({searchTerm}));
   };
 
-  // Function to toggle the auth navbar state
   const toggleNavbar = () => {
-    setIsOpen(!isOpen);
+    setIsAuthNavBarOpen(!isAuthNavBarOpen);
   };
 
   // for authorization
@@ -104,7 +79,6 @@ const Banner = ({ filterSelected, setFilterSelected, showSearch = false, showGoB
                   type="text"
                   value={searchTerm}
                   onChange={handleChange}
-                  // onKeyDown={handleKeyDown}
                   placeholder="Search study spots"
                 />
                 <button type="submit" className='banner-box__search-button'><FaSearch className="banner-box__icon" /></button>
@@ -115,18 +89,13 @@ const Banner = ({ filterSelected, setFilterSelected, showSearch = false, showGoB
         </div>
 
         <div className="banner-box__right-box">
-          {/* Adding study spot btn */}
-
           {showSeekSpotButton ? <button className="banner-box__button banner-box__suggest-button" onClick={() => navigate("/spots/seek-a-spot")}>Suggest Spot</button> : null}
-          <div className={isOpen ? "banner-box__user-nav open" : "banner-box__user-nav"}>
-            {/* User Navbar button */}
+          <div className={isAuthNavBarOpen ? "banner-box__user-nav open" : "banner-box__user-nav"}>
             <button className="banner-box__dropdown-button" onClick={toggleNavbar}>
               <GiHamburgerMenu className="banner-box__icon" />
               <FaCircleUser className="banner-box__icon" />
             </button>
-
-            {/* User Navbar contents */}
-            {isOpen && handleAuth(auth)}
+            {isAuthNavBarOpen && handleAuth(auth)}
           </div>
         </div>
       </div>

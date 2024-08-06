@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react"
 import "./AddReviewCard.scss";
 import useAuth from "../../hooks/useAuth";
 import LoginForm from "../../Pages/AuthForm/LoginForm";
-import { createReview } from "../../Services/review";
 import { Rating } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { saveReview } from "../../Slices/reviews.ts";

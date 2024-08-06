@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "./ReviewSummaryCard.scss";
-import { Rating } from "@mui/material";
 import CustomLinearProgress from "./CustomLinearProgress";
 import CustomRating from "../CustomRating";
 

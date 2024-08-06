@@ -7,7 +7,6 @@ import filterOptions from '../Data/FilterOptions';
 // import AllReviewsCard from '../Components/Review/AllReviewsCard';
 import UBCMap from '../Components/UBCMap/UBCMap';
 import Gallery from '../Components/Gallery/Gallery';
-import LoaderScreen from '../Components/LoaderScreen/LoaderScreen';
 import getCurrentUserLocation from '../Helpers/GetUserLocation';
 import StudySpots from '../Data/StudySpotsData';
 import { useAppDispatch, useAppSelector } from '../hooks.ts';

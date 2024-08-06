@@ -1,4 +1,3 @@
-import { Rating } from "@mui/material";
 import "./ReviewCard.scss";
 import { IconButton, Button } from '@mui/material';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';

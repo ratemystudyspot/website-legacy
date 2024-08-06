@@ -1,3 +1,4 @@
+// COULD DELETE IN THE FUTURE! 
 import { createSlice } from "@reduxjs/toolkit";
 
 let initialState= {

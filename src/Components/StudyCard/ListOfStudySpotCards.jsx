@@ -1,7 +1,6 @@
 import "./ListOfStudySpotCards.scss";
 import StudySpotCard from "./StudySpotCard";
-import { getSpots, getSpotsByFeatures, getSpotsByTime } from "../../Services/studySpot";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks.ts";
 import { filterSpots } from "../../Slices/studySpots.ts";
 export const getCurrentDate = () => {

@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState } from 'react';
 import '../AuthForm.scss'
 import { FaUser } from "react-icons/fa";
 import useRecovery from '../../../hooks/useRecovery';

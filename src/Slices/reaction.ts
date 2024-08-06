@@ -8,6 +8,8 @@ export interface Reaction {
   user_id: number;
   reaction: boolean;
 }
+// I think Ray commented this out? Keep for now just in case
+
 
 // defining type for slice state
 // export interface ReactionsState {

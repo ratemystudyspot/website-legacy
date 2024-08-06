@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import "./ReviewSummaryCard.scss";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import { Height } from "@mui/icons-material";
 import { styled } from '@mui/material/styles';
 import { Rating } from "@mui/material";
-import useAuth from "../../hooks/useAuth";
-import { createReview } from "../../Services/review";
 
 const defaultProgressBarValue = -1;
 

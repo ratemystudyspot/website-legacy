@@ -4,7 +4,7 @@ import { IoMdMail } from "react-icons/io";
 import { FaUser, FaLock } from "react-icons/fa";
 import { register } from "../../Services/auth.js";
 import { Link, useNavigate } from "react-router-dom";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 // type RegisterFormInputs = { // when we switch to ts
 //   name: string;

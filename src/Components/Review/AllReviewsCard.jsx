@@ -1,7 +1,6 @@
 import React from "react";
 import "./AllReviewsCard.scss"
 import useAuth from "../../hooks/useAuth";
-import { useParams } from "react-router-dom";
 import ReviewCard from "./ReviewCard/ReviewCard";
 import ReviewSummaryCard from "./ReviewSummaryCard/ReviewSummaryCard";
 
