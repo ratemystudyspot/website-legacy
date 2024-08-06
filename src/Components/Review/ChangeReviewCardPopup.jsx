@@ -20,7 +20,7 @@ const ChangeReviewCardPopup = ({ toggleReviewCardPopupVisibility, change }) => {
   const hashids = new Hashids();
 
   const listOfReviews = useAppSelector((state) => state.reviews.value);
-  const currentUserReview = (listOfReviews.filter(review => review.user_id === auth.user_info.id))[0];
+  const currentUserReview = (listOfReviews.filter(review => review.user_id === auth?.user_info?.id))[0];
 
   // setting states depending if adding vs editing reviews
   const [overallRating, setOverallRating] =
