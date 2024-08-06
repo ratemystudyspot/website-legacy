@@ -57,6 +57,7 @@
     "sitemap": "^8.0.0",
     "toastify-js": "^1.12.0",
     "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
     "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4",
     "webpack": "^5.91.0",
